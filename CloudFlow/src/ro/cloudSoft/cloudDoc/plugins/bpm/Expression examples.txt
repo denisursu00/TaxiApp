@@ -1,0 +1,20 @@
+Exemple expresii pentru rutarea conditionata:
+
+Text / Text extins / Auto number:
+	{metadata} == 'valoare'
+	{metadata} != 'valoare'
+
+Numeric:
+	{metadata} == 10
+	{metadata} < 10
+
+Data:
+	{metadata} == '2010.06.28'
+	{metadata} >= '2010.06.28'
+
+Lista:
+	{metadata} =~ '.*#valoare#.*'
+
+Conditii compuse:
+	({metadata1} == 'valoare1') && ({metadata2} > 10)
+	({metadata} == 'val1') || ({metadata == 'val2'})

@@ -1,0 +1,62 @@
+<div class="ui-g-12">
+	<p-tieredMenu
+		#documentTypesMenu
+		[model]="documentTypeMenuItems"
+		[popup]="true"
+		appendTo="body">
+	</p-tieredMenu>
+	<button
+		pButton 
+		[disabled]="isDisabledForAdd"
+		[label]="'LABELS.ADD' | translate"
+		(click)="documentTypesMenu.toggle($event)"
+		type="button"
+		icon="fa fa-plus"
+		style="width: 130px">
+	</button>
+	<p-button
+		[disabled]="isDisabledForEdit"
+		(onClick)="onDocumentEdit($event)"
+		icon="fa fa-fw fa-edit"
+		[pTooltip]="'LABELS.EDIT' | translate"
+		tooltipPosition="bottom">
+	</p-button>
+	<button
+		pButton
+		[disabled]="isDisabledForDelete"
+		(click)="onDocumentDelete()"
+		type="button"
+		icon="fa fa-trash-o"
+		style="width: 35px"
+		[pTooltip]="'LABELS.DELETE' | translate"
+		tooltipPosition="bottom">
+	</button>
+	<button *ngIf="isAdminUpdateDocumentPermissionAllowed"
+		pButton
+		[disabled]="isDisabledForEdit"
+		(click)="onAdminUpdateDocument()"
+		type="button"
+		icon="fa fa-wrench"
+		style="width: 35px"
+		[pTooltip]="'LABELS.ADMIN_UPDATE_DOCUMENT' | translate"
+		tooltipPosition="bottom">
+	</button>
+</div>
+
+<app-document-window *ngIf="documentWindowVisible" 
+	[inputData]="documentWindowInputData" 
+	[mode]="documentWindowMode" 
+	[maximized]="true"
+	(windowClosed)="onDocumentWindowClosed($event)">
+</app-document-window>
+
+<app-admin-update-document-window *ngIf="adminUpdateDocumentWindowVisible" 
+	[inputData]="adminUpdateDocumentWindowInputData"
+	[maximized]="true"
+	(windowClosed)="onAdminUpdateDocumentWindowClosed($event)">
+</app-admin-update-document-window>
+
+<app-confirmation-window *ngIf="confirmationWindow.visible"
+	[messages]="confirmationWindow.messages"
+	[confirmationCallback]="confirmationWindow.callback">
+</app-confirmation-window>

@@ -1,0 +1,63 @@
+<p-tieredMenu
+	#notificationTypeMenu
+	[model]="notificationTypeMenuItems"
+	[popup]="true"
+	appendTo="body">
+</p-tieredMenu>
+<p-table [(selection)]="selectedNotification" [value]="notifications" selectionMode="single">
+	<ng-template pTemplate="caption">
+		<div class="ui-helper-clearfix">
+			<p-button
+				[label]="'LABELS.ADD' | translate"
+				[ngStyle]="{'float': 'left', 'width': '120px'}"
+				(onClick)="notificationTypeMenu.toggle($event)"
+				type="button"
+				icon="fa fa-plus"
+				iconPos="left">
+			</p-button>
+			<p-button
+				[label]="'LABELS.EDIT' | translate"
+				[disabled]="!isNotificationSelected()"
+				[ngStyle]="{'float': 'left', 'margin-left': '5px', 'width': '120px'}"
+				(onClick)="onEditNotification($event)"
+				type="button"
+				icon="fa fa-edit"
+				iconPos="left">
+			</p-button>
+			<p-button
+				[label]="'LABELS.DELETE' | translate"
+				[disabled]="!isNotificationSelected()"
+				[ngStyle]="{'float': 'left', 'margin-left': '5px', 'width': '120px'}"
+				(onClick)="onDeleteNotification($event)"
+				type="button"
+				icon="fa fa-trash"
+				iconPos="left">
+			</p-button>
+		</div>
+	</ng-template>
+	<ng-template pTemplate="header">
+		<tr>
+			<th>{{"LABELS.TYPE" | translate}}</th>
+			<th>{{"LABELS.EMAIL_SUBJECT" | translate}}</th>
+			<th>{{"LABELS.EMAIL_BODY" | translate}}</th>
+			<th>{{"LABELS.DETAILS" | translate}}</th>
+		</tr>
+	</ng-template>
+	<ng-template pTemplate="body" let-notification>
+		<tr [pSelectableRow]="notification">
+			<td>{{"LABELS." + notification.type | translate}}</td>
+			<td>{{notification.emailSubjectTemplate}}</td>
+			<td>{{notification.emailContentTemplate}}</td>
+			<td>{{notification.details}}</td> 
+		</tr>
+	</ng-template>
+</p-table>
+<app-transition-notification-window
+	*ngIf="notificationWindowVisible"
+	[mode]="notificationWindowMode"
+	[notification]="notification"
+	[notificationType]="notificationType"
+	[documentTypes]="_documentTypes"
+	(notificationSaved)="onSaveNotification($event)"
+	(windowClosed)="onNotificationWindowClosed($event)">
+</app-transition-notification-window>

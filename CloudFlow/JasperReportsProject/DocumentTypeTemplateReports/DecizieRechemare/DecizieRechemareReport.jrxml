@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaCDaprob" pageWidth="595" pageHeight="842" columnWidth="451" leftMargin="72" rightMargin="72" topMargin="72" bottomMargin="72" uuid="bcefacc5-6559-4471-a131-1397b5ee330b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DocumentTypeTemplateReports\DecizieRechemare\TestDataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.unit." value="inch"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="inch"/>
+	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
+	<parameter name="imagineSt" class=""/>
+	<parameter name="ImagineDr" class=""/>
+	<parameter name="sigla_arb_image" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="contact_arb_image" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="date_format" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["dd.MM.yyyy"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="date_time_format" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["dd.MM.yyyy HH:mm"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="nr" class="java.lang.String"/>
+	<field name="data_decizie_rechemare" class="java.util.Date"/>
+	<field name="initiator_decizie_rechemare" class="java.lang.String"/>
+	<field name="functia" class="java.lang.String"/>
+	<field name="data_intrarii_vigoare_rechemarii" class="java.util.Date"/>
+	<field name="motiv_rechemare" class="java.lang.String"/>
+	<field name="data_inceput_zile_neefectuate" class="java.util.Date"/>
+	<field name="data_sfarsit_zile_neefectuate" class="java.sql.Timestamp"/>
+	<field name="user_rechemat" class="java.lang.String"/>
+	<field name="numar_zile_rechemare" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="591" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="110" height="90" uuid="33b7b93d-f337-4a81-939c-4b6e4be983b8"/>
+				<imageExpression><![CDATA[$P{sigla_arb_image} != null ? $P{sigla_arb_image} : "CommonResources/sigla_arb_image.png"]]></imageExpression>
+			</image>
+			<image hAlign="Right" vAlign="Bottom">
+				<reportElement x="220" y="0" width="230" height="80" uuid="4dbea28a-361a-4574-ac41-80b3532df09b"/>
+				<imageExpression><![CDATA[$P{contact_arb_image} != null ? $P{contact_arb_image} : "CommonResources/contact_arb_image.png"]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="190" width="451" height="30" uuid="b76cfd60-ab7e-497d-9a4a-d1bcba797740"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DECIZIE DE RECHEMARE DIN CONCEDIUL DE ODIHNA"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="220" width="451" height="29" uuid="67f3c3b4-7e77-4699-bfd2-85c5bdcfc927"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nr. " +$F{nr} + "/" + " " + DATEFORMAT($F{data_decizie_rechemare}, $P{date_format})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="330" width="451" height="120" uuid="b924e238-a57b-4451-9cae-b06970649934"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	Art.1. Începând cu data de  " + "<b>" +DATEFORMAT($F{data_intrarii_vigoare_rechemarii}, $P{date_format})  +"</b>"+" dna/dl " +"<b>"+ $F{user_rechemat}+"</b>" + " având funcția de " +"<b>"+ $F{functia}+"</b>" +" în cadrul Asociației Române a Băncilor, este rechemat/ă din concediul de odihnă, pentru "+"<b>"+$F{motiv_rechemare}+"."+"</b>" +"	\n	Art.2. Reprogramarea celor " + "<b>"+$F{numar_zile_rechemare} +"</b>"+ " zile de concediu de odihnă neefectuate " + DATEFORMAT($F{data_inceput_zile_neefectuate}, $P{date_format}) + " - " +DATEFORMAT($F{data_sfarsit_zile_neefectuate}, $P{date_format}) + ", astfel încât acestea să poata fi efectuate de dna/dl " + "<b>"+$F{user_rechemat}+"</b>" + " până la finele anului calendaristic."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="540" width="451" height="40" uuid="6606a8d7-911e-4d16-a971-62e5d6c924cd"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	Semnătura"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="0" y="138" width="451" height="28" uuid="821aca9d-aa2f-40e1-b834-c7b2e259624f"/>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	Asociația Română a Băncilor "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="260" width="451" height="30" uuid="4035c7c4-fc3a-4d87-9b0b-891a39ca969c"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	Directorul Executiv Dna. " + "<b>"+ $F{initiator_decizie_rechemare}+ "</b>" + " în baza prevederilor art. 151 alin. (2) din Codul muncii, republicat, "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="500" width="451" height="20" uuid="a795ce3c-2b54-484e-b5e7-8016c205b376"/>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	Director executiv, "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="520" width="451" height="20" uuid="ab7829e4-9f4c-47a5-89c1-37b0e1dc2dc1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	<b>"+$F{initiator_decizie_rechemare}+"</b>"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="310" width="451" height="19" uuid="6f98a844-fbd1-4553-b0c4-54a770c5a790"/>
+				<textElement verticalAlignment="Bottom" markup="styled">
+					<font fontName="DejaVu Sans" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	D E C I D E:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="0" y="90" width="451" height="40" uuid="d3d98a77-a574-4c7d-b900-5d0103d756b6"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Grad de confidențialitate: Restricționat Acest document este destinat exclusiv adresantului.  Informațiile pot fi utilizate doar de persoana sau entitatea căreia i-au fost adresate."]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="30">
+			<textField>
+				<reportElement positionType="Float" x="0" y="1" width="451" height="19" uuid="2c25defe-232c-428f-9431-df1c94ba4aa7"/>
+				<textElement textAlignment="Justified">
+					<font fontName="DejaVu Sans" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Uz intern pt organizatia ARB"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

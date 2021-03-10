@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0014-creare-tabel-user_nomenclator_person" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			CREATE TABLE USER_NOMENCLATOR_PERSON (
+				ID BIGINT NOT NULL,
+				USER_ID BIGINT NOT NULL,
+				NOMENCLATOR_PERSON_ID BIGINT NOT NULL,
+				
+				CONSTRAINT USER_NOMENCLATOR_PERSON_PK PRIMARY KEY (ID),
+				CONSTRAINT USER_NOMENCLATOR_PERSON_USR_UQ UNIQUE (USER_ID),
+				CONSTRAINT USER_NOMENCLATOR_PERSON_NOM_UQ UNIQUE (NOMENCLATOR_PERSON_ID)
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0014-adaugare-constrageri-in-tabel-user_nomenclator_person" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			ALTER TABLE USER_NOMENCLATOR_PERSON ADD CONSTRAINT USER_PERSON_OF_NOM_USER_ID_FK FOREIGN KEY (USER_ID) REFERENCES EDOCUSER (ORG_ENTITY_ID);
+			ALTER TABLE USER_NOMENCLATOR_PERSON ADD CONSTRAINT USER_NOM_PERSN_NOM_PERS_ID_FK FOREIGN KEY (NOMENCLATOR_PERSON_ID) REFERENCES NOMENCLATOR_VALUES (ID);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0014-adaugare-persoane-in-nomenclator-din-useri" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO NOMENCLATOR_VALUES (ID, NOMENCLATOR_ID, ATTRIBUTE1, ATTRIBUTE2, ATTRIBUTE3, ATTRIBUTE4, ATTRIBUTE5, ATTRIBUTE6, ATTRIBUTE7, ATTRIBUTE8, ATTRIBUTE9, DELETED) SELECT
+				nextval('HIBERNATE_SEQUENCE'),
+				(select id from nomenclator where code='persoane'),
+				u.lastname,
+				u.firstname,
+				u.email,
+				u.phone,
+				u.fax,
+				u.mobile,
+				(select name from organizationunit where org_entity_id=u.ou_org_entity_id),
+				u.title,
+				(select ID from NOMENCLATOR_VALUES where nomenclator_id=(select ID from NOMENCLATOR where CODE='institutii') and ATTRIBUTE2='Asociatia Romana a Bancilor'),
+				FALSE
+			FROM EDOCUSER u WHERE u.USERNAME != 'application.user';
+			
+			INSERT INTO USER_NOMENCLATOR_PERSON (ID, USER_ID, NOMENCLATOR_PERSON_ID) SELECT
+				nextval('HIBERNATE_SEQUENCE'),
+				u.ORG_ENTITY_ID,
+				(select ID from NOMENCLATOR_VALUES where nomenclator_id=(select ID from NOMENCLATOR where CODE='persoane') 
+					and ATTRIBUTE1=u.lastname 
+					and ATTRIBUTE2=u.firstname
+					and ATTRIBUTE7=(select name from organizationunit where org_entity_id=u.ou_org_entity_id)
+				)
+			FROM EDOCUSER u WHERE u.USERNAME != 'application.user';
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

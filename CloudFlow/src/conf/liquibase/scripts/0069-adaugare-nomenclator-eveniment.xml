@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0069-adaugare-nomenclator-eveniment" author="CloudSoft.User2">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO NOMENCLATOR (ID, NAME, CODE, HIDDEN) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Eveniment', 'task_eveniment', TRUE);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0069-adaugare-nomenclator-eveniment-atribute" author="CloudSoft.User2">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO NOMENCLATOR_ATTRIBUTE (ID, NOMENCLATOR_ID, NAME, KEY, COLUMN_NAME, TYPE, UI_ORDER, REQUIRED) VALUES 
+				(nextval('HIBERNATE_SEQUENCE'), (select ID from nomenclator where code='task_eveniment'),	'Denumire', 'attribute1', 'ATTRIBUTE1', 'TEXT', 1, TRUE),
+				(nextval('HIBERNATE_SEQUENCE'), (select ID from nomenclator where code='task_eveniment'),	'Descriere', 'attribute2', 'ATTRIBUTE2', 'TEXT', 2, FALSE);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0069-adaugare-nomenclator-eveniment-values" author="CloudSoft.User2">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO NOMENCLATOR_VALUES (ID, NOMENCLATOR_ID, ATTRIBUTE1, DELETED) VALUES 
+				(nextval('HIBERNATE_SEQUENCE'), (select ID from nomenclator where code='task_eveniment'), 'Conferinte', FALSE),
+			    (nextval('HIBERNATE_SEQUENCE'), (select ID from nomenclator where code='task_eveniment'), 'Comunicat de presa', FALSE),
+			    (nextval('HIBERNATE_SEQUENCE'), (select ID from nomenclator where code='task_eveniment'), 'Evenimente ARB', FALSE),
+			    (nextval('HIBERNATE_SEQUENCE'), (select ID from nomenclator where code='task_eveniment'), 'Intalniri', FALSE),
+			    (nextval('HIBERNATE_SEQUENCE'), (select ID from nomenclator where code='task_eveniment'), 'Intalnire BNR', FALSE),
+			    (nextval('HIBERNATE_SEQUENCE'), (select ID from nomenclator where code='task_eveniment'), 'Intalnire Consiliul Director', FALSE),
+			    (nextval('HIBERNATE_SEQUENCE'), (select ID from nomenclator where code='task_eveniment'), 'Intalnire cu conducerea BNR', FALSE),
+			    (nextval('HIBERNATE_SEQUENCE'), (select ID from nomenclator where code='task_eveniment'), 'Sedinte Parlament', FALSE),
+			    (nextval('HIBERNATE_SEQUENCE'), (select ID from nomenclator where code='task_eveniment'), 'Sedinta Comisie/Grupuri de lucru', FALSE),
+			    (nextval('HIBERNATE_SEQUENCE'), (select ID from nomenclator where code='task_eveniment'), 'Sedinta Comisie Sistemica', FALSE),
+			    (nextval('HIBERNATE_SEQUENCE'), (select ID from nomenclator where code='task_eveniment'), 'Altele', FALSE);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0069-adaugare-permisiune-administrator" author="CloudSoft.User2">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order)
+				VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.EDIT_TASK_EVENT_DESCRIPTIONS', 'Modificare descrieri evenimente din taskuri', null, (select id from permission_group where name='admin'), 142);
+			INSERT INTO role_permission (role_id, permission_id)
+				VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.EDIT_TASK_EVENT_DESCRIPTIONS'));
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

@@ -1,0 +1,144 @@
+<p-dialog #pDialog [(visible)]="visible" [modal]="true" appendTo="body"
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onShow)="onShow($event)" (onHide)="onHide()">
+	<p-header>
+		{{"LABELS.PREZENTA_ONLINE_ADAUGA_PARTICIPANT" | translate}} 
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+    </p-header>
+    
+    <form [formGroup]="formGroup">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2">
+                    {{"LABELS.PREZENTA_ONLINE_ADAUGARE_PARTICIPANT_INSTITUTIE" | translate}} *:
+                </div>
+                <div class="ui-grid-col-10">
+                    <p-dropdown 
+                        [options]="institutieSelectItems" 
+                        formControlName="institutie"
+                        [style]="{'width':'100%'}"
+                        [placeholder]="'LABELS.SELECT' | translate"
+                        [filterPlaceholder]="'LABELS.SELECT' | translate"
+                        [filter]="true"
+                        autoDisplayFirst="false"
+                        showClear="true"
+                        appendTo="body"
+                        (onClick)="onDropdownClick()">
+                    </p-dropdown>		
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2"></div>
+                <div class="ui-grid-col-10">
+                    <div *ngIf="institutieFormControl.invalid && (institutieFormControl.dirty || institutieFormControl.touched)" class="ui-message ui-widget ui-corner-all ui-message-error">
+                        <span class="ui-message-icon pi pi-times"></span>
+                        <span *ngIf="institutieFormControl.errors['required']" class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+                    </div>
+                </div>
+            </div>	
+        </div>
+
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2">
+                        {{"LABELS.PREZENTA_ONLINE_ADAUGARE_PARTICIPANT_NUME" | translate}} *:
+                </div>
+                <div class="ui-grid-col-10">
+                    <input type="text" formControlName="numeMembruInlocuitor" pInputText required>		
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2"></div>
+                <div class="ui-grid-col-10">
+                    <div *ngIf="numeMembruInlocuitorFormControl.invalid && (numeMembruInlocuitorFormControl.dirty || numeMembruInlocuitorFormControl.touched)" class="ui-message ui-widget ui-corner-all ui-message-error">
+                        <span class="ui-message-icon pi pi-times"></span>
+                        <span *ngIf="numeMembruInlocuitorFormControl.errors['required']" class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+                    </div>
+                </div>
+            </div>	
+        </div>
+    
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2">
+                    {{"LABELS.PREZENTA_ONLINE_ADAUGARE_PARTICIPANT_PRENUME" | translate}} *:
+                </div>
+                <div class="ui-grid-col-10">
+                    <input type="text" formControlName="prenumeMembruInlocuitor" pInputText required>		
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2"></div>
+                <div class="ui-grid-col-10">
+                    <div *ngIf="prenumeMembruInlocuitorFormControl.invalid && (prenumeMembruInlocuitorFormControl.dirty || prenumeMembruInlocuitorFormControl.touched)" class="ui-message ui-widget ui-corner-all ui-message-error">
+                        <span class="ui-message-icon pi pi-times"></span>
+                        <span *ngIf="prenumeMembruInlocuitorFormControl.errors['required']" class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+                    </div>
+                </div>
+            </div>	
+        </div>
+    
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2">
+                    {{"LABELS.PREZENTA_ONLINE_ADAUGARE_PARTICIPANT_FUNCTIE" | translate}} :
+                </div>
+                <div class="ui-grid-col-10">
+                    <input type="text" formControlName="functie" pInputText>		
+                </div>
+            </div>
+        </div>
+    
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2">
+                    {{"LABELS.PREZENTA_ONLINE_ADAUGARE_PARTICIPANT_DEPARTAMENT" | translate}} :
+                </div>
+                <div class="ui-grid-col-10">
+                    <input type="text" formControlName="departament" pInputText>		
+                </div>
+            </div>	
+        </div>
+    
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2">
+                    {{"LABELS.PREZENTA_ONLINE_ADAUGARE_PARTICIPANT_TELEFON" | translate}} :
+                </div>
+                <div class="ui-grid-col-10">
+                    <input type="text" formControlName="telefon" pInputText>		
+                </div>
+            </div>	
+        </div>		
+            
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2">
+                    {{"LABELS.PREZENTA_ONLINE_ADAUGARE_PARTICIPANT_EMAIL" | translate}} :
+                </div>
+                <div class="ui-grid-col-10">
+                    <input type="text" formControlName="email" pInputText>		
+                </div>
+            </div>	
+        </div>
+    
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2">
+                    {{"LABELS.PREZENTA_ONLINE_ADAUGARE_PARTICIPANT_CALITATE" | translate}} :
+                </div>
+                <div class="ui-grid-col-10">
+                    <input type="text" pInputText readonly value="{{'LABELS.MEMBRU_REPREZENTANTI_COMISIE_SAU_GL_CALITATE_INLOCUITOR' | translate}}">		
+                </div>
+            </div>	
+        </div>
+    </form>
+        
+
+	<p-footer>
+		<p-button [label]="'LABELS.ADD' | translate" (onClick)="onAdd()"></p-button>
+		<p-button [label]="'LABELS.CANCEL' | translate" (onClick)="onHide()"></p-button>
+	</p-footer>
+</p-dialog>

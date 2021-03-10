@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0008-adaugare-structura-organizatorica-arb" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			WITH ouRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO ORGANIZATIONUNIT (ORG_ENTITY_ID, NAME, ORGANIZATION_ID) VALUES (
+				(select ORG_ENTITY_ID from ouRow),
+				'Presedinte Executiv',
+				(select ID from ORGANIZATION where NAME = 'Asociatia Romana a Bancilor')
+			);
+			
+			WITH ouRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO ORGANIZATIONUNIT (ORG_ENTITY_ID, NAME, PARENTOU_ORG_ENTITY_ID) VALUES (
+				(select ORG_ENTITY_ID from ouRow),
+				'Director Executiv(DEIC)',
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Presedinte Executiv')
+			);
+			WITH ouRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO ORGANIZATIONUNIT (ORG_ENTITY_ID, NAME, PARENTOU_ORG_ENTITY_ID) VALUES (
+				(select ORG_ENTITY_ID from ouRow),
+				'Departamentul Administrativ si Investitii',
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Director Executiv(DEIC)')
+			);
+			WITH ouRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO ORGANIZATIONUNIT (ORG_ENTITY_ID, NAME, PARENTOU_ORG_ENTITY_ID) VALUES (
+				(select ORG_ENTITY_ID from ouRow),
+				'Director Executiv Proiecte(DEPR)',
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Presedinte Executiv')
+			);
+			WITH ouRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO ORGANIZATIONUNIT (ORG_ENTITY_ID, NAME, PARENTOU_ORG_ENTITY_ID) VALUES (
+				(select ORG_ENTITY_ID from ouRow),
+				'Departamentul Secretariat General ARB',
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Director Executiv Proiecte(DEPR)')
+			);
+			WITH ouRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO ORGANIZATIONUNIT (ORG_ENTITY_ID, NAME, PARENTOU_ORG_ENTITY_ID) VALUES (
+				(select ORG_ENTITY_ID from ouRow),
+				'Departament Informatica',
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Director Executiv Proiecte(DEPR)')
+			);
+			
+			WITH ouRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO ORGANIZATIONUNIT (ORG_ENTITY_ID, NAME, PARENTOU_ORG_ENTITY_ID) VALUES (
+				(select ORG_ENTITY_ID from ouRow),
+				'Director Executiv Operatiuni Plati(DEOP)',
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Presedinte Executiv')
+			);
+			WITH ouRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO ORGANIZATIONUNIT (ORG_ENTITY_ID, NAME, PARENTOU_ORG_ENTITY_ID) VALUES (
+				(select ORG_ENTITY_ID from ouRow),
+				'Departamentul Monitorizare proiecte si comisii',
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Director Executiv Operatiuni Plati(DEOP)')
+			);
+			WITH ouRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO ORGANIZATIONUNIT (ORG_ENTITY_ID, NAME, PARENTOU_ORG_ENTITY_ID) VALUES (
+				(select ORG_ENTITY_ID from ouRow),
+				'Departament Asistent Manager',
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Director Executiv Operatiuni Plati(DEOP)')
+			);
+			WITH ouRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO ORGANIZATIONUNIT (ORG_ENTITY_ID, NAME, PARENTOU_ORG_ENTITY_ID) VALUES (
+				(select ORG_ENTITY_ID from ouRow),
+				'Departament Scheme Plati',
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Director Executiv Operatiuni Plati(DEOP)')
+			);
+			WITH ouRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO ORGANIZATIONUNIT (ORG_ENTITY_ID, NAME, PARENTOU_ORG_ENTITY_ID) VALUES (
+				(select ORG_ENTITY_ID from ouRow),
+				'Departament Juridic',
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Director Executiv Operatiuni Plati(DEOP)')
+			);
+			
+			WITH ouRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO ORGANIZATIONUNIT (ORG_ENTITY_ID, NAME, ORGANIZATION_ID) VALUES (
+				(select ORG_ENTITY_ID from ouRow),
+				'Conturi dezactivate',
+				(select ID from ORGANIZATION where NAME = 'Asociatia Romana a Bancilor')
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0008-adaugare-grupuri-arb" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			WITH groupRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+			    RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCGROUP (
+				ORG_ENTITY_ID, 
+				NAME
+			) VALUES (
+				(select ORG_ENTITY_ID from groupRow), 
+				'Directori'
+			);
+			WITH groupRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+			    RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCGROUP (
+				ORG_ENTITY_ID, 
+				NAME
+			) VALUES (
+				(select ORG_ENTITY_ID from groupRow), 
+				'Director DEOP'
+			);
+			WITH groupRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+			    RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCGROUP (
+				ORG_ENTITY_ID, 
+				NAME
+			) VALUES (
+				(select ORG_ENTITY_ID from groupRow), 
+				'Director DEIC'
+			);
+			WITH groupRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+			    RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCGROUP (
+				ORG_ENTITY_ID, 
+				NAME
+			) VALUES (
+				(select ORG_ENTITY_ID from groupRow), 
+				'Consilieri Financiari Bancari(DAS)'
+			);
+			WITH groupRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+			    RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCGROUP (
+				ORG_ENTITY_ID, 
+				NAME
+			) VALUES (
+				(select ORG_ENTITY_ID from groupRow), 
+				'Responsabili proiect activitate'
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0008-adaugare-utilizatori-arb" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[		
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'florin.danescu@arb.ro',
+				'Florin',
+				'Danescu',
+				'Presedinte Executiv',
+				'florin.danescu',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Presedinte Executiv'),
+				null,
+				'0213212078',
+				'0213212095',
+				null
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'rodica.tuchila@arb.ro',
+				'Rodica',
+				'Tuchila',
+				'Director Executiv',
+				'rodica.tuchila',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Director Executiv Operatiuni Plati(DEOP)'),
+				null,
+				'0213212078',
+				'0213212095',
+				'0721243031'
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'cati.ursu@arb.ro',
+				'Cati',
+				'Ursu',
+				'Director Executiv',
+				'cati.ursu',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Director Executiv Proiecte(DEPR)'),
+				null,
+				'0213212078',
+				'0213212095',
+				null
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'gabriela.folcut@arb.ro',
+				'Gabriela',
+				'Folcut',
+				'Director Executiv',
+				'gabriela.folcut',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Director Executiv(DEIC)'),
+				null,
+				'0213212078',
+				'0213212095',
+				'0722765374'
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'luminita.malanciuc@arb.ro',
+				'Luminita',
+				'Malanciuc',
+				'Expert Juridic',
+				'luminita.malanciuc',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Juridic'),
+				null,
+				'0213212078',
+				'0213212095',
+				'0737025096'
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'constantin.rotaru@arb.ro',
+				'Constantin',
+				'Rotaru',
+				'Sef Departament Administrarea Schemelor',
+				'constantin.rotaru',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Scheme Plati'),
+				null,
+				'0213212078',
+				'0213212095',
+				'0725216218'
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'tatiana.grafcenco@arb.ro',
+				'Tatiana',
+				'Grafcenco',
+				'Consilier Financiar Bancar',
+				'tatiana.grafcenco',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Scheme Plati'),
+				null,
+				'0213212078',
+				'0213212095',
+				null
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'cristina.dumitrescu@arb.ro',
+				'Cristina',
+				'Dumitrescu',
+				'Consilier Financiar Bancar',
+				'cristina.dumitrescu',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Scheme Plati'),
+				null,
+				'0213212078',
+				'0213212095',
+				null
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'luminita.soitu@arb.ro',
+				'Luminita',
+				'Soitu',
+				'Consilier Financiar Bancar',
+				'luminita.soitu',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Scheme Plati'),
+				null,
+				'0213212078',
+				'0213212095',
+				null
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'bogdan.martimof@arb.ro',
+				'Bogdan',
+				'Martimof',
+				'Consilier Financiar Bancar',
+				'bogdan.martimof',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departamentul Monitorizare proiecte si comisii'),
+				null,
+				'0213212078',
+				'0213212095',
+				null
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'stefan.dina@arb.ro',
+				'Stefan',
+				'Dina',
+				'Consilier Financiar Bancar',
+				'stefan.dina',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Scheme Plati'),
+				null,
+				'0213212078',
+				'0213212095',
+				'0725216223'
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'vlad.barabas@arb.ro',
+				'Vlad',
+				'Barabas',
+				'Manager Proiect Informatic',
+				'vlad.barabas',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Informatica'),
+				null,
+				'0213212078',
+				'0213212095',
+				'0743527450'
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'florin.ninu@arb.ro',
+				'Florin',
+				'Ninu',
+				'Economist',
+				'florin.ninu',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departamentul Administrativ si Investitii'),
+				null,
+				'0213212078',
+				'0213212095',
+				'0725216222'
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'adriana.tudor@arb.ro',
+				'Adriana',
+				'Tudor',
+				'Asistent Cabinet',
+				'adriana.tudor',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departamentul Secretariat General ARB'),
+				null,
+				'0213212078',
+				'0213212095',
+				'0725216220'
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'andreea.rosu@arb.ro',
+				'Andreea',
+				'Rosu',
+				'Asistent Cabinet',
+				'andreea.rosu',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departamentul Secretariat General ARB'),
+				null,
+				'0213212078',
+				'0213212095',
+				'0725216224'
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'lina.visan@arb.ro',
+				'Lina',
+				'Visan',
+				'Inspector Resurse Umane',
+				'lina.visan',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departamentul Administrativ si Investitii'),
+				null,
+				'0213212078',
+				'0213212095',
+				'0740939521'
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'sorina.sirbu@arb.ro',
+				'Sorina',
+				'Sirbu',
+				'Asistent Manager',
+				'sorina.sirbu',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Asistent Manager'),
+				null,
+				'0213212078',
+				'0213212095',
+				null
+			);
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+				RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID,
+				EMAIL,
+				FIRSTNAME,
+				LASTNAME,
+				TITLE,
+				USERNAME,
+				ORGANIZATION_ID,
+				OU_ORG_ENTITY_ID,
+				CUSTOM_TITLE_TEMPLATE,
+				PHONE,
+				FAX,
+				MOBILE
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow),
+				'liviu.chitu@arb.ro',
+				'Liviu',
+				'Chitu',
+				'Sofer',
+				'liviu.chitu',
+				null,
+				(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departamentul Administrativ si Investitii'),
+				null,
+				'0213212078',
+				'0213212095',
+				'0725216221'
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0008-adaugare-utilizatori-arb-in-grupuri" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO GROUP_USER (
+				GROUP_ID,
+				USER_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCGROUP where NAME = 'All'),
+				ORG_ENTITY_ID
+			FROM EDOCUSER WHERE USERNAME != 'application.user';
+			INSERT INTO GROUP_USER (
+				GROUP_ID,
+				USER_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCGROUP where NAME = 'Admin'),
+				ORG_ENTITY_ID
+			FROM EDOCUSER WHERE USERNAME = 'vlad.barabas';
+			INSERT INTO GROUP_USER (
+				GROUP_ID,
+				USER_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCGROUP where NAME = 'Directori'),
+				ORG_ENTITY_ID
+			FROM EDOCUSER WHERE USERNAME IN ('rodica.tuchila', 'cati.ursu', 'gabriela.folcut');
+			INSERT INTO GROUP_USER (
+				GROUP_ID,
+				USER_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCGROUP where NAME = 'Director DEOP'),
+				ORG_ENTITY_ID
+			FROM EDOCUSER WHERE USERNAME IN ('rodica.tuchila');
+			INSERT INTO GROUP_USER (
+				GROUP_ID,
+				USER_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCGROUP where NAME = 'Director DEIC'),
+				ORG_ENTITY_ID
+			FROM EDOCUSER WHERE USERNAME IN ('gabriela.folcut');
+			INSERT INTO GROUP_USER (
+				GROUP_ID,
+				USER_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCGROUP where NAME = 'Consilieri Financiari Bancari(DAS)'),
+				ORG_ENTITY_ID
+			FROM EDOCUSER WHERE USERNAME IN ('rodica.tuchila', 'constantin.rotaru', 'tatiana.grafcenco', 'cristina.dumitrescu', 'luminita.soitu', 'stefan.dina');
+			INSERT INTO GROUP_USER (
+				GROUP_ID,
+				USER_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCGROUP where NAME = 'Responsabili proiect activitate'),
+				ORG_ENTITY_ID
+			FROM EDOCUSER WHERE USERNAME IN ('rodica.tuchila','cati.ursu','gabriela.folcut','luminita.malanciuc','constantin.rotaru','tatiana.grafcenco','cristina.dumitrescu','luminita.soitu','bogdan.martimof','stefan.dina','florin.ninu','adriana.tudor','andreea.rosu','sorina.sirbu', 'vlad.barabas');
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0008-setare-manageri-la-unitatile-organizatorice-arb" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE ORGANIZATIONUNIT 
+			SET MANAGER_ORG_ENTITY_ID = (select ORG_ENTITY_ID from EDOCUSER where USERNAME='florin.danescu')
+			WHERE NAME = 'Presedinte Executiv';
+			
+			UPDATE ORGANIZATIONUNIT 
+			SET MANAGER_ORG_ENTITY_ID = (select ORG_ENTITY_ID from EDOCUSER where USERNAME='cati.ursu')
+			WHERE NAME = 'Director Executiv Proiecte(DEPR)';
+			
+			UPDATE ORGANIZATIONUNIT 
+			SET MANAGER_ORG_ENTITY_ID = (select ORG_ENTITY_ID from EDOCUSER where USERNAME='rodica.tuchila')
+			WHERE NAME = 'Director Executiv Operatiuni Plati(DEOP)';
+			
+			UPDATE ORGANIZATIONUNIT 
+			SET MANAGER_ORG_ENTITY_ID = (select ORG_ENTITY_ID from EDOCUSER where USERNAME='gabriela.folcut')
+			WHERE NAME = 'Director Executiv(DEIC)';
+		]]>
+		</sql>	
+	</changeSet>
+	
+	<changeSet id="0008-setare-email-uri-utilizatori-cloud-soft-test-dev" author="CloudSoft.User1" context="dev,test">
+		<sql endDelimiter=";"><![CDATA[
+			update edocuser set email = 'activitiorga@gmail.com' where username != 'application.user';
+		]]>
+		</sql>	
+	</changeSet>
+	
+	<changeSet id="0008-setare-email-uri-utilizatori-arb-staging" author="CloudSoft.User1" context="staging">
+		<sql endDelimiter=";"><![CDATA[
+			update edocuser 
+			set email = 'luminita.soitu@arb.ro' 
+			where username in ('cati.ursu', 'gabriela.folcut', 'luminita.malanciuc', 'constantin.rotaru', 'cristina.dumitrescu', 'luminita.soitu', 'florin.ninu', 'lina.visan', 'liviu.chitu');
+			
+			update edocuser 
+			set email = 'tatiana.grafcenco@arb.ro' 
+			where username in ('florin.danescu', 'rodica.tuchila', 'tatiana.grafcenco', 'bogdan.martimof', 'stefan.dina', 'adriana.tudor', 'andreea.rosu', 'sorina.sirbu');
+			
+			update edocuser 
+			set email = 'vlad.barabas@arb.ro' 
+			where username in ('vlad.barabas');
+		]]>
+		</sql>	
+	</changeSet>
+	
+	<changeSet id="0008-adaugare-parametrii-ai-aplicatiei-ce-reprezinta-ponderile-pentru-calcularea-gradului-de-realizarea-a-proiectului" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO parameters (id, name, description, value, type) 
+			VALUES (nextval('HIBERNATE_SEQUENCE'), 'proiect.grad_realizare_pondere_in_procente_pentru_nr_actiuni_realizate_pe_nr_actiuni_estimate', 'Reprezinta ponderea (in procente pentru calcularea gradului de realizare a proiectului pentru calculul Numar actiuni realizate / estimate', '20', 'NUMBER');
+			
+			INSERT INTO parameters (id, name, description, value, type)
+			VALUES (nextval('HIBERNATE_SEQUENCE'), 'proiect.grad_realizare_pondere_in_procente_pentru_realizare_actiuni_in_termen', 'Reprezinta ponderea (in procente pentru calcularea gradului de realizare a proiectului pentru actiunile realizate la termen', '30', 'NUMBER');
+			
+			INSERT INTO parameters (id, name, description, value, type) 
+			VALUES (nextval('HIBERNATE_SEQUENCE'), 'proiect.grad_realizare_pondere_in_procente_pentru_estimare_responsabil', 'Reprezinta ponderea (in procente) pentru calcularea gradului de realizare a proiectului pentru estimarea data de catre responsabilul de proiect', '50', 'NUMBER');
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0008-adaugare-parametrii-ai-aplicatiei-ce-reprezinta-ponderile-pentru-calcularea-gradului-de-realizarea-a-proiectului-pentru-diagrame" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO parameters (id, name, description, value, type) 
+			VALUES (nextval('HIBERNATE_SEQUENCE'), 'proiect.grad_realizare_pondere_in_procente_pentru_proiectele_cu_grad_de_importanta_critic', 'Reprezinta ponderea (in procente) pentru proiectele cu grad de importanta critic.', '35', 'NUMBER');
+			
+			INSERT INTO parameters (id, name, description, value, type)
+			VALUES (nextval('HIBERNATE_SEQUENCE'), 'proiect.grad_realizare_pondere_in_procente_pentru_proiectele_cu_grad_de_importanta_important', 'Reprezinta ponderea (in procente) pentru proiectele cu grad de importanta important.', '25', 'NUMBER');
+			
+			INSERT INTO parameters (id, name, description, value, type)
+			VALUES (nextval('HIBERNATE_SEQUENCE'), 'proiect.grad_realizare_pondere_in_procente_pentru_proiectele_cu_grad_de_importanta_in_asteptare', 'Reprezinta ponderea (in procente) pentru proiectele cu grad de importanta in asteptare.', '10', 'NUMBER');
+			
+			INSERT INTO parameters (id, name, description, value, type)
+			VALUES (nextval('HIBERNATE_SEQUENCE'), 'proiect.grad_realizare_pondere_in_procente_pentru_proiectele_cu_grad_de_importanta_strategic', 'Reprezinta ponderea (in procente) pentru proiectele cu grad de importanta strategic.', '30', 'NUMBER');
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

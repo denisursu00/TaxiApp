@@ -1,0 +1,127 @@
+<app-loading *ngIf="loadingVisible"></app-loading>
+
+<p-dialog #pDialog [(visible)]="windowVisible" [modal]="true" appendTo="body"
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onShow)="onShow($event)" (onHide)="onHide($event)">
+	<p-header>
+		{{title}}
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+	</p-header>
+
+	<form [formGroup]="formGroup" [ngStyle]="{'height':'70vh'}">
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.ALTE_DECONTURI_TITULAR_DECONT" | translate}}<span *ngIf="!readonly">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="text" formControlName="titularDecont" [readonly]="readonly">
+			</div>
+			<div *ngIf="titularDecontFormControl.invalid && (titularDecontFormControl.dirty || titularDecontFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.ALTE_DECONTURI_DATA_DECONT" | translate}}<span *ngIf="!readonly">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-calendar 
+						[showIcon]="true"
+						[dateFormat]="dateFormat"
+						formControlName="dataDecont"
+						readonlyInput="true"
+						appendTo="body">
+				</p-calendar>
+			</div>
+			<div *ngIf="dataDecontFormControl.invalid && (dataDecontFormControl.dirty || dataDecontFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.ALTE_DECONTURI_AVANS_PRIMIT" | translate}}<span *ngIf="!readonly">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="number" formControlName="avansPrimit" [min]="valoareMinimaAvansPrimit" [readonly]="readonly" (change)="onAvansPrimitValueChanged($event)">
+			</div>
+			<div *ngIf="avansPrimitFormControl.invalid && (avansPrimitFormControl.dirty || avansPrimitFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					<span *ngIf="avansPrimitFormControl.errors.required">{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}</span>
+					<span *ngIf="avansPrimitFormControl.errors.min">{{"MESSAGES.VALIDATOR_MIN_VALUE" | translate:validationMessageMinLengthParameter}}</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.ALTE_DECONTURI_TIP_AVANS_PRIMIT" | translate}}<span *ngIf="!readonly">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-dropdown 
+					[options]="tipAvansPrimitItems"
+					[placeholder]="'LABELS.SELECT' | translate" 
+					[style]="{'width':'100%'}" 
+					[readonly]="readonly"
+					formControlName="tipAvansPrimit"
+					filter="true"
+					appendTo="body">
+				</p-dropdown>
+			</div>
+			<div *ngIf="tipAvansPrimitFormControl.invalid && (tipAvansPrimitFormControl.dirty || tipAvansPrimitFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid" *ngIf="dataDecontFormControl.value">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.ALTE_DECONTURI_CHELTUIELI" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<app-alte-deconturi-cheltuieli-manager formControlName="cheltuieli" [decontId]="decontId" [dataDecont]="dataDecontFormControl.value" (dataChanged)="onAlteDeconturiCheltuieliDataChanged($event)"></app-alte-deconturi-cheltuieli-manager>
+			</div>
+			<div *ngIf="cheltuieliFormControl.invalid && (cheltuieliFormControl.dirty || cheltuieliFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.ALTE_DECONTURI_TOTAL_CHELTUIELI" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="number" formControlName="totalCheltuieli" readonly>
+			</div>
+			<div *ngIf="totalCheltuieliFormControl.invalid && (totalCheltuieliFormControl.dirty || totalCheltuieliFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.ALTE_DECONTURI_TOTAL_DE_INCASAT_RESTITUIT" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="number" formControlName="totalDeIncasatRestituit" readonly>
+			</div>
+			<div *ngIf="totalDeIncasatRestituitFormControl.invalid && (totalDeIncasatRestituitFormControl.dirty || totalDeIncasatRestituitFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+	
+	</form>
+
+	<p-footer>
+		<p-button (onClick)="onSaveAction($event)" [disabled]="!saveActionEnabled" [label]="'LABELS.SAVE' | translate"></p-button>
+		<p-button (onClick)="onCloseAction($event)" [label]="'LABELS.CLOSE' | translate"></p-button>
+	</p-footer>
+</p-dialog>

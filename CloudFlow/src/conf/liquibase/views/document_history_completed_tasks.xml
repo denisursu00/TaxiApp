@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="create-or-replace-view-document_history_completed_tasks" author="CloudSoft.User4" runOnChange ="true">
+		<sql endDelimiter=";">
+			CREATE OR replace VIEW document_history_completed_tasks AS
+			    (
+				    SELECT 
+				    	row_number() OVER() as fake_id,
+				    	wi.documentid as document_id,
+				    	wi.workspacename as document_location_real_name,
+				    	wi.status as document_workflow_status,
+				    	jht.assignee_::text as assignee_user_id,
+				    	ut.firstname as assignee_user_firstname,
+				    	ut.lastname as assignee_user_lastname,
+				    	jht.create_ as task_created_date,
+				    	jht.end_ as task_ended_date
+				    FROM workflowinstance wi
+				    JOIN jbpm4_hist_task jht on wi.processinstanceid = jht.execution_
+				    JOIN edocuser ut on jht.assignee_::bigint = ut.org_entity_id
+				    WHERE jht.state_ = 'completed' 
+				    	AND jht.assignee_ != ( 
+				    		SELECT org_entity_id 
+				    		FROM edocuser 
+				    		WHERE username='application.user' 
+				    	)::text
+			    )
+    			UNION 
+    			(
+				 	SELECT 
+				 		row_number() OVER() + (SELECT COUNT(*) FROM jbpm4_hist_task) as fake_id,
+				    	wi.documentid as document_id,
+				    	wi.workspacename as document_location_real_name,
+				    	wi.status as document_workflow_status,      
+				    	wi.initiatorid::text as assignee_user_id,
+				    	ui.firstname as assignee_user_firstname,
+				    	ui.lastname as assignee_user_lastname,  
+				        (
+					        SELECT min(create_)
+					        FROM jbpm4_hist_task
+					        WHERE jbpm4_hist_task.execution_ = wi.processinstanceid 
+				       ) as task_created_date,
+				       (
+					       	SELECT min(create_)
+					        FROM jbpm4_hist_task
+					        WHERE jbpm4_hist_task.execution_ = wi.processinstanceid 
+				       ) as task_ended_date
+				    FROM workflowinstance wi
+				    JOIN edocuser ui on wi.initiatorid = ui.org_entity_id
+				)
+				ORDER BY task_created_date;
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

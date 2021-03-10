@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0044-update-metadata-definitions-and-list-items-values" author="CloudSoft.User3">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE listmetadataitem
+			SET LABEL = 'Vicepresedinte/DGAdj'
+			WHERE LIST_ID = (SELECT ID FROM metadatadefinition 
+								WHERE COLLECTION_ID = (SELECT ID FROM metadatacollection WHERE DOCUMENTTYPE_ID = (SELECT ID FROM documenttype WHERE NAME ='Prezenta AGA') AND NAME = 'prezenta_membrii')
+								AND NAME = 'calitate_participant')
+			AND VALUE = 'vicepresedinte_dgad';
+			
+			
+			-----
+			UPDATE metadatadefinition
+			SET ORDERNUMBER = 1
+			WHERE COLLECTION_ID = (SELECT ID FROM metadatacollection WHERE DOCUMENTTYPE_ID = (SELECT ID FROM documenttype WHERE NAME ='Prezenta AGA') AND NAME = 'prezenta_membrii')
+			AND NAME = 'imputernicire';
+			
+			UPDATE metadatadefinition
+			SET ORDERNUMBER = 2
+			WHERE COLLECTION_ID = (SELECT ID FROM metadatacollection WHERE DOCUMENTTYPE_ID = (SELECT ID FROM documenttype WHERE NAME ='Prezenta AGA') AND NAME = 'prezenta_membrii')
+			AND NAME = 'participant_acreditat';
+			
+			UPDATE metadatadefinition
+			SET ORDERNUMBER = 3
+			WHERE COLLECTION_ID = (SELECT ID FROM metadatacollection WHERE DOCUMENTTYPE_ID = (SELECT ID FROM documenttype WHERE NAME ='Prezenta AGA') AND NAME = 'prezenta_membrii')
+			AND NAME = 'nume_participant_inlocuitor';
+			
+			UPDATE metadatadefinition
+			SET ORDERNUMBER = 4
+			WHERE COLLECTION_ID = (SELECT ID FROM metadatacollection WHERE DOCUMENTTYPE_ID = (SELECT ID FROM documenttype WHERE NAME ='Prezenta AGA') AND NAME = 'prezenta_membrii')
+			AND NAME = 'prenume_participant_inlocuitor';
+			
+			UPDATE metadatadefinition
+			SET ORDERNUMBER = 5
+			WHERE COLLECTION_ID = (SELECT ID FROM metadatacollection WHERE DOCUMENTTYPE_ID = (SELECT ID FROM documenttype WHERE NAME ='Prezenta AGA') AND NAME = 'prezenta_membrii')
+			AND NAME = 'functie_participant_acreditat_inlocuitor';
+			
+			UPDATE metadatadefinition
+			SET ORDERNUMBER = 6
+			WHERE COLLECTION_ID = (SELECT ID FROM metadatacollection WHERE DOCUMENTTYPE_ID = (SELECT ID FROM documenttype WHERE NAME ='Prezenta AGA') AND NAME = 'prezenta_membrii')
+			AND NAME = 'calitate_participant';
+			
+			UPDATE metadatadefinition
+			SET ORDERNUMBER = 7
+			WHERE COLLECTION_ID = (SELECT ID FROM metadatacollection WHERE DOCUMENTTYPE_ID = (SELECT ID FROM documenttype WHERE NAME ='Prezenta AGA') AND NAME = 'prezenta_membrii')
+			AND NAME = 'institutie';
+		]]>
+		</sql>
+	</changeSet>
+		
+</databaseChangeLog>

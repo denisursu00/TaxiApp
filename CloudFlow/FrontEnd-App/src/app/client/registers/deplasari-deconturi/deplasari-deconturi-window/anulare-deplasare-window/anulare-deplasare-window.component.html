@@ -1,0 +1,28 @@
+<p-dialog
+		[(visible)]="windowVisible" [modal]="true" [maximizable]="true" appendTo="body"
+		[contentStyle]="{'height':'auto'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onHide)="onHide($event)">
+	<p-header>{{title}}</p-header>
+	
+	<form [formGroup]="formGroup" [ngStyle]="{'height':'auto'}">
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.ANULARE_REGISTRU_INTRARI_IESIRI_MOTIV_ANULARE" | translate}}*:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText formControlName="motivAnulare" type="text" required/>
+			</div>
+			<div *ngIf="motivAnulareFormControl.invalid && (motivAnulareFormControl.dirty || motivAnulareFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+	</form>
+
+	<p-footer>
+		<p-button (onClick)="onOkAction()" [label]="'LABELS.OK' | translate"></p-button>
+		<p-button (onClick)="onCloseAction()" [label]="'LABELS.CLOSE' | translate"></p-button>
+	</p-footer>
+</p-dialog>

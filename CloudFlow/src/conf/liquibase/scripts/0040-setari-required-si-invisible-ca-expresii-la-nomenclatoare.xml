@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0040-setari-attribute-ca-required-si-invisible-la-nomenclator-institutii" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			-- Tip institutie
+			UPDATE nomenclator_attribute  
+			SET required=true
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute1';
+			
+			-- Denumire institutie
+			UPDATE nomenclator_attribute  
+			SET required=true
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute2';
+				
+			-- Abreviere
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				required_check_expression='not empty({attribute1}) and nomenclator:isTipInstitutieMembruARB({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute3';
+							
+			-- Cod BIC
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				required_check_expression='not empty({attribute1}) and nomenclator:isTipInstitutieMembruARB({attribute1})',
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute4';
+				
+			-- Cod unic inregistrare
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				required_check_expression='not empty({attribute1}) and nomenclator:isTipInstitutieMembruARB({attribute1})',
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute5';
+				
+			-- Adresa
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				required_check_expression='not empty({attribute1}) and nomenclator:isTipInstitutieMembruARB({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute6';
+			
+			-- Oras
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				required_check_expression='not empty({attribute1}) and nomenclator:isTipInstitutieMembruARB({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute7';
+			
+			-- Site web
+			UPDATE nomenclator_attribute  
+			SET required=false
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute8';
+				
+			-- Telefon
+			UPDATE nomenclator_attribute  
+			SET required=false
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute9';
+			
+			-- Email
+			UPDATE nomenclator_attribute  
+			SET required=false
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute10';	
+			
+			-- Fax
+			UPDATE nomenclator_attribute  
+			SET required=false
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute11';	
+				
+			-- Numar ordine registru comertului
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute12';	
+				
+			-- Radiat
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute13';
+				
+			-- Data radierii
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute14';
+			
+			-- Numar PV la Notariat
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute15';
+			
+			-- Data PV la notariat
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute16';
+			
+			-- Numar incheiere la Judecatorie
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute17';	
+				
+			-- Data incheierii la Judecatorie
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute18';
+			
+			-- Presedinte DG
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				required_check_expression='not empty({attribute1}) and nomenclator:isTipInstitutieMembruARB({attribute1})',
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute19';
+			
+			-- Vicepresedinte DG Adj
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				required_check_expression='not empty({attribute1}) and nomenclator:isTipInstitutieMembruARB({attribute1})',
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute20';
+			
+			-- Data aprobarii cererii de aderare la ARB
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				required_check_expression='not empty({attribute1}) and (nomenclator:isTipInstitutieMembruARB({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}))',
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute21';	
+				
+			-- Reprezentant membru afiliat
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				required_check_expression='not empty({attribute1}) and nomenclator:isTipInstitutieMembruAfiliat({attribute1})',
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruARB({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute22';	
+			
+			-- Functie reprezentant membru afiliat
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				required_check_expression='not empty({attribute1}) and nomenclator:isTipInstitutieMembruAfiliat({attribute1})',
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruARB({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute23';	
+				
+			-- Observatii
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute24';		
+				
+			-- Cota piata
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute25';		
+				
+			-- Valoare active
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute26';	
+					
+			-- Capital
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute27';	
+				
+			-- Numar salariati
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute28';
+				
+			-- Contributie anuala ARB
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute29';	
+				
+			-- Contributie anuala IBR
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute30';	
+			
+			-- Contributie anuala ARB – platita
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute31';		
+				
+			-- Data platii contributiei anuale ARB
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute32';	
+				
+			-- Contributie anuala IBR – platita
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute33';
+				
+			-- Data platii contributiei anuale IBR
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute34';
+			
+			-- Rest de plata contributie anuala ARB
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute35';
+			
+			-- Rest de plata contributie anuala IBR
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				invisible_check_expression='empty({attribute1}) or nomenclator:isTipInstitutieMembruAfiliat({attribute1}) or nomenclator:isTipInstitutieAlteInstitutii({attribute1})'
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute36';
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0040-actualizari-labels-metadate-avans_salarial" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE metadatadefinition
+			SET LABEL = 'Data aprobare/respingere DEIC'
+			WHERE DOCUMENTTYPE_ID = (SELECT id FROM documenttype WHERE NAME = 'Avans Salarial')
+				AND NAME = 'data_aprobare_deic';
+			
+			UPDATE metadatadefinition
+			SET LABEL = 'Data aprobare/respingere DEOP'
+			WHERE DOCUMENTTYPE_ID = (SELECT id FROM documenttype WHERE NAME = 'Avans Salarial')
+				AND NAME = 'data_aprobare_deop';
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0040-update-eliminare-required-la-reprezentant_membru_afiliat-si-functie-din-nomenclator-institutii" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			-- Reprezentant membru afiliat
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				required_check_expression=null
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute22';	
+			
+			-- Functie reprezentant membru afiliat
+			UPDATE nomenclator_attribute  
+			SET required=false,
+				required_check_expression=null
+			WHERE nomenclator_id=(SELECT id FROM nomenclator WHERE code='institutii') 
+				and key='attribute23';
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

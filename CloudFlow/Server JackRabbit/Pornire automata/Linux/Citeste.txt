@@ -1,0 +1,2 @@
+* Serverele de JackRabbit trebuie pornite dupa ce baza de date Oracle este pornita SI DISPONIBILA.
+* Aplicatia CloudDoc din Tomcat (sau alt server) trebuie pornita dupa ce server-ul de JackRabbit este pornit SI DISPONIBIL.

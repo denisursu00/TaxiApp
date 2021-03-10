@@ -1,0 +1,291 @@
+<div class="ui-g ui-grid-responsive ui-grid-pad ui-fluid">
+	<div class="ui-g-4">
+		<div class="ui-g-12">
+			<p-button [label]="'LABELS.ADD_TRANSITION' | translate" (onClick)="onAddTransition($event)"></p-button>
+			<p-button [disabled]="deleteTransitionButtonDisabled" [label]="'LABELS.DELETE_TRANSITION' | translate" (onClick)="onDeleteTransition($event)"></p-button>
+		</div>
+		<div class="ui-g-12">
+			<p-table
+					[(selection)]="selectedTransition"
+					[value]="transitions"
+					[scrollable]="true"
+					[scrollHeight]="scrollHeight"
+					(onRowSelect)="onTransitionSelected($event)"
+					(onRowUnselect)="onTransitionUnselected($event)"
+					selectionMode="single"
+					sortField="name">
+				<ng-template pTemplate="header">
+					<tr>
+						<th>{{"LABELS.TRANSITION_NAME" | translate}}</th>
+						<th>{{"LABELS.INITIAL_STATE" | translate}}</th>
+						<th>{{"LABELS.FINAL_STATE" | translate}}</th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-transition>
+					<tr [pSelectableRow]="transition">
+						<td class="wrap-text">{{transition.name}}</td>
+						<td class="wrap-text">{{transition.startState.name}}</td>
+						<td class="wrap-text">{{transition.finalState.name | translate}}</td>
+					</tr>
+				</ng-template>
+			</p-table>
+		</div>
+	</div>
+	<div class="ui-g-8">
+		<form *ngIf="formVisible" [formGroup]="form" novalidate>
+
+			<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.TRANSITION_NAME" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<input pInputText type="text" formControlName="transitionName"/>
+				</div>
+				<div *ngIf="transitionNameFormControl.invalid && (transitionNameFormControl.dirty || transitionNameFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="transitionNameFormControl.errors['required'] || transitionNameFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+						<span *ngIf="transitionNameFormControl.errors['transitionWithNameExists']">{{'MESSAGES.TRANSITION_WITH_THIS_NAME_ALREADY_EXISTS' | translate}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.INITIAL_STATE" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<p-dropdown
+						[options]="startStates"
+						[style.width.%]="100"
+						[autoDisplayFirst]="false"
+						appendTo="body"
+						optionLabel="name"
+						filter="true"
+						formControlName="transitionStartState">
+					</p-dropdown>
+				</div>
+				<div *ngIf="transitionStartStateFormControl.invalid && (transitionStartStateFormControl.dirty || transitionStartStateFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="transitionStartStateFormControl.errors['required'] || transitionStartStateFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+						<span *ngIf="transitionStartStateFormControl.errors['startStateExists']">{{'MESSAGES.TRANSITION_START_STATE_ALREADY_EXISTS' | translate}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.FINAL_STATE" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<p-dropdown
+						[options]="finalStates"
+						[style.width.%]="100"
+						[autoDisplayFirst]="false"
+						(onChange)="endStateChanged()"
+						appendTo="body"
+						optionLabel="name"
+						filter="true"
+						formControlName="transitionFinalState">
+					</p-dropdown>
+				</div>
+				<div *ngIf="transitionFinalStateFormControl.invalid && (transitionFinalStateFormControl.dirty || transitionFinalStateFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="transitionFinalStateFormControl.errors['required'] || transitionFinalStateFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+						<span *ngIf="transitionFinalStateFormControl.errors['finalStateExists']">{{'MESSAGES.TRANSITION_WITH_INITIAL_FINAL_STATE_ALREADY_EXISTS' | translate}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.CONDITIONAL_ROUTING" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<p-checkbox
+						[label]="'LABELS.CONDITIONAL_ROUTING_YES' | translate"
+						[binary]="true"
+						[formControl]="form.get('transitionConditionalRouting')"
+						name="transitionConditionalRouting">
+					</p-checkbox>
+				</div>
+			</div>
+
+			<div *ngIf="transitionRoutingConditionFormControl.enabled" class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.ROUTING_CONDITION" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<input pInputText type="text" formControlName="transitionRoutingCondition"/>
+				</div>
+				<div *ngIf="transitionRoutingConditionFormControl.invalid && (transitionRoutingConditionFormControl.dirty || transitionRoutingConditionFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-g-12 ui-g-nopad">
+				<p-fieldset [toggleable]="true" [collapsed]="true" [legend]="'LABELS.ADDITIONAL_VIEWING_RIGHTS' | translate">
+					<div class="ui-g-12 ui-sm-12 ui-md-12">
+						<app-organizational-structure-entities-selector formControlName="transitionAdditionalViewingRights"></app-organizational-structure-entities-selector>
+					</div>
+				</p-fieldset>
+			</div>
+
+			<div *ngIf="transitionRoutingTypeFormControl.enabled" class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.ROUTING_TYPE" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<app-transition-routing-type-selector formControlName="transitionRoutingType"></app-transition-routing-type-selector>
+				</div>
+				<div *ngIf="transitionRoutingTypeFormControl.invalid && (transitionRoutingTypeFormControl.dirty || transitionRoutingTypeFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}
+					</div>
+				</div>
+			</div>
+
+			<div *ngIf="transitionRoutingTypeFormControl.enabled && transitionDestinationGroupFormControl.enabled"  class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.DESTINATION_GROUP" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-8">
+					<p-autoComplete [readonly]="true" formControlName="transitionDestinationGroup" field="name"></p-autoComplete>
+				</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-2">
+					<p-button
+						[label]="'LABELS.SELECT' | translate"
+						[style.width.%]="100"
+						(onClick)="openDestinationGroupWindow()"
+						type="button">
+					</p-button>
+				</div>
+				<div *ngIf="transitionDestinationGroupFormControl.invalid && (transitionDestinationGroupFormControl.dirty || transitionDestinationGroupFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}
+					</div>
+				</div>
+				<app-workflow-transition-destination-group-window *ngIf="destinationGroupWindowVisible" (selected)="onGroupSelected($event)" (windowClosed)="onGroupWindowClosed($event)"></app-workflow-transition-destination-group-window>
+			</div>
+
+			<div *ngIf="transitionRoutingTypeFormControl.enabled && transitionDestinationOrganizationUnitFormControl.enabled" class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.DESTINATION_OU" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-8">
+					<p-autoComplete [readonly]="true" formControlName="transitionDestinationOrganizationUnit" field="name"></p-autoComplete>
+				</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-2">
+					<p-button
+						[label]="'LABELS.SELECT' | translate"
+						[style.width.%]="100"
+						(onClick)="openTransitionDestinationOrganizationUnitWindow()"
+						type="button">
+					</p-button>
+				</div>
+				<div *ngIf="transitionDestinationOrganizationUnitFormControl.invalid && (transitionDestinationOrganizationUnitFormControl.dirty || transitionDestinationOrganizationUnitFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}
+					</div>
+				</div>
+				<app-workflow-transition-organization-unit-window *ngIf="transitionDestinationOrganizationUnitWindowVisible" (selected)="onOrganizationUnitSelected($event)" (windowClosed)="onTransitionDestinationOrganizationUnitWindowClosed($event)"></app-workflow-transition-organization-unit-window>
+			</div>
+
+			<div *ngIf="transitionRoutingTypeFormControl.enabled && transitionDestinationParameterFormControl.enabled" class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.DESTINATION_PARAMETER" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<app-user-metadata-from-document-types-selector [documentTypes]="documentTypes" formControlName="transitionDestinationParameter"></app-user-metadata-from-document-types-selector>
+				</div>
+				<div *ngIf="transitionDestinationParameterFormControl.invalid && (transitionDestinationParameterFormControl.dirty || transitionDestinationParameterFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-g-12 ui-g-nopad">
+				<p-fieldset [toggleable]="true" [collapsed]="false" [legend]="'LABELS.NOTIFICATIONS' | translate">
+					<app-transition-notifications [documentTypes]="documentTypes" formControlName="notifications"></app-transition-notifications>
+				</p-fieldset>
+			</div>
+
+			<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.AVAILABLE_FOR_AUTOMATIC_ACTIONS_ONLY" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<p-checkbox
+						[binary]="true"
+						[formControl]="form.get('availableForAutomaticActionsOnly')"
+						name="availableForAutomaticActionsOnly">
+					</p-checkbox>
+				</div>
+			</div>
+
+			<div *ngIf="!transitionDeadlineActionFormControl.disabled" class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.DEADLINE_AUTOMATIC_ACTION" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<p-checkbox
+						[binary]="true"
+						[formControl]="form.get('transitionDeadlineAction')"
+						name="transitionDeadlineAction">
+					</p-checkbox>
+				</div>
+			</div>
+
+			<div *ngIf="!transitionDeadlineActionFormControl.disabled && !transitionDeadlineActionTypeFormControl.disabled" class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.ACTION" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<p-dropdown
+							[options]="transitionDeadlineActions"
+							[style]="{'width':'100%'}"
+							[autoDisplayFirst]="false"
+							filter="true"
+							formControlName="transitionDeadlineActionType">
+						<ng-template let-item pTemplate="selectedItem"> 
+							<span style="vertical-align:middle">{{"LABELS." + item.label | translate}}</span>
+						</ng-template> 
+						<ng-template let-action pTemplate="item"> 
+							<div>{{"LABELS." + action.label | translate}}</div>
+						</ng-template>
+					</p-dropdown>
+				</div>
+				<div *ngIf="transitionDeadlineActionTypeFormControl.invalid && (transitionDeadlineActionTypeFormControl.dirty || transitionDeadlineActionTypeFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}
+					</div>
+				</div>
+			</div>
+
+			<div *ngIf="!transitionDeadlineActionFormControl.disabled && !transitionDeadlinePeriodFormControl.disabled" class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.DEADLINE_PERIOD" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<input pInputText type="text" formControlName="transitionDeadlinePeriod"/>
+				</div>
+				<div *ngIf="transitionDeadlinePeriodFormControl.invalid && (transitionDeadlinePeriodFormControl.dirty || transitionDeadlinePeriodFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="transitionDeadlinePeriodFormControl.errors['required'] || transitionDeadlinePeriodFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div *ngIf="!transitionDeadlineActionFormControl.disabled && !transitionDeadlineNotifyResendIntervalFormControl.disabled" class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.NOTIFICATION_RESEND_INTERVAL" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<input pInputText type="text" formControlName="transitionDeadlineNotifyResendInterval"/>
+				</div>
+				<div *ngIf="transitionDeadlineNotifyResendIntervalFormControl.invalid && (transitionDeadlineNotifyResendIntervalFormControl.dirty || transitionDeadlineNotifyResendIntervalFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="transitionDeadlineNotifyResendIntervalFormControl.errors['required'] || transitionDeadlineNotifyResendIntervalFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div *ngIf="!uiSendConfirmationFormControl.disabled" class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.UI_SEND_CONFIRMATION" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<p-checkbox
+						[binary]="true"
+						[formControl]="form.get('uiSendConfirmation')"
+						name="uiSendConfirmation">
+					</p-checkbox>
+				</div>
+			</div>
+
+			<p-button (onClick)="saveTransition()" [label]="'LABELS.SAVE_TRANSITION' | translate" style="float: right"></p-button>
+		</form>
+	</div>
+</div>

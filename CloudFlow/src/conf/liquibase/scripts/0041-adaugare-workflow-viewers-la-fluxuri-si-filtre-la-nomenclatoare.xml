@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0041-adaugare-workflow-viewers-flux-conciliere" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Comentariu, atasament adaugat' and workflow_id=(select id from workflow where name='Conciliere')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Metadate completate final' and workflow_id=(select id from workflow where name='Conciliere')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));			
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Metadate completate initial' and workflow_id=(select id from workflow where name='Conciliere')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));			
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Task asignat si initiat' and workflow_id=(select id from workflow where name='Conciliere')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0041-adaugare-workflow-viewers-flux-modificare_schema" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Task asignat si initiat' and workflow_id=(select id from workflow where name='Modificare schema')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Comentariu, atasament adaugat' and workflow_id=(select id from workflow where name='Modificare schema')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Metadate modificare schema completate' and workflow_id=(select id from workflow where name='Modificare schema')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));
+		]]>
+		</sql>
+	</changeSet>
+
+	<changeSet id="0041-adaugare-workflow-viewers-flux-investigatie" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Metadate completate final' and workflow_id=(select id from workflow where name='Investigatie')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Comentariu, atasament adaugat' and workflow_id=(select id from workflow where name='Investigatie')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Metadate completate initial' and workflow_id=(select id from workflow where name='Investigatie')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Task asignat si initiat' and workflow_id=(select id from workflow where name='Investigatie')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0041-adaugare-workflow-viewers-flux-misiune_de_audit_si_control" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Task asignat si initiat' and workflow_id=(select id from workflow where name='Misiune de audit si control')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Metadate completate' and workflow_id=(select id from workflow where name='Misiune de audit si control')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Comentariu sau atasament adaugat' and workflow_id=(select id from workflow where name='Misiune de audit si control')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((select id from workflowtransition where name='Misiune marcata in Calendar ARB si in Agenda PE' and workflow_id=(select id from workflow where name='Misiune de audit si control')), (select ORG_ENTITY_ID from edocgroup where name='Consilieri Financiari Bancari(DAS)'));
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0041-adaugare-filtru-la-selectare-reprezentant_membru_afiliat-in-nomenclator-institutii-dupa-institutii-membre-afiliate" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE nomenclator_attribute
+			SET type_nomenclator_selection_filters_custom_class='ro.cloudSoft.cloudDoc.services.nomenclator.customSelectionFilters.ReprezentantMembruAfiliatOfInstitutii', 
+				type_nomenclator_selection_filters_custom_class_attribute_keys='attribute1'
+			WHERE nomenclator_id=(select id from nomenclator where code='institutii') and key='attribute22';
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

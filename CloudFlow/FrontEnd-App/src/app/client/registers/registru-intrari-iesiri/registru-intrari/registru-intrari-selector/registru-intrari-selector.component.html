@@ -1,0 +1,129 @@
+<div class="ui-g-12 ui-sm-12 ui-md-6">
+	<p-dropdown 
+			[(ngModel)]="selectedYear" 
+			[options]="yearItems"
+			[placeholder]="'LABELS.SELECT' | translate"
+			appendTo="body" 
+			filter="true"
+			(onChange)="onYearValueChanged($event)">
+	</p-dropdown>
+</div>
+
+<div class="ui-g-12">
+	<p-table #registruIntrariDataTable 
+			[lazy]="true"
+			[(selection)]="selectedData" 
+			[columns]="columns" 
+			[value]="pageData.items" 
+			[paginator]="true" 
+			[totalRecords]="pageData.totalItems" 
+			[first]="pageOffset" 
+			[rows]="pageData.pageSize"
+			[rowsPerPageOptions]="rowsPerPageOptions" 
+			[scrollable]="true" 
+			[scrollHeight]="scrollHeight"
+			[loading]="dataLoading" 
+			selectionMode="single"
+			[resizableColumns]="true"
+			(onRowSelect)="onDataSelected($event)"
+			(onRowUnselect)="onDataUnselected($event)"
+			(onLazyLoad)="onLazyLoad($event)">
+
+		<ng-template pTemplate="colgroup" let-columns>
+			<colgroup>
+				<col *ngFor="let column of columns" style="width:250px">
+			</colgroup>
+		</ng-template>
+
+		<ng-template pTemplate="header" let-columns>
+			<tr>
+				<th *ngFor="let column of columns" [pSortableColumn]="column.filterField" [pSortableColumnDisabled]="!column.sortable" pResizableColumn>
+					{{column.header}}
+					<p-sortIcon *ngIf="column.sortable" [field]="column.filterField"></p-sortIcon>
+				</th>
+			</tr>
+			<tr>
+				<th *ngFor="let column of columns" [ngSwitch]="column.filterType">
+					<input *ngIf="column.filterType === 'TEXT' && column.filter" 
+							pInputText type="text" 
+							[ngModel]="selectedFilterValueMap.get(column.filterField)"
+							(ngModelChange)="selectedFilterValueMap.set(column.filterField,$event)"
+							[disabled]="!column.filter"
+							(input)="registruIntrariDataTable.filter($event.target.value, column.filterField, column.filterMatchMode)">
+					<input *ngIf="column.filterType === 'NUMBER' && column.filter" 
+							pInputText type="text" 
+							[ngModel]="selectedFilterValueMap.get(column.filterField)"
+							(ngModelChange)="selectedFilterValueMap.set(column.filterField,$event)"
+							pKeyFilter="num" 
+							[disabled]="!column.filter"
+							(input)="registruIntrariDataTable.filter($event.target.value, column.filterField, column.filterMatchMode)">
+					<p-calendar *ngIf="column.filterType === 'DATE' && column.filter" 
+							[showIcon]="true" 
+							[ngModel]="selectedFilterValueMap.get(column.filterField)"
+							(ngModelChange)="selectedFilterValueMap.set(column.filterField,$event)"
+							[monthNavigator]="true" 
+							[yearNavigator]="true" 
+							[readonlyInput]="true"
+							[dateFormat]="dateFormat" 
+							[yearRange]="yearRange" 
+							[style]="{'max-width':'100%'}" 
+							[inputStyle]="{'max-width':'70%'}"
+							[disabled]="!column.filter"
+							appendTo="body" 
+							showButtonBar="true" 
+							(onSelect)="registruIntrariDataTable.filter($event, column.filterField, column.filterMatchMode)"
+							(onClearClick)="registruIntrariDataTable.filter('', column.filterField, column.filterMatchMode)">
+					</p-calendar>
+					<p-selectButton *ngIf="(column.filterType === 'BOOLEAN' || column.filterType === 'RASPUNSURI_BANCI') && column.filter"
+							[options]="column.filterType === 'BOOLEAN' ? booleanFilterTypes : raspunsuriBanciCuPropuneriItems" 
+							[multiple]="true"
+							[disabled]="!column.filter"
+							[ngModel]="selectedFilterValueMap.get(column.filterField)"
+							(ngModelChange)="selectedFilterValueMap.set(column.filterField,$event)"
+							(onChange)="registruIntrariDataTable.filter($event.value, column.filterField, column.filterMatchMode)">
+					</p-selectButton>
+					<p-multiSelect *ngIf="column.filterType === 'NOMENCLATOR' && column.filter" 
+						[ngModel]="selectedFilterValueMap.get(column.filterField)"
+						(ngModelChange)="selectedFilterValueMap.set(column.filterField,$event)"
+						[options]="nomenclatorFilterData[column.filterField]" 
+						[style]="{'width' :'100%'}" 
+						[disabled]="!column.filter"
+						maxSelectedLabels="1" 
+						appendTo="body"
+						(onChange)="registruIntrariDataTable.filter($event.value, column.filterField, column.filterMatchMode)">
+					</p-multiSelect>
+					<p-multiSelect *ngIf="column.filterType === 'MONTH' && column.filter"
+						[options]="monthSelectItems"
+						[ngModel]="selectedFilterValueMap.get(column.filterField)"
+						(ngModelChange)="selectedFilterValueMap.set(column.filterField,$event)"
+						[style]="{'width' :'100%'}" 
+						[disabled]="!column.filter"
+						maxSelectedLabels="1" 
+						appendTo="body"
+						(onChange)="registruIntrariDataTable.filter($event.value, column.filterField, column.filterMatchMode)">
+					</p-multiSelect>
+				</th>
+			</tr>
+		</ng-template>
+		
+		<ng-template pTemplate="body" let-registruIntrariData let-columns="columns">
+			<tr [pSelectableRow]="registruIntrariData">
+				<td *ngFor="let column of columns" [ngClass]="registruIntrariData.trebuieAnulat ? 'must-be-canceled' : null">
+					<span *ngIf="booleanColumns(column)">{{ registruIntrariData[column.field] | translate}}</span>
+					<span *ngIf="monthColumns(column)">{{ registruIntrariData[column.field] | translate}}</span>
+					
+					<span *ngIf="!booleanColumns(column) && !monthColumns(column)">{{ registruIntrariData[column.field] }}</span>
+				</td>
+			</tr>
+		</ng-template>
+
+		<ng-template pTemplate="emptymessage" let-columns>
+			<tr>
+				<td [attr.colspan]="columns.length">
+					{{'LABELS.NO_RECORDS_FOUND' | translate}}
+				</td>
+			</tr>
+		</ng-template>
+	</p-table>
+	
+</div>

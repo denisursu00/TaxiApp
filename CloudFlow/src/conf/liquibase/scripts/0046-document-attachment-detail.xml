@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0046-creare-tabel-document_attachment_detail" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			CREATE TABLE DOCUMENT_ATTACHMENT_DETAIL (			
+				ID BIGINT NOT NULL,
+				DOCUMENT_LOCATION_REAL_NAME TEXT NOT NULL,
+				DOCUMENT_ID TEXT NOT NULL,
+				DOCUMENT_WORKFLOW_STATE_CODE TEXT NOT NULL,				
+				ATTACHMENT_NAME TEXT NOT NULL,
+				ATTACHED_BY BIGINT NOT NULL,
+				
+				CONSTRAINT DOCUMENT_ATTACHMENT_DETAIL_PK PRIMARY KEY (ID),
+				CONSTRAINT DOCUMENT_ATTACHMENT_DETAIL_ATTACHED_BY_FK FOREIGN KEY (ATTACHED_BY) REFERENCES EDOCUSER (ORG_ENTITY_ID)
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+		<changeSet id="0016-adaugare-tabel-registru-intrari-atasamente" author="CloudSoft.User3">
+		<sql endDelimiter=";"><![CDATA[
+			CREATE TABLE registru_intrari_atasamente (
+				id BIGINT NOT NULL,
+				registru_intrari_id BIGINT NOT NULL,
+				file_name  TEXT NOT NULL,
+				file_content BYTEA NOT NULL,
+				
+				CONSTRAINT registru_intrari_atasamente_pk PRIMARY KEY (id),
+				CONSTRAINT registru_intrari_atasamente_registru_intrari_id_fk FOREIGN KEY (registru_intrari_id) REFERENCES registru_intrari(id)
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0016-adaugare-tabel-registru-iesiri-atasamente" author="CloudSoft.User3">
+		<sql endDelimiter=";"><![CDATA[
+			CREATE TABLE registru_iesiri_atasamente (
+				id BIGINT NOT NULL,
+				registru_iesiri_id BIGINT NOT NULL,
+				file_name  TEXT NOT NULL,
+				file_content BYTEA NOT NULL,
+				
+				CONSTRAINT registru_iesiri_atasamente_pk PRIMARY KEY (id),
+				CONSTRAINT registru_iesiri_atasamente_registru_iesiri_id_fk FOREIGN KEY (registru_iesiri_id) REFERENCES registru_iesiri(id)
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

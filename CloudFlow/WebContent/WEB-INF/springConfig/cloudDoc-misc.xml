@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+    
+    <bean id="staticSpringContextAccessorHelper" class="ro.cloudSoft.common.utils.spring.StaticSpringContextAccessorHelper" />
+    
+    <bean id="localeResolver" class="ro.cloudSoft.common.utils.spring.HttpSessionAttributeLocaleResolver">
+    	<constructor-arg index="0" value="locale" /> <!-- attributeName -->
+    	<constructor-arg index="1"> <!-- supportedLocaleCodes -->
+    		<set>
+    			<value>ro</value>
+    			<value>en</value>
+    		</set>
+    	</constructor-arg>
+    	<constructor-arg index="2" value="ro" /> <!-- defaultLocaleCode -->
+    </bean>
+    
+    <bean id="messageSource" class="ro.cloudSoft.common.utils.spring.MultiplePrefixedLocalizablePropertiesMessageSource">
+    	<constructor-arg index="0"> <!-- propertiesPackagePathForBaseNameByPrefix -->
+    		<map>
+    			<entry key="constants" value="/ro/cloudSoft/cloudDoc/presentation/client/shared/locale/LocaleConstants" />
+    			<entry key="messages" value="/ro/cloudSoft/cloudDoc/presentation/client/shared/locale/LocaleMessages" />
+    			<entry key="errors" value="/ro/cloudSoft/cloudDoc/presentation/client/shared/locale/LocaleExceptions" />
+    		</map>
+    	</constructor-arg>
+    	<constructor-arg index="1"> <!-- localeCodes -->
+    		<set>
+    			<value>ro</value>
+    			<value>en</value>
+    		</set>
+    	</constructor-arg> 	
+    </bean>
+       
+      <!-- LOG service -->
+    <bean id="logService" class="ro.cloudSoft.cloudDoc.services.log.LogServiceImpl">
+        <property name="logDao" ref="logDao"/>
+    </bean>    
+	<!-- end LOG service -->
+    
+    <!-- LOG DAO -->
+    <bean id="logDao" class="ro.cloudSoft.cloudDoc.dao.log.LogDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+  	</bean>
+  	<!-- end LOG DAO -->
+	
+	<bean id="replacementProfileDao" class="ro.cloudSoft.cloudDoc.dao.replacementProfiles.HibernateReplacementProfileDao">
+  		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="replacementProfileStatusDao" class="ro.cloudSoft.cloudDoc.dao.replacementProfiles.HibernateReplacementProfileStatusDao">
+  		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="replacementProfileInstanceDao" class="ro.cloudSoft.cloudDoc.dao.replacementProfiles.HibernateReplacementProfileInstanceDao">
+  		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="replacementProfileInstanceItemDao" class="ro.cloudSoft.cloudDoc.dao.replacementProfiles.HibernateReplacementProfileInstanceItemDao">
+  		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="gatherReplacementProfilesForEntitiesIncludingForReplacementsHelper" class="ro.cloudSoft.cloudDoc.helpers.replacementProfiles.GatherReplacementProfilesForEntitiesIncludingForReplacementsHelperImpl">
+  		<property name="replacementProfileDao" ref="replacementProfileDao" />
+  		<property name="organizationUnitPersistencePlugin" ref="organizationUnitPersistencePlugin" />
+  		<property name="groupPersistencePlugin" ref="groupPersistencePlugin" />
+	</bean>
+	
+	<bean id="replacementProfilesOutOfOfficeTemplatingHelper" class="ro.cloudSoft.cloudDoc.helpers.replacementProfiles.ReplacementProfilesOutOfOfficeTemplatingHelper">
+		<property name="constants" ref="replacementProfilesOutOfOfficeConstants" />
+	</bean>
+	
+	<bean id="replacementProfilesService" class="ro.cloudSoft.cloudDoc.services.replacementProfiles.ReplacementProfilesServiceImpl">
+		<property name="userService" ref="userService" />
+		<property name="organizationUnitService" ref="organizationUnitService" />
+		<property name="groupService" ref="groupService" />
+		<property name="documentService" ref="documentService" />
+		<property name="workflowExecutionService" ref="workflowExecutionService" />
+		<property name="replacementProfileInstanceService" ref="replacementProfileInstanceService" />
+		<property name="outOfOfficeMailService" ref="outOfOfficeMailService" />
+		
+		<property name="auditService" ref="auditService" />
+			
+		<property name="replacementProfileDao" ref="replacementProfileDao" />
+		<property name="replacementProfileStatusDao" ref="replacementProfileStatusDao" />
+		
+		<property name="outOfOfficeTemplatingHelper" ref="replacementProfilesOutOfOfficeTemplatingHelper" />
+		
+		<property name="customTitleTemplateForReplacedUser" value="${app.replacement_profiles.custom_title_template_for_replaced_user}" />
+		<property name="replacementUserNamePlaceholderInCustomTitleTemplateForReplacedUser" value="${app.replacement_profile.replacement_user_name_placeholder_in_custom_title_template_for_replaced_user}" />
+	</bean>
+	
+	<bean id="replacementProfileInstanceService" class="ro.cloudSoft.cloudDoc.services.replacementProfiles.ReplacementProfileInstanceServiceImpl">
+  		<property name="replacementProfileInstanceDao" ref="replacementProfileInstanceDao" />
+  		<property name="replacementProfileInstanceItemDao" ref="replacementProfileInstanceItemDao" />
+	</bean>
+	
+  	<bean id="concediuDao" class="ro.cloudSoft.cloudDoc.dao.ConcediuDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+  	</bean>
+  	
+  	<bean id="pendingPontajForConcediuDao" class="ro.cloudSoft.cloudDoc.dao.PendingPontajForConcediuDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+  	</bean>
+  	
+  	<bean id="pontajForConcediuCreationFailureEmailGenerator" class="ro.cloudSoft.cloudDoc.utils.PontajForConcediuCreationFailureEmailGenerator">
+  		<property name="subject" value="${app.concedii.pontaj.failure.email.subject}" />
+  		
+  		<property name="templateForPersonNotFound" value="${app.concedii.pontaj.failure.email.templates.person_not_found}" />
+  		<property name="templateForProjectNotFound" value="${app.concedii.pontaj.failure.email.templates.project_not_found}" />
+  		<property name="templateForTaskNotFound" value="${app.concedii.pontaj.failure.email.templates.task_not_found}" />
+  		<property name="templateForTimesheetsExist" value="${app.concedii.pontaj.failure.email.templates.timesheets_exist}" />
+  	</bean>
+   	
+   	<bean id="templateEngine" class="ro.cloudSoft.cloudDoc.templating.FreeMarkerTemplateEngine" />
+   	
+   	<bean id="liquibaseMigrator" class="ro.cloudSoft.cloudDoc.liquibase.AppEnvironmentAwareSpringLiquibaseMigrator">
+   		<property name="dataSource" ref="dataSourceSpring" />
+   		<property name="changelogFilePath" value="classpath:/conf/liquibase/changelog-main.xml" />
+   	</bean>
+   	
+   	<bean id="auditEntryDao" class="ro.cloudSoft.cloudDoc.dao.HibernateAuditEntryDao">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+   	<bean id="auditService" class="ro.cloudSoft.cloudDoc.services.AuditServiceImpl">
+   		<property name="documentTypeService" ref="documentTypeService" />
+   		<property name="userService" ref="userService" />
+   		
+   		<property name="auditEntryDao" ref="auditEntryDao" />
+   	</bean>
+	
+	<bean id="fileSystemAttachmentManager" class="ro.cloudSoft.cloudDoc.utils.FileSystemAttachmentManager">
+		<property name="temporaryFilesFolderPath" value="${app.temporary_files.folder_path}" />
+	</bean>
+	
+	<bean id="fileSystemDocumentTemplateManager" class="ro.cloudSoft.cloudDoc.utils.FileSystemDocumentTemplateManager">
+		<property name="temporaryFilesFolderPath" value="${app.temporary_files.folder_path}" />
+	</bean>
+	
+	<!-- Nomenclatoare -->
+	<bean id="nomenclatorDao" class="ro.cloudSoft.cloudDoc.dao.nomenclator.NomenclatorDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+	
+	<bean id="nomenclatorValueDao" class="ro.cloudSoft.cloudDoc.dao.nomenclator.NomenclatorValueDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+	
+	<bean id="nomenclatorAttributeDao" class="ro.cloudSoft.cloudDoc.dao.nomenclator.NomenclatorAttributeDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+	
+	<bean id="nomenclatorUiAttributeDao" class="ro.cloudSoft.cloudDoc.dao.nomenclator.NomenclatorUiAttributeDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+	<bean id="nomenclatorService" class="ro.cloudSoft.cloudDoc.services.nomenclator.NomenclatorServiceImpl">
+  		<property name="nomenclatorDao" ref="nomenclatorDao" />
+  		<property name="nomenclatorValueDao" ref="nomenclatorValueDao" />
+  		<property name="nomenclatorAttributeDao" ref="nomenclatorAttributeDao" />
+  		<property name="nomenclatorUiAttributeDao" ref="nomenclatorUiAttributeDao" />
+  		<property name="nomenclatorConverter" ref="nomenclatorConverter" />
+  		<property name="nomenclatorValueConverter" ref="nomenclatorValueConverter" />
+  		<property name="nomenclatorAttributeConverter" ref="nomenclatorAttributeConverter" />
+  		<property name="arbConstants" ref="arbConstants" />
+	</bean>
+	
+	<!-- Registru Documente Justificate Plati (Registru Facturi) -->
+	<bean id="registruDocumenteJustificativePlatiDao" class="ro.cloudSoft.cloudDoc.dao.registruDocumenteJustificativePlati.RegistruDocumenteJustificativePlatiDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+	<bean id="registruDocumenteJustificativePlatiService" class="ro.cloudSoft.cloudDoc.services.registruDocumenteJustificativePlati.RegistruDocumenteJustificativePlatiServiceImpl">
+  		<property name="registruDocumenteJustificativePlatiDao" ref="registruDocumenteJustificativePlatiDao" />
+  		<property name="nomenclatorValueDao" ref="nomenclatorValueDao" />
+  		<property name="nomenclatorDao" ref="nomenclatorDao" />
+  		<property name="registruDocumenteJustificativePlatiConverter" ref="registruDocumenteJustificativePlatiConverter" />
+  		<property name="nomenclatorService" ref="nomenclatorService" />
+  		<property name="fileSystemAttachmentManager" ref="fileSystemAttachmentManager" />
+	</bean>
+	
+	<bean id="registruDocumenteJustificativePlatiConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.registruDocumenteJustificativePlati.RegistruDocumenteJustificativePlatiConverter">
+  		<property name="registruDocumenteJustificativePlatiDao" ref="registruDocumenteJustificativePlatiDao" />
+  		<property name="nomenclatorValueConverter" ref="nomenclatorValueConverter" />
+  		<property name="nomenclatorValueDao" ref="nomenclatorValueDao" />
+   	</bean>
+   	
+   	<!-- RegistruIntrariIesiri -->
+	<bean id="registruIntrariIesiriDao" class="ro.cloudSoft.cloudDoc.dao.registruIntrariIesiri.RegistruIntrariIesiriDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+	
+	<bean id="registruIntrariIesiriConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.registruIntrariIesiri.RegistruIntrariIesiriConverter">
+  		<property name="registruIntrariIesiriDao" ref="registruIntrariIesiriDao" />
+  		<property name="nomenclatorValueDao" ref="nomenclatorValueDao" />
+		<property name="projectDao" ref="projectDao" />
+		<property name="userService" ref="userService" />
+   	</bean>
+   	
+	<bean id="registruIntrariIesiriService" class="ro.cloudSoft.cloudDoc.services.registruIntrariIesiri.RegistruIntrariIesiriServiceImpl">
+  		<property name="registruIntrariIesiriDao" ref="registruIntrariIesiriDao" />
+  		<property name="registruIntrariIesiriConverter" ref="registruIntrariIesiriConverter" />
+  		<property name="nomenclatorValueDao" ref="nomenclatorValueDao" />
+  		<property name="nomenclatorService" ref="nomenclatorService" />
+  		<property name="nomenclatorDao" ref="nomenclatorDao" />
+  		<property name="fileSystemAttachmentManager" ref="fileSystemAttachmentManager" />
+	</bean>
+	
+	
+   	<!-- AlteDeconturi -->
+	<bean id="alteDeconturiDao" class="ro.cloudSoft.cloudDoc.dao.alteDeconturi.AlteDeconturiDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+	
+	<bean id="alteDeconturiConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.alteDeconturi.AlteDeconturiConverter">
+  		<property name="alteDeconturiDao" ref="alteDeconturiDao" />
+   	</bean>
+   	
+	<bean id="alteDeconturiService" class="ro.cloudSoft.cloudDoc.services.alteDeconturi.AlteDeconturiServiceImpl">
+  		<property name="alteDeconturiDao" ref="alteDeconturiDao" />
+  		<property name="nomenclatorValueDao" ref="nomenclatorValueDao" />
+  		<property name="nomenclatorDao" ref="nomenclatorDao" />
+  		<property name="alteDeconturiConverter" ref="alteDeconturiConverter" />
+  		<property name="fileSystemAttachmentManager" ref="fileSystemAttachmentManager" />
+	</bean>
+   	
+   	<!-- DeplasariDeconturi -->
+	<bean id="deplasariDeconturiDao" class="ro.cloudSoft.cloudDoc.dao.deplasariDeconturi.DeplasariDeconturiDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+	<bean id="cheltuieliArbDao" class="ro.cloudSoft.cloudDoc.dao.deplasariDeconturi.CheltuieliArbDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+	<bean id="cheltuieliReprezentantArbDao" class="ro.cloudSoft.cloudDoc.dao.deplasariDeconturi.CheltuieliReprezentantArbDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+	
+	<bean id="cheltuieliArbConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.deplasariDeconturi.CheltuieliArbConverter">
+  		<property name="cheltuieliArbDao" ref="cheltuieliArbDao" />
+   	</bean>
+	
+	<bean id="cheltuieliReprezentantArbConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.deplasariDeconturi.CheltuieliReprezentantArbConverter">
+  		<property name="cheltuieliReprezentantArbDao" ref="cheltuieliReprezentantArbDao" />
+   	</bean>
+	
+	<bean id="deplasariDeconturiConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.deplasariDeconturi.DeplasariDeconturiConverter">
+  		<property name="deplasariDeconturiDao" ref="deplasariDeconturiDao" />
+  		<property name="nomenclatorValueDao" ref="nomenclatorValueDao" />
+  		<property name="cheltuieliArbConverter" ref="cheltuieliArbConverter" />
+  		<property name="cheltuieliReprezentantArbConverter" ref="cheltuieliReprezentantArbConverter" />
+   	</bean>
+   	
+	<bean id="deplasariDeconturiService" class="ro.cloudSoft.cloudDoc.services.deplasariDeconturi.DeplasariDeconturiServiceImpl">
+  		<property name="deplasariDeconturiConverter" ref="deplasariDeconturiConverter" />
+  		<property name="deplasariDeconturiDao" ref="deplasariDeconturiDao" />
+  		<property name="cheltuieliArbDao" ref="cheltuieliArbDao" />
+  		<property name="cheltuieliReprezentantArbDao" ref="cheltuieliReprezentantArbDao" />
+  		<property name="nomenclatorValueDao" ref="nomenclatorValueDao" />
+  		<property name="nomenclatorDao" ref="nomenclatorDao" />
+  		<property name="decizieDeplasareService" ref="decizieDeplasareService" />
+		<property name="documentService" ref="documentService" />
+		<property name="documentTypeService" ref="documentTypeService" />
+		<property name="arbConstants" ref="arbConstants" />
+	</bean>
+  	
+  	<!-- Converters -->
+  	<bean id="nomenclatorMetadataDefinitionConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.content.NomenclatorMetadataDefinitionConverter">
+  		<property name="nomenclatorDao" ref="nomenclatorDao" />
+  		<property name="nomenclatorAttributeDao" ref="nomenclatorAttributeDao" />
+  	</bean>
+	
+	<bean id="nomenclatorConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.nomenclator.NomenclatorConverter">
+   		<property name="nomenclatorAttributeConverter" ref="nomenclatorAttributeConverter" />
+   		<property name="nomenclatorDao" ref="nomenclatorDao" />
+   		<property name="nomenclatorUiAttributeDao" ref="nomenclatorUiAttributeDao" />
+   		<property name="nomenclatorAttributeDao" ref="nomenclatorAttributeDao" />
+   	</bean>
+	
+	<bean id="nomenclatorValueConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.nomenclator.NomenclatorValueConverter">
+   		<property name="nomenclatorDao" ref="nomenclatorDao" />
+   		<property name="nomenclatorValueDao" ref="nomenclatorValueDao" />
+   	</bean>
+   	
+	<bean id="nomenclatorAttributeConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.nomenclator.NomenclatorAttributeConverter">
+   		<property name="nomenclatorDao" ref="nomenclatorDao" />
+   		<property name="nomenclatorAttributeDao" ref="nomenclatorAttributeDao" />
+   	</bean>
+   	
+   	<!-- Calendar -->
+   	
+  	<bean id="calendarDao" class="ro.cloudSoft.cloudDoc.dao.calendar.CalendarDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+  	<bean id="calendarEventDao" class="ro.cloudSoft.cloudDoc.dao.calendar.CalendarEventDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+  	<bean id="calendarUserRightsDao" class="ro.cloudSoft.cloudDoc.services.calendar.CalendarUserRightsDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+   	<bean id="calendarService" class="ro.cloudSoft.cloudDoc.services.calendar.CalendarServiceImpl">
+  		<property name="calendarDao" ref="calendarDao" />
+  		<property name="calendarEventDao" ref="calendarEventDao" />
+  		<property name="calendarUserRightsDao" ref="calendarUserRightsDao" />
+  		<property name="calendarConverter" ref="calendarConverter" />
+  		<property name="calendarEventConverter" ref="calendarEventConverter" />
+	</bean>
+	
+	<bean id="calendarConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.calendar.CalendarConverter">
+		<property name="userService" ref="userService" />
+		<property name="calendarDao" ref="calendarDao" />
+  		<property name="calendarUserRightsDao" ref="calendarUserRightsDao" />
+   	</bean>
+	
+	<bean id="calendarEventConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.calendar.CalendarEventConverter">
+		<property name="calendarEventFactory" ref="calendarEventFactory" />
+		<property name="calendarEventModelFactory" ref="calendarEventModelFactory" />
+	</bean>
+	
+	<bean id="calendarEventFactory" class="ro.cloudSoft.cloudDoc.domain.calendar.CalendarEventFactory">
+		<property name="calendarDao" ref="calendarDao" />
+		<property name="userService" ref="userService" />
+	</bean>
+	
+	<bean id="calendarEventModelFactory" class="ro.cloudSoft.cloudDoc.presentation.client.shared.model.calendar.CalendarEventModelFactory">
+	</bean>
+	
+	<!-- Project -->
+   	
+   	<bean id="projectDao" class="ro.cloudSoft.cloudDoc.dao.project.ProjectDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+   	<bean id="taskDao" class="ro.cloudSoft.cloudDoc.dao.project.TaskDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+   	<bean id="projectService" class="ro.cloudSoft.cloudDoc.services.project.ProjectServiceImpl">
+   		<property name="projectDao" ref="projectDao"></property>
+   		<property name="taskDao" ref="taskDao"></property>
+		<property name="documentService" ref="documentService" />
+		<property name="documentTypeDao" ref="documentTypeDao" />
+		<property name="nomenclatorValueDao" ref="nomenclatorValueDao" />
+		<property name="parametersService" ref="parametersService" />
+		<property name="userService" ref="userService" />
+		<property name="nomenclatorService" ref="nomenclatorService" />
+		<property name="documentDspConstants" ref="documentDspConstants" />
+   		<property name="projectConverter" ref="projectConverter"></property>
+   		<property name="taskConverter" ref="taskConverter"></property>
+   		<property name="taskFilterConverter" ref="taskFilterConverter"></property>
+   		<property name="taskSortedAttributeConverter" ref="taskSortedAttributeConverter"></property>
+   		<property name="fileSystemAttachmentManager" ref="fileSystemAttachmentManager"></property>
+   		<property name="xDocReportsService" ref="xDocReportsService"></property>
+   		<property name="calendarDao" ref="calendarDao"></property>
+   		<property name="calendarService" ref="calendarService"></property>
+   	</bean>
+   	
+   	<bean name="projectConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.project.ProjectConverter">
+   		<property name="userService" ref="userService"></property>
+   		<property name="projectDao" ref="projectDao"></property>
+   		<property name="projectEstimationConverter" ref="projectEstimationConverter"></property>
+   		<property name="nomenclatorValueDao" ref="nomenclatorValueDao"></property>
+   		<property name="nomenclatorDao" ref="nomenclatorDao"></property>
+   	</bean>
+	
+   	<bean name="projectEstimationConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.project.ProjectEstimationConverter">
+   		<property name="projectDao" ref="projectDao"></property>
+   	</bean>
+   	
+   	<bean name="taskConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.project.TaskConverter">
+   		<property name="projectDao" ref="projectDao"></property>
+   		<property name="taskDao" ref="taskDao"></property>
+   		<property name="userService" ref="userService"></property>
+   		<property name="taskAttachmentConverter" ref="taskAttachmentConverter"></property>
+   		<property name="projectConverter" ref="projectConverter"></property>
+   	</bean>
+   	
+   	<bean name="taskAttachmentConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.project.TaskAttachmentConverter">
+   	</bean>
+   	
+   	<bean name="taskFilterConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.project.TaskFilterConverter">
+   	</bean>
+   	
+   	<bean name="taskSortedAttributeConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.project.TaskSortedAttributeConverter">
+	</bean>
+   	
+   	<!-- SecurityManager  -->
+   	
+   	<bean id="securityManagerFactory" class="ro.cloudSoft.cloudDoc.security.SecurityManagerFactory">
+   		<property name="userService" ref="userService" />
+		<property name="groupService" ref="groupService" />
+	</bean>
+  	
+  	<bean id="reprezentantiComisieSauGLDao" class="ro.cloudSoft.cloudDoc.dao.arb.ReprezentantiComisieSauGLDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+   	<bean id="reprezentantiComisieSauGLConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.arb.ReprezentantiComisieSauGLConverter">
+		<property name="nomenclatorValueDao" ref="nomenclatorValueDao" />
+		<property name="reprezentantiComisieSauGLDao" ref="reprezentantiComisieSauGLDao" />
+		<property name="userPersistencePlugin" ref="userPersistencePlugin" />
+	</bean>
+	
+   	<bean id="reprezentantiComisieSauGLService" class="ro.cloudSoft.cloudDoc.services.arb.ComisieSauGLServiceImpl">
+   		<property name="reprezentantiComisieSauGLDao" ref="reprezentantiComisieSauGLDao" />
+   		<property name="reprezentantiComisieSauGLConverter" ref="reprezentantiComisieSauGLConverter" />
+   		<property name="groupService" ref="groupService" />
+   		<property name="groupPersistencePlugin" ref="groupPersistencePlugin" />
+   		<property name="userPersistencePlugin" ref="userPersistencePlugin" />
+   		<property name="nomenclatorValueConverter" ref="nomenclatorValueConverter" />
+   	</bean>
+   	
+   	<!-- Parameters -->
+   	
+   	<bean id="parametersDao" class="ro.cloudSoft.cloudDoc.dao.parameters.ParamentersDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+   	<bean id="parametersConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.parameters.ParameterConverter">
+   		<property name="parametersDao" ref="parametersDao"></property>
+   	</bean>
+   	
+   	<bean id="parametersService" class="ro.cloudSoft.cloudDoc.services.parameters.ParametersServiceImpl">
+   		<property name="parametersDao" ref="parametersDao"></property>
+   		<property name="parametersConverter" ref="parametersConverter"></property>
+   	</bean>
+   	
+   	<bean id="decizieDeplasareService" class="ro.cloudSoft.cloudDoc.services.arb.DecizieDeplasareServiceImpl">
+    	<property name="decizieDeplasareDocumentPlugin" ref="decizieDeplasareDocumentPlugin" />
+    </bean>
+    
+    <!-- Prezenta online  -->
+    
+    <bean id="prezentaOnlineConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.prezentaOnline.PrezentaOnlineConverter">
+   		<property name="nomenclatorValueDao" ref="nomenclatorValueDao" />
+   		<property name="nomenclatorService" ref="nomenclatorService" />
+	</bean>
+    
+   	<bean id="prezentaOnlineFinalizataDao" class="ro.cloudSoft.cloudDoc.dao.prezentaOnline.PrezentaOnlineFinalizataDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+   	<bean id="prezentaOnlineParticipantiDao" class="ro.cloudSoft.cloudDoc.dao.prezentaOnline.PrezentaOnlineParticipantiDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+    
+    <bean id="prezentaOnlineService" class="ro.cloudSoft.cloudDoc.services.prezentaOnline.PrezentaOnlineServiceImpl">
+    	<property name="prezentaComisieGlDocumentPlugin" ref="prezentaComisieGlDocumentPlugin" />
+    	<property name="prezentaOnlineFinalizataDao" ref="prezentaOnlineFinalizataDao" />
+    	<property name="prezentaOnlineParticipantiDao" ref="prezentaOnlineParticipantiDao" />
+    	<property name="comisieSauGLService" ref="reprezentantiComisieSauGLService" />
+    	<property name="nomenclatorService" ref="nomenclatorService" />
+    	<property name="documentService" ref="documentService" />
+    	<property name="documentTypeService" ref="documentTypeService" />
+    	<property name="workflowService" ref="workflowService" />
+    	<property name="prezentaOnlineConverter" ref="prezentaOnlineConverter" />
+    	<property name="arbConstants" ref="arbConstants" />
+    </bean>
+    
+    
+    <!-- CursValutar  -->
+   	
+   	<bean id="cursValutarDao" class="ro.cloudSoft.cloudDoc.dao.cursValutar.CursValutarDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="cursValutarConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.cursValutar.CursValutarConverter">
+    </bean>
+   	
+   	<bean id="cursValutarBnrService" class="ro.cloudSoft.cloudDoc.services.cursValutar.CursValutarBnrService">
+   		<property name="cursValutarConstants" ref="cursValutarConstants" />
+    </bean>
+    
+   	<bean id="cursValutarService" class="ro.cloudSoft.cloudDoc.services.cursValutar.CursValutarServiceImpl">
+    	<property name="cursValutarDao" ref="cursValutarDao" />
+    	<property name="cursValutarBnrService" ref="cursValutarBnrService" />
+    	<property name="cursValutarConverter" ref="cursValutarConverter" />
+    </bean>
+    
+    <bean id="jasperReportsService" class="ro.cloudSoft.cloudDoc.services.jasperReports.JasperReportsServiceImpl">
+    	<property name="baseDirectoryPathOfReports" value="${app.jasperreports.base_directory_path}" />
+    	<property name="documentTypeTemplateDao" ref="documentTypeTemplateDao" />
+    	<property name="commonParametersOfReports">
+    		<map>
+    			<entry key="nume_presedinte_arb" value="${app.jasperreports.parameter.nume_presedinte_arb}"></entry>
+    		</map>
+    	</property>
+    </bean>
+        
+    <bean id="xDocReportsService" class="ro.cloudSoft.cloudDoc.services.xDocReports.XDocReportsServiceImpl">
+    </bean>
+    
+    <bean id="documentHistoryCompletedTasksViewDao" class="ro.cloudSoft.cloudDoc.dao.views.DocumentHistoryCompletedTasksViewDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+    
+    <bean id="reportService" class="ro.cloudSoft.cloudDoc.services.report.ReportServiceImpl">
+    	<property name="documentReportPlugin" ref="documentReportPlugin" />
+    	<property name="documentTypeService" ref="documentTypeService" />
+    	<property name="arbConstants" ref="arbConstants" />
+    	<property name="deplasariDeconturiDao" ref="deplasariDeconturiDao" />
+    	<property name="nomenclatorService" ref="nomenclatorService" />
+    	<property name="nomenclatorValueDao" ref="nomenclatorValueDao" />
+    	<property name="nomenclatorDao" ref="nomenclatorDao" />
+    	<property name="taskDao" ref="taskDao" />
+    	<property name="userService" ref="userService" />
+    	<property name="registruIntrariIesiriDao" ref="registruIntrariIesiriDao" />
+    	<property name="alteDeconturiDao" ref="alteDeconturiDao" />
+    	<property name="workflowInstanceDao" ref="workflowInstanceDao" />
+    	<property name="projectDao" ref="projectDao" />
+    	<property name="documentDspConstants" ref="documentDspConstants" />
+    	<property name="parametersDao" ref="parametersDao" />
+    	<property name="groupService" ref="groupService" />
+    	<property name="calendarDao" ref="calendarDao" />
+    	<property name="documentService" ref="documentService" />
+    	<property name="documentHistoryCompletedTasksViewDao" ref="documentHistoryCompletedTasksViewDao" />
+    	<property name="workflowService" ref="workflowService" />
+    	<property name="reprezentantiComisieSauGLDao" ref="reprezentantiComisieSauGLDao" />
+    	<property name="parametersService" ref="parametersService" />
+    </bean>
+    
+    <bean id="prezentaComisiiGLImporterService" class="ro.cloudSoft.cloudDoc.services.importer.PrezentaComisiiGLImporterService">
+    </bean>
+    
+    <bean class="ro.cloudSoft.cloudDoc.services.appUtilities.AppUtilitiesService">
+    	<property name="prezentaComisiiGLImporter">
+    		<bean class="ro.cloudSoft.cloudDoc.services.appUtilities.PrezentaComisiiGLImporter">
+    			<property name="securityManagerFactory" ref="securityManagerFactory"></property>
+    			<property name="businessConstants" ref="businessConstants"></property>
+    			<property name="prezentaComisiiGLImporterService" ref="prezentaComisiiGLImporterService"></property>
+    		</bean>
+    	</property>
+    	<property name="dspImporter">
+    		<bean class="ro.cloudSoft.cloudDoc.services.appUtilities.DSPImporter">
+    			<property name="securityManagerFactory" ref="securityManagerFactory"></property>
+    			<property name="businessConstants" ref="businessConstants"></property>
+    			<property name="userPersistencePlugin" ref="userPersistencePlugin"></property>
+    			<property name="nomenclatorValueDao" ref="nomenclatorValueDao"></property>
+    			<property name="projectDao" ref="projectDao"></property>
+    		</bean>
+    	</property>
+    	<property name="dspTasksImporter">
+    		<bean class="ro.cloudSoft.cloudDoc.services.appUtilities.DSPTasksImporter">
+    			<property name="userPersistencePlugin" ref="userPersistencePlugin"></property>
+    			<property name="projectDao" ref="projectDao"></property>
+    			<property name="taskDao" ref="taskDao"></property>
+    		</bean>
+    	</property>
+   	 	<property name="registruIntrariImporter">
+    		<bean class="ro.cloudSoft.cloudDoc.services.appUtilities.RegistruIntrariImporter">
+    			<property name="securityManagerFactory" ref="securityManagerFactory"></property>
+    			<property name="businessConstants" ref="businessConstants"></property>
+    			<property name="userPersistencePlugin" ref="userPersistencePlugin"></property>
+    			<property name="nomenclatorValueDao" ref="nomenclatorValueDao"></property>
+    			<property name="projectDao" ref="projectDao"></property>
+    			<property name="registruIntrariIesiriDao" ref="registruIntrariIesiriDao"></property>
+    		</bean>
+    	</property>
+   	 	<property name="registruIesiriImporter">
+    		<bean class="ro.cloudSoft.cloudDoc.services.appUtilities.RegistruIesiriImporter">
+    			<property name="securityManagerFactory" ref="securityManagerFactory"></property>
+    			<property name="businessConstants" ref="businessConstants"></property>
+    			<property name="userPersistencePlugin" ref="userPersistencePlugin"></property>
+    			<property name="nomenclatorValueDao" ref="nomenclatorValueDao"></property>
+    			<property name="projectDao" ref="projectDao"></property>
+    			<property name="registruIntrariIesiriDao" ref="registruIntrariIesiriDao"></property>
+    		</bean>
+    	</property>
+   	 	<property name="registruDocumenteJustificativePlatiImporter">
+    		<bean class="ro.cloudSoft.cloudDoc.services.appUtilities.RegistruDocumenteJustificativePlatiImporter">
+    			<property name="securityManagerFactory" ref="securityManagerFactory"></property>
+    			<property name="businessConstants" ref="businessConstants"></property>
+    			<property name="userPersistencePlugin" ref="userPersistencePlugin"></property>
+    			<property name="nomenclatorValueDao" ref="nomenclatorValueDao"></property>
+    			<property name="projectDao" ref="projectDao"></property>
+    			<property name="registruIntrariIesiriDao" ref="registruIntrariIesiriDao"></property>
+    			<property name="registruDocumenteJustificativePlatiDao" ref="registruDocumenteJustificativePlatiDao"></property>
+    		</bean>
+    	</property>
+    	<property name="documentUtilitiesPlugin">
+    		<bean class="ro.cloudSoft.cloudDoc.plugins.content.JR_DocumentUtilitiesPlugin" parent="jrPluginBase">
+		    	<property name="documentLocationPlugin" ref="documentLocationPlugin" />
+		    	<property name="documentTypeService" ref="documentTypeService" />
+		    </bean>
+    	</property>
+    	<property name="mailService" ref="mailService"></property>
+    </bean>
+    
+    <!-- Notifications  -->
+    <bean id="notificareNrOrganismeBugetateDao" class="ro.cloudSoft.cloudDoc.dao.notifications.NotificareNrOrganismeBugetateDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="notificareExpirareMandatReprezentantiComisieGlDao" class="ro.cloudSoft.cloudDoc.dao.notifications.NotificareExpirareMandatReprezentantiComisieGlDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="notificareExpirareProiectDao" class="ro.cloudSoft.cloudDoc.dao.notifications.NotificareExpirareProiectDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    
+   	<bean id="exportJRDao" class="ro.cloudSoft.cloudDoc.dao.export_JR.ExportJRDao">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+    
+</beans>

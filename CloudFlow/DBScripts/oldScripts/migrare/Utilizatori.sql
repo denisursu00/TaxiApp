@@ -1,0 +1,451 @@
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID, 
+	FIRSTNAME, 
+	LASTNAME, 
+	TITLE, 
+	USERNAME, 
+	ORGANIZATION_ID
+) VALUES (
+	(select ORG_ENTITY_ID from userRow), 
+	'Application', 
+	'User', 
+	'Application Bot)', 
+	'application.user', 
+	(select ID from ORGANIZATION where NAME = 'Asociatia Romana a Bancilor')
+);
+
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Florin',
+	'Danescu',
+	'Presedinte Executiv',
+	'florin.danescu',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Presedinte Executiv'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Rodica',
+	'Tuchila',
+	'Director Executiv',
+	'rodica.tuchila',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Director Executiv Operatiuni Plati(DEOP)'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Cati',
+	'Ursu',
+	'Director Executiv',
+	'cati.ursu',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Director Executiv Proiecte(DEPR)'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Gabriela',
+	'Folcut',
+	'Director Executiv',
+	'gabriela.folcut',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Director Executiv(DEIC)'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Luminita',
+	'Malanciuc',
+	'Expert Juridic',
+	'luminita.malanciuc',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Juridic'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Constantin',
+	'Rotaru',
+	'Sef Departament Scheme Plati',
+	'constantin.rotaru',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Scheme Plati'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Tatiana',
+	'Grafcenco',
+	'Consilier Financiar Bancar',
+	'tatiana.grafcenco',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Financiar Bancar'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Cristina',
+	'Dumitrescu',
+	'Consilier Financiar Bancar',
+	'cristina.dumitrescu',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Financiar Bancar'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Luminita',
+	'Soitu',
+	'Consilier Financiar Bancar',
+	'luminita.soitu',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Financiar Bancar'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Bogdan',
+	'Martimof',
+	'Consilier Financiar Bancar',
+	'bogdan.martimof',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Financiar Bancar'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Stefan',
+	'Dina',
+	'Consilier Financiar Bancar',
+	'stefan.dina',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Financiar Bancar'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Barabas',
+	'Vlad',
+	'Administrator IT',
+	'vlad.barabas',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Informatica'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Florin',
+	'Ninu',
+	'Economist',
+	'florin.ninu',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Contabilitate'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Adriana',
+	'Tudor',
+	'Asistent Cabinet',
+	'adriana.tudor',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Asistenta'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Andreea',
+	'Rosu',
+	'Asistent Cabinet',
+	'andreea.rosu',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Asistenta'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Lina',
+	'Visan',
+	'Inspector Resurse Umane',
+	'lina.visan',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Resurse Umane'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Sorina',
+	'Sirbu',
+	'Asistent Manager',
+	'sorina.sirbu',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Asistent Manager'),
+	null
+);
+WITH userRow AS (
+	INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+    RETURNING ORG_ENTITY_ID
+) INSERT INTO EDOCUSER (
+	ORG_ENTITY_ID,
+	EMAIL,
+	FIRSTNAME,
+	LASTNAME,
+	TITLE,
+	USERNAME,
+	ORGANIZATION_ID,
+	OU_ORG_ENTITY_ID,
+	CUSTOM_TITLE_TEMPLATE
+) VALUES (
+	(select ORG_ENTITY_ID from userRow),
+	null,
+	'Liviu',
+	'Chitu',
+	'Sofer',
+	'liviu.chitu',
+	null,
+	(select ORG_ENTITY_ID from ORGANIZATIONUNIT where NAME='Departament Administrativ'),
+	null
+);

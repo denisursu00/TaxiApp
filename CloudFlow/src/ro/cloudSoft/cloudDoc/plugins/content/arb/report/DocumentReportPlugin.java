@@ -1,0 +1,63 @@
+package ro.cloudSoft.cloudDoc.plugins.content.arb.report;
+
+import java.util.List;
+
+import ro.cloudSoft.cloudDoc.core.AppException;
+import ro.cloudSoft.cloudDoc.domain.content.Document;
+import ro.cloudSoft.cloudDoc.domain.content.DocumentIdentifier;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.ActiuniPeProiectReportFilterModel;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.CentralizatorPrezentaPerioadaReportFilterModel;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.CereriConcediuReportFilterModel;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.MembriiAfiliatiReportFilterModel;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.NotaGeneralaPeMembriiArbReportFilterModel;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.NumarParticipantiSedinteComisieGlReportFilterModel;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.NumarSedinteCdPvgSiParticipantiReportFilterModel;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.NumarSedinteComisieGlReportFilterModel;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.PrezentaAgaFilterModel;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.PrezentaComisiiGlInIntervalReportFilterModel;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.PrezentaReprezentivitateReportFilterModel;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.PrezentaSedintaCdPvgInvitatiARBReportFilterModel;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.PrezentaSedintaCdPvgInvitatiExterniFilterModel;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.PrezentaSedintaCdPvgMembriiReportFilterModel;
+import ro.cloudSoft.cloudDoc.presentation.client.shared.model.report.ReprezentantiBancaPerFunctieSiComisieReportFilterModel;
+
+public interface DocumentReportPlugin {
+
+	List<Document> getDocumentsForNumarSedinteCdPvgSiParticipantiReport(NumarSedinteCdPvgSiParticipantiReportFilterModel filter) throws AppException;
+
+	List<Document> getDocumentsForPrezentaSedinteCdPvgInvitatiExterniReport(PrezentaSedintaCdPvgInvitatiExterniFilterModel filter) throws AppException;
+	
+	List<Document> getDocumentsForPrezentaSedinteCdPvgMembriiReport(PrezentaSedintaCdPvgMembriiReportFilterModel filter) throws AppException;
+
+	List<Document> getPrezentaSedinteCdPvgInvitatiArbReport(PrezentaSedintaCdPvgInvitatiARBReportFilterModel filter) throws AppException;
+	
+	List<Document> getDocumentsMinutaPrezentaComisiiGlForActiuniOrgArbReport(DocumentIdentifier documentIdentifierPrezentaComisiiGlFilter) throws AppException;
+	
+	List<Document> getDocumentsPrezentaCdPvgForActiuniOrgArbReport(DocumentIdentifier documentIdentifierOrdineDeZiFilter) throws AppException;
+	
+	List<Document> getDocumentsMinutaPrezentaComisiiGlForParticipareReprzArbLaActiuniInAfaraAsocReport(DocumentIdentifier documentPrezentaComisiiGlFilter) throws AppException;
+	
+	List<Document> getDocumentsPrezentaCdPvgForParticipareReprzArbLaActiuniInAfaraAsocReport(DocumentIdentifier documentOrdineDeZiFilter) throws AppException;
+	
+	List<Document> getDocumentsForPrezentaComisiiGlInIntervalReport(PrezentaComisiiGlInIntervalReportFilterModel filter) throws AppException;
+
+	List<Document> getDocumentsForPrezentaAgaReport(PrezentaAgaFilterModel filter) throws AppException;
+	
+	List<Document> getDocumentsForNumarSedinteComisieGlReport(NumarSedinteComisieGlReportFilterModel filter) throws AppException;
+
+	List<Document> getDocumentsForMembriiAfiliati(MembriiAfiliatiReportFilterModel filter) throws AppException;
+	
+	List<Document> getDocumentsForNumarParticipantiSedinteComisieGlReport(NumarParticipantiSedinteComisieGlReportFilterModel filter) throws AppException;
+	
+	List<Document> getDocumentsForCereriConcediuReportModel(CereriConcediuReportFilterModel filter, Long cererePersonalaAprobataId, Long cerereNepersonalaAprobataId) throws AppException;
+
+	List<Document> getDocumentsForReprezentantiBancaPerFunctieSiComisieReportFilterModel(ReprezentantiBancaPerFunctieSiComisieReportFilterModel filter) throws AppException;
+	
+	List<Document> getCentralizatorPrezentaPerioadaReport(CentralizatorPrezentaPerioadaReportFilterModel filter) throws AppException;
+	
+	List<Document> getNotaGeneralaPeMembriiArbReport(NotaGeneralaPeMembriiArbReportFilterModel filter) throws AppException;
+	
+	List<Document> getDocumentsForPrezentaComisiiArbReprezentativitateReport(PrezentaReprezentivitateReportFilterModel filter) throws AppException;
+	
+	List<Document> getDocumentsNoteCDForActiuniPeProiectReport(ActiuniPeProiectReportFilterModel filter) throws AppException;
+}

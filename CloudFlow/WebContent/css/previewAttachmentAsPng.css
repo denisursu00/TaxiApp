@@ -1,0 +1,15 @@
+#zoomButtons {
+	white-space: nowrap;
+}
+
+#zoomButtons button {
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
+img.pagePreviewImage {
+	display: block;
+	margin: 10px auto;
+	border: 1px solid black;
+	width: 100%;
+}

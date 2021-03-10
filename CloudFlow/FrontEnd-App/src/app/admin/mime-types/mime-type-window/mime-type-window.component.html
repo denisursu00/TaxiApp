@@ -1,0 +1,43 @@
+<app-loading *ngIf="loadingVisible"></app-loading>
+<p-dialog #pDialog [(visible)]="visible" (onShow)="onShow($event)" (onHide)="onHide($event)" modal="true"
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" >
+	<p-header>
+		<span>{{"LABELS.MIME_TYPES" | translate}}</span>
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>	
+	</p-header>
+	<p-tabView>
+		<form [formGroup]="form" class="ui-g ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.MIME_TYPE_NAME" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<input pInputText formControlName="mimeTypeName" type="text" required/>
+				</div>
+				<div *ngIf="mimeTypeNameFormControl.invalid && (mimeTypeNameFormControl.dirty || mimeTypeNameFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="mimeTypeNameFormControl.errors['required'] || mimeTypeNameFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.MIME_TYPE_EXTENSION" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<input pInputText formControlName="mimeTypeExtension" type="text" required/>
+				</div>
+				<div *ngIf="mimeTypeExtensionFormControl.invalid && (mimeTypeExtensionFormControl.dirty || mimeTypeExtensionFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="mimeTypeExtensionFormControl.errors['required'] || mimeTypeExtensionFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</form>
+	</p-tabView>
+	<p-footer>
+		<p-button [label]="'LABELS.SAVE' | translate" (click)="onSave()"></p-button>
+		<p-button [label]="'LABELS.CANCEL' | translate" (click)="onHide($event)"></p-button>
+	</p-footer>
+</p-dialog>

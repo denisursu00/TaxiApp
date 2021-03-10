@@ -1,0 +1,92 @@
+====================================================
+CONFIGURARE PROIECT PE ECLIPSE
+====================================================
+
+Required:
+- Eclipse
+- Tomcat 8.5
+- Java 8
+- PostgreSQL 10
+Optional:
+- Visual Studio Code 
+- DBeaver
+
+
+1) Start Eclipse
+
+2) Setare Java 8
+	Window -> Preferences -> Java -> Installed JREs: Se adauga java 1.8 si se bifeaza ca fiind default.
+
+3) Adaugare Server in Eclipse
+La JRE sa fie: Workbench default JRE.
+
+4) In catalina.properties se adauga proprietatea: 
+cloudflow.environment=dev
+
+5) Descarcare proiect de pe git din Eclipse (se iau toate branch-urile).
+url: http://192.168.13.245:50080/CloudSoft/CloudFlow.git
+
+	Branch-ul de lucru este "develop".
+
+	ATENTIE: Nu se lucreaza pe "master".
+
+
+6) Import proiect in Eclipse
+
+7) Setare JackRabbit
+	Vezi "conf/appEnvironmentDependentParameters_dev.properties"
+	Cauti proprietatile: "app.jackrabbit.embedded.rep_home_dir" si "app.jackrabbit.embedded.config_file_path"
+	Creezi caile si apoi adaugi din package-ul "src/ro/cloudSoft/cloudDoc/plugins/content/jackrabbit/config" fisierele xml "indexing_configuration.xml" si "repository.xml"
+
+8) Baza de date
+Se cauta in "conf/appEnvironmentDependentParameters_dev.properties" proprietatile care incep cu "app.database.".
+Baza de date de date sa fie denumita si sa aibe credentialele asa cum sunt trecute in proiect pentru a evita greseli de commit, neconcordante, etc.
+
+9) Adaugare aplicatie pe server (Click dreapta pe Tomcat -> Add and Remove...)
+
+10) Start server
+
+FRON-END
+1) Se deschide aplicatia in IDE (VSCode)
+
+2) Se executa:
+npm install
+
+3) Pornire server angular:
+npm run start
+
+4) Se acceseasa din browser: http://localhost:4200
+
+
+==================================================
+RULARE PROIECT DIN ECLIPSE PE TOMCAT (ca si live)
+==================================================
+
+1) In folderul FrontEnd-App se da comanda:
+npm run build
+
+2) Refresh la proiect din eclipse
+
+3) Restart Server tomcat
+
+4) Se acceseaza din browser login-ul:
+http://localhost:8080/CloudFlow
+
+
+====================================================
+GIT flow info
+====================================================
+
+Branch-ul "master": branch principal care reflecta productia.
+Branch-ul "develop": branch principal care reflecta development-ul.
+
+Pentru features noi developerii creaza branch din develop, iar cand e gata fac merge request in develop (care va fi acceptat
+de catre cel ce face code review).
+De exemplu: exista in redmine un task, se va creea din develop un branch cu denumire de forma "Redmine_<id>#<scurta-descriere-a-task-ului>" 
+(de exemplu daca task-ul in redmine este 725 atunci se va crea branch "Redmine_725#creare-pagina-my-activities").
+
+Realease-ul de testare se face din develop, care apoi se duce in
+master si develop (vezi: Instructiuni deploy).
+
+Cand sunt bug-uri pe productie se face branch din master care 
+se va duce in master si in develop.

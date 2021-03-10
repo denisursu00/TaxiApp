@@ -1,0 +1,41 @@
+<app-loading *ngIf="loadingVisible"></app-loading>
+
+<p-dialog #pDialog [(visible)]="windowVisible" [modal]="true" appendTo="body"
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onShow)="onShow($event)" (onHide)="onHide($event)">
+	<p-header>
+		<span *ngIf="mode == 'add'">{{"LABELS.ADD_NOMENCLATOR" | translate}}</span>
+		<span *ngIf="mode == 'edit'">{{"LABELS.EDIT_NOMENCLATOR" | translate}}: {{ tabContentInputData.name }}</span>
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+	</p-header>
+
+	<p-tabView [activeIndex]="activeTabIndex" (onChange)="onTabChanged($event)">
+		<p-tabPanel [header]="'LABELS.GENERAL' | translate" [selected]="true">
+			<span *ngIf="!tabContentVisible">{{'MESSAGES.LOADING' | translate}}</span>
+			<app-nomenclator-general-tab-content *ngIf="tabContentVisible" 
+				[inputData]="tabContentInputData" 
+				[mode]="tabContentMode">
+			</app-nomenclator-general-tab-content>
+		</p-tabPanel>
+		<p-tabPanel [header]="'LABELS.NOMENCLATOR_ATTRIBUTES' | translate">
+			<span *ngIf="!tabContentVisible">{{'MESSAGES.LOADING' | translate}}</span>
+			<app-nomenclator-attributes-tab-content *ngIf="tabContentVisible" 
+				[inputData]="tabContentInputData" 
+				[mode]="tabContentMode">
+			</app-nomenclator-attributes-tab-content>
+		</p-tabPanel>
+	</p-tabView>
+
+	<p-footer>
+		<p-button *ngIf="addButtonVisible" (onClick)="onSave($event)" [label]="'LABELS.ADD' | translate"></p-button>
+		<p-button *ngIf="saveButtonVisible" (onClick)="onSave($event)" [label]="'LABELS.SAVE' | translate"></p-button>
+		<p-button (onClick)="onCancel($event)" [label]="'LABELS.CANCEL' | translate"></p-button>
+	</p-footer>
+</p-dialog>
+
+<app-messages-window *ngIf="messagesWindowVisible"
+	[messages]="messagesWindowMessages"
+	(windowClosed)="onMessagesWindowClosed($event)">
+</app-messages-window>

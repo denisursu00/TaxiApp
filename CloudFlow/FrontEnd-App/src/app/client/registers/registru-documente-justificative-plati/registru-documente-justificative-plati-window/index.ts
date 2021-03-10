@@ -1,0 +1,1 @@
+export * from "./registru-documente-justificative-plati-window.component";

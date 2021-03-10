@@ -1,0 +1,1 @@
+export * from "./reprezentanti-comisie-sau-gl-general-tab-content.component";

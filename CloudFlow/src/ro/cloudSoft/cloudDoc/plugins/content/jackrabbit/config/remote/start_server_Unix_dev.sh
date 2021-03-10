@@ -1,0 +1,14 @@
+# Fisierul trebuie sa aiba randurile noi in format UNIX (nu Windows). Pentru asta trebuie editat cu un editor de texte mai avansat (ex: Notepad++).
+
+# Daca se doreste pornirea automata a server-ului si se va apela script-ul curent prin cale absoluta, atunci trebuie specificata calea absoluta catre JAR pentru ca va cauta JAR-ul in directorul de unde se executa script-ul.
+CLOUD_DOC_JR_SERVER_JAR=jackrabbit-standalone-1.5.7.jar
+
+CLOUD_DOC_JR_SERVER_PORT=8081
+
+CLOUD_DOC_JR_ORACLE_JDBC_URL=jdbc:oracle:thin:@86.123.84.48:1521:xe
+CLOUD_DOC_JR_ORACLE_USERNAME=clouddoc_dev
+CLOUD_DOC_JR_ORACLE_PASSWORD=clouddoc_dev
+
+CLOUD_DOC_JR_ORACLE_SCHEMA_OBJECT_PREFIX=X
+
+java -Dapp.jackrabbit.cloud_doc_properties.oracle.jdbc_url=$CLOUD_DOC_JR_ORACLE_JDBC_URL -Dapp.jackrabbit.cloud_doc_properties.oracle.username=$CLOUD_DOC_JR_ORACLE_USERNAME -Dapp.jackrabbit.cloud_doc_properties.oracle.password=$CLOUD_DOC_JR_ORACLE_PASSWORD -Dapp.jackrabbit.cloud_doc_properties.oracle.schema_object_prefix=$CLOUD_DOC_JR_ORACLE_SCHEMA_OBJECT_PREFIX -jar $CLOUD_DOC_JR_SERVER_JAR -p $CLOUD_DOC_JR_SERVER_PORT

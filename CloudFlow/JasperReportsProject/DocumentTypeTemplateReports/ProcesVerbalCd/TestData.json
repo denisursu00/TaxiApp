@@ -1,0 +1,114 @@
+{
+
+"data_sedinta":"23.01.2018 00:00:00",
+
+"locatie":"Alpha Leasing din Piaţa Gheorghe Cantacuzino, nr. 6, sector 2 ",
+
+"membrii_consiliu_director_arb":[
+	{
+	"membru":"Costica Tudose",
+	"functie_membru":"Director Executiv"
+	},
+	{
+	"membru":"Membru 2",
+	"functie_membru":"Director Adjunct"
+	},
+	{
+	"membru":"Membru 3",
+	"functie_membru":"Avocat Contracte"
+	}
+],
+
+"informatii_invitati_externi":[
+	{
+	"nume_invitat_extern":"Nume Invitat 1",
+	"prenume_invitat_extern":"PreNume Invita 4",
+	"functie_invitat_extern":"c1"
+	},
+	{
+	"nume_invitat_extern":"Nume Invita 2",
+	"prenume_invitat_extern":"PreNume Invita 4",
+	"functie_invitat_extern":"c2"
+	},
+	{
+	"nume_invitat_extern":"Nume Invita 3",
+	"prenume_invitat_extern":"PreNume Invita 4",
+	"functie_invitat_extern":"c3"
+	},
+	{
+	"nume_invitat_extern":"Nume Invita 4",
+	"prenume_invitat_extern":"PreNume Invita 4",
+	"functie_invitat_extern":"c4"
+	}
+],
+
+
+"informatii_discutii_decizii":[
+	{
+		"capitol":"1 PENTRU APROBAREA CONSILIULUI DIRECTOR",
+		"subiect":" Aici se va scrie ceva legat de subiectul din acest raport.",
+		"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+		"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+		"responsabil":"Resposabil 1",
+		"termen":"23.01.2018 00:00:00"
+	
+	},
+	
+	{
+		"capitol":"1 PENTRU APROBAREA CONSILIULUI DIRECTOR",
+		"subiect":"1a Aici se va scrie ceva legat de subiectul din acest raport.",
+		"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+		"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+		"responsabil":"Resposabil 1",
+		"termen":"23.01.2018 00:00:00"
+	
+	},
+	
+	{
+		"capitol":"1 PENTRU APROBAREA CONSILIULUI DIRECTOR",
+		"subiect":"1b Aici se va scrie ceva legat de subiectul din acest raport.",
+		"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+		"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+		"responsabil":"Resposabil 1",
+		"termen":"23.01.2018 00:00:00"
+	
+	},
+	
+	{
+		"capitol":"2 INIŢIATIVE LEGISLATIVE RECENTE ȘI PROIECTE DE TRANSPUNERE A REGLEMENTĂRILOR EUROPENE",
+		"subiect": "a) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque finibus tincidunt justo, eu malesuada orci porta eget. Donec viverra sit amet elit a cursus. Suspendisse convallis risus sit amet nibh tristique sollicitudin. Vestibulum auctor ipsum ut quam scelerisque maximus. Nulla eu rhoncus nunc, id fringilla est. Phasellus felis augue, molestie quis augue eget, bibendum malesuada nulla. Praesent eleifend enim quis arcu pellentesque rhoncus. Nunc sed quam non eros egestas facilisis. Fusce id pellentesque metus. Pellentesque laoreet laoreet lorem. Vivamus non ex vulputate, pulvinar felis eget, fringilla leo. Etiam eu maximus tortor. Praesent diam augue, pulvinar sit amet finibus sit amet, accumsan id ipsum. Nam interdum euismod eros eget facilisis. Vestibulum fermentum tortor lacus, vitae ultricies ipsum cursus vel.\n\nPellentesque mollis dui eu malesuada tempor. Nulla nec suscipit eros. Aenean sit amet sagittis ipsum. Integer a arcu facilisis, scelerisque dui ac, tempor ante. Nullam non molestie ligula. Ut suscipit odio et consectetur vestibulum. Suspendisse nec condimentum justo. Phasellus finibus ullamcorper rhoncus.\n\nSed efficitur ex eu nulla consectetur, non consequat augue pharetra. Aliquam feugiat ipsum dictum odio dictum sodales id consequat ante. Sed velit eros, porttitor non porttitor et, aliquam ut tortor. Etiam accumsan massa erat, in hendrerit ligula faucibus et. Quisque non est nulla. Pellentesque sollicitudin sapien est, nec sagittis nunc consequat elementum. Donec eu neque mollis, dignissim nibh ac, dapibus quam. Proin justo nunc, tempus in lobortis eu, placerat vitae lorem. Nunc et orci a eros scelerisque lobortis. Morbi congue non orci non placerat. Praesent bibendum, augue sit amet pretium sagittis, dui nibh aliquet sapien, a placerat enim lectus quis ex.\n\nDuis imperdiet vestibulum ex, sit amet bibendum massa ultricies eget. Etiam ut lorem sed augue dignissim faucibus non quis libero. Nam quis arcu gravida, bibendum libero in, luctus nunc. Curabitur molestie laoreet magna, vitae cursus lectus. Praesent gravida, nibh blandit condimentum venenatis, dolor sapien tempor libero, quis commodo justo velit in ligula. Sed mollis posuere justo in viverra. Integer et dapibus felis. Etiam iaculis id dolor et rutrum. Morbi non neque tellus. Integer porta arcu non turpis pharetra, non pellentesque mauris tempus. Maecenas ut tortor sed lorem congue ultricies a placerat sapien. Mauris non eros lacinia, ultrices enim id, sodales odio. Donec non vulputate massa.\n\nNulla non arcu augue. Ut quis velit lacinia, posuere lorem quis, eleifend urna. Phasellus mi justo, efficitur a interdum id, condimentum in felis. In quis ex imperdiet sapien feugiat congue. Curabitur gravida nisi vitae libero scelerisque, sit amet facilisis felis laoreet. Sed ultricies euismod ultricies. Vestibulum vitae fermentum mauris. In justo nunc, elementum ac molestie in, tincidunt ut dolor. Sed ultrices mattis felis ac volutpat. Aliquam nec dui sit amet tortor pretium mollis eu eget purus. Phasellus aliquam ornare posuere. Vivamus pharetra, ex quis suscipit faucibus, mi mi rhoncus purus, quis bibendum neque odio quis metus.",
+		"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+		"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+		"responsabil":"Resposabil 2",
+		"termen":"23.01.2018 00:00:00"
+	},
+	
+	{
+		"capitol":"3 stadiul PROIECTELOR ŞI activităţilor curente (informare şi discuţii la solicitarea membrilor Consiliului Director",
+		"subiect":"3a Aici se va scrie ceva legat de subiectul din acest raport.",
+		"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+		"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+		"responsabil":"Resposabil 2",
+		"termen":"23.01.2018 00:00:00"
+	},
+	
+	{
+		"capitol":"4 GUVERNANŢ",
+		"subiect":"4a Aici se va scrie ceva legat de subiectul din acest raport.",
+		"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+		"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport ",
+		"responsabil":"Resposabil 3",
+		"termen":"23.01.2018 00:00:00"
+	},
+	
+	{
+		"capitol":"4 GUVERNANŢ",
+		"subiect": "a) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque finibus tincidunt justo, eu malesuada orci porta eget. Donec viverra sit amet elit a cursus. Suspendisse convallis risus sit amet nibh tristique sollicitudin. Vestibulum auctor ipsum ut quam scelerisque maximus. Nulla eu rhoncus nunc, id fringilla est. Phasellus felis augue, molestie quis augue eget, bibendum malesuada nulla. Praesent eleifend enim quis arcu pellentesque rhoncus. Nunc sed quam non eros egestas facilisis. Fusce id pellentesque metus. Pellentesque laoreet laoreet lorem. Vivamus non ex vulputate, pulvinar felis eget, fringilla leo. Etiam eu maximus tortor. Praesent diam augue, pulvinar sit amet finibus sit amet, accumsan id ipsum. Nam interdum euismod eros eget facilisis. Vestibulum fermentum tortor lacus, vitae ultricies ipsum cursus vel.\n\nPellentesque mollis dui eu malesuada tempor. Nulla nec suscipit eros. Aenean sit amet sagittis ipsum. Integer a arcu facilisis, scelerisque dui ac, tempor ante. Nullam non molestie ligula. Ut suscipit odio et consectetur vestibulum. Suspendisse nec condimentum justo. Phasellus finibus ullamcorper rhoncus.\n\nSed efficitur ex eu nulla consectetur, non consequat augue pharetra. Aliquam feugiat ipsum dictum odio dictum sodales id consequat ante. Sed velit eros, porttitor non porttitor et, aliquam ut tortor. Etiam accumsan massa erat, in hendrerit ligula faucibus et. Quisque non est nulla. Pellentesque sollicitudin sapien est, nec sagittis nunc consequat elementum. Donec eu neque mollis, dignissim nibh ac, dapibus quam. Proin justo nunc, tempus in lobortis eu, placerat vitae lorem. Nunc et orci a eros scelerisque lobortis. Morbi congue non orci non placerat. Praesent bibendum, augue sit amet pretium sagittis, dui nibh aliquet sapien, a placerat enim lectus quis ex.\n\nDuis imperdiet vestibulum ex, sit amet bibendum massa ultricies eget. Etiam ut lorem sed augue dignissim faucibus non quis libero. Nam quis arcu gravida, bibendum libero in, luctus nunc. Curabitur molestie laoreet magna, vitae cursus lectus. Praesent gravida, nibh blandit condimentum venenatis, dolor sapien tempor libero, quis commodo justo velit in ligula. Sed mollis posuere justo in viverra. Integer et dapibus felis. Etiam iaculis id dolor et rutrum. Morbi non neque tellus. Integer porta arcu non turpis pharetra, non pellentesque mauris tempus. Maecenas ut tortor sed lorem congue ultricies a placerat sapien. Mauris non eros lacinia, ultrices enim id, sodales odio. Donec non vulputate massa.\n\nNulla non arcu augue. Ut quis velit lacinia, posuere lorem quis, eleifend urna. Phasellus mi justo, efficitur a interdum id, condimentum in felis. In quis ex imperdiet sapien feugiat congue. Curabitur gravida nisi vitae libero scelerisque, sit amet facilisis felis laoreet. Sed ultricies euismod ultricies. Vestibulum vitae fermentum mauris. In justo nunc, elementum ac molestie in, tincidunt ut dolor. Sed ultrices mattis felis ac volutpat. Aliquam nec dui sit amet tortor pretium mollis eu eget purus. Phasellus aliquam ornare posuere. Vivamus pharetra, ex quis suscipit faucibus, mi mi rhoncus purus, quis bibendum neque odio quis metus.",
+		"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+		"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+		"responsabil":"Resposabil 3",
+		"termen":"23.01.2018 00:00:00"
+	}
+]
+
+}

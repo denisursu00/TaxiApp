@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <bean id="password" class="java.lang.String">
+        <constructor-arg index="0" value="admin"/>
+    </bean>
+    
+    <bean id="credentials" class="javax.jcr.SimpleCredentials">
+    	<constructor-arg index="0" value="adminId" />
+      	<constructor-arg index="1" >
+			<bean factory-bean="password" factory-method="toCharArray" />
+		</constructor-arg>
+    </bean>
+    
+    <bean id="autoNumberMetadataSequenceValueDao" class="ro.cloudSoft.cloudDoc.dao.content.AutoNumberMetadataSequenceValueDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="autoNumberMetadataValueGenerator" class="ro.cloudSoft.cloudDoc.generators.AutoNumberMetadataValueGeneratorImpl">
+    	<property name="maximumNumberOfTries" value="${app.auto_number_metadata_value_generator.maximum_number_of_tries}" />
+    	
+    	<property name="documentTypeDao" ref="documentTypeDao" />
+    	<property name="autoNumberMetadataSequenceValueDao" ref="autoNumberMetadataSequenceValueDao" />    	
+    </bean>
+
+    <bean id="searchService" class="ro.cloudSoft.cloudDoc.services.content.SearchServiceImpl">
+    
+    	<property name="workflowService" ref="workflowService" />
+    	<property name="workflowExecutionService" ref="workflowExecutionService" />
+    	<property name="userService" ref="userService" />
+    	<property name="documentTypeService" ref="documentTypeService" />
+    	<property name="documentService" ref="documentService" />
+    	<property name="nomenclatorService" ref="nomenclatorService" />
+    	<property name="groupService" ref="groupService" />
+    	<property name="calendarService" ref="calendarService" />
+    	<property name="projectService" ref="projectService" />
+    
+        <property name="plugin" ref="searchPlugin"/>
+    </bean>
+
+    <bean id="documentLocationService" class="ro.cloudSoft.cloudDoc.services.content.DocumentLocationServiceImpl">
+        <property name="plugin" ref="documentLocationPlugin"/>
+    </bean>
+    
+    <bean id="importedDocumentDao" class="ro.cloudSoft.cloudDoc.dao.content.ImportedDocumentDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    
+    <bean id="documentService" class="ro.cloudSoft.cloudDoc.services.content.DocumentServiceImpl">
+    	<property name="workflowExecutionService" ref="workflowExecutionService" />
+
+        <property name="auditService" ref="auditService" />
+    	
+    	<property name="documentLocationPlugin" ref="documentLocationPlugin" />
+        <property name="documentPlugin" ref="documentPlugin" />
+        
+        <property name="autoNumberMetadataValueGenerator" ref="autoNumberMetadataValueGenerator" />
+        
+    	<property name="userService" ref="userService" />
+        
+    	<property name="securityManagerFactory" ref="securityManagerFactory" />
+        
+        <property name="businessConstants" ref="businessConstants"></property>
+        
+        <property name="timesheetsForLeavesIntegrationEnabled" value="${app.integration.timesheets.leaves.is_enabled}" />
+        
+        <property name="documentTypeDao" ref="documentTypeDao"></property>
+        <property name="workflowService" ref="workflowService" />
+        <property name="jasperReportsService" ref="jasperReportsService" />
+        <property name="documentTypeTemplateDao" ref="documentTypeTemplateDao" />
+        <property name="nomenclatorService" ref="nomenclatorService" />
+        <property name="groupService" ref="groupService" />
+        <property name="documentService" ref="documentService" />
+        <property name="calendarService" ref="calendarService" />
+        <property name="projectService" ref="projectService" />
+        <property name="documentTypeService" ref="documentTypeService" />
+        <property name="importedDocumentDao" ref="importedDocumentDao" />
+        <property name="xDocReportsService" ref="xDocReportsService" />
+        <property name="arbConstants" ref="arbConstants" />
+        <property name="workflowInstanceDao" ref="workflowInstanceDao" />
+        <property name="documentAttachmentDetailDao" ref="documentAttachmentDetailDao" />
+    </bean>
+
+    <bean id="folderService" class="ro.cloudSoft.cloudDoc.services.content.FolderServiceImpl">
+    	<property name="documentLocationService" ref="documentLocationService" />
+        <property name="plugin" ref="folderPlugin"/>
+    </bean>
+    
+    <bean id="documentTypeService" class="ro.cloudSoft.cloudDoc.services.content.DocumentTypeServiceImpl">
+    	<property name="folderService" ref="folderService" />
+    	<property name="documentService" ref="documentService" />
+        
+        <property name="auditService" ref="auditService" />
+    	
+    	<property name="documentTypeDao" ref="documentTypeDao" />
+    	<property name="documentTypeTemplateDao" ref="documentTypeTemplateDao" />
+    	<property name="autoNumberMetadataSequenceValueDao" ref="autoNumberMetadataSequenceValueDao" />
+    </bean>
+    
+    <bean id="mimeTypeService" class="ro.cloudSoft.cloudDoc.services.content.MimeTypeServiceImpl">
+    	<property name="documentTypeService" ref="documentTypeService" />
+    	<property name="auditService" ref="auditService" />
+    	<property name="mimeTypeDao" ref="mimeTypeDao" />
+    </bean>
+    
+	<bean id="repository" class="ro.cloudSoft.cloudDoc.plugins.content.jackrabbit.repositoryFactory.AppEnvironmentDependentRepositoryFactoryBean">
+		<property name="credentials" ref="credentials" />
+		
+		<!-- proprietati pentru varianta remote -->
+  		<property name="url" value="${app.jackrabbit.remote.url}" />
+  		
+  		<!-- proprietati pentru varianta embedded -->
+  		<property name="configFilePath" value="${app.jackrabbit.embedded.config_file_path}" />
+   		<property name="repHomeDir" value="${app.jackrabbit.embedded.rep_home_dir}" />
+        <property name="systemProperties">
+        	<map key-type="java.lang.String" value-type="java.lang.String">
+	       		<entry key="app.jackrabbit.cloud_doc_properties.oracle.jdbc_url"
+		    		value="${app.jackrabbit.cloud_doc_properties.oracle.jdbc_url}" />
+		    	<entry key="app.jackrabbit.cloud_doc_properties.oracle.username"
+		    		value="${app.jackrabbit.cloud_doc_properties.oracle.username}" />
+		    	<entry key="app.jackrabbit.cloud_doc_properties.oracle.password"
+		    		value="${app.jackrabbit.cloud_doc_properties.oracle.password}" />
+		    	<entry key="app.jackrabbit.cloud_doc_properties.oracle.schema_object_prefix"
+		    		value="${app.jackrabbit.cloud_doc_properties.oracle.schema_object_prefix}" />
+        	</map>
+        </property>
+	</bean>
+
+    <bean id="jrPluginBase" class="ro.cloudSoft.cloudDoc.plugins.content.JR_PluginBase">
+        <property name="credentials" ref="credentials" />
+        <property name="repository" ref="repository"/>
+    </bean>
+
+    <bean id="searchPlugin" class="ro.cloudSoft.cloudDoc.plugins.content.JR_SearchPlugin" parent="jrPluginBase">
+    	<property name="documentTypeDao" ref="documentTypeDao" />
+    </bean>
+
+    <bean id="documentLocationPlugin" class="ro.cloudSoft.cloudDoc.plugins.content.JR_DocumentLocationPlugin" parent="jrPluginBase"/>
+ 
+
+    <bean id="documentPlugin" class="ro.cloudSoft.cloudDoc.plugins.content.JR_DocumentPlugin" parent="jrPluginBase">
+    	<property name="documentTypeDao" ref="documentTypeDao" />
+    	<property name="jrDocumentLocationPlugin" ref="documentLocationPlugin" />
+    </bean>
+    
+    <bean id="decizieDeplasareDocumentPlugin" class="ro.cloudSoft.cloudDoc.plugins.content.arb.JR_DecizieDeplasareDocumentPlugin" parent="jrPluginBase">
+    	<property name="documentTypeService" ref="documentTypeService" />
+    	<property name="documentLocationService" ref="documentLocationService" />
+    	<property name="workflowService" ref="workflowService" />
+    	<property name="arbConstants" ref="arbConstants" />
+    </bean>
+
+    <bean id="folderPlugin" class="ro.cloudSoft.cloudDoc.plugins.content.JR_FolderPlugin" parent="jrPluginBase"/>
+    
+    <!-- DAO for content administration -->
+    
+    <bean id="documentTypeDao" class="ro.cloudSoft.cloudDoc.dao.content.DocumentTypeDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+  	</bean>
+  	
+  	<bean id="documentTypeTemplateDao" class="ro.cloudSoft.cloudDoc.dao.content.DocumentTypeTemplateDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+  	</bean>
+  	
+  	<bean id="mimeTypeDao" class="ro.cloudSoft.cloudDoc.dao.content.MimeTypeDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+  	</bean>
+  	
+  	<bean id="documentAttachmentDetailDao" class="ro.cloudSoft.cloudDoc.dao.content.DocumentAttachmentDetailDaoImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+  	</bean>
+  	
+  	<!-- >> Convertoare formate fisiere -->
+  	
+  	<bean id="officeDocumentToPdfConverter" class="ro.cloudSoft.cloudDoc.fileFormats.converters.LibreOfficeBasedOfficeDocumentToPdfConverterWrapper">
+  		<property name="enabled" value="${app.fileFormats.converters.office_to_pdf.libre_office.is_enabled}" />
+  		<property name="libreOfficeServerPort" value="${app.fileFormats.converters.office_to_pdf.libre_office.server_port}" />
+  	</bean>
+  	
+  	<bean id="officeDocumentToPngConverter" class="ro.cloudSoft.cloudDoc.fileFormats.converters.OtherConvertersBasedOfficeDocumentToPngConverter">
+  		<property name="officeDocumentToPdfConverter" ref="officeDocumentToPdfConverter" />
+  		<property name="pdfDocumentToPngConverter" ref="pdfDocumentToPngConverter" />
+  	</bean>
+  	
+  	<bean id="pdfDocumentToPngConverter" class="ro.cloudSoft.cloudDoc.fileFormats.converters.GhostscriptBasedPdfDocumentToPngConverter">
+  		<property name="commandPlaceholderSourceFilePath" value="${app.fileFormats.converters.pdf_to_png.ghostscript.convert_command.placeholders.source_file_path}" />
+  		<property name="commandPlaceholderDestinationFilePathExpression" value="${app.fileFormats.converters.pdf_to_png.ghostscript.convert_command.placeholders.destination_file_path_expression}" />
+  		<property name="commandWithPlaceholders" value="${app.fileFormats.converters.pdf_to_png.ghostscript.convert_command.command_with_placeholders}" />
+  	</bean>
+  	
+  	<!-- << Convertoare formate fisiere -->
+  	
+  	<!-- Convertoare metadata definition  -->
+  	
+  	<bean id="groupMetadataDefinitionConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.content.GroupMetadataDefinitionConverter">
+  	</bean>
+  	
+  	<!-- End Convertoare metadata definition  -->
+  	
+  	<bean id="documentReportPlugin" class="ro.cloudSoft.cloudDoc.plugins.content.arb.report.JR_DocumentReportPlugin" parent="jrPluginBase">
+    	<property name="documentLocationPlugin" ref="documentLocationPlugin" />
+    	<property name="documentTypeService" ref="documentTypeService" />
+    	<property name="arbConstants" ref="arbConstants" />
+    	<property name="workflowService" ref="workflowService" />
+    </bean>     
+    
+    <bean id="prezentaComisieGlDocumentPlugin" class="ro.cloudSoft.cloudDoc.plugins.content.arb.JR_PrezentaComisieGlDocumentPlugin" parent="jrPluginBase">
+    	<property name="documentTypeService" ref="documentTypeService" />
+    	<property name="documentLocationService" ref="documentLocationService" />
+    	<property name="workflowService" ref="workflowService" />
+    	<property name="nomenclatorService" ref="nomenclatorService" />
+    	<property name="arbConstants" ref="arbConstants" />
+    </bean>
+    
+</beans>

@@ -1,0 +1,28 @@
+<p-dialog #pDialog [(visible)]="visible" [modal]="true" appendTo="body"
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onShow)="onShow($event)" (onHide)="onHide($event)">
+	<p-header>
+		{{"LABELS.FOLDER" | translate}} 
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+	</p-header>
+	<p-tabView [style]="{'height':'70vh'}">
+		<p-tabPanel [header]="'LABELS.GENERAL' | translate" [selected]="true">
+			<app-folder-general-tab-content *ngIf="tabContentVisible"
+				[mode]="mode"
+				[path]="path"
+				[documentLocationRealName]="inputData.documentLocationRealName"
+				[folderParentId]="inputData.folderId"
+				[folder]="folder">
+			</app-folder-general-tab-content>
+		</p-tabPanel>		
+		<p-tabPanel [header]="'LABELS.SECURITY' | translate">
+			<app-folder-security-tab-content *ngIf="tabContentVisible" [mode]="mode" [permissions]="permissions"></app-folder-security-tab-content>
+		</p-tabPanel>
+	</p-tabView>
+	<p-footer>
+		<p-button [label]="'LABELS.SAVE' | translate" (click)="onSave()"></p-button>
+		<p-button [label]="'LABELS.CANCEL' | translate" (click)="onHide($event)"></p-button>
+	</p-footer>
+</p-dialog>

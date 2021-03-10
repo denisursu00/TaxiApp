@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0072-adaugare-validare-pe-abreviere-proiect-pentru-initiere-dsp" author="CloudSoft.User3">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO document_validation_definition(
+				id, 
+				document_type_id, 
+				condition_expression, 
+				validation_in_states, 
+				message,
+				validation_order
+			) VALUES (
+				nextval('HIBERNATE_SEQUENCE'), 
+				(select id from documenttype where name='Initiere DSP'), 
+				'project:projectAbbreviationExistsValidation({abreviere_proiect})',
+				'completare_metadate_dsp;corectare_dsp;validare_dsp',
+				'Există un proiect cu aceasta abreviere', 
+				1
+			);
+		]]>
+		</sql>
+	</changeSet>
+
+	<changeSet id="0072-adaugare-validare-pe-nume-proiect-pentru-initiere-dsp" author="CloudSoft.User3">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO document_validation_definition(
+				id, 
+				document_type_id, 
+				condition_expression, 
+				validation_in_states, 
+				message,
+				validation_order
+			) VALUES (
+				nextval('HIBERNATE_SEQUENCE'), 
+				(select id from documenttype where name='Initiere DSP'), 
+				'project:projectNameExistsValidation({nume_proiect})',
+				'completare_metadate_dsp;corectare_dsp;validare_dsp', 
+				'Există un proiect cu acest nume', 
+				2
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

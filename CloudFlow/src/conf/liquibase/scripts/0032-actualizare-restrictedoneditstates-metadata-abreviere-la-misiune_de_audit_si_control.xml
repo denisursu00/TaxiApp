@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    
+	<changeSet id="0032-actualizare-restrictedoneditstates-metadata-abreviere-la-misiune_de_audit_si_control" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE metadatadefinition
+			SET RESTRICTEDONEDITSTATES = 'adaugare_comentariu_atasamemt;asignare_task_user;completare_metadate;marcare_misiune_calendar_agenda;misiune_finalizata' 
+			WHERE DOCUMENTTYPE_ID = (SELECT ID FROM documenttype WHERE NAME='Misiune de audit si control')
+				AND NAME = 'abreviere';
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

@@ -1,0 +1,11 @@
+{
+
+"initiatorCerereAvans":"salariat al Asociației Române a Băncilor în funcţia de",
+"functie":" Sef Departament vamnzatri",
+"lunaAvans": "11.2018"
+"valoareAvans": 2500,
+"dataInitiereCerereAvans":" dataInitiereCerereAvans ",
+"dataAprobareDeop":" data_aprobare_deop",
+"dataAprobareDeic":" data_aprobare_deic ",
+
+}

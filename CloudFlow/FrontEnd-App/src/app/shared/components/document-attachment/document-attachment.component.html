@@ -1,0 +1,24 @@
+<app-loading *ngIf="loading"></app-loading>
+<p-fileUpload 
+		name="fileUpload[]" 
+		chooseLabel="Browse"
+		multiple="multiple" 
+		customUpload="true"
+		(uploadHandler)="onUpload($event)"
+		[accept]="allowedAttachmentTypesAsString" 
+		[disabled]="readonly">
+	<ng-template pTemplate="content">
+		<div *ngIf="hasAttachments">
+			<div class="ui-fileupload-row" *ngFor="let uploadedAttachment of uploadedAttachments; let i = index;">
+				<div>{{i+1}}) {{uploadedAttachment.name}}</div>
+				<div><button pButton type="button" icon="fa fa-fw fa-download" (click)="onDownload(uploadedAttachment)"></button></div>
+				<div><button pButton type="button" icon="fa fa-close" (click)="onRemove(uploadedAttachment)" [disabled]="!deleteAttachmentEnabled"></button></div>
+			</div>
+		</div>
+	</ng-template>
+</p-fileUpload>
+
+<app-confirmation-window *ngIf="confirmationWindow.visible"
+	[messages]="confirmationWindow.messages"
+	[confirmationCallback]="confirmationWindow.callback">
+</app-confirmation-window>

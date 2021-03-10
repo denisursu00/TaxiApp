@@ -1,0 +1,1 @@
+export * from "./anulare-document-justificativ-plati-window.component";

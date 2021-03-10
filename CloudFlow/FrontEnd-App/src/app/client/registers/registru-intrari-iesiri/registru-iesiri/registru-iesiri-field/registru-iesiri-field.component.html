@@ -1,0 +1,15 @@
+<div class="ui-inputgroup">
+	<input type="text" pInputText [(ngModel)]="numarInregistrare" [placeholder]="placeholder" [readonly]="true">
+	<button pButton type="button" *ngIf="clearValueEnabled" icon="fa fa-close" class="ui-button-secondary" (click)="onClearValue()"></button>			
+	<button pButton type="button" label="..." [disabled]="!selectValueEnabled" (click)="onSelectValue()"></button> 
+</div>
+
+<p-dialog [(visible)]="visible" [width]="width" [height]="height" [style]="{'position':'absolute'}" 
+		[maximizable]="true" appendTo="body" modal="true" positionTop="20">
+	<p-header>{{"LABELS.REGISTRU_IESIRI" | translate}}</p-header>
+	<app-registru-iesiri-selector *ngIf="visible" [inputData]="registruIesiriSelectorInputData" (selectionChanged)="onRegistruIesiriSelectionChanged($event)"></app-registru-iesiri-selector>
+	
+	<p-footer>
+		<p-button [label]="'LABELS.ADD' | translate" (onClick)="onAddValue()"></p-button>
+	</p-footer>
+</p-dialog>

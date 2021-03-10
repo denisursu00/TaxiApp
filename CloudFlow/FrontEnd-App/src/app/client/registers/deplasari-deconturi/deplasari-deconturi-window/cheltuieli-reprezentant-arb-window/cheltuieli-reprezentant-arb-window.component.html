@@ -1,0 +1,142 @@
+<p-dialog #pDialog [(visible)]="visible" [modal]="true" appendTo="body"
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onShow)="onShow($event)" (onHide)="onHide($event)">
+	<p-header>
+		{{"LABELS.CHELTUIELI_REPREZENTANT_ARB" | translate}} 
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+	</p-header>
+
+	<form [formGroup]="formGroup" [ngStyle]="{'height':'68vh'}">
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.CHELTUIELI_REPREZENTANT_ARB_VALUTA" | translate}}<span *ngIf="mandatoryVisible">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-dropdown 
+					[options]="valutaItems"
+					[placeholder]="'LABELS.SELECT' | translate" 
+					[style]="{'width':'100%'}" 
+					formControlName="valuta"
+					appendTo="body"
+					filter="true"
+					(onChange)="onValutaChanged($event)">
+				</p-dropdown>
+			</div>
+			<div *ngIf="valutaFormControl.invalid && (valutaFormControl.dirty || valutaFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.CHELTUIELI_REPREZENTANT_ARB_CURS_VALUTAR" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="number" formControlName="cursValutar" readonly>
+			</div>
+		</div>
+		
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.CHELTUIELI_REPREZENTANT_ARB_CURS_MODALITATE_DE_PLATA" | translate}}<span *ngIf="mandatoryVisible">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-dropdown 
+					[options]="modalitatePlataItems"
+					[placeholder]="'LABELS.SELECT' | translate" 
+					[style]="{'width':'100%'}" 
+					formControlName="modalitatePlata"
+					appendTo="body">
+				</p-dropdown>
+			</div>
+			<div *ngIf="modalitatePlataFormControl.invalid && (modalitatePlataFormControl.dirty || modalitatePlataFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.CHELTUIELI_REPREZENTANT_ARB_NUMAR_DOCUMENT_JUSTIFICATIV" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="text" formControlName="numarDocumentJustificativ">
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.CHELTUIELI_REPREZENTANT_ARB_DATA_DOCUMENT_JUSTIFICATIV" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-calendar 
+						[showIcon]="true"
+						[dateFormat]="dateFormat"
+						[maxDate]="dataDocumentJustMaxDate"
+						formControlName="dataDocumentJustificativ"
+						readonlyInput="true"
+						appendTo="body"
+						(onSelect)="onDataDocumentJustificativSelected()">
+				</p-calendar>
+			</div>
+			<div *ngIf="dataDocumentJustificativFormControl.invalid && (dataDocumentJustificativFormControl.dirty || dataDocumentJustificativFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					<span *ngIf="dataDocumentJustificativFormControl.errors['dataDocumentJustificativRequired']">{{"MESSAGES.CHELTUIERI_ARB_DATA_DOCUMENT_JUSTIFICATIV_DATA_DECONT_REQUIRED" | translate}}</span>
+					<span *ngIf="dataDocumentJustificativFormControl.errors['dataDecontLessThanDataDocumentJustificativ']">{{"MESSAGES.CHELTUIERI_ARB_DATA_DECONT_MAI_MICA_DECAT_DATA_DOCUMENT_JUSTIFICATIV" | translate}}</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.CHELTUIELI_REPREZENTANT_ARB_TIP_DOCUMENT_JUSTIFICATIV" | translate}}<span *ngIf="mandatoryVisible">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-dropdown 
+					[options]="tipDocumentJustificativItems"
+					[placeholder]="'LABELS.SELECT' | translate" 
+					[style]="{'width':'100%'}" 
+					formControlName="tipDocumentJustificativ"
+					appendTo="body"
+					(onChange)="onTipDocumentJustificativValueChanged($event)">
+				</p-dropdown>
+			</div>
+			<div *ngIf="tipDocumentJustificativFormControl.invalid && (tipDocumentJustificativFormControl.dirty || tipDocumentJustificativFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.CHELTUIELI_REPREZENTANT_ARB_VALOARE" | translate}}<span *ngIf="mandatoryVisible">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="number" min="1" formControlName="valoareCheltuiala">
+			</div>
+			<div *ngIf="valoareCheltuialaFormControl.invalid && (valoareCheltuialaFormControl.dirty || valoareCheltuialaFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					<span *ngIf="valoareCheltuialaFormControl.errors.required">{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}</span>
+					<span *ngIf="valoareCheltuialaFormControl.errors.min">{{"MESSAGES.VALIDATOR_MIN_VALUE" | translate:validationMessageMinLengthParameter}}</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.CHELTUIELI_REPREZENTANT_ARB_EXPLICATIE" | translate}} <span *ngIf="isExplicatieCampObligatoriu() && mandatoryVisible">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="text" formControlName="explicatie">
+			</div>
+			<div *ngIf="explicatieFormControl.invalid && (explicatieFormControl.dirty || explicatieFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+	</form>
+	
+	<p-footer>
+		<p-button *ngIf ="saveButtonVisible" [label]="'LABELS.SAVE' | translate" (onClick)="onSave()"></p-button>
+		<p-button [label]="'LABELS.CANCEL' | translate" (onClick)="onCancel($event)"></p-button>
+	</p-footer>
+</p-dialog>

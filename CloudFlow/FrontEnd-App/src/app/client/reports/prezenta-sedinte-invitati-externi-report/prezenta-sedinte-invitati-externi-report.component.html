@@ -1,0 +1,226 @@
+<app-loading *ngIf="loading"></app-loading>
+<p-panel [toggleable]="true">
+    <p-header>
+        {{ 'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI' | translate }}
+    </p-header>
+
+    <form [formGroup]="formGroup">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-3">
+                    {{ 'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_FILTER_TIP_SEDINTA' | translate }}
+                </div>
+                <div class="ui-grid-col-9">
+                    <app-tip-sedinta-cd-pvg-selector
+                        formControlName="tipSedinta">
+                    </app-tip-sedinta-cd-pvg-selector>
+                </div>
+            </div>
+
+            <div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_FILTER_INSTITUTIE_INVITAT' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-dropdown
+						[options]="institutieInvitatSelectItems"
+						formControlName="institutieInvitat"
+						filter="true"
+						[placeholder]="'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_SELECTEAZA_INSTITUTIE_INVITAT' | translate"
+						showClear="true"
+						[style]="{'width':'100%'}">
+					</p-dropdown>
+				</div>
+            </div>
+
+            <div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_FILTER_INVITAT_ACREDITAT' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-checkbox 
+						formControlName="invitatAcreditat" 
+						binary="true" 
+						(onChange)="onChangeTipInvitat($event)">
+					</p-checkbox>
+				</div>
+			</div>
+            
+            <div class="ui-grid-row" *ngIf="isInvitatAcreditat">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_FILTER_INVITAT_ACREDITAT_NUME' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-dropdown
+						[options]="invitatAcreditatSelectItems"
+						formControlName="invitatAcreditatNume"
+						filter="true"
+						[placeholder]="'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_SELECTEAZA_INVITAT_ACREDITAT' | translate"
+						showClear="true"
+						[style]="{'width':'100%'}">
+					</p-dropdown>
+				</div>
+            </div>
+            
+            <div class="ui-grid-row" *ngIf="!isInvitatAcreditat">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_FILTER_INVITAT_INLOCUITOR_NUME' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+                    <input 
+                        type="text" 
+                        [style]="{'width':'100%'}"
+                        formControlName="invitatInlocuitorNume"
+                        pInputText />
+				</div>
+            </div>
+            
+            <div class="ui-grid-row" *ngIf="!isInvitatAcreditat">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_FILTER_INVITAT_INLOCUITOR_PRENUME' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+                    <input 
+                        type="text" 
+                        [style]="{'width':'100%'}"
+                        formControlName="invitatInlocuitorPrenume"
+                        pInputText />
+				</div>
+            </div>
+
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-3">
+                    {{'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_FILTER_DE_LA_DATA' | translate}}*:
+                </div>
+                <div class="ui-grid-col-9">
+                    <p-calendar formControlName="dataSedintaDeLa"
+                            showIcon="true" 
+                            [dateFormat]="dateFormat"
+                            monthNavigator="true" 
+                            yearNavigator="true"
+                            [yearRange]="yearRange"
+                            showButtonBar="true"
+                            appendTo="body" 
+                            [dataType]="'date'">
+                    </p-calendar>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+				<div class="ui-grid-col-3"></div>
+				<div class="ui-grid-col-9">
+					<div *ngIf="dataSedintaDeLaFormControl.invalid && (dataSedintaDeLaFormControl.dirty || dataSedintaDeLaFormControl.touched)" class="ui-message ui-widget ui-corner-all ui-message-error">
+						<span class="ui-message-icon pi pi-times"></span>
+						<span *ngIf="dataSedintaDeLaFormControl.errors['required']" class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+            </div> 
+
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-3">
+                    {{'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_FILTER_PANA_LA_DATA' | translate}}*:
+                </div>
+                <div class="ui-grid-col-9">
+                    <p-calendar formControlName="dataSedintaPanaLa"
+                            showIcon="true" 
+                            [dateFormat]="dateFormat"
+                            monthNavigator="true" 
+                            yearNavigator="true"
+                            [yearRange]="yearRange"
+                            showButtonBar="true"
+                            appendTo="body" 
+                            [dataType]="'date'">
+                    </p-calendar>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-3"></div>
+                <div class="ui-grid-col-9">
+                    <div *ngIf="dataSedintaPanaLaFormControl.invalid && (dataSedintaPanaLaFormControl.dirty || dataSedintaPanaLaFormControl.touched)" class="ui-message ui-widget ui-corner-all ui-message-error">
+                        <span class="ui-message-icon pi pi-times"></span>
+                        <span *ngIf="dataSedintaPanaLaFormControl.errors['required']" class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </form>
+    <p-footer>
+        <p-button [label]="'LABELS.REPORT_VIEW' | translate" (onClick)="onView()"></p-button>
+        <p-button [label]="'LABELS.EXPORT_CSV' | translate" (onClick)="exportCSV()"></p-button>
+    </p-footer>
+</p-panel>
+
+<p-table *ngIf="reportVisible"
+    [value]="report.rows"
+    [columns]="columns"
+	[responsive]="true"
+	[resizableColumns]="true"
+	[loading]="loading"
+	[style]="{'margin-top':'5px'}"
+	sortField="dataSedintaForDisplay" 
+    sortMode="single"
+    [scrollable]="true" 
+	[scrollHeight]="scrollHeight"
+    (onSort)="onSort()">
+
+    <ng-template pTemplate="colgroup">
+        <colgroup>
+            <col style="width: 50px">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 20%">
+        </colgroup>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th>{{ 'LABELS.NO_CRT' | translate }}</th>
+            <th pResizableColumn>{{ 'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_TIP_SEDINTA' | translate  }}</th>
+            <th pResizableColumn>{{ 'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_DATA_SEDINTA' | translate  }}</th>
+            <th pResizableColumn>{{ 'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_INSTITUTIE_INVITAT' | translate  }}</th>
+            <th pResizableColumn>{{ 'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_INVITAT_ACREDITAT' | translate  }}</th>
+            <th pResizableColumn>{{ 'LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_INVITAT_INLOCUITOR' | translate }}</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
+        <tr>
+            <td>
+                {{rowIndex + 1}}
+            </td>	
+            <td *ngIf="rowGroupMetadata[row.tipSedinta].index === rowIndex" [attr.rowspan]="rowGroupMetadata[row.tipSedinta].size">
+                {{ row.tipSedinta }}
+            </td>
+            <td *ngIf="rowGroupMetadata[row.dataSedintaForDisplay].index === rowIndex" [attr.rowspan]="rowGroupMetadata[row.dataSedintaForDisplay].size">
+                {{ row.dataSedintaForDisplay }}
+            </td>
+            <td>
+                {{ row.institutieInvitat }}
+            </td>
+            <td>
+                {{ row.invitatAcreditat }}
+            </td>
+            <td>
+                {{ row.invitatInlocuitorForDisplay }}
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="footer" *ngIf="footerVisible">
+        <tr>
+            <td colspan="4">{{"LABELS.REPORT_PREZENTA_SEDINTE_INVITATI_EXTERNI_TOTAL_INVITATI" | translate}}</td>			
+            <td>{{ report.totalInvitatiAcreditati }}</td>
+            <td>{{ report.totalInvitatiInlocuitori }}</td>	
+        </tr>
+	</ng-template>
+
+	<ng-template pTemplate="emptymessage" let-columns>
+		<tr>
+			<td [attr.colspan]="6">
+				{{ "LABELS.NO_RECORDS_FOUND" | translate }}
+			</td>
+		</tr>
+	</ng-template>
+
+</p-table>

@@ -1,0 +1,14 @@
+<div class="ui-g ui-grid-responsive ui-grid-pad ui-fluid">
+	<div class="ui-g-12 ui-g-nopad">
+		<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.ANY_INITIATOR_ALLOWED" | translate}}:</div>
+		<div class="ui-g-12 ui-sm-12 ui-md-4">
+			<p-checkbox [(ngModel)]="allowAnyInitiator" binary="true" (onChange)="onChangeAllowAnyInitiator($event)"></p-checkbox>
+		</div>
+	</div>
+
+	<app-organizational-structure-entities-selector
+		[(organizationEntities)]="initiators"
+		[readonly]="readonly"
+		(selectionChanged)="onOrganizationalStructureEntitiesSelectorSelectionChanged($event)">
+	</app-organizational-structure-entities-selector>
+</div>

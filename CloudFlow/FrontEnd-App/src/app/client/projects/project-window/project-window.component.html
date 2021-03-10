@@ -1,0 +1,52 @@
+<app-loading *ngIf="loadingVisible"></app-loading>
+<p-dialog #pDialog [(visible)]="windowVisible" [modal]="true" appendTo="body" 
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onShow)="onShow($event)" (onHide)="onHide($event)">
+	<p-header>
+		{{"LABELS.PROJECT" | translate}} 
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+	</p-header>
+	<p-tabView [style]="{'height':'70vh'}">
+		<p-tabPanel [header]="'LABELS.GENERAL' | translate" [selected]="true">
+			<app-project-general-tab-content *ngIf="tabContentVisible" [project]="projectViewModel" [mode]="mode"></app-project-general-tab-content>
+		</p-tabPanel>
+		<p-tabPanel [header]="'LABELS.PROJECT_PARTICIPANTS' | translate">
+			<app-project-participants-tab-content *ngIf="tabContentVisible" [project]="projectViewModel" [mode]="mode"></app-project-participants-tab-content>
+		</p-tabPanel>
+		<p-tabPanel [header]="'LABELS.PROJECT_ESTIMATIONS' | translate" [disabled]="projectEstimationsTabDisabled">
+			<app-project-estimations-tab-content *ngIf="tabContentVisible" [project]="projectViewModel" [mode]="mode"></app-project-estimations-tab-content>
+		</p-tabPanel>
+		<p-tabPanel [header]="'LABELS.PROJECT_COMISII_SAU_GL' | translate">
+			<app-project-comisii-sau-gl-tab-content *ngIf="tabContentVisible" [project]="projectViewModel" [mode]="mode"></app-project-comisii-sau-gl-tab-content>
+		</p-tabPanel>
+		<p-tabPanel [header]="'LABELS.PROJECT_SUBACTIVITIES' | translate">
+			<app-project-subactivities-tab-content *ngIf="tabContentVisible" [project]="projectViewModel" [mode]="mode"></app-project-subactivities-tab-content>
+		</p-tabPanel>
+	</p-tabView>
+	<p-footer>
+		<p-button (onClick)="onSaveAction()" [disabled]="isProjectClosed()" [label]="'LABELS.SAVE' | translate"></p-button>
+		<p-button (onClick)="onCloseProjectAction()" [disabled]="isProjectClosed()" [label]="'LABELS.CLOSE_PROJECT' | translate"></p-button>
+		<p-button *ngIf="viewDspVisible" (onClick)="onDspViewAction()" [label]="'LABELS.VIEW_DSP' | translate"></p-button>
+		<p-button *ngIf="viewTasksVisible" (onClick)="onTasksViewAction()" [label]="'LABELS.VIEW_TASKS' | translate"></p-button>
+		<p-button (onClick)="onCancelAction()" [label]="'LABELS.EXIT' | translate"></p-button>
+	</p-footer>
+</p-dialog>
+
+<app-messages-window *ngIf="messagesWindowVisible"
+	[messages]="messagesWindowMessages"
+	(windowClosed)="onMessagesWindowClosed()">
+</app-messages-window>
+
+<app-dsp-view-window *ngIf="dspViewWindowVisible"
+	[projectId]="dspViewWindowProjectId"
+	[maximized]="true"
+	(windowClosed)="onDspViewWindowClosed()">
+</app-dsp-view-window>
+
+<app-tasks-view-window *ngIf="tasksViewWindowVisible"
+	[projectId]="tasksViewWindowProjectId"
+	[maximized]="true"
+	(windowClosed)="onTasksViewWindowClosed()">
+</app-tasks-view-window>

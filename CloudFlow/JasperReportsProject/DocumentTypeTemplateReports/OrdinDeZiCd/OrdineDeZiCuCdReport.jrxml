@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaCDaprob" pageWidth="595" pageHeight="842" columnWidth="451" leftMargin="72" rightMargin="72" topMargin="72" bottomMargin="72" uuid="bcefacc5-6559-4471-a131-1397b5ee330b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DocumentTypeTemplateReports\OrdinDeZiCd\TestDataAdaptor.xml"/>
+	<property name="net.sf.jasperreports.json.date.pattern" value="dd.MM.yyyy HH:mm:ss"/>
+	<property name="com.jaspersoft.studio.unit." value="inch"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="inch"/>
+	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
+	<subDataset name="ActiuniIntreprinseDataset" uuid="a3fecc35-8741-42ca-9742-d092a6322663">
+		<parameter name="date_format" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="iteratorCapitol" class="java.lang.String"/>
+		<field name="numeCapitol" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="Dataset2" uuid="d4f73059-ef8f-4d83-8f83-1ccbb6edabf8">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="iteratorSubiecte" class="java.lang.String"/>
+		<field name="continut" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="ListCaitole" uuid="ed3f4899-9c8b-4950-9009-a562daff77e6">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<parameter name="sigla_arb_image" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="contact_arb_image" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="date_format" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["dd.MM.yyyy"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="time_format" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["HH:mm"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="OrdineDeZiSubreport" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false"/>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="data_inceput" class="java.util.Date"/>
+	<field name="locatie" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="352" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="80" height="80" uuid="33b7b93d-f337-4a81-939c-4b6e4be983b8"/>
+				<imageExpression><![CDATA[$P{sigla_arb_image} != null ? $P{sigla_arb_image} : "CommonResources/sigla_arb_image.png"]]></imageExpression>
+			</image>
+			<image hAlign="Right" vAlign="Bottom">
+				<reportElement x="240" y="0" width="210" height="80" uuid="4dbea28a-361a-4574-ac41-80b3532df09b"/>
+				<imageExpression><![CDATA[$P{contact_arb_image} != null ? $P{contact_arb_image} : "CommonResources/contact_arb_image.png"]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="210" width="451" height="30" uuid="b76cfd60-ab7e-497d-9a4a-d1bcba797740"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="false"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["la sediul "+$F{locatie}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="260" width="451" height="21" uuid="1286f438-a0fd-4a8f-8f8a-c02201d88693"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ORDINE DE ZI"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="0" y="130" width="451" height="80" uuid="c58301f9-f8be-4d8a-9f6a-d72bb853da5a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ȘEDINȚA CONSILIULUI DIRECTOR "+
+"\n al"+
+"\n ASOCIAŢIEI ROMÂNE A BĂNCILOR"+
+"\n din data de "+DATEFORMAT($F{data_inceput},$P{date_format})+" ora "+DATEFORMAT($F{data_inceput},$P{time_format})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="100" width="451" height="30" uuid="58758499-28dc-4e03-81a4-ab23012c2cdd"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Grad de confidențialitate: Restricționat Acest document este destinat exclusiv adresantului.  Informațiile pot fi utilizate doar de persoana sau entitatea căreia i-au fost adresate."]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="281" width="451" height="39" uuid="83fe0f2b-d38f-487c-b6f0-e74aa65b0b63"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("informatii_capitole")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{OrdineDeZiSubreport} != null ? $P{OrdineDeZiSubreport} : "OrdineDeZiSubreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

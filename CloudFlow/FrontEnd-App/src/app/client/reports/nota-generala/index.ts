@@ -1,0 +1,1 @@
+export * from "./nota-generala-report.component";

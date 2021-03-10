@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    
+	<changeSet id="0032-update-metadata-colectie-informatii_participanti-prezenta-comisii-gl" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE metadatacollection SET md_name_for_auto_cmpl_wth_md='denumire_comisie_gl', type_of_auto_cmpl_wth_md='DELETE_VALUE'
+			WHERE documenttype_id = (select id from documenttype where name = 'Prezenta Comisie GL') and name='informatii_participanti';
+		]]>
+		</sql>	
+	</changeSet>
+		
+</databaseChangeLog>

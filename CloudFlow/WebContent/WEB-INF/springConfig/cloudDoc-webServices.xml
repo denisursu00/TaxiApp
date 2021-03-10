@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean name="timesheetsForLeavesWebServiceClient" class="ro.cloudSoft.cloudDoc.webServices.client.TimesheetsForLeavesWebServiceClientImpl">
+		<property name="webServiceUrlAsString" value="${app.external.web_services.pontaj.concedii.url}" />
+	
+		<property name="secretToken" value="${app.external.web_services.pontaj.concedii.secretToken}" />
+	
+		<property name="operationSuffix" value="${app.external.web_services.pontaj.concedii.operations.suffix}" />
+	
+		<property name="operationNameCreate" value="${app.external.web_services.pontaj.concedii.operations.names.create}" />
+		<property name="operationNameCheckApproved" value="${app.external.web_services.pontaj.concedii.operations.names.checkApproved}" />
+	</bean>
+
+</beans>

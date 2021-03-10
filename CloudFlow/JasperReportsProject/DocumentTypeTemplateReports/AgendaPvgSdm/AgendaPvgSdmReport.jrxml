@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AgendaPvgSdm" pageWidth="595" pageHeight="842" columnWidth="451" leftMargin="72" rightMargin="72" topMargin="72" bottomMargin="72" uuid="bcefacc5-6559-4471-a131-1397b5ee330b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DocumentTypeTemplateReports\AgendaPvgSdm\TestDataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.unit." value="inch"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="inch"/>
+	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
+	<parameter name="sigla_arb_image" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="contact_arb_image" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="date_format" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["dd.MM.yyyy"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="date_time_format" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["dd.MM.yyyy HH:mm"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="time_format" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["HH:mm"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nume_presedinte_arb" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="ContinutAgendaSubreport" class="net.sf.jasperreports.engine.JasperReport"/>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="punct_agenda" class="java.lang.String"/>
+	<field name="data_cd_arb" class="java.util.Date"/>
+	<field name="data_inceput" class="java.util.Date"/>
+	<field name="locatie" class="java.lang.String"/>
+	<field name="continut_agenda" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="497" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="80" height="80" uuid="33b7b93d-f337-4a81-939c-4b6e4be983b8"/>
+				<imageExpression><![CDATA[$P{sigla_arb_image} != null ? $P{sigla_arb_image} : "CommonResources/sigla_arb_image.png"]]></imageExpression>
+			</image>
+			<image hAlign="Right" vAlign="Bottom">
+				<reportElement x="220" y="0" width="225" height="80" uuid="4dbea28a-361a-4574-ac41-80b3532df09b"/>
+				<imageExpression><![CDATA[$P{contact_arb_image} != null ? $P{contact_arb_image} : "CommonResources/contact_arb_image.png"]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="274" width="441" height="60" uuid="139620e3-8b4e-406d-bb53-57fefc9dc8f2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="12" isBold="false"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\n pentru întâlnirea lunară a \n Consiliului Director al ARB  \n cu domnul Prim - viceguvernator Florin Georgescu\n din data de "+"<b>"+DATEFORMAT($F{data_inceput}, $P{date_format})+"</b>"+" ora "+"<b>"+DATEFORMAT($F{data_inceput}, $P{time_format})+"</b>"+"\n"+"<b>"+$F{locatie}+"</b>"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="175" width="441" height="30" uuid="13697076-a32b-4bb6-be37-a03b9c87b573"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	Pct. " + $F{punct_agenda} + " / CD ARB  " + DATEFORMAT($F{data_cd_arb},$P{date_format})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="10" y="244" width="441" height="30" uuid="d2304c08-3b5f-422a-ba13-96dcf47cbb0c"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="styled">
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["AGENDĂ DE DISCUŢII "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="112" width="441" height="30" uuid="f17da121-7c32-466e-9fd5-efb607b9b101"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="styled">
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Grad de confidențialitate: Restricționat Acest document este destinat exclusiv adresantului.  Informațiile pot fi utilizate doar de persoana sau entitatea căreia i-au fost adresate."]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="380" width="451" height="90" uuid="1d571b31-91f1-4e31-9405-9fca1491cac6"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("continut_agenda")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{ContinutAgendaSubreport} != null ? $P{ContinutAgendaSubreport} : "ContinutAgendaSubreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

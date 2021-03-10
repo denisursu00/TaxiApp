@@ -1,0 +1,1 @@
+export * from "./prezenta-comisii-gl-in-interval-report.component";

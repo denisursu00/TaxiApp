@@ -1,0 +1,113 @@
+<div class="ui-g">
+	<div class="ui-g-12 ui-g-nopad">
+		<div class="ui-g-12 ui-sm-12 ui-md-12">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.MANDATORY_ATTACHMENT" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-4">
+				<p-checkbox [(ngModel)]="mandatoryAttachmentCheckBoxValue" binary="true" (onChange)="onChangeMandatoryAttachment($event)">
+				</p-checkbox>
+			</div>
+		</div>
+	</div>
+	
+	<div class="ui-g-12 ui-g-nopad" [hidden]="!mandatoryAttachmentCheckBoxValue">
+		<div class="ui-g-12 ui-sm-12 ui-md-12">
+			<p-fieldset [legend]="'LABELS.MANDATORY_ATTACHMENT_IN_STEPS' | translate" [toggleable]="true" 
+					[(collapsed)]="mandatoryAttachmentInStatesFieldSetCollapsed">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.STATES" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10 ui-g-nopad" [ngClass]="mandatoryAttachmentStatesNamesCSSClassName">
+					<div class="ui-g-12 ui-sm-12 ui-md-1">
+						<p-button [label]="'LABELS.SELECT' | translate" [disabled]="selectStateButtonDisabled" (onClick)="onSelectState($event)">
+						</p-button>
+					</div>
+					<div class="ui-g-12 ui-sm-12 ui-md-9" 
+							[ngClass]="(!areMandatoryAttachmentStatesNames) ? 'mandatoryStates' : {}">
+						{{mandatoryAttachmentStatesNamesJoined}}
+					</div>
+				</div>
+			</p-fieldset>
+		</div>
+	</div>
+	
+	<div class="ui-g-12 ui-g-nopad" [hidden]="!mandatoryAttachmentCheckBoxValue">
+		<div class="ui-g-12 ui-sm-12 ui-md-12">
+			<p-fieldset [legend]="'LABELS.MANDATORY_ATTACHMENT_WHEN_METADATA_HAS_VALUE' | translate" [toggleable]="true" 
+					[(collapsed)]="mandatoryAttachmentWhenMetadataHasValueFieldSetCollapsed">
+				<form [formGroup]="form">
+					<div class="ui-g-12 ui-g-nopad">
+						<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.METADATA_NAME" | translate}}:</div>
+						<div class="ui-g-12 ui-sm-12 ui-md-6">
+							<input pInputText type="text" formControlName="metadataName" required/>
+						</div>
+						<div *ngIf="metadataNameFormControl.invalid && (metadataNameFormControl.dirty || metadataNameFormControl.touched)"
+								class="ui-g-12 ui-sm-12 ui-md-4">
+							<div class="ui-message ui-messages-error ui-corner-all">
+								<i class="fa fa-close"></i>
+								{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+							</div>
+						</div>
+					</div>
+					<div class="ui-g-12 ui-g-nopad">
+						<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.METADATA_VALUE" | translate}}:</div>
+						<div class="ui-g-12 ui-sm-12 ui-md-6">
+							<input pInputText type="text" formControlName="metadataValue" required/>
+						</div>
+						<div *ngIf="metadataValueFormControl.invalid && (metadataValueFormControl.dirty || metadataValueFormControl.touched)"
+								class="ui-g-12 ui-sm-12 ui-md-4">
+							<div class="ui-message ui-messages-error ui-corner-all">
+								<i class="fa fa-close"></i>
+								{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+							</div>
+						</div>
+					</div>
+				</form>
+			</p-fieldset>
+		</div>
+	</div>
+	
+	<div class="ui-g-12 ui-g-nopad">
+		<div class="ui-g-12 ui-sm-12 ui-md-12">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.ALLOWED_ATTACHMENT_TYPES" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-table [value]="allAttachmentTypes"  
+						[selectionMode]="'single'"
+						[responsive]="true"
+						[resizableColumns]="true"
+						[scrollable]="true" 
+						[scrollHeight]="scrollHeight">
+
+					<ng-template pTemplate="colgroup">
+						<colgroup>
+							<col style="width: 60%">
+							<col style="width: 30%">
+							<col style="width: 10%">
+						</colgroup>
+					</ng-template>
+					<ng-template pTemplate="header" let-columns>
+						<tr>
+							<th pResizableColumn>{{"LABELS.NAME" | translate}}</th>
+							<th pResizableColumn>{{"LABELS.ATTACHMENT_EXTENSION" | translate}}</th>
+							<th pResizableColumn>{{"LABELS.ATTACHMENT_ALLOWED" | translate}}</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-attachmentType>
+						<tr>						
+							<td>{{attachmentType.name}}</td>
+							<td>{{attachmentType.extension}}</td>
+							<td>
+								<p-checkbox [(ngModel)]="attachmentType.allowed" binary="true"></p-checkbox>
+							</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</div>
+		</div>
+	</div>
+</div>
+	
+<app-workflow-states-selection-window
+		*ngIf="workflowStatesSelectionWindowVisible"
+		[possibleStates]="possibleWorkflowStates"
+		[selectedStateCodes]="selectedStateCodes"
+		(statesSelected)="onWorkflowStatesSelectionWindowStatesSelected($event)"
+		(windowClosed)="onWorkflowStatesSelectionWindowCancelled()">
+</app-workflow-states-selection-window>

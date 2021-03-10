@@ -1,0 +1,85 @@
+{
+
+"data_sedinta":"23.01.2018 00:00:00",
+
+"locatie":"Alpha Leasing din Piaţa Gheorghe Cantacuzino, nr. 6, sector 2 ",
+
+"membrii_consiliu_director_arb":[
+	{
+	"membru":"Costica Tudose",
+	"functie_membru":"Director Executiv"
+	},
+	{
+	"membru":"Membru 2",
+	"functie_membru":"Director Adjunct"
+	},
+	{
+	"membru":"Membru 3",
+	"functie_membru":"Avocat Contracte"
+	}
+],
+
+"informatii_invitati_externi":[
+	{
+	"nume_invitat_extern":"Nume Invitat 1",
+	"prenume_invitat_extern":"PreNume Invita 4",
+	"functie_invitat_extern":"c1"
+	},
+	{
+	"nume_invitat_extern":"Nume Invita 2",
+	"prenume_invitat_extern":"PreNume Invita 4",
+	"functie_invitat_extern":"c2"
+	},
+	{
+	"nume_invitat_extern":"Nume Invita 3",
+	"prenume_invitat_extern":"PreNume Invita 4",
+	"functie_invitat_extern":"c3"
+	},
+	{
+	"nume_invitat_extern":"Nume Invita 4",
+	"prenume_invitat_extern":"PreNume Invita 4",
+	"functie_invitat_extern":"c4"
+	}
+],
+
+
+"informatii_discutii_decizii":[
+	{
+		"capitol":"1 PENTRU APROBAREA CONSILIULUI DIRECTOR",
+		"subiecte": [
+			{
+				"subiect":"subiect1"
+			},
+			{
+				"subiect":" subiect2",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":"23.01.2018 00:00:00"
+			}
+		]
+	
+	},
+	{
+		"capitol":"2 asdasd asda sdPENTRU APROBAREA CONSILIULUI DIRECTOR",
+		"subiecte": [
+			{
+				"subiect":" sub3",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":"23.01.2018 00:00:00"
+			},
+			{
+				"subiect":" sub4",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":"23.01.2018 00:00:00"
+			}
+		]
+	
+	}
+]
+
+}

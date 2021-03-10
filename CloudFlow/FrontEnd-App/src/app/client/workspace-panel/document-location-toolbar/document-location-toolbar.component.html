@@ -1,0 +1,19 @@
+<div class="ui-inputgroup">
+	<button pButton [disabled]="isDisabledForAdd" (click)="onAdd()" type="button" icon="fa fa-plus"
+			[pTooltip]="'LABELS.ADD' | translate" tooltipPosition="bottom">
+	</button>
+	<button pButton [disabled]="isDisabledForEdit" (click)="onEdit()" type="button" icon="fa fa-fw fa-edit"
+			[pTooltip]="'LABELS.EDIT' | translate" tooltipPosition="bottom">
+	</button>
+	<button pButton [disabled]="isDisabledForDelete" (click)="onDelete()" type="button" icon="fa fa-trash-o"
+			[pTooltip]="'LABELS.DELETE' | translate" tooltipPosition="bottom">
+	</button>
+</div>
+<app-document-location-window
+	*ngIf="documentLocationWindowVisible"
+	[mode]="documentLocationWindowMode"
+	[documentLocationRealName]="documentLocationRealName"
+	[maximized]="true"
+	(windowClosed)="onDocumentLocationWindowClosed()"
+	(documentLocationSaved)="onDocumentLocationSaved()">
+</app-document-location-window>

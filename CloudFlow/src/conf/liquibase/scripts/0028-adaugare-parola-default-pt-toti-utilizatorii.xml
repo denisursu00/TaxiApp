@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0028-adaugare-parola-default-pt-toti-utilizatorii" author="CloudSoft.User3" context="dev,test,staging">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE edocuser
+			SET password = '2WWCMlCAgSJzYJEtgcUjBw=='
+			WHERE username <> 'application.user';
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0028-adaugare-parola-default-pt-toti-utilizatorii" author="CloudSoft.User3" context="prod">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE edocuser
+			SET password = 'C2eT1YI7TnDkgPOS6AKSaw=='
+			WHERE username <> 'application.user';
+		]]>
+		</sql>
+	</changeSet>
+		
+</databaseChangeLog>

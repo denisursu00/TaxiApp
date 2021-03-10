@@ -1,0 +1,27 @@
+.must-be-canceled {
+	background-color: tomato !important;
+}
+
+.ui-selectable-row.ui-state-highlight .must-be-canceled {
+	background-color: darkmagenta !important;
+}
+
+.ui-selectable-row td{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ui-selectable-row.ui-state-highlight td{
+	white-space: normal;
+}
+
+::ng-deep .regIesiriSDestWindowDialog .ui-selectable-row td{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+::ng-deep .regIesiriSDestWindowDialog .ui-selectable-row.ui-state-highlight td{
+	white-space: normal;
+}

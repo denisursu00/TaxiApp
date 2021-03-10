@@ -1,0 +1,41 @@
+<p-table [(selection)]="selectedAttribute"
+		[value]="nomenclatorAttributes"  
+		[selectionMode]="'single'"
+		[responsive]="true"
+		[resizableColumns]="true"
+		[scrollable]="true"
+		(onRowSelect)="onAttributeSelected($event)"
+		(onRowUnselect)="onAttributeUnselected($event)"
+		columnResizeMode="expand"
+		scrollHeight="200px">
+	<ng-template pTemplate="colgroup" let-columns>
+		<colgroup>
+			<col style="width: 25%">
+			<col style="width: 25%">
+			<col style="width: 25%">
+		</colgroup>
+	</ng-template>
+	<ng-template pTemplate="header" let-columns>
+		<tr>								
+			<th pResizableColumn pSortableColumn="name">
+				{{"LABELS.NAME" | translate}}
+				<p-sortIcon field="name"></p-sortIcon>
+			</th>
+			<th pResizableColumn pSortableColumn="type">
+				{{"LABELS.TYPE" | translate}}
+				<p-sortIcon field="type"></p-sortIcon>
+			</th>
+			<th pResizableColumn pSortableColumn="orderNumber">
+				{{"LABELS.ORDER_NUMBER" | translate}}
+				<p-sortIcon field="orderNumber"></p-sortIcon>
+			</th>
+		</tr>
+	</ng-template>
+	<ng-template pTemplate="body" let-attribute>
+		<tr [pSelectableRow]="attribute">						
+			<td class="ui-resizable-column">{{attribute.name}}</td>
+			<td class="ui-resizable-column">{{attribute.type}}</td>
+			<td class="ui-resizable-column">{{attribute.uiOrder}}</td>
+		</tr>
+	</ng-template>
+</p-table>

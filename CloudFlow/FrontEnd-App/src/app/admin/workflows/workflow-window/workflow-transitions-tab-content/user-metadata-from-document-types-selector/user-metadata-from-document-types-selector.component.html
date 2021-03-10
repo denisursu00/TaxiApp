@@ -1,0 +1,9 @@
+<p-dropdown
+	[(ngModel)]="selectedUserMetadata" 
+	[options]="userMetadatasSelectItems"
+	[autoDisplayFirst]="false"
+	[style]="{'width':'100%'}"
+	(onChange)="onUserMetadataSelectionChanged($event)"
+	filter="true"
+	appendTo="body">
+</p-dropdown>

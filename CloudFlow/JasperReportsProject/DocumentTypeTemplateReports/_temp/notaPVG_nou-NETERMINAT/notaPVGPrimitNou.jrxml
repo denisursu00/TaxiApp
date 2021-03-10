@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cerereCM_CFP_metadate" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bcefacc5-6559-4471-a131-1397b5ee330b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="RapoarteARB\notaPVG_nou\notaPVG.xml"/>
+	<parameter name="imagineSt" class=""/>
+	<parameter name="ImagineDr" class=""/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="punctNotaPvg" class="java.lang.String"/>
+	<field name="dataNotaPvg" class="java.util.Date"/>
+	<field name="titlu" class="java.lang.String"/>
+	<field name="subiect" class="java.lang.String"/>
+	<field name="pozitiaArb" class="java.lang.String"/>
+	<field name="preocupariArb" class="java.lang.String"/>
+	<field name="dataIntocmireNotaPvg" class="java.util.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="654" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="310" width="555" height="30" uuid="b76cfd60-ab7e-497d-9a4a-d1bcba797740"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	SUBIECT"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="411" width="555" height="29" uuid="67f3c3b4-7e77-4699-bfd2-85c5bdcfc927"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="false"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	"+$F{pozitiaArb}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="280" y="515" width="275" height="20" uuid="6606a8d7-911e-4d16-a971-62e5d6c924cd"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataIntocmireNotaPvg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="10" width="100" height="60" uuid="158e6e60-1242-4c00-abf6-c2f1728360f5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ImagineSt"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="445" width="555" height="20" uuid="a795ce3c-2b54-484e-b5e7-8016c205b376"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	PREOCUPĂRI ARB  "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="515" width="280" height="20" uuid="ab7829e4-9f4c-47a5-89c1-37b0e1dc2dc1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="false"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CONSILIUL DIRECTOR AL ARB"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="175" width="555" height="30" uuid="139620e3-8b4e-406d-bb53-57fefc9dc8f2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["cu domnul Prim - viceguvernator Florin Georgescu"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="215" width="555" height="30" uuid="13697076-a32b-4bb6-be37-a03b9c87b573"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pct. " + $F{punctNotaPvg} + " / " + $F{dataNotaPvg}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="0" y="265" width="555" height="30" uuid="088aa6aa-ff3e-4f31-ab65-5e8eaa92d289"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	Titlu " + $F{titlu}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="465" width="555" height="30" uuid="8f1f9bd4-67e4-4c36-99c7-763823f91552"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="false"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	"+$F{preocupariArb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="0" width="198" height="90" uuid="4fafbb56-5767-4d98-8f54-b8146703a912"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["ImagineDr"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="145" width="555" height="30" uuid="d2304c08-3b5f-422a-ba13-96dcf47cbb0c"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="styled">
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Întâlnirea lunară a Consiliului Director al ARB "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="345" width="555" height="20" uuid="80fc5d14-999f-4de3-a981-8a937fcefa14"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="false"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	"+$F{subiect}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="375" width="555" height="29" uuid="da32d0f0-43ea-4cf2-8ec5-0bdf41e884d5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	POZIȚIA ARB"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="90" width="555" height="30" uuid="f17da121-7c32-466e-9fd5-efb607b9b101"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="styled">
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Grad de confidențialitate: Restricționat Acest document este destinat exclusiv adresantului.  Informațiile pot fi utilizate doar de persoana sau entitatea căreia i-au fost adresate."]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="10" width="270" height="20" uuid="2b85e5c3-fbc9-4d4e-ab64-08bd123c300a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["pag. " +  $V{PAGE_NUMBER} ]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="280" y="10" width="274" height="20" uuid="7db52b1b-c1a0-41f2-8d96-d4a59cfd71e1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="270" y="10" width="10" height="20" uuid="ab4d0983-e55e-4109-b4c9-c9ccbff3db24"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

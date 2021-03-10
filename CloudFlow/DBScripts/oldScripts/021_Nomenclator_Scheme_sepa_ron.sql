@@ -1,0 +1,43 @@
+----script pt stergere nomenclator de pe server-----
+--SELECT * FROM NOMENCLATOR WHERE ID = 33494;
+--SELECT * FROM NOMENCLATOR_ATTRIBUTE WHERE NOMENCLATOR_ID = 33494;
+--SELECT * FROM NOMENCLATOR_UI_ATTRIBUTE WHERE NOMENCLATOR_ID = 33494;
+--SELECT * FROM NOMENCLATOR_VALUES WHERE NOMENCLATOR_ID = 33494;
+
+--DELETE FROM NOMENCLATOR_VALUES WHERE NOMENCLATOR_ID = 33494; 
+--DELETE FROM NOMENCLATOR_UI_ATTRIBUTE WHERE NOMENCLATOR_ID = 33494;
+--DELETE FROM NOMENCLATOR_ATTRIBUTE WHERE NOMENCLATOR_ID = 33494;
+--DELETE FROM NOMENCLATOR WHERE ID = 33494;
+----script pt stergere nomenclator de pe server-----
+
+
+-- nomenclator
+INSERT INTO NOMENCLATOR (ID, NAME, CODE) VALUES (HIBERNATE_SEQUENCE.nextval, 'Scheme Sepa Ron', 'scheme_sepa_ron');
+
+-- atributes
+INSERT INTO NOMENCLATOR_ATTRIBUTE (ID, NOMENCLATOR_ID, NAME, KEY, COLUMN_NAME, TYPE,TYPE_NOMENCLATOR_ID, UI_ORDER, REQUIRED) 
+    VALUES (HIBERNATE_SEQUENCE.nextval, (select ID from nomenclator where code='scheme_sepa_ron'),	'Schema', 'attribute1', 'ATTRIBUTE1', 'TEXT', NULL, 1, 1);  
+
+--ui attributes
+INSERT INTO NOMENCLATOR_UI_ATTRIBUTE (
+	ID, 
+	NOMENCLATOR_ID, 
+	ATTRIBUTE_ID, 
+	UI_ORDER
+) VALUES (
+	HIBERNATE_SEQUENCE.nextval, 
+	(select ID from NOMENCLATOR where code='scheme_sepa_ron'),
+	(select ID from NOMENCLATOR_ATTRIBUTE where NOMENCLATOR_ID=(select ID from NOMENCLATOR where code='scheme_sepa_ron') and KEY='attribute1'),
+	1
+);
+
+
+--- valori
+INSERT INTO NOMENCLATOR_VALUES (ID, NOMENCLATOR_ID, ATTRIBUTE1, DELETED) 
+    VALUES (HIBERNATE_SEQUENCE.nextval, (select ID from nomenclator where code='scheme_sepa_ron'), 'SCT', 0);
+INSERT INTO NOMENCLATOR_VALUES (ID, NOMENCLATOR_ID, ATTRIBUTE1, DELETED) 
+    VALUES (HIBERNATE_SEQUENCE.nextval, (select ID from nomenclator where code='scheme_sepa_ron'), 'SDD B2B', 0);
+INSERT INTO NOMENCLATOR_VALUES (ID, NOMENCLATOR_ID, ATTRIBUTE1, DELETED) 
+    VALUES (HIBERNATE_SEQUENCE.nextval, (select ID from nomenclator where code='scheme_sepa_ron'), 'SDD CORE', 0);
+INSERT INTO NOMENCLATOR_VALUES (ID, NOMENCLATOR_ID, ATTRIBUTE1, DELETED) 
+    VALUES (HIBERNATE_SEQUENCE.nextval, (select ID from nomenclator where code='scheme_sepa_ron'), 'INST', 0);

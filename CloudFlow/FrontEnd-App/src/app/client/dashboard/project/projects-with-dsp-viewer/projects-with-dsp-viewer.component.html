@@ -1,0 +1,101 @@
+<p-table #projectsTable [value]="projects" [loading]="loading" [responsive]="true" [scrollable]="true" [scrollable]="true">
+    <ng-template pTemplate="caption">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+            <div class="ui-g-12" style="text-align: right;">
+                <span style="vertical-align: super">{{"LABELS.SHOW_ALL_PROJECTS" | translate}}</span>
+                <p-inputSwitch (onChange)="onShowAllProjectChanged($event)" [(ngModel)]="showAllProjects"></p-inputSwitch>
+            </div>
+		</div>
+    </ng-template>
+
+	<ng-template pTemplate="colgroup" let-columns>
+		<colgroup>
+			<col style="width: 100px">
+			<col style="width: 200px">
+			<col style="width: 200px">
+			<col style="width: 150px">
+			<col style="width: 150px">
+			<col style="width: 150px">
+		</colgroup>
+	</ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th [pSortableColumn]="'importanceDegreeColorForSort'">
+                {{"LABELS.PROJECT_IMPORTANCE" | translate}}
+                <p-sortIcon [field]="'importanceDegreeColorForSort'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'name'">
+                {{"LABELS.PROJECT_NAME" | translate}}
+                <p-sortIcon [field]="'name'"></p-sortIcon>
+            </th>
+            <th>{{"LABELS.PROJECT_SUBACTIVITIES" | translate}}</th>
+            <th [pSortableColumn]="'responsibleUserName'">
+                {{"LABELS.PROJECT_USER_RESPONSIBLE" | translate}}
+                <p-sortIcon [field]="'responsibleUserName'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'degreeOfAchievementForView'">
+                {{"LABELS.PROJECT_ACHIEVEMENT_LEVEL" | translate}}
+                <p-sortIcon [field]="'degreeOfAchievementForView'"></p-sortIcon>
+            </th>
+            <th>{{"LABELS.PROJECT_FINALIZED_ACTIONS" | translate}}</th>
+            <th>{{"LABELS.PROJECT_UPCOMING_ACTIONS" | translate}}</th>
+        </tr>
+        <tr>
+            <th>
+                <p-dropdown [options]="importanceDegreeColorSelectItems" appendTo="body" [showClear]="true"
+                        [style]="{'min-width': '95px', 'max-width': '95px', 'margin-left': '-13px', 'height': '27px'}"
+                        (onChange)="projectsTable.filter($event.value, 'importanceDegreeColor', 'equals')">
+                    <ng-template let-color pTemplate="selectedItem">
+                        <div [style.background-color]="color.value" [style.width.px]="40" [style.height.px]="14"></div>
+                    </ng-template>
+                    <ng-template let-color pTemplate="item">
+                        <div [style.background-color]="color.value" [style.width.px]="70" [style.height.px]="20"></div>
+                    </ng-template>
+				</p-dropdown>
+            </th>
+            <th>
+                <input pInputText type="text" style="width :100%"
+                        (input)="projectsTable.filter($event.target.value, 'name', 'contains')">
+            </th>
+            <th>
+                <input pInputText type="text" style="width :100%"
+                        (input)="projectsTable.filter($event.target.value, 'subprojects', 'contains')">
+            </th>
+            <th>
+                <input pInputText type="text" style="width :100%"
+                        (input)="projectsTable.filter($event.target.value, 'responsibleUserName', 'contains')">
+            </th>
+            <th>
+                <p-dropdown [options]="degreeOfAchievementSelectItems" appendTo="body" [showClear]="true" filter="true" [autoDisplayFirst]="false"
+                        [style]="{'min-width': '138px', 'max-width': '138px', 'margin-left': '-10px'}"
+                        (onChange)="projectsTable.filter($event.value, 'degreeOfAchievement', 'equals')">
+                </p-dropdown>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+
+    </ng-template>
+
+    <ng-template pTemplate="body" let-project>
+        <tr>
+            <td [style.background-color]="project.importanceDegreeColor"></td>
+            <td><span style="text-decoration: underline; cursor: pointer" (click)="onShowDspWindow(project.id)">{{project.name}}</span></td>
+            <td>{{project.subprojects}}</td>
+            <td>{{project.responsibleUserName}}</td>
+            <td>{{project.degreeOfAchievementForView}}</td>
+            <td><p-button (onClick)="onShowFinalizedTasksWindow(project.id)" [label]="'LABELS.VIEW' | translate"></p-button></td>
+            <td><p-button (onClick)="onShowInProgressTasksWindow(project.id)" [label]="'LABELS.VIEW' | translate"></p-button></td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<app-project-with-dsp-in-progress-tasks-window *ngIf="inProgressTasksWindowVisible" [projectId]="projectId" [maximized]="true" (windowClosed)="onInProgressTasksWindowClosed()">
+</app-project-with-dsp-in-progress-tasks-window>
+
+<app-project-with-dsp-finalized-tasks-window *ngIf="finalizedTasksWindowVisible" [projectId]="projectId" [maximized]="true" (windowClosed)="onFinalizedTasksWindowClosed()">
+</app-project-with-dsp-finalized-tasks-window>
+
+<app-dsp-view-window *ngIf="dspViewWindowVisible" [projectId]="dspViewWindowProjectId" [maximized]="true" (windowClosed)="onDspViewWindowClosed()">
+</app-dsp-view-window>

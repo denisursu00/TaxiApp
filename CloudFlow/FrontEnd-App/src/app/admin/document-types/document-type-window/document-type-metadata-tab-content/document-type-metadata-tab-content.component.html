@@ -1,0 +1,5 @@
+<span *ngIf="!metadataDefinitionsManagerVisible">{{'MESSAGES.LOADING' | translate}}</span>
+<app-metadata-definitions-manager *ngIf="metadataDefinitionsManagerVisible"
+	[usageMode]="'documentType'"
+	[inputData]="metadataDefinitionsManagerInputData">	
+</app-metadata-definitions-manager>

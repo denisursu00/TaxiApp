@@ -1,0 +1,15 @@
+UPDATE ORGANIZATIONUNIT 
+SET MANAGER_ORG_ENTITY_ID = (select ORG_ENTITY_ID from EDOCUSER where USERNAME='florin.danescu')
+WHERE NAME = 'Presedinte Executiv';
+
+UPDATE ORGANIZATIONUNIT 
+SET MANAGER_ORG_ENTITY_ID = (select ORG_ENTITY_ID from EDOCUSER where USERNAME='cati.ursu')
+WHERE NAME = 'Director Executiv Proiecte(DEPR)';
+
+UPDATE ORGANIZATIONUNIT 
+SET MANAGER_ORG_ENTITY_ID = (select ORG_ENTITY_ID from EDOCUSER where USERNAME='rodica.tuchila')
+WHERE NAME = 'Director Executiv Operatiuni Plati(DEOP)';
+
+UPDATE ORGANIZATIONUNIT 
+SET MANAGER_ORG_ENTITY_ID = (select ORG_ENTITY_ID from EDOCUSER where USERNAME='gabriela.folcut')
+WHERE NAME = 'Director Executiv(DEIC)';

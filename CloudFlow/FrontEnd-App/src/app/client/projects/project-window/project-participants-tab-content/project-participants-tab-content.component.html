@@ -1,0 +1,10 @@
+<div class="ui-g">
+	<app-organizational-structure-entities-selector
+		[(organizationEntities)]="participants"
+		[readonly]="visibleForAllUsers"
+		[groupsVisible]="false"
+		[selectableEntityTypes]="['user']"
+		[visibleEntityTypes]="['organization', 'ou', 'user']"
+		(selectionChanged)="participantsSelected($event)">
+	</app-organizational-structure-entities-selector>
+</div>

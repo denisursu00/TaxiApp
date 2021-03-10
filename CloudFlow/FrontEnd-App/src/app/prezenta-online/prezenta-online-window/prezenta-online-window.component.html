@@ -1,0 +1,281 @@
+<app-loading *ngIf="loadingVisible"></app-loading>
+
+<p-dialog #pDialog [(visible)]="visible" [modal]="true" appendTo="body"
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onShow)="onShow($event)" (onHide)="onHide()">
+	<p-header>
+		{{"LABELS.PREZENTA" | translate}} {{title}}
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>				
+	</p-header>
+
+	<p-button *ngIf="!isPrezentaFinalizata" [label]="'LABELS.PREZENTA_ONLINE_ADAUGA_PARTICIPANT' | translate" (onClick)="onAdd()"></p-button>
+	<p-table #membriiTable *ngIf="!isPrezentaFinalizata"
+			[value]="membrii"  
+			[paginator]="true" 
+			[rows]="15"
+			[rowsPerPageOptions]="[5,10,15,20,30]" 	
+			[scrollable]="true" 
+			[scrollHeight]="scrollHeight">
+		<ng-template pTemplate="colgroup">
+			<colgroup *ngIf="!isMobileDevices">
+				<col style="width: 40%">
+				<col style="width: 15%">
+				<col style="width: 20%">
+				<col style="width: 10%">
+				<col style="width: 15%">
+			</colgroup>
+			<colgroup *ngIf="isMobileDevices">
+				<col style="width: 150px">
+				<col style="width: 100px">
+				<col style="width: 150px">
+				<col style="width: 120px">
+				<col style="width: 120px">
+			</colgroup>
+		</ng-template>
+		<ng-template pTemplate="header">
+			<tr>
+				<th [pSortableColumn]="'numeInstitutie'">
+					{{"LABELS.PREZENTA_ONLINE_INSTITUTIE" | translate}}
+					<p-sortIcon [field]="'numeInstitutie'"></p-sortIcon>
+				</th>
+				<th [pSortableColumn]="'nume'">
+					{{"LABELS.PREZENTA_ONLINE_NUME" | translate}}
+					<p-sortIcon [field]="'nume'"></p-sortIcon>
+				</th>
+				<th [pSortableColumn]="'prenume'">
+					{{"LABELS.PREZENTA_ONLINE_PRENUME" | translate}}
+					<p-sortIcon [field]="'prenume'"></p-sortIcon>
+				</th>
+				<th [pSortableColumn]="'calitate'">
+					{{"LABELS.PREZENTA_ONLINE_CALITATE" | translate}}
+					<p-sortIcon [field]="'calitate'"></p-sortIcon>
+				</th>
+				<th> {{"LABELS.PREZENTA_ONLINE_PREZENTA" | translate}}</th>	
+			</tr>
+			<tr>
+				<th>
+					<input pInputText type="text" [(ngModel)]="numeInstitutie" (input)="membriiTable.filter($event.target.value, 'numeInstitutie', 'contains'); onInputFilter()" style="width:100%">
+				</th>
+				<th>
+					<input pInputText type="text" [(ngModel)]="nume" (input)="membriiTable.filter($event.target.value, 'nume', 'contains'); onInputFilter()" style="width:100%">
+				</th>
+				<th>
+					<input pInputText type="text" [(ngModel)]="prenume" (input)="membriiTable.filter($event.target.value, 'prenume', 'contains'); onInputFilter()" style="width:100%">
+				</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-row let-index="rowIndex">
+				<tr *ngIf="rowsVisible"
+						[style.background-color]="row.isPrezent ? 'green' : index%2==0 ? 'white' : '#f2f2f2'"
+						[style.color]="row.isPrezent ? 'white' : 'black'">			
+					<td>{{row.numeInstitutie}}</td>	
+					<td>{{row.nume}}</td>	
+					<td>{{row.prenume}}</td>		
+					<td>{{"LABELS.MEMBRU_REPREZENTANTI_COMISIE_SAU_GL_CALITATE_" + row.calitate | translate}}</td>	
+					<td>
+						<p-button *ngIf="!row.isPrezent" [label]="'LABELS.PREZENTA_ONLINE_PREZENT' | translate" (onClick)="onPrezent(row)"></p-button>
+					</td>	
+				</tr>
+		</ng-template>
+		<ng-template pTemplate="emptymessage" let-columns>
+			<tr>
+				<td [attr.colspan]="5">
+					{{"LABELS.NO_RECORDS_FOUND" | translate}}
+				</td>
+			</tr>
+		</ng-template>
+	</p-table>
+	
+	<br>
+	
+	<p-table #participantiTable
+			*ngIf="!isUserPrezenta"
+			[value]="participanti.rows"  
+			[paginator]="true" 
+			[rows]="15"
+			[rowsPerPageOptions]="[5,10,15,20,30]" 
+			[scrollable]="true" 
+			[scrollHeight]="scrollHeight">
+		<ng-template pTemplate="colgroup">
+			<colgroup *ngIf="!isMobileDevices">
+				<col style="width: 15%">
+				<col style="width: 10%">
+				<col style="width: 15%">
+				<col style="width: 10%">
+				<col style="width: 15%">
+				<col style="width: 7%">
+				<col style="width: 10%">
+				<col style="width: 8%">
+				<col style="width: 10%">
+			</colgroup>
+			<colgroup *ngIf="isMobileDevices">
+				<col style="width: 150px">
+				<col style="width: 100px">
+				<col style="width: 150px">
+				<col style="width: 120px">
+				<col style="width: 120px">
+				<col style="width: 120px">
+				<col style="width: 120px">
+				<col style="width: 120px">
+				<col style="width: 120px">
+			</colgroup>
+		</ng-template>
+		<ng-template pTemplate="caption">
+			{{"LABELS.PREZENTA_ONLINE_PARTICIPANTI" | translate}}
+		</ng-template>
+		<ng-template pTemplate="header">
+			<tr>
+				<th [pSortableColumn]="'numeInstitutie'">
+					{{"LABELS.PREZENTA_ONLINE_INSTITUTIE" | translate}}
+					<p-sortIcon [field]="'numeInstitutie'"></p-sortIcon>
+				</th>
+				<th [pSortableColumn]="'nume'">
+					{{"LABELS.PREZENTA_ONLINE_NUME" | translate}}
+					<p-sortIcon [field]="'nume'"></p-sortIcon>
+				</th>
+				<th [pSortableColumn]="'prenume'">
+					{{"LABELS.PREZENTA_ONLINE_PRENUME" | translate}}
+					<p-sortIcon [field]="'prenume'"></p-sortIcon>
+				</th>
+				<th [pSortableColumn]="'functie'">
+					{{"LABELS.PREZENTA_ONLINE_FUNCTIE" | translate}}
+					<p-sortIcon [field]="'functie'"></p-sortIcon>
+				</th>
+				<th [pSortableColumn]="'departament'">
+					{{"LABELS.PREZENTA_ONLINE_DEPARTAMENT" | translate}}
+					<p-sortIcon [field]="'departament'"></p-sortIcon>
+				</th>
+				<th [pSortableColumn]="'telefon'">
+					{{"LABELS.PREZENTA_ONLINE_TELEFON" | translate}}
+					<p-sortIcon [field]="'telefon'"></p-sortIcon>
+				</th>
+				<th [pSortableColumn]="'email'">
+					{{"LABELS.PREZENTA_ONLINE_EMAIL" | translate}}
+					<p-sortIcon [field]="'email'"></p-sortIcon>
+				</th>
+				<th [pSortableColumn]="'calitate'">
+					{{"LABELS.PREZENTA_ONLINE_CALITATE" | translate}}
+					<p-sortIcon [field]="'calitate'"></p-sortIcon>
+				</th>
+				<th> {{"LABELS.PREZENTA_ONLINE_OPERATIUNI" | translate}}</th>	
+			</tr>
+			<tr>
+				<th>
+					<input pInputText type="text" (input)="participantiTable.filter($event.target.value, 'numeInstitutie', 'contains')" style="width:100%">
+				</th>
+				<th>
+					<input pInputText type="text" (input)="participantiTable.filter($event.target.value, 'nume', 'contains')" style="width:100%">
+				</th>
+				<th>
+					<input pInputText type="text" (input)="participantiTable.filter($event.target.value, 'prenume', 'contains')" style="width:100%">
+				</th>
+				<th>
+					<input pInputText type="text" (input)="participantiTable.filter($event.target.value, 'functie', 'contains')" style="width:100%">
+				</th>
+				<th>
+					<input pInputText type="text" (input)="participantiTable.filter($event.target.value, 'departament', 'contains')" style="width:100%">
+				</th>
+				<th>
+					<input pInputText type="text" (input)="participantiTable.filter($event.target.value, 'telefon', 'contains')" style="width:100%">
+				</th>
+				<th>
+					<input pInputText type="text" (input)="participantiTable.filter($event.target.value, 'email', 'contains')" style="width:100%">
+				</th>
+				<th>
+					<input pInputText type="text" (input)="participantiTable.filter($event.target.value, 'calitate', 'contains')" style="width:100%">
+				</th>
+				<th></th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-row let-index="rowIndex">
+				<tr>			
+					<td>{{row.numeInstitutie}}</td>	
+					<td>{{row.nume}}</td>	
+					<td>{{row.prenume}}</td>		
+					<td>{{row.functie}}</td>		
+					<td>{{row.departament}}</td>		
+					<td>{{row.telefon}}</td>		
+					<td>{{row.email}}</td>		
+					<td>{{"LABELS.MEMBRU_REPREZENTANTI_COMISIE_SAU_GL_CALITATE_" + row.calitate | translate}}</td>	
+					<td>
+						<p-button [label]="'LABELS.PREZENTA_ONLINE_STERGE' | translate" (onClick)="onStergere(row)"></p-button>
+					</td>	
+				</tr>
+		</ng-template>
+		<ng-template pTemplate="emptymessage" let-columns>
+			<tr>
+				<td [attr.colspan]="9">
+					{{"LABELS.NO_RECORDS_FOUND" | translate}}
+				</td>
+			</tr>
+		</ng-template>
+	</p-table>
+
+	<br>
+
+	<p-table #prezentaTable
+			[value]="participanti.rows"  
+			[scrollable]="true" 
+			[scrollHeight]="scrollHeight">
+		<ng-template pTemplate="colgroup">
+			<colgroup *ngIf="!isMobileDevices">
+				<col style="width: 50%">
+				<col style="width: 50%">
+			</colgroup>
+			<colgroup *ngIf="isMobileDevices">
+				<col style="width: 150px">
+				<col style="width: 100px">
+			</colgroup>
+		</ng-template>
+		<ng-template pTemplate="caption">
+			{{"LABELS.PREZENTA_ONLINE_PREZENTA" | translate}}
+		</ng-template>
+		<ng-template pTemplate="header">
+			<tr>
+				<th> {{"LABELS.PREZENTA_ONLINE_TIP_INSTITUTIE" | translate}} </th>
+				<th> {{"LABELS.PREZENTA_ONLINE_PERSOANE" | translate}} </th>	
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="footer">
+				<tr>	
+					<td> {{"LABELS.PREZENTA_ONLINE_MEMBRU_ARB" | translate}} </td>		
+					<td>{{participanti.totalMembriiArb}}</td>		
+				</tr>
+				<tr>	
+					<td> {{"LABELS.PREZENTA_ONLINE_MEMBRU_AFILIAT" | translate}} </td>		
+					<td>{{participanti.totalMembriiAfiliati}}</td>		
+				</tr>
+				<tr>	
+					<td> {{"LABELS.PREZENTA_ONLINE_ALTE_INSTITUTII" | translate}} </td>		
+					<td>{{participanti.totalMembriiAlteInstitutii}}</td>		
+				</tr>
+				<tr>	
+					<td> <b>{{"LABELS.PREZENTA_ONLINE_TOTAL" | translate}}</b> </td>		
+					<td> <b>{{participanti.totalParticipanti}}</b> </td>		
+				</tr>
+		</ng-template>
+	</p-table>
+
+	<p-footer>
+		<p-button *ngIf="isPrezentaFinalizata && !isUserPrezenta" [label]="'LABELS.PREZENTA_ONLINE_IMPORT' | translate" (onClick)="onImportaPrezenta()"></p-button>
+		<p-button *ngIf="finalizarePrezentaVisible && !isPrezentaFinalizata" [label]="'LABELS.PREZENTA_ONLINE_FINALIZARE_PREZENTA' | translate" (onClick)="onFinalizarePrezenta()"></p-button>
+		<p-button [label]="'LABELS.CANCEL' | translate" (onClick)="onHide()"></p-button>
+	</p-footer>
+</p-dialog>
+
+<app-participant-window
+    *ngIf="participantWindowVisible"
+	[documentId]="inputData.documentId"
+	[documentLocationRealName]="inputData.documentLocationRealName"
+	(windowClosed)="onParticipantWindowClose()"
+	(dataSaved)="onParticipantWindowDataSaved()">
+</app-participant-window>
+
+<app-confirmation-window *ngIf="confirmationWindow.visible"
+	[messages]="confirmationWindow.messages"
+	[confirmationCallback]="confirmationWindow.callback">
+</app-confirmation-window>

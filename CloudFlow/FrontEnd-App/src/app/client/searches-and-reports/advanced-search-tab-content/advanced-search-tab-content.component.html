@@ -1,0 +1,114 @@
+<div class="ui-g">
+	<form [formGroup]="formGroup">
+		
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-sm-12 ui-md-3">{{"LABELS.WORKSPACE" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-9">
+				<app-document-location-selector 
+					formControlName="documentLocation">
+				</app-document-location-selector>
+			</div>
+		</div>
+
+		<p-fieldset [toggleable]="true" [legend]="'LABELS.DOCUMENT_CREATION_DATE' | translate">
+
+			<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-3">{{"LABELS.DOCUMENT_CREATION_DATE_FROM" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-9">
+					<p-calendar 
+						[showIcon]="true"
+						[dateFormat]="dateFormat"
+						[monthNavigator]="true"
+						[yearNavigator]="true"
+						[yearRange]="yearRange"
+						formControlName="documentCreationDateFrom"
+						readonlyInput="true">
+					</p-calendar>
+				</div>
+				<div *ngIf="documentCreationDateFromFormControl.invalid && (documentCreationDateFromFormControl.dirty || documentCreationDateFromFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="documentCreationDateFromFormControl.errors['toDateGreaterThanFromDate'] ">{{'MESSAGES.START_DATE_MUST_BE_LOWER_THAT_END_DATE' | translate}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-3">{{"LABELS.DOCUMENT_CREATION_DATE_TO" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-9">
+					<p-calendar 
+						[showIcon]="true"
+						[dateFormat]="dateFormat"
+						[monthNavigator]="true"
+						[yearNavigator]="true"
+						[yearRange]="yearRange"
+						formControlName="documentCreationDateTo"
+						readonlyInput="true">
+					</p-calendar>
+				</div>
+				<div *ngIf="documentCreationDateToFormControl.invalid && (documentCreationDateToFormControl.dirty || documentCreationDateToFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="documentCreationDateToFormControl.errors['fromDateLowerThanToDate']">{{'MESSAGES.END_DATE_MUST_BE_GRATER_THAT_START_DATE' | translate}} </span>
+					</div>
+				</div>
+			</div>
+		
+		</p-fieldset>
+
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-sm-12 ui-md-3">{{"LABELS.DOC_TYPE" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-9">
+				<p-dropdown 
+					[options]="documentTypeSelectItems"
+					[autoDisplayFirst]="false"
+					(onChange)="onDocumentTypeChange($event)"
+					formControlName="documentType"
+					appendTo="body"
+					filter="true"
+					required>
+				</p-dropdown>
+			</div>
+			<div *ngIf="documentTypeFormControl.invalid && (documentTypeFormControl.dirty || documentTypeFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-6">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-sm-12 ui-md-3">{{"LABELS.SEARCH_IN_VERSIONS" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-9">
+				<p-checkbox
+					formControlName="searchInVersions"
+					binary="true">
+				</p-checkbox>
+			</div>
+		</div>
+		
+		<br>
+
+		<p-fieldset [toggleable]="true" [legend]="'LABELS.INDEXED_METADATAS' | translate">
+			<div *ngFor="let metadataDefinition of metadataDefinitions" class="ui-fluid">
+				<app-search-document-metadata
+					[formGroup]="formGroup"
+					[metadataDefinition]="metadataDefinition">
+				</app-search-document-metadata>
+			</div>
+		</p-fieldset>
+		
+		<br>
+
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-sm-12 ui-md-3">{{"LABELS.DOCUMENT_STATES" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-9">
+				<app-document-states-selector
+					[documentTypeIds]="documentTypeIds"
+					[showControls]="false"
+					formControlName="documentStates"></app-document-states-selector>
+			</div>
+		</div>
+
+	</form>
+</div>

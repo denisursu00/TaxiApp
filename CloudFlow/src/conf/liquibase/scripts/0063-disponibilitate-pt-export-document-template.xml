@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	
+	<changeSet id="0063-actualizare-expresie-petru-export-nota-cd-das" author="CloudSoft.User4">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE documenttypetemplate 
+			SET export_availability_expression='{tip_nota_cd} =~ ''.*#aprobare#.*'''
+			WHERE documenttypeid = (select id from documenttype where name = 'Nota CD - Consilieri Financiari Bancari DAS') AND name = 'TemplateNotaCdAprobare.docx';
+			
+			UPDATE documenttypetemplate 
+			SET export_availability_expression='{tip_nota_cd} =~ ''.*#dezbatere#.*'''
+			WHERE documenttypeid = (select id from documenttype where name = 'Nota CD - Consilieri Financiari Bancari DAS') AND name = 'TemplateNotaCdDezbatere.docx';
+			
+			UPDATE documenttypetemplate 
+			SET export_availability_expression='{tip_nota_cd} =~ ''.*#informare#.*'''
+			WHERE documenttypeid = (select id from documenttype where name = 'Nota CD - Consilieri Financiari Bancari DAS') AND name = 'TemplateNotaCdInformare.docx';
+			
+			
+			UPDATE documenttypetemplate 
+			SET export_availability_expression='{tip_nota_cd} =~ ''.*#aprobare#.*'''
+			WHERE documenttypeid = (select id from documenttype where name = 'Nota CD - Directori') AND name = 'TemplateNotaCdAprobare.docx';
+			
+			UPDATE documenttypetemplate 
+			SET export_availability_expression='{tip_nota_cd} =~ ''.*#dezbatere#.*'''
+			WHERE documenttypeid = (select id from documenttype where name = 'Nota CD - Directori') AND name = 'TemplateNotaCdDezbatere.docx';
+			
+			UPDATE documenttypetemplate 
+			SET export_availability_expression='{tip_nota_cd} =~ ''.*#informare#.*'''
+			WHERE documenttypeid = (select id from documenttype where name = 'Nota CD - Directori') AND name = 'TemplateNotaCdInformare.docx';
+			
+			
+			UPDATE documenttypetemplate 
+			SET export_availability_expression='{tip_nota_cd} =~ ''.*#aprobare#.*'''
+			WHERE documenttypeid = (select id from documenttype where name = 'Nota CD - Responsabil') AND name = 'TemplateNotaCdAprobare.docx';
+			
+			UPDATE documenttypetemplate 
+			SET export_availability_expression='{tip_nota_cd} =~ ''.*#dezbatere#.*'''
+			WHERE documenttypeid = (select id from documenttype where name = 'Nota CD - Responsabil') AND name = 'TemplateNotaCdDezbatere.docx';
+			
+			UPDATE documenttypetemplate 
+			SET export_availability_expression='{tip_nota_cd} =~ ''.*#informare#.*'''
+			WHERE documenttypeid = (select id from documenttype where name = 'Nota CD - Responsabil') AND name = 'TemplateNotaCdInformare.docx';
+			
+						
+			UPDATE documenttypetemplate 
+			SET export_availability_expression='{tip_nota_cd} =~ ''.*#aprobare#.*'''
+			WHERE documenttypeid = (select id from documenttype where name = 'Nota CD - Useri ARB') AND name = 'TemplateNotaCdAprobare.docx';
+			
+			UPDATE documenttypetemplate 
+			SET export_availability_expression='{tip_nota_cd} =~ ''.*#dezbatere#.*'''
+			WHERE documenttypeid = (select id from documenttype where name = 'Nota CD - Useri ARB') AND name = 'TemplateNotaCdDezbatere.docx';
+			
+			UPDATE documenttypetemplate 
+			SET export_availability_expression='{tip_nota_cd} =~ ''.*#informare#.*'''
+			WHERE documenttypeid = (select id from documenttype where name = 'Nota CD - Useri ARB') AND name = 'TemplateNotaCdInformare.docx';
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

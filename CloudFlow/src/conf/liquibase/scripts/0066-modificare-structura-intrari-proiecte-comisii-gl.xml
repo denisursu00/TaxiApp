@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0066-modificare-structura-intrari-proiecte-comisii-gl" author="CloudSoft.User2">
+		<sql endDelimiter=";"><![CDATA[
+			ALTER TABLE registru_intrari_proiect
+			DROP CONSTRAINT registru_intrari_proiect_pk;
+			
+			ALTER TABLE registru_intrari_proiect
+			DROP COLUMN id;
+			
+			CREATE TABLE bkp_registru_intrari_proiect AS
+			SELECT * FROM registru_intrari_proiect;
+			
+			ALTER TABLE registru_intrari_proiect
+			ADD CONSTRAINT registru_intrari_proiect_pk PRIMARY KEY (registru_intrari_id, proiect_id);
+			
+			ALTER TABLE registru_intrari_comisie_gl
+			DROP CONSTRAINT registru_intrari_comisie_gl_pk;
+			
+			ALTER TABLE registru_intrari_comisie_gl
+			DROP COLUMN id;
+			
+			CREATE TABLE bkp_registru_intrari_comisie_gl AS
+			SELECT * FROM registru_intrari_comisie_gl;
+			
+			ALTER TABLE registru_intrari_comisie_gl
+			ADD CONSTRAINT registru_intrari_comisie_gl_pk PRIMARY KEY (registru_intrari_id, comisii_gl_id);
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

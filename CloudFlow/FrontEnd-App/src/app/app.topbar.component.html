@@ -1,0 +1,68 @@
+<style>
+    .logo-text { 
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #ffffff;
+    }
+    .logo-text-environment {
+        font-size: 1.1em;
+        padding-left: 4px;
+        color: #f3f722;
+    }
+</style>
+<div class="layout-topbar">
+    <a href="#" id="topbar-menu-button" (click)="app.onMenuButtonClick($event)">
+        <i class="fa fa-angle-left arrow"></i>
+        <i class="fa fa-angle-up mobile"></i>
+    </a>
+
+    <!-- <div class="search-input">
+        <i class="fa fa-search icon-search"></i>
+        <input type="text"/>
+    </div> -->
+
+    <a [routerLink]="homeRouterLink" class="logo-container" title="version: {{appVersion}}">
+        <!-- <img src="assets/layout/images/ecuador-logo.png" alt="ecuador-layout" /> -->
+        <span class="logo-text" translate>LABELS.APP_NAME</span><span *ngIf="!isProduction" class="logo-text-environment">({{appEnvironmentName}})</span>
+    </a>
+
+    <a id="topbar-profile-menu-button" href="#" (click)="app.onTopbarMenuButtonClick($event)">        
+        <span>{{ loggedInUserInfo }}</span>
+        <i class="fa fa-sort-desc"></i>
+    </a>
+
+    <ul id="topbar-usermenu" class="fadeInDown animated" [ngClass]="{'usermenu-active': app.topbarMenuActive}">
+        <li #settings [ngClass]="{'menuitem-active':app.activeTopbarItem === settings}">
+            <a href="#" (click)="app.onTopbarItemClick($event, settings)">
+                <i class="fa fa-language"></i>
+                <span class="topbar-item-name" translate>LABELS.LANGUAGE</span>
+            </a>
+            <ul>
+                <li role="menuitem">
+                    <a href="#" (click)="onChangeLanguage($event, 'ro')">
+                        <i class="fa fa-globe"></i>
+                        <span>RO</span>
+                    </a>
+                </li>
+                <li role="menuitem">
+                    <a href="#" (click)="onChangeLanguage($event, 'en')">
+                        <i class="fa fa-globe"></i>
+                        <span>EN</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li *ngIf="!isUserPrezenta">
+            <a href="#" (click)="onChangePassword($event)">
+                <i class="fa fa-sign-out"></i>
+                <span class="topbar-item-name" translate>LABELS.CHANGE_PASSWORD</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" (click)="onLogout($event)">
+                <i class="fa fa-sign-out"></i>
+                <span class="topbar-item-name" translate>LABELS.LOGOUT</span>
+            </a>
+        </li>
+    </ul>
+</div>

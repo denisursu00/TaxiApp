@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0068-adaugare-subactivitate-proiect" author="CloudSoft.User2">
+		<sql endDelimiter=";"><![CDATA[
+			CREATE TABLE subactivity (
+			id BIGINT NOT NULL,
+			project_id BIGINT NOT NULL,
+			name TEXT,
+			CONSTRAINT subactivity_pk PRIMARY KEY (id));
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0068-adaugare-fk-constraint-subactivitate" author="CloudSoft.User2">
+		<sql endDelimiter=";"><![CDATA[
+			ALTER TABLE subactivity
+			ADD CONSTRAINT subactivity_project_id_fk FOREIGN KEY (project_id) REFERENCES project(id);
+			
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0068-adaugare-coloana-subactivitate-task" author="CloudSoft.User2">
+		<sql endDelimiter=";"><![CDATA[
+			ALTER TABLE task
+			ADD COLUMN subactivity_id BIGINT,
+			ADD CONSTRAINT task_subactivity_id_fk FOREIGN KEY (subactivity_id) REFERENCES subactivity(id) ON DELETE SET NULL;
+			
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

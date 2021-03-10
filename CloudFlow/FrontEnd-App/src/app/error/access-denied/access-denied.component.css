@@ -1,0 +1,9 @@
+.logo-text { 
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+.exception-body .exception-panel {
+	padding-top: 5px;
+}

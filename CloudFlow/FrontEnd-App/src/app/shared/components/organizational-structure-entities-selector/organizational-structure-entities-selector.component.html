@@ -1,0 +1,43 @@
+<div class="ui-g ui-g-12 ui-md-5 ui-lg-5">
+	<p-accordion (onOpen)="onOpenTab($event)">
+		<p-accordionTab [header]="'LABELS.ORGANIZATIONAL_STRUCTURE' | translate" selected="true" [disabled]="readonly">
+			<app-organization-selector 
+					selectionMode="multiple" 
+					[selectableEntityTypes]="selectableEntityTypes"
+					[visibleEntityTypes]="visibleEntityTypes"
+					(dataLoaded)="onOrganizationSelectorDataLoaded($event)"
+					(selectionChanged)="onOrganizationSelectionChanged($event)">
+			</app-organization-selector>
+		</p-accordionTab>
+		<p-accordionTab *ngIf="groupsVisible" [header]="'LABELS.GROUPS' | translate" [disabled]="readonly">
+			<app-group-selector
+				(selectionChanged)="onGroupSelectionChanged($event)"
+				(dataLoaded)="onGroupSelectorDataLoaded($event)">
+			</app-group-selector>
+		</p-accordionTab>
+	</p-accordion>
+</div>
+
+<div class="ui-g-12 ui-md-2 ui-lg-2">
+	<div class="ui-g-12">
+		<button pButton type="button" label="Adauga" (click)="onAddEntity()" [disabled]="readonly"></button>
+	</div>
+	<div class="ui-g-12">
+		<button pButton type="button" class="ui-button-danger" label="Elimina" (click)="onDeleteEntity()" [disabled]="readonly"></button>
+	</div>
+</div>
+
+<div class="ui-g-12 ui-md-5 ui-lg-5"> 
+	<p-table [(selection)]="selectedEntitiesViewInfo" [value]="entitiesViewInfo" selectionMode="multiple">
+		<ng-template pTemplate="header">
+			<tr>
+				<th>{{"LABELS.ENTITY" | translate}}</th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-entity>
+			<tr [pSelectableRow]="entity">
+				<td><span class="pi {{entity.icon}}"></span> {{entity.label}}</td>
+			</tr>
+		</ng-template>
+	</p-table>
+</div>

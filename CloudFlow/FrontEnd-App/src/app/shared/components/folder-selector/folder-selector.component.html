@@ -1,0 +1,12 @@
+<p-tree
+	[(selection)]="selectedNode"
+	[value]="folders"
+	[loading]="isFolderLoading"
+	(onNodeSelect)="onNodeSelect($event)"
+	(onNodeUnselect)="onNodeUnselect($event)"
+	(onNodeExpand)="onNodeExpand($event)"
+	(onNodeDrop)="onNodeDrop($event)"
+	draggableNodes="true"
+	droppableNodes="true"
+	selectionMode="single" >
+</p-tree>

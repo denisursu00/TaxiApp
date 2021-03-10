@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaCDaprob" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bcefacc5-6559-4471-a131-1397b5ee330b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="RapoarteARB\avans_salariu\cerereAvans.xml"/>
+	<parameter name="imagineSt" class=""/>
+	<parameter name="ImagineDr" class=""/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="initiatorCerereAvans" class="java.lang.String"/>
+	<field name="functie" class="java.lang.String"/>
+	<field name="lunaAvans" class="java.util.Date"/>
+	<field name="valoareAvans" class="java.lang.Long"/>
+	<field name="dataInitiereCerereAvans" class="java.util.Date"/>
+	<field name="dataAprobareDeop" class="java.lang.String"/>
+	<field name="dataAprobareDeic" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="655" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="0" y="200" width="555" height="40" uuid="b76cfd60-ab7e-497d-9a4a-d1bcba797740"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	Subsemnata/Subsemnatul " + $F{initiatorCerereAvans} + ", salariat al Asociației Române a Băncilor în funcţia de " + $F{functie} +", solicit acordarea unui  avans din salariul aferent lunii " +  $F{lunaAvans} + ", în valoare de " + $F{valoareAvans} + " lei, pentru acoperirea unor cheltuieli personale. "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="270" width="555" height="30" uuid="67f3c3b4-7e77-4699-bfd2-85c5bdcfc927"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="11" isBold="false"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cu multumiri,"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="310" width="555" height="20" uuid="b924e238-a57b-4451-9cae-b06970649934"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
+					<font fontName="DejaVu Sans" size="11" isBold="false"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{initiatorCerereAvans}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="0" y="330" width="555" height="20" uuid="0e72964b-6a62-403c-b112-eb344d538f7a"/>
+				<textElement textAlignment="Right" markup="styled">
+					<font fontName="DejaVu Sans" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataInitiereCerereAvans}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="390" width="555" height="20" uuid="8ad9c0a5-fae1-493a-a452-0968773d8667"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="DejaVu Sans" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Aprobat"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="150" width="555" height="38" uuid="821aca9d-aa2f-40e1-b834-c7b2e259624f"/>
+				<textElement textAlignment="Justified">
+					<font fontName="DejaVu Sans" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	Doamna Director Executiv,"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="70" width="555" height="61" uuid="f4511f24-e7b3-4455-831b-cfae60806ccd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CERERE AVANS SALARIAL"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="410" width="555" height="20" uuid="aa8370a4-a1e9-41db-9e2c-21dfaddc23a9"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="DejaVu Sans" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rodica Tuchila"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="430" width="555" height="20" uuid="51c106d8-7192-4add-a69d-0a2b4663480d"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="DejaVu Sans" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Director Executiv"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="0" y="450" width="555" height="30" uuid="897fa350-1316-4a99-badd-94ed14aab4ec"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="DejaVu Sans" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataAprobareDeop}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="540" width="555" height="20" uuid="7a551c3c-f630-4b1f-b4a4-0b5596556243"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="DejaVu Sans" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Gabriela Folcut"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="560" width="555" height="20" uuid="2c1b352d-c085-47e3-91cc-051c4e369129"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="DejaVu Sans" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Director Executiv"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="0" y="580" width="555" height="30" uuid="3cfd7224-2a84-45f9-9d82-c7383fbc9935"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="DejaVu Sans" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataAprobareDeic}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="555" height="41" uuid="abd0eb60-8609-42d9-84e3-72e2dd462a8e"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Grad de confidențialitate: Restricționat Acest document este destinat exclusiv adresantului.  Informațiile pot fi utilizate doar de persoana sau entitatea căreia i-au fost adresate."]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

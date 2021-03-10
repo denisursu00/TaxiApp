@@ -1,0 +1,22 @@
+{
+	
+	"nr_decizie":"sc_1",	
+	"data_decizie":"23.12.2018 00:00:00",	
+	"apelativ":"Dna",
+	"user_delegat":"Vasilescu Mihai",	
+	"functia":"Secretar General",	
+	"tara":"Romania",	
+	"data_inceput":"23.12.2018 00:00:00",	
+	"data_sfarsit":"23.12.2018 00:00:00",	
+	"eveniment":"Deschidere nou project",	
+	"organism":"Contabilitate",	
+	"oras":"Cluj-Napoca",	
+	"data_inceput_conferinta":"23.12.2018 00:00:00",	
+	"oras_intermediar":"Alba Iulia",	
+	"aprobator_depr":"Ioan Stanciu",	
+	"data_aprobare_depr":"23.12.2018 13:20:00",	
+	"aprobator_deic":"Mihai Dragulin",	
+	"data_aprobare_deic":"23.12.2018 17:58:00",	
+	"aprobator_logistica":"Florin Mihaila",	
+	"data_aprobare_logistica": "23.12.2018 00:00:00"
+}

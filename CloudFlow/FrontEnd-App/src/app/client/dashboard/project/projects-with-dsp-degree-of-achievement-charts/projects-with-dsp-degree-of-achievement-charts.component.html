@@ -1,0 +1,36 @@
+<div class="ui-g-12">
+	<div class="ui-g-12 ui-md-6 ui-lg-6" style="text-align: center">
+		<h3>General</h3>
+		<app-gauge-chart [value]="valoarePentruGradDeRealizareGeneral" [min]="minValue" [max]="maxValue" [thickness]="thickness" [unitLabel]="unitLabel" [size]="size"
+			[backgroundColor]="backgroundColorPentruGradGeneral" [foregroundColor]="foregroundColorPentruGradGeneral" [fontColor]="backgroundColorPentruGradGeneral">
+		</app-gauge-chart>
+	</div>
+	<div class="ui-g-12 ui-md-6 ui-lg-6" style="text-align: center">
+		<h3>Strategic</h3>
+		<app-gauge-chart [value]="valoarePentruGradDeImportantaStrategic" [min]="minValue" [max]="maxValue" [thickness]="thickness" [unitLabel]="unitLabel" [size]="size"
+			[backgroundColor]="backgroundColorPentruGradDeImportantaStrategic" [foregroundColor]="foregroundColorPentruGradDeImportantaStrategic"
+			[fontColor]="backgroundColorPentruGradDeImportantaStrategic">
+		</app-gauge-chart>
+	</div>
+	<div class="ui-g-12 ui-md-6 ui-lg-6" style="text-align: center">
+		<h3>Critic</h3>
+		<app-gauge-chart [value]="valoarePentruGradDeImportantaCritic" [min]="minValue" [max]="maxValue" [thickness]="thickness" [unitLabel]="unitLabel" [size]="size"
+			[backgroundColor]="backgroundColorPentruGradDeImportantaCritic" [foregroundColor]="foregroundColorPentruGradDeImportantaCritic"
+			[fontColor]="backgroundColorPentruGradDeImportantaCritic">
+		</app-gauge-chart>
+	</div>
+	<div class="ui-g-12 ui-md-6 ui-lg-6" style="text-align: center">
+		<h3>Important</h3>
+		<app-gauge-chart [value]="valoarePentruGradDeImportantaImportant" [min]="minValue" [max]="maxValue" [thickness]="thickness" [unitLabel]="unitLabel" [size]="size"
+			[backgroundColor]="backgroundColorPentruGradDeImportantaImportant" [foregroundColor]="foregroundColorPentruGradDeImportantaImportant"
+			[fontColor]="backgroundColorPentruGradDeImportantaImportant">
+		</app-gauge-chart>
+	</div>
+	<div class="ui-g-12 ui-md-6 ui-lg-6" style="text-align: center">
+		<h3>In asteptare</h3>
+		<app-gauge-chart [value]="valoarePentruGradDeImportantaInAsteptare" [min]="minValue" [max]="maxValue" [thickness]="thickness" [unitLabel]="unitLabel" [size]="size"
+			[backgroundColor]="backgroundColorPentruGradDeImportantaInAsteptare" [foregroundColor]="foregroundColorPentruGradDeImportantaInAsteptare"
+			[fontColor]="backgroundColorPentruGradDeImportantaInAsteptare">
+		</app-gauge-chart>
+	</div>
+</div>

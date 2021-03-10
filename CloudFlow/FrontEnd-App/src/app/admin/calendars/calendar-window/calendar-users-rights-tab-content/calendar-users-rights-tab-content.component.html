@@ -1,0 +1,16 @@
+<div class="ui-g ui-grid-responsive ui-grid-pad ui-fluid">
+	<div class="ui-g-12 ui-g-nopad">
+		<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.ANY_USER_ALLOWED" | translate}}:</div>
+		<div class="ui-g-12 ui-sm-12 ui-md-10">
+			<p-checkbox [(ngModel)]="permitAll" binary="true"></p-checkbox>
+		</div>
+	</div>
+
+	<app-calendar-user-rights-selector
+			[usersRights]="usersRights"
+			[calendarId]="calendarId"
+			[premitAll]="permitAll"
+			[mode]="mode"
+			(selectionChanged)="onUsersRightsSelectionChanged($event)">
+	</app-calendar-user-rights-selector>
+</div>

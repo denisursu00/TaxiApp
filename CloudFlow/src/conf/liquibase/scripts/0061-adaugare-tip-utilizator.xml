@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0061-adaugare-tip-utilizator" author="CloudSoft.User4">
+		<sql endDelimiter=";">
+			ALTER TABLE edocuser ADD COLUMN type TEXT;
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0061-setare-tip-utilizator" author="CloudSoft.User4">
+		<sql endDelimiter=";">
+			UPDATE edocuser
+			SET type = 'PERSON'
+			WHERE username NOT IN('prezenta', 'application.user');
+			
+			UPDATE edocuser
+			SET type = 'SIMPLE_USER'
+			WHERE username = 'prezenta';
+			
+			UPDATE edocuser
+			SET type = 'HIDDEN'
+			WHERE username = 'application.user';
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0061-adaugare-constrangere-tip-utilizator-not-null" author="CloudSoft.User4">
+		<sql endDelimiter=";">
+			ALTER TABLE edocuser ALTER COLUMN type SET NOT NULL;
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

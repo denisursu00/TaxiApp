@@ -1,0 +1,649 @@
+<form [formGroup]="formGroup">
+
+	<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3">
+				{{'LABELS.NAME' | translate}} *:
+			</div>
+			<div class="ui-grid-col-9">
+				<input type="text" formControlName="name" pInputText>
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3"></div>
+			<div class="ui-grid-col-9">
+				<div class="ui-message ui-messages-error ui-corner-all" *ngIf="nameFormControl.invalid && (nameFormControl.dirty || nameFormControl.touched)">
+					<span class="fa fa-close"></span>					
+					<span *ngIf="nameFormControl.errors['required'] || nameFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					<span *ngIf="nameFormControl.errors['pattern']">{{'MESSAGES.METADATA_NAME_INCORRECT' | translate}}</span>
+					<span *ngIf="nameFormControl.errors['duplicated']">{{'MESSAGES.NAME_ALREADY_EXISTS' | translate}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3">
+				{{'LABELS.LABEL' | translate}} *:
+			</div>
+			<div class="ui-grid-col-9">
+				<input type="text" formControlName="label" pInputText>
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3"></div>
+			<div class="ui-grid-col-9">
+				<div class="ui-message ui-messages-error ui-corner-all" *ngIf="labelFormControl.invalid && (labelFormControl.dirty || labelFormControl.touched)">
+					<span class="fa fa-close"></span>					
+					<span *ngIf="labelFormControl.errors['required'] || labelFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3">
+				{{'LABELS.TYPE' | translate}} *:
+			</div>
+			<div class="ui-grid-col-9">
+				<app-metadata-definition-type-field 
+					formControlName="type" 
+					[usageMode]="usageMode" 
+					(selectionChanged)="onMetadataTypeChanged($event)">
+				</app-metadata-definition-type-field>
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3"></div>
+			<div class="ui-grid-col-9">
+				<div class="ui-message ui-messages-error ui-corner-all" *ngIf="typeFormControl.invalid && (typeFormControl.dirty || typeFormControl.touched)">
+					<span class="fa fa-close"></span>					
+					<span *ngIf="typeFormControl.errors['required']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="metadataDefinitionsOfMetadataCollectionFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3"></div>
+			<div class="ui-grid-col-9">
+				<app-metadata-definitions-of-metadata-collection-field 
+					formControlName="metadataDefinitionsOfMetadataCollection" 
+					[workflowStates]="inputData.workflowStates">
+				</app-metadata-definitions-of-metadata-collection-field>
+			</div>
+		</div>
+	</div>
+	
+	<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3">
+				{{'LABELS.MANDATORY' | translate}}:
+			</div>
+			<div class="ui-grid-col-9">
+				<p-checkbox 
+					[formControl]="mandatoryFormControl"
+					name="mandatory"
+					[binary]="true"
+					(onChange)="onMandatoryChanged($event)">
+				</p-checkbox>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="mandatoryInStatesFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3">
+				{{'LABELS.MANDATORY_IN_STEPS' | translate}}:
+			</div>
+			<div class="ui-grid-col-9">
+				<app-workflow-states-selection-field 
+					formControlName="mandatoryInStates"
+					[possibleStates]="inputData.workflowStates"
+					(selectionChanged)="onMandatoryInStatesSelectionChanged($event)">
+				</app-workflow-states-selection-field>
+			</div>
+		</div>
+	</div>
+
+	<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3">
+				{{'LABELS.EDIT_RESTRICTION' | translate}}:
+			</div>
+			<div class="ui-grid-col-9">
+				<p-checkbox
+					[formControl]="restrictedOnEditFormControl"
+					name="restrictedOnEditFormControl"
+					[binary]="true"
+					(onChange)="onRestrictedOnEditChanged($event)">
+				</p-checkbox>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="restrictedOnEditInStatesFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3">
+				{{'LABELS.RESTRICTED_IN_STEPS' | translate}} *:
+			</div>
+			<div class="ui-grid-col-9">
+				<app-workflow-states-selection-field 
+					formControlName="restrictedOnEditInStates"
+					[possibleStates]="inputData.workflowStates">
+				</app-workflow-states-selection-field>
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3"></div>
+			<div class="ui-grid-col-9">
+				<div *ngIf="restrictedOnEditInStatesFormControl.invalid && (restrictedOnEditInStatesFormControl.dirty || restrictedOnEditInStatesFormControl.touched)" class="ui-message ui-messages-error ui-corner-all">
+					<span class="fa fa-close"></span>					
+					<span *ngIf="restrictedOnEditInStatesFormControl.errors['required']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3">
+				{{'LABELS.INVISIBLE' | translate}}:
+			</div>
+			<div class="ui-grid-col-9">
+				<p-checkbox
+					[formControl]="invisibleFormControl"
+					name="invisibleFormControl"
+					[binary]="true"
+					(onChange)="onInvisibleChanged($event)">
+				</p-checkbox>
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3"></div>
+			<div class="ui-grid-col-9">
+				<div class="ui-message ui-messages-error ui-corner-all" *ngIf="invisibleFormControl.invalid && (invisibleFormControl.dirty || invisibleFormControl.touched)">
+					<span class="fa fa-close"></span>					
+					<span *ngIf="invisibleFormControl.errors['mandatoryAndInvisibleAtTheSameTime']">{{'MESSAGES.MANDATORY_AND_INVISIBLE_AT_THE_SAME_TIME' | translate}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="invisibleInStatesFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3">
+				{{'LABELS.INVISIBLE_IN_STEPS' | translate}}:
+			</div>
+			<div class="ui-grid-col-9">
+				<app-workflow-states-selection-field 
+					formControlName="invisibleInStates"
+					[possibleStates]="inputData.workflowStates"
+					(selectionChanged)="onInvisibleInStatesSelectionChanged($event)">
+				</app-workflow-states-selection-field>
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3"></div>
+			<div class="ui-grid-col-9">
+				<div class="ui-message ui-messages-error ui-corner-all" *ngIf="invisibleInStatesFormControl.invalid && (invisibleInStatesFormControl.dirty || invisibleInStatesFormControl.touched)">
+					<span class="fa fa-close"></span>					
+					<span *ngIf="invisibleInStatesFormControl.errors['mandatoryAndInvisibleAtTheSameStep']">{{'MESSAGES.MANDATORY_AND_INVISIBLE_AT_THE_SAME_STEP' | translate}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="representativeFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3">
+				{{'LABELS.SIGNIFICANT' | translate}}:
+			</div>
+			<div class="ui-grid-col-9">
+				<p-checkbox
+					[formControl]="representativeFormControl"
+					name="representativeFormControl"
+					[binary]="true">
+				</p-checkbox>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="indexedFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3">
+				{{'LABELS.INDEXED' | translate}}:
+			</div>
+			<div class="ui-grid-col-9">
+				<p-checkbox
+					[formControl]="indexedFormControl"
+					name="indexedFormControl"
+					[binary]="true">
+				</p-checkbox>
+			</div>
+		</div>
+	</div>
+
+	<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3">
+				{{'LABELS.ORDER_NUMBER' | translate}} *:
+			</div>
+			<div class="ui-grid-col-9">
+				<input type="text" formControlName="orderNumber" pInputText pKeyFilter="pint">
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3"></div>
+			<div class="ui-grid-col-9">
+				<div class="ui-message ui-messages-error ui-corner-all" *ngIf="orderNumberFormControl.invalid && (orderNumberFormControl.dirty || orderNumberFormControl.touched)">
+					<span class="fa fa-close"></span>					
+					<span *ngIf="orderNumberFormControl.errors['required'] || orderNumberFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<p-fieldset [legend]="'LABELS.AUTONUMBER' | translate" *ngIf="prefixFormControl.enabled && numberLengthFormControl.enabled">
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					{{'LABELS.PREFIX' | translate}} *:
+				</div>
+				<div class="ui-grid-col-8">
+					<input type="text" formControlName="prefix" pInputText (input)="onPrefixChanged()">
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4"></div>
+				<div class="ui-grid-col-8">
+					<div class="ui-message ui-messages-error ui-corner-all" *ngIf="prefixFormControl.invalid && (prefixFormControl.dirty || prefixFormControl.touched)">
+						<span class="fa fa-close"></span>					
+						<span *ngIf="prefixFormControl.errors['required'] || prefixFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					{{'LABELS.NUMBER_LENGTH' | translate}} *:
+				</div>
+				<div class="ui-grid-col-8">
+					<input type="text" formControlName="numberLength" pInputText pKeyFilter="pint">
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4"></div>
+				<div class="ui-grid-col-8">
+					<div class="ui-message ui-messages-error ui-corner-all" *ngIf="numberLengthFormControl.invalid && (numberLengthFormControl.dirty || numberLengthFormControl.touched)">
+						<span class="fa fa-close"></span>					
+						<span *ngIf="numberLengthFormControl.errors['required'] || numberLengthFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+						<span *ngIf="numberLengthFormControl.errors['numberLengthLowerThanPrefixLength']">{{'MESSAGES.NUMBER_LENGTH_MUST_BE_GREATER_THAN_PREFIX_LENGTH' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</p-fieldset>
+
+	<p-fieldset [legend]="'LABELS.LIST' | translate" *ngIf="listItemsFormControl.enabled">
+		<div *ngIf="multipleSelectionFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.MULTIPLE_SELECTION' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-checkbox
+						[formControl]="multipleSelectionFormControl"
+						name="multipleSelection"
+						[binary]="true">
+					</p-checkbox>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="extendableFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.EXTENDABLE' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-checkbox
+						[formControl]="extendableFormControl"
+						name="extendable"
+						[binary]="true">
+					</p-checkbox>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="listItemsFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.ALLOWED_VALUES' | translate}} *:
+				</div>
+				<div class="ui-grid-col-9">
+					<app-metadata-list-items-field 
+						formControlName="listItems"
+						(valueChanged)="onMetadataListItemsValueChanged($event)">
+					</app-metadata-list-items-field>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3"></div>
+				<div class="ui-grid-col-9">
+					<div *ngIf="listItemsFormControl.invalid && (listItemsFormControl.dirty || listItemsFormControl.touched)" class="ui-message ui-messages-error ui-corner-all">
+						<span class="fa fa-close"></span>					
+						<span *ngIf="listItemsFormControl.errors['required']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</p-fieldset>
+
+	<p-fieldset [legend]="'LABELS.USER' | translate" *ngIf="onlyUsersFromGroupFormControl.enabled && autoCompleteWithCurrentUserFormControl.enabled">
+		<div *ngIf="onlyUsersFromGroupFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					{{'LABELS.ONLY_USERS_FROM_A_GROUP' | translate}}:
+				</div>
+				<div class="ui-grid-col-8">
+					<p-checkbox
+						[formControl]="onlyUsersFromGroupFormControl"
+						name="onlyUsersFromGroup"
+						[binary]="true"
+						(onChange)="onOnlyUsersFromGroupChanged($event)">
+					</p-checkbox>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="idOfGroupOfPermittedUsersFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					{{'LABELS.GROUP' | translate}}:
+				</div>
+				<div class="ui-grid-col-8">
+					<app-group-selection-field 
+						formControlName="idOfGroupOfPermittedUsers"
+						(selectionChanged)="onIdOfGroupOfPermittedUsersSelectionChanged($event)">
+					</app-group-selection-field>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4"></div>
+				<div class="ui-grid-col-8">
+					<div *ngIf="idOfGroupOfPermittedUsersFormControl.invalid && (idOfGroupOfPermittedUsersFormControl.dirty || idOfGroupOfPermittedUsersFormControl.touched)" class="ui-message ui-messages-error ui-corner-all">
+						<span class="fa fa-close"></span>					
+						<span *ngIf="idOfGroupOfPermittedUsersFormControl.errors['required']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="autoCompleteWithCurrentUserFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					{{'LABELS.AUTO_COMPLETE_WITH_CURRENT_USER' | translate}}:
+				</div>
+				<div class="ui-grid-col-8">
+					<p-checkbox
+						[formControl]="autoCompleteWithCurrentUserFormControl"
+						name="autoCompleteWithCurrentUser"
+						[binary]="true"
+						(onChange)="onAutoCompleteWithCurrentUserChanged($event)">
+					</p-checkbox>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="autoCompleteWithCurrentUserStateFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					{{'LABELS.AUTO_COMPLETE_WITH_CURRENT_USER_STEP' | translate}}:
+				</div>
+				<div class="ui-grid-col-8">
+					<app-workflow-states-selection-field 
+						[selectionMode]="'single'"
+						formControlName="autoCompleteWithCurrentUserState"
+						[possibleStates]="inputData.workflowStates">
+					</app-workflow-states-selection-field>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4"></div>
+				<div class="ui-grid-col-8">
+					<div class="ui-message ui-messages-error ui-corner-all" *ngIf="autoCompleteWithCurrentUserStateFormControl.invalid && (autoCompleteWithCurrentUserStateFormControl.dirty || autoCompleteWithCurrentUserStateFormControl.touched)">
+						<span class="fa fa-close"></span>					
+						<span *ngIf="autoCompleteWithCurrentUserStateFormControl.errors['required']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>		
+	</p-fieldset>
+
+	<p-fieldset [legend]="'LABELS.NOMENCLATOR' | translate" *ngIf="nomenclatorIdFormControl.enabled">
+		<div *ngIf="nomenclatorIdFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.NOMENCLATOR' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+					<app-nomenclator-selection-field 
+						formControlName="nomenclatorId"
+						(selectionChanged)="onNomenclatorIdSelectionChanged($event)">
+					</app-nomenclator-selection-field>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3"></div>
+				<div class="ui-grid-col-9">
+					<div *ngIf="nomenclatorIdFormControl.invalid && (nomenclatorIdFormControl.dirty || nomenclatorIdFormControl.touched)" class="ui-message ui-messages-error ui-corner-all">
+						<span class="fa fa-close"></span>					
+						<span *ngIf="nomenclatorIdFormControl.errors['required']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="nomenclatorValueSelectionFiltersFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.NOMENCLATOR_METADATA_DEFINITION_VALUE_SELECTION_FILTERS' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+					<app-nomenclator-metadata-definition-value-selection-filters-field
+						formControlName="nomenclatorValueSelectionFilters">
+					</app-nomenclator-metadata-definition-value-selection-filters-field>
+				</div>
+			</div>			
+		</div>
+	</p-fieldset>
+
+	<p-fieldset [legend]="'LABELS.AUTO_COMPLETE' | translate" *ngIf="autoCompleteWithCurrentDateFormControl.enabled || autoCompleteWithCurrentDateTimeFormControl.enabled || autoCompleteWithCurrentMonthFormControl.enabled || isAutoCompleteWithMetadataApplicable">
+		<div *ngIf="autoCompleteWithCurrentDateFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					{{'LABELS.AUTO_COMPLETE_WITH_CURRENT_DATE' | translate}}:
+				</div>
+				<div class="ui-grid-col-8">
+					<p-checkbox
+						[formControl]="autoCompleteWithCurrentDateFormControl"
+						name="autoCompleteWithCurrentDate"
+						[binary]="true"
+						(onChange)="onAutoCompleteWithCurrentDateChanged($event)">
+					</p-checkbox>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="autoCompleteWithCurrentDateTimeFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					{{'LABELS.AUTO_COMPLETE_WITH_CURRENT_DATE_TIME' | translate}}:
+				</div>
+				<div class="ui-grid-col-8">
+					<p-checkbox
+						[formControl]="autoCompleteWithCurrentDateTimeFormControl"
+						name="autoCompleteWithCurrentDateTime"
+						[binary]="true"
+						(onChange)="onAutoCompleteWithCurrentDateTimeChanged($event)">
+					</p-checkbox>
+				</div>
+			</div>
+		</div>	
+		<div *ngIf="autoCompleteWithCurrentMonthFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					{{'LABELS.AUTO_COMPLETE_WITH_CURRENT_MONTH' | translate}}:
+				</div>
+				<div class="ui-grid-col-8">
+					<p-checkbox
+						[formControl]="autoCompleteWithCurrentMonthFormControl"
+						name="autoCompleteWithCurrentMonth"
+						[binary]="true"
+						(onChange)="onAutoCompleteWithCurrentMonthChanged($event)">
+					</p-checkbox>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="metadataNameForAutoCompleteWithMetadataFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					{{'LABELS.METADATA_NAME_FOR_AUTO_COMPLETE_WITH_METADATA' | translate}}:
+				</div>
+				<div class="ui-grid-col-8">
+					<p-dropdown 
+						[options]="metadataNameForAutoCompleteWithMetadataSelectItems" 
+						formControlName="metadataNameForAutoCompleteWithMetadata"
+						filter="true"
+						(onChange)="onMetadataNameForAutoCompleteWithMetadataChanged()">
+					</p-dropdown>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="typeOfAutoCompleteWithMetadataFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					{{'LABELS.TYPE_OF_AUTO_COMPLETE_WITH_METADATA' | translate}}:
+				</div>
+				<div class="ui-grid-col-8">
+					<p-dropdown 
+						[options]="typeOfAutoCompleteWithMetadataSelectItems" 
+						formControlName="typeOfAutoCompleteWithMetadata"
+						filter="true"
+						(onChange)="onTypeOfAutoCompleteWithMetadataChanged()">
+					</p-dropdown>
+				</div>
+			</div>
+		</div>	
+		<div *ngIf="nomenclatorAttributeKeyForAutoCompleteWithMetadataFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					{{'LABELS.NOMENCLATOR_ATTRIBUTE_FOR_AUTO_COMPLETE_WITH_METADATA' | translate}}:
+				</div>
+				<div class="ui-grid-col-8">
+					<p-dropdown 
+						[options]="nomenclatorAttributeKeyForAutoCompleteWithMetadataSelectItems" 
+						filter="true"
+						formControlName="nomenclatorAttributeKeyForAutoCompleteWithMetadata">
+					</p-dropdown>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="classNameForAutoCompleteWithMetadataFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					{{'LABELS.CLASS_NAME_FOR_AUTO_COMPLETE_WITH_METADATA' | translate}}:
+				</div>
+				<div class="ui-grid-col-8">
+					<input type="text" formControlName="classNameForAutoCompleteWithMetadata" pInputText>
+				</div>
+			</div>
+		</div>			
+	</p-fieldset>
+
+	<p-fieldset [legend]="'LABELS.DOCUMENT' | translate" *ngIf="metadataDocumentTypeIdFormControl.enabled">
+		<div *ngIf="metadataDocumentTypeIdFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.DOC_TYPE' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+					<app-document-type-selector
+						formControlName="metadataDocumentTypeId"
+						(selectionChanged)="onMetadataDocumentTypeIdChanged($event)">
+					</app-document-type-selector>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3"></div>
+				<div class="ui-grid-col-9">
+					<div *ngIf="metadataDocumentTypeIdFormControl.invalid && (metadataDocumentTypeIdFormControl.dirty || metadataDocumentTypeIdFormControl.touched)" class="ui-message ui-messages-error ui-corner-all">
+						<span class="fa fa-close"></span>					
+						<span *ngIf="metadataDocumentTypeIdFormControl.errors['required']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="multipleDocumentsSelectionFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.MULTIPLE_SELECTION' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-checkbox
+						[formControl]="multipleDocumentsSelectionFormControl"
+						name="multipleDocumentsSelection"
+						[binary]="true">
+					</p-checkbox>
+				</div>
+			</div>
+		</div>
+	</p-fieldset>
+
+	<p-fieldset [legend]="'LABELS.PROJECT' | translate" *ngIf="multipleProjectsSelectionFormControl.enabled">
+		<div *ngIf="multipleProjectsSelectionFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.MULTIPLE_SELECTION' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-checkbox
+						[formControl]="multipleProjectsSelectionFormControl"
+						name="multipleProjectsSelection"
+						[binary]="true">
+					</p-checkbox>
+				</div>
+			</div>
+		</div>
+	</p-fieldset>
+
+	<div *ngIf="defaultValueFormControl.enabled" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3">
+				{{'LABELS.DEFAULT_VALUE' | translate}}:
+			</div>
+			<div class="ui-grid-col-9">
+				<app-metadata-definition-default-value-field formControlName="defaultValue"></app-metadata-definition-default-value-field>
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-3"></div>
+			<div class="ui-grid-col-9">
+				<div class="ui-message ui-messages-error ui-corner-all" *ngIf="defaultValueFormControl.invalid && (defaultValueFormControl.dirty || defaultValueFormControl.touched)">
+					<span class="fa fa-close"></span>					
+					<span *ngIf="defaultValueFormControl.errors['invalidNumber']">{{'MESSAGES.VALUE_MUST_BE_NUMERIC' | translate}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-6"></div>
+			<div class="ui-grid-col-6" style="text-align: right;">
+				<p-button (onClick)="onSaveAction($event)" [label]="'LABELS.' + saveActionLabelCode | translate"></p-button>
+				<p-button (onClick)="onCancelAction($event)" [label]="'LABELS.CANCEL' | translate"></p-button>
+			</div>
+		</div>
+	</div>	
+	
+</form>

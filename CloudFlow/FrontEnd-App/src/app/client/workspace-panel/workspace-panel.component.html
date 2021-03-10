@@ -1,0 +1,40 @@
+<div class="ui-fluid">
+	<div class="ui-g">
+		<div class="ui-g-3 ui-xl-2 ui-sm-12">
+			<app-document-location-toolbar (documentLocationSavedOrDeleted)="onDocumentLocationSavedOrDeleted()">
+			</app-document-location-toolbar>
+			<app-document-location-selector (documentLocationChanged)="onDocumentLocationChanged($event)">
+			</app-document-location-selector>
+		</div>
+		<div class="ui-g-9 ui-xl-10 ui-sm-12">
+			<app-document-toolbar (documentActionPerformed)=" onDocumentToolbarDocumentActionPerformed()">
+			</app-document-toolbar>
+		</div>
+
+		<div class="ui-g-3 ui-xl-2 ui-lg-3 ui-md-12 ui-sm-12">
+			<app-folder-toolbar (folderDeleted)="onFolderDeleted()" (folderSaved)="onFolderSaved()">
+			</app-folder-toolbar>
+			<app-folder-selector (folderSelected)="onFolderSelected($event)"></app-folder-selector>
+		</div>
+		<div class="ui-g-9 ui-xl-10 ui-lg-9 ui-md-12 ui-sm-12">
+			<app-document-grid (selectionChanged)="onDocumentSelectionChanged($event)"
+				(loadStarted)="onDocumentGridLoadStarted()" (loadEnded)="onDocumentGridLoadEnded()">
+			</app-document-grid>
+		</div>
+	</div>
+</div>
+
+<p-blockUI>
+	<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="position: absolute; top: 30%; left: 47%;">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-12" style="text-align: center;">
+				<p-progressSpinner strokeWidth="4" fill="#777" animationDuration=".5s"></p-progressSpinner>
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-12" style="text-align: center;">
+				<span style="color: #FFFFFF;">{{'MESSAGES.PLEASE_WAIT' | translate}}</span>
+			</div>
+		</div>
+	</div>
+</p-blockUI>

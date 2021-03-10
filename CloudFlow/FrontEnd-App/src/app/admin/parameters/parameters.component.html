@@ -1,0 +1,41 @@
+<div class="ui-g">
+	<div class="ui-g-12">
+		<p-button [label]="'LABELS.ADD' | translate" (onClick)="onAddParameter()"></p-button>
+		<p-button [label]="'LABELS.EDIT' | translate" [disabled]="editButtonDisabled" (onClick)="onEditParameter()"></p-button>
+		<p-button [label]="'LABELS.DELETE' | translate" [disabled]="deleteButtonDisabled" (onClick)="onDeleteParameter()"></p-button>
+	</div>
+	<div class="ui-g-12">
+		<p-table [value]="parameters" selectionMode="single" [(selection)]="selectedParameter"
+				[scrollable]="true" [scrollHeight]="scrollHeight"
+				(onRowSelect)="onParameterSelected($event)" (onRowUnselect)="onParameterUnselected($event)" autoLayout="true">
+			<ng-template pTemplate="colgroup">
+				<colgroup>
+					<col style="width: 42%">
+					<col style="width: 35%">
+					<col style="width: 15%">
+					<col style="width: 8%">
+				</colgroup>
+			</ng-template>
+			<ng-template pTemplate="header">
+				<tr>
+					<th>{{"LABELS.PARAMETER_NAME" | translate}}</th>
+					<th>{{"LABELS.PARAMETER_DESCRIPTION" | translate}}</th>
+					<th>{{"LABELS.PARAMETER_VALUE" | translate}}</th>
+					<th>{{"LABELS.PARAMETER_TYPE" | translate}}</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-parameter>
+				<tr [pSelectableRow]="parameter">
+					<td>{{parameter.name}}</td>
+					<td>{{parameter.description}}</td>
+					<td>{{parameter.value}}</td>
+					<td>{{parameter.type}}</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
+</div>
+	
+<app-parameter-window *ngIf="parameterWindowVisible" [mode]="parameterWindowMode" [parameterId]="parameterWindowParameterId"
+		(windowClosed)="onParameterWindowClosed()" (dataSaved)="onParameterWindowDataSaved()">
+</app-parameter-window>

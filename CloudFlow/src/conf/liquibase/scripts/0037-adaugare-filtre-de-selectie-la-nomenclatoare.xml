@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0037-adaugare-filtru-la-selectare-organism-in-nomenclator-comitete-pe-tip_organism-organisme_internationale" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO nomenclator_attribute_selection_filter (
+				id, 
+				attribute_id, 
+				filter_attribute_id, 
+				default_filter_value, 
+				attribute_name_for_filter_value
+			) VALUES (
+				nextval('HIBERNATE_SEQUENCE'), 
+				(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='comitete') and key='attribute1'), 
+				(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='organisme') and key='attribute1'),
+				(select id from nomenclator_values where nomenclator_id=(select id from nomenclator where code='tip_organism') and attribute1='Organisme internationale'), 
+				null
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0037-adaugare-filtru-la-selectare-persoana-in-nomenclator-concedii_personal_arb-pe-institutie-arb" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO nomenclator_attribute_selection_filter (
+				id, 
+				attribute_id, 
+				filter_attribute_id, 
+				default_filter_value, 
+				attribute_name_for_filter_value
+			) VALUES (
+				nextval('HIBERNATE_SEQUENCE'), 
+				(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='concedii_personal_arb') and key='attribute2'), 
+				(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='persoane') and key='attribute9'),
+				(select id from nomenclator_values where nomenclator_id=(select id from nomenclator where code='institutii') and attribute2='Asociatia Romana a Bancilor'), 
+				null
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0037-adaugare-filtru-la-selectare-institutie-in-nomenclator-institutii_membre_ale_organismelor_si_comitetelor-pe-tip_institutie-membru_arb" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO nomenclator_attribute_selection_filter (
+				id, 
+				attribute_id, 
+				filter_attribute_id, 
+				default_filter_value, 
+				attribute_name_for_filter_value
+			) VALUES (
+				nextval('HIBERNATE_SEQUENCE'), 
+				(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='institutii_membre_ale_organismelor_si_comitetelor') and key='attribute1'), 
+				(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='institutii') and key='attribute1'),
+				(select id from nomenclator_values where nomenclator_id=(select id from nomenclator where code='tip_institutii') and attribute1='Membru ARB (B)'), 
+				null
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0037-adaugare-filtru-la-selectare-comitet-in-nomenclator-institutii_membre_ale_organismelor_si_comitetelor-pe-organism" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO nomenclator_attribute_selection_filter (
+				id, 
+				attribute_id, 
+				filter_attribute_id, 
+				default_filter_value, 
+				attribute_name_for_filter_value
+			) VALUES (
+				nextval('HIBERNATE_SEQUENCE'), 
+				(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='institutii_membre_ale_organismelor_si_comitetelor') and key='attribute3'), 
+				(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='comitete') and key='attribute1'),
+				null, 
+				'Organism'
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0037-adaugare-filtru-la-selectare-comitet-in-nomenclator-reprezentanti_arb_organisme_interne_si_internationale-pe-organism" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO nomenclator_attribute_selection_filter (
+				id, 
+				attribute_id, 
+				filter_attribute_id, 
+				default_filter_value, 
+				attribute_name_for_filter_value
+			) VALUES (
+				nextval('HIBERNATE_SEQUENCE'), 
+				(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='reprezentanti_arb_organisme_interne_si_internationale') and key='attribute3'), 
+				(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='comitete') and key='attribute1'),
+				null, 
+				'Organism'
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0037-adaugare-filtru-la-selectare-institutie-in-nomenclator-reprezentanti_arb_organisme_interne_si_internationale-dupa-organism-si-comitet" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE nomenclator_attribute
+			SET type_nomenclator_selection_filters_custom_class='ro.cloudSoft.cloudDoc.services.nomenclator.customSelectionFilters.InstitutieOfReprezentantiArbOrganismeInterneSiInternationale', type_nomenclator_selection_filters_custom_class_attribute_names='Organism;Comitet'
+			WHERE nomenclator_id=(select id from nomenclator where code='reprezentanti_arb_organisme_interne_si_internationale') and key='attribute4';
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0037-adaugare-filtru-la-selectare-reprezentant-in-nomenclator-reprezentanti_arb_organisme_interne_si_internationale-pe-institutie" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO nomenclator_attribute_selection_filter (
+				id, 
+				attribute_id, 
+				filter_attribute_id, 
+				default_filter_value, 
+				attribute_name_for_filter_value
+			) VALUES (
+				nextval('HIBERNATE_SEQUENCE'), 
+				(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='reprezentanti_arb_organisme_interne_si_internationale') and key='attribute5'), 
+				(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='persoane') and key='attribute9'),
+				null, 
+				'Institutie'
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0037-adaugare-filtru-la-selectare-coordonator_arb-in-nomenclator-reprezentanti_arb_organisme_interne_si_internationale-pe-institutia-arb" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO nomenclator_attribute_selection_filter (
+				id, 
+				attribute_id, 
+				filter_attribute_id, 
+				default_filter_value, 
+				attribute_name_for_filter_value
+			) VALUES (
+				nextval('HIBERNATE_SEQUENCE'), 
+				(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='reprezentanti_arb_organisme_interne_si_internationale') and key='attribute7'), 
+				(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='persoane') and key='attribute9'),
+				(select id from nomenclator_values where nomenclator_id=(select id from nomenclator where code='institutii') and attribute2='Asociatia Romana a Bancilor'), 
+				null
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<!-- Actualizari schimbare din attribute name in key -->
+	
+	<changeSet id="0037-upgrade-to-key-adaugare-filtru-la-selectare-comitet-in-nomenclator-institutii_membre_ale_organismelor_si_comitetelor-pe-organism" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE nomenclator_attribute_selection_filter
+			SET attribute_name_for_filter_value='attribute2'
+			WHERE attribute_id=(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='institutii_membre_ale_organismelor_si_comitetelor') and key='attribute3')
+				and filter_attribute_id=(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='comitete') and key='attribute1');
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0037-upgrade-to-key-adaugare-filtru-la-selectare-comitet-in-nomenclator-reprezentanti_arb_organisme_interne_si_internationale-pe-organism" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE nomenclator_attribute_selection_filter
+			SET attribute_name_for_filter_value='attribute1'
+			WHERE attribute_id=(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='reprezentanti_arb_organisme_interne_si_internationale') and key='attribute3')
+				and filter_attribute_id=(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='comitete') and key='attribute1');
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0037-upgrade-to-key-adaugare-filtru-la-selectare-reprezentant-in-nomenclator-reprezentanti_arb_organisme_interne_si_internationale-pe-institutie" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE nomenclator_attribute_selection_filter
+			SET attribute_name_for_filter_value='attribute4'
+			WHERE attribute_id=(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='reprezentanti_arb_organisme_interne_si_internationale') and key='attribute5')
+				and filter_attribute_id=(select id from nomenclator_attribute where nomenclator_id=(select id from nomenclator where code='persoane') and key='attribute9');
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0037-upgrade-to-key-adaugare-filtru-la-selectare-institutie-in-nomenclator-reprezentanti_arb_organisme_interne_si_internationale-dupa-organism-si-comitet" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE nomenclator_attribute
+			SET type_nomenclator_selection_filters_custom_class_attribute_names='attribute1;attribute3'
+			WHERE nomenclator_id=(select id from nomenclator where code='reprezentanti_arb_organisme_interne_si_internationale') and key='attribute4';
+		]]>
+		</sql>
+	</changeSet>
+	
+	<!-- Actualizari schimbare din attribute name in key -->
+	
+</databaseChangeLog>

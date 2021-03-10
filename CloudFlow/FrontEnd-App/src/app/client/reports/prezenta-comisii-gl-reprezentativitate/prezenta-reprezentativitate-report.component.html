@@ -1,0 +1,283 @@
+<app-loading *ngIf="loading"></app-loading>
+<p-panel [toggleable]="true">
+    <p-header>
+        {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE' | translate }}
+    </p-header>
+
+    <form [formGroup]="formGroup">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-3">
+                    {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_BANCA' | translate }}:
+                </div>
+                <div class="ui-grid-col-9">
+                    <app-nomenclator-value-field formControlName="banca">
+                    </app-nomenclator-value-field>
+                </div>
+            </div>
+
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-3">
+                    {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_INCEPUT_SEDINTA_DE_LA_DATA' | translate }}*:
+                </div>
+                <div class="ui-grid-col-9">
+                    <p-calendar formControlName="dataSedintaDeLa" showIcon="true" [readonlyInput]="true"
+                        [dateFormat]="dateFormat" monthNavigator="true" yearNavigator="true" [yearRange]="yearRange"
+                        showButtonBar="true" appendTo="body" [dataType]="'date'">
+                    </p-calendar>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-3"></div>
+                <div class="ui-grid-col-9">
+                    <div *ngIf="dataSedintaDeLaFormControl.invalid && (dataSedintaDeLaFormControl.dirty || dataSedintaDeLaFormControl.touched)"
+                        class="ui-message ui-widget ui-corner-all ui-message-error">
+                        <span class="ui-message-icon pi pi-times"></span>
+                        <span *ngIf="dataSedintaDeLaFormControl.errors['required']"
+                            class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-3">
+                    {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_INCEPUT_SEDINTA_PANA_LA_DATA' | translate }}*:
+                </div>
+                <div class="ui-grid-col-9">
+                    <p-calendar formControlName="dataSedintaPanaLa" showIcon="true" [readonlyInput]="true"
+                        [dateFormat]="dateFormat" monthNavigator="true" yearNavigator="true" [yearRange]="yearRange"
+                        showButtonBar="true" appendTo="body" [dataType]="'date'">
+                    </p-calendar>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-3"></div>
+                <div class="ui-grid-col-9">
+                    <div *ngIf="dataSedintaPanaLaFormControl.invalid && (dataSedintaPanaLaFormControl.dirty || dataSedintaPanaLaFormControl.touched)"
+                        class="ui-message ui-widget ui-corner-all ui-message-error">
+                        <span class="ui-message-icon pi pi-times"></span>
+                        <span *ngIf="dataSedintaPanaLaFormControl.errors['required']"
+                            class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <p-footer>
+        <p-button [label]="'LABELS.REPORT_VIEW' | translate" (onClick)="onView()"></p-button>
+        <p-button [label]="'LABELS.EXPORT_CSV' | translate" (onClick)="exportCSV()"></p-button>
+	</p-footer>
+</p-panel>
+
+<p-table [value]="report.rows" 
+    [responsive]="true"
+    [columns]="columns" 
+    [resizableColumns]="true" 
+    [loading]="loading"
+    [style]="{'margin-top':'5px'}">
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 50px" rowspan="3">{{ 'LABELS.NO_CRT' | translate }}</th>
+            <th pResizableColumn style="width: 200px" rowspan="3">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_BANCA' | translate  }}</th>
+            <th pResizableColumn style="width: 100px" rowspan="3">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_COD' | translate  }}</th>
+            <th pResizableColumn style="width: 900px" colspan="9">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_PREZENTA_COM_ARB_IN_INTERVALUL' | translate  }}
+            </th>
+            <th pResizableColumn style="width: 1500px" colspan="13">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_RASPUNSURI_LA_INTEROGARI_ARB_LA' | translate  }}
+            </th>
+            <th pResizableColumn style="width: 500px" colspan="3">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_NOTA_GENERALA_PE_MEMBRI' | translate  }}</th>
+        </tr>
+        <tr>
+            <th pResizableColumn>{{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_LEVEL_0' | translate }}</th>
+            <th pResizableColumn>{{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_LEVEL_1' | translate }}</th>
+            <th pResizableColumn>{{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_LEVEL_2' | translate }}</th>
+            <th pResizableColumn>{{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_LEVEL_3' | translate }}</th>
+            <th pResizableColumn>{{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_LEVEL_3_PLUS' | translate }}
+            </th>
+            <th pResizableColumn>
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_IN_AFARA_NOMNINALIZARILOR' | translate }}</th>
+            <th pResizableColumn rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_TOTAL_PREZENTA' | translate }}</th>
+            <th pResizableColumn rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_COEFICIENT_STRUCTURAL' | translate }}</th>
+            <th pResizableColumn rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_NOTA_FINALA_PREZENTA' | translate }}</th>
+            <th pResizableColumn style="width: 20%" rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_BANCA' | translate }}</th>
+            <th pResizableColumn>
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_RASPUNSURI_FARA_PROPUNERI' | translate }}</th>
+            <th pResizableColumn>
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_RASPUNSURI_CU_PROPUNERI' | translate }}</th>
+            <th pResizableColumn rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_TOTAL_RASPUNSURI' | translate }}</th>
+            <th pResizableColumn rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_COEFICIENT_STRUCTURAL_CALITATE_RASP' | translate }}
+            </th>
+            <th pResizableColumn rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_NOTA_RASPUNSURI_ADJUSTATA_CU_CALITATEA_RASP' | translate }}
+            </th>
+            <th pResizableColumn>
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_RASPUNSURI_FARA_INTARZIERE' | translate }}
+            </th>
+            <th pResizableColumn>
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_RASPUNSURI_CU_INTARZIERE_PESTE_O_ZI' | translate }}
+            </th>
+            <th pResizableColumn rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_TOTAL_RASPUNSURI' | translate }}</th>
+            <th pResizableColumn rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_COEFICIENT_STRUCTURAL_VITEZA_RASP' | translate }}
+            </th>
+            <th pResizableColumn rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_NOTA_RASPUNSURI_ADJUSTATA_CU_VITEZA_RASP' | translate }}
+            </th>
+            <th pResizableColumn rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_NOTA_TOTALA_RASP_BANCI' | translate }}</th>
+            <th pResizableColumn rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_NOTA_FINALA_RASP_BANCI' | translate }}</th>
+            <th pResizableColumn  style="width: 200px" rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_BANCA' | translate }}</th>
+            <th pResizableColumn rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_NOTA_FINALA_BANCA' | translate }}</th>
+            <th pResizableColumn rowspan="2">
+                {{ 'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_RANK_NOTA_BANCA' | translate }}</th>
+        </tr>
+        <tr>
+            <th>
+                {{report.level0Percentage}}
+            </th>
+            <th>
+                {{report.level1Percentage}}
+            </th>
+            <th>
+                {{report.level2Percentage}}
+            </th>
+            <th>
+                {{report.level3Percentage}}
+            </th>
+            <th>
+                {{report.level3PlusPercentage}}
+            </th>
+            <th>
+                {{report.inAfaraNomPercentage}}
+            </th>
+            <th>
+                {{report.raspFaraPropPercentage}}
+            </th>
+            <th>
+                {{report.raspCuPropPercentage}}
+            </th>
+            <th>
+                {{report.nrRaspFaraIntarzPercentage}}
+            </th>
+            <th>
+                {{report.nrRaspCuIntarzPercentage}}
+            </th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
+        <tr>
+            <td> {{rowIndex + 1}} </td>
+            <td> {{ row.banca }} </td>
+            <td> {{ row.cod }} </td>
+            <td> {{ row.level0 }} </td>
+            <td> {{ row.level1 }} </td>
+            <td> {{ row.level2 }} </td>
+            <td> {{ row.level3 }} </td>
+            <td> {{ row.level3Plus }} </td>
+            <td> {{ row.inAfaraNom }} </td>
+            <td> {{ row.totalPrezenta }} </td>
+            <td> {{ row.coeficientStructural.toFixed(2) }} </td>
+            <td> {{ row.notaFinalaPrezenta.toFixed(2) }} </td>
+            <td> {{ row.raspunsuriBanci.denumireBanca }} </td>
+            <td> {{ row.raspunsuriBanci.nrRaspunsuriFaraPropuneri }} </td>
+            <td> {{ row.raspunsuriBanci.nrRaspunsuriCuPropuneri }} </td>
+            <td> {{ row.raspunsuriBanci.nrTotalRaspunsuriPropuneri }} </td>
+            <td> {{ row.raspunsuriBanci.coeficientStructuralCalitateRaspunsuri.toFixed(2) }} </td>
+            <td> {{ row.raspunsuriBanci.notaRaspunsuriAjustataCuCalitateaRaspunsurilor.toFixed(2) }} </td>
+            <td> {{ row.raspunsuriBanci.nrRaspunsuriFaraIntarziere }} </td>
+            <td> {{ row.raspunsuriBanci.nrRaspunsuriCuIntarzierePesteOZi }} </td>
+            <td> {{ row.raspunsuriBanci.nrTotalRaspunsuriTermen }} </td>
+            <td> {{ row.raspunsuriBanci.coeficientStructuralVitezaRaspunsuri.toFixed(2) }} </td>
+            <td> {{ row.raspunsuriBanci.notaRaspunsuriAjustataCuVitezaRaspunsurilor.toFixed(2) }} </td>
+            <td> {{ row.raspunsuriBanci.notaTotalaRaspunsuriBanci.toFixed(2) }} </td>
+            <td> {{ row.notaFinalaRaspunsuriBanci.toFixed(2) }} </td>
+            <td> {{ row.banca }} </td>
+            <td> {{ row.notaFinalaBanca.toFixed(2) }} </td>
+            <td> {{ row.rankNotaBanca }} </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="footer" *ngIf="footerVisible">
+        <tr>
+            <td colspan="3"> {{'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_TOTAL' | translate}} </td>
+            <td> {{ report.level0Total }} </td>
+            <td> {{ report.level1Total }} </td>
+            <td> {{ report.level2Total }} </td>
+            <td> {{ report.level3Total }} </td>
+            <td> {{ report.level3PlusTotal }} </td>
+            <td> {{ report.inAfaraNomTotal }} </td>
+            <td> {{ report.totalPrezentaTotal }} </td>
+            <td> {{ report.coeficientStructuralTotal.toFixed(2) }} </td>
+            <td> {{ report.notaFinalaPrezentaTotal.toFixed(2) }} </td>
+            <td>  </td>
+            <td> {{ report.nrRaspunsuriFaraPropuneriTotal }} </td>
+            <td> {{ report.nrRaspunsuriCuPropuneriTotal }} </td>
+            <td> {{ report.nrTotalRaspunsuriPropuneriTotal }} </td>
+            <td> {{ report.coeficientStructuralCalitateRaspunsuriTotal.toFixed(2) }} </td>
+            <td> {{ report.notaRaspunsuriAjustataCuCalitateaRaspunsurilorTotal.toFixed(2) }} </td>
+            <td> {{ report.nrRaspunsuriFaraIntarziereTotal }} </td>
+            <td> {{ report.nrRaspunsuriCuIntarzierePesteOZiTotal }} </td>
+            <td> {{ report.nrTotalRaspunsuriTermenTotal }} </td>
+            <td> {{ report.coeficientStructuralVitezaRaspunsuriTotal.toFixed(2) }} </td>
+            <td> {{ report.notaRaspunsuriAjustataCuVitezaRaspunsurilorTotal.toFixed(2) }} </td>
+            <td> {{ report.notaTotalaRaspunsuriBanciTotal.toFixed(2) }} </td>
+            <td> {{ report.notaFinalaRaspunsuriBanciTotal.toFixed(2) }} </td>
+            <td> </td>
+            <td> {{ report.notaFinalaBancaTotal.toFixed(2) }} </td>
+            <td> {{ report.rankNotaBancaTotal.toFixed(2) }} </td>
+        </tr>
+        <tr>
+            <td colspan="3"> {{'LABELS.REPORT_PREZENTA_COMISII_ARB_REPREZENTATIVITATE_MEDIE' | translate}} </td>
+            <td> {{ report.level0Avg.toFixed(2) }} </td>
+            <td> {{ report.level1Avg.toFixed(2) }} </td>
+            <td> {{ report.level2Avg.toFixed(2) }} </td>
+            <td> {{ report.level3Avg.toFixed(2) }} </td>
+            <td> {{ report.level3PlusAvg.toFixed(2) }} </td>
+            <td> {{ report.inAfaraNomAvg.toFixed(2) }} </td>
+            <td> {{ report.totalPrezentaAvg.toFixed(2) }} </td>
+            <td> {{ report.coeficientStructuralAvg.toFixed(2) }} </td>
+            <td> {{ report.notaFinalaPrezentaAvg.toFixed(2) }} </td>
+            <td>  </td>
+            <td> {{ report.nrRaspunsuriFaraPropuneriAvg.toFixed(2) }} </td>
+            <td> {{ report.nrRaspunsuriCuPropuneriAvg.toFixed(2) }} </td>
+            <td> {{ report.nrTotalRaspunsuriPropuneriAvg.toFixed(2) }} </td>
+            <td> {{ report.coeficientStructuralCalitateRaspunsuriAvg.toFixed(2) }} </td>
+            <td> {{ report.notaRaspunsuriAjustataCuCalitateaRaspunsurilorAvg.toFixed(2) }} </td>
+            <td> {{ report.nrRaspunsuriFaraIntarziereAvg.toFixed(2) }} </td>
+            <td> {{ report.nrRaspunsuriCuIntarzierePesteOZiAvg.toFixed(2) }} </td>
+            <td> {{ report.nrTotalRaspunsuriTermenAvg.toFixed(2) }} </td>
+            <td> {{ report.coeficientStructuralVitezaRaspunsuriAvg.toFixed(2) }} </td>
+            <td> {{ report.notaRaspunsuriAjustataCuVitezaRaspunsurilorAvg.toFixed(2) }} </td>
+            <td> {{ report.notaTotalaRaspunsuriBanciAvg.toFixed(2) }} </td>
+            <td> {{ report.notaFinalaRaspunsuriBanciAvg.toFixed(2) }} </td>
+            <td> </td>
+            <td> {{ report.notaFinalaBancaAvg.toFixed(2) }} </td>
+            <td> {{ report.rankNotaBancaAvg.toFixed(2) }} </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td [attr.colspan]="6">
+                {{ "LABELS.NO_RECORDS_FOUND" | translate }}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

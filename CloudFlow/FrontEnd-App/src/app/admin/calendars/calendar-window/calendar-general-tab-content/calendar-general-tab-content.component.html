@@ -1,0 +1,39 @@
+<div class="ui-g ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+	<form [formGroup]="form" class="ui-g-12" novalidate>
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.NAME" | translate}}*:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="text" formControlName="name" />
+			</div>
+			<div *ngIf="calendarNameFormControl.invalid && calendarNameFormControl.touched" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.DESCRIPTION" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<textarea formControlName="description" pInputTextarea></textarea>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.CALENDAR_COLOR" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<p-colorPicker formControlName="color" appendTo="body"></p-colorPicker>
+				</div>
+			</div>
+			<div *ngIf="calendarColorFormControl.invalid && calendarColorFormControl.touched" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+		
+	</form>
+</div>

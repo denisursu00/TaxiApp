@@ -1,0 +1,70 @@
+<p-table
+		[value]="destinatari"
+		dataKey="collapseExpandAll"
+		[responsive]="true"
+		[resizableColumns]="true"
+		[scrollable]="true"
+		[loading]="loading"
+		columnResizeMode="fit"
+		selectionMode="single" 
+		scrollHeight="250px">
+	<ng-template pTemplate="caption">
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-12" style="text-align: left;">
+					<p-button [disabled]="!addActionEnabled" (onClick)="onAddAction()" [label]="'LABELS.ADD' | translate"></p-button>
+					<p-button [disabled]="!addActionEnabled || isLoadingComisiiGl" (onClick)="onAddArbMembersAction()" [label]="'LABELS.REGISTRU_IESIRI_ADD_ARB_MEMBERS' | translate"></p-button>
+					<p-button [disabled]="!addActionEnabled" (onClick)="onAddAffiliatedMembersAction()" [label]="'LABELS.REGISTRU_IESIRI_ADD_AFFILIATED_MEMBERS' | translate"></p-button>
+					<p-button [disabled]="!editActionEnabled" (onClick)="onEditAction()" [label]="'LABELS.EDIT' | translate"></p-button>
+					<p-button [disabled]="!viewActionEnabled" (onClick)="onViewAction()" [label]="'LABELS.VIEW' | translate"></p-button>
+					<p-button [disabled]="!removeActionEnabled" (onClick)="onRemoveAction()" [label]="'LABELS.DELETE' | translate"></p-button>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+	<ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded">
+		<tr class="ui-widget-header" *ngIf="rowIndex === 0">
+			<td>
+				<div [pRowToggler]="rowData" [ngStyle]="{'overflow':'hidden', 'white-space':'nowrap', 'text-overflow':'ellipsis'}">
+                    <i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+                    <span>{{getListOfDestinatariNames()}}</span>
+				</div>
+			</td>
+		</tr>
+	</ng-template>
+	<ng-template pTemplate="rowexpansion" let-rowData let-rowIndex="rowIndex">
+		<tr (click)="handleSelection(rowData)" [ngClass]="rowData.rowStyleClass">
+			<td>
+				{{rowData["numeForView"]}}
+			</td>
+		</tr>
+	</ng-template>
+</p-table>
+
+<app-registru-iesiri-destinatar-window [mode]="destinatarWindowMode" *ngIf="destinatarWindowVisible" [destinatar]="selectedDestinatar" [nomenclatorIdByCode]="nomenclatorIdByCode"
+		[inputData]="registruIesiriDestinatarWindowInputData" (windowClosed)="onDestinatarWindowClosed()" (dataSaved)="onDestinatarDataSaved($event)">
+</app-registru-iesiri-destinatar-window>
+
+<p-dialog [header]="'LABELS.REGISTRU_IESIRI_DESTINATAR_COMISII_GL' | translate" 
+	[style]="{'width':'40vw', 'min-width':'40vw'}"
+	[contentStyle]="{'min-height':'40vh', 'max-height':'40vh'}"
+	[(visible)]="displayComisiiGlMembriiArb">
+	<div class="ui-g">
+		<div class="ui-g-12 ui-sm-12 ui-md-2">
+			{{ 'LABELS.REGISTRU_IESIRI_DESTINATAR_COMISII_GL' | translate }}
+		</div>
+		<div class="ui-g-12 ui-sm-12 ui-md-10">
+			<p-dropdown 
+				[options]="comisiiGlMembriiArb" 
+				[(ngModel)]="selectedComisieGlMembriiArb"
+				[placeholder]="'LABELS.REGISTRU_IESIRI_DESTINATAR_NO_COMISII_GL' | translate"
+				[style]="{'width':'100%'}" 
+				appendTo="body">
+			</p-dropdown>
+		</div>
+	</div>
+	<p-footer>
+		<p-button [label]="'LABELS.RESET' | translate" (onClick)="onClearSelectedComisieGlMembriiArb()" [disabled]="selectedComisieGlMembriiArb === null"></p-button>
+		<p-button [label]="'LABELS.ADD' | translate" (onClick)="onAddComisieGlMembriiArb()"></p-button>
+	</p-footer>
+</p-dialog>

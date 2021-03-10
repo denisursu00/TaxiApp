@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0048-actualizare-order_number-la-listitems-pt-participare_la-din-activitati_proiect-din-initiere_dsp" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE listmetadataitem SET order_number=1 WHERE list_id = (select id from metadatadefinition where collection_id=(select id from metadatacollection where name='activitati_proiect' and documenttype_id=(select id from documenttype where name='Initiere DSP')) and name='participare_la') AND value='Conferinte';
+			UPDATE listmetadataitem SET order_number=8 WHERE list_id = (select id from metadatadefinition where collection_id=(select id from metadatacollection where name='activitati_proiect' and documenttype_id=(select id from documenttype where name='Initiere DSP')) and name='participare_la') AND value='Sedinte parlament';
+			UPDATE listmetadataitem SET order_number=4 WHERE list_id = (select id from metadatadefinition where collection_id=(select id from metadatacollection where name='activitati_proiect' and documenttype_id=(select id from documenttype where name='Initiere DSP')) and name='participare_la') AND value='Intalniri';
+			UPDATE listmetadataitem SET order_number=3 WHERE list_id = (select id from metadatadefinition where collection_id=(select id from metadatacollection where name='activitati_proiect' and documenttype_id=(select id from documenttype where name='Initiere DSP')) and name='participare_la') AND value='Evenimente ARB';
+			UPDATE listmetadataitem SET order_number=11 WHERE list_id = (select id from metadatadefinition where collection_id=(select id from metadatacollection where name='activitati_proiect' and documenttype_id=(select id from documenttype where name='Initiere DSP')) and name='participare_la') AND value='Altele';
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0048-adaugare-items-pt-participare_la-din-activitati_proiect-din-initiere_dsp" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO listmetadataitem (id, label, value, list_id, order_number) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Intalnire BNR', 'Intalnire BNR', (select id from metadatadefinition where collection_id=(select id from metadatacollection where name='activitati_proiect' and documenttype_id=(select id from documenttype where name='Initiere DSP')) and name='participare_la'), 5);
+			INSERT INTO listmetadataitem (id, label, value, list_id, order_number) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Comunicat de presa', 'Comunicat de presa', (select id from metadatadefinition where collection_id=(select id from metadatacollection where name='activitati_proiect' and documenttype_id=(select id from documenttype where name='Initiere DSP')) and name='participare_la'), 2);
+			INSERT INTO listmetadataitem (id, label, value, list_id, order_number) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Sedinta Comisie/Grupuri de lucru', 'Sedinta Comisie/Grupuri de lucru', (select id from metadatadefinition where collection_id=(select id from metadatacollection where name='activitati_proiect' and documenttype_id=(select id from documenttype where name='Initiere DSP')) and name='participare_la'), 9);
+			INSERT INTO listmetadataitem (id, label, value, list_id, order_number) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Intalnire Consiliul Director', 'Intalnire Consiliul Director', (select id from metadatadefinition where collection_id=(select id from metadatacollection where name='activitati_proiect' and documenttype_id=(select id from documenttype where name='Initiere DSP')) and name='participare_la'), 6);
+			INSERT INTO listmetadataitem (id, label, value, list_id, order_number) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Intalnire cu conducerea BNR', 'Intalnire cu conducerea BNR', (select id from metadatadefinition where collection_id=(select id from metadatacollection where name='activitati_proiect' and documenttype_id=(select id from documenttype where name='Initiere DSP')) and name='participare_la'), 7);
+			INSERT INTO listmetadataitem (id, label, value, list_id, order_number) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Sedinta Comisie Sistemica', 'Sedinta Comisie Sistemica', (select id from metadatadefinition where collection_id=(select id from metadatacollection where name='activitati_proiect' and documenttype_id=(select id from documenttype where name='Initiere DSP')) and name='participare_la'), 10);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0048-actualizare-ca-mandatory-pt-participare_la-si-data_inceput_sfarsit-eveniment-din-activitati_proiect-din-initiere_dsp" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			update metadatadefinition set mandatory=TRUE, mandatorystates='adaugare_participanti_si_actiuni_viitoare;corectare_participanti_desemnati;validare_participanti_desemnati' 
+			where collection_id=(select id from metadatacollection where name='activitati_proiect' and documenttype_id=(select id from documenttype where name='Initiere DSP')) 
+				and name='participare_la';
+			
+			update metadatadefinition set mandatory=TRUE, mandatorystates='adaugare_participanti_si_actiuni_viitoare;corectare_participanti_desemnati;validare_participanti_desemnati' 
+			where collection_id=(select id from metadatacollection where name='activitati_proiect' and documenttype_id=(select id from documenttype where name='Initiere DSP')) 
+				and name='data_inceput_eveniment';
+			
+			update metadatadefinition set mandatory=TRUE, mandatorystates='adaugare_participanti_si_actiuni_viitoare;corectare_participanti_desemnati;validare_participanti_desemnati' 
+			where collection_id=(select id from metadatacollection where name='activitati_proiect' and documenttype_id=(select id from documenttype where name='Initiere DSP')) 
+				and name='data_sfarsit_eveniment';		
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0048-eliminare-mandatory-pt-functie_membru-din-informatii_participanti-din-prezenta_comisie_gl" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			update metadatadefinition set mandatory=FALSE, mandatorystates=NULL 
+			where collection_id=(select id from metadatacollection where name='informatii_participanti' and documenttype_id=(select id from documenttype where name='Prezenta Comisie GL')) 
+				and name='functie_membru';
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

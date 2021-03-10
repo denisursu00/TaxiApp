@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0035-adaugare-coloana-default_value-in-nomenclator_attribute" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			ALTER TABLE nomenclator_attribute
+				ADD default_value TEXT;
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0035-adaugare-coloana-readonly_on_add-in-nomenclator_attribute" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			ALTER TABLE nomenclator_attribute
+				ADD readonly_on_add BOOLEAN default FALSE;
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0035-adaugare-coloana-readonly_on_edit-in-nomenclator_attribute" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			ALTER TABLE nomenclator_attribute
+				ADD readonly_on_edit BOOLEAN default FALSE;
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0035-creare-tabel-nomenclator_attribute_selection_filter" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			CREATE TABLE NOMENCLATOR_ATTRIBUTE_SELECTION_FILTER (			
+				ID BIGINT NOT NULL,
+				ATTRIBUTE_ID BIGINT NOT NULL,
+				FILTER_ATTRIBUTE_ID BIGINT NOT NULL,
+				DEFAULT_FILTER_VALUE TEXT,
+				ATTRIBUTE_NAME_FOR_FILTER_VALUE TEXT,
+				
+				CONSTRAINT NOM_ATTRIBUTE_SEL_FILTER_PK PRIMARY KEY (ID),
+				CONSTRAINT NOM_ATTRIBUTE_SEL_FILTER_ATTRIBUTE_ID_FK FOREIGN KEY (ATTRIBUTE_ID) REFERENCES NOMENCLATOR_ATTRIBUTE (ID),
+				CONSTRAINT NOM_ATTRIBUTE_SEL_FILTER_FILTER_ATTRIBUTE_ID_FK FOREIGN KEY (FILTER_ATTRIBUTE_ID) REFERENCES NOMENCLATOR_ATTRIBUTE (ID)
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0035-adaugare-coloana-type_nomenclator_selection_filters_custom_class-in-nomenclator_attribute" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			ALTER TABLE nomenclator_attribute
+				ADD type_nomenclator_selection_filters_custom_class TEXT;
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0035-adaugare-coloana-type_nomenclator_selection_filters_custom_class_attribute_names-in-nomenclator_attribute" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			ALTER TABLE nomenclator_attribute
+				ADD type_nomenclator_selection_filters_custom_class_attribute_names TEXT;
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0035-adaugare-coloane-autocomplete-in-nomenclator_attribute" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			ALTER TABLE nomenclator_attribute ADD ATTRIBUTE_NAME_FOR_AUTOCOMPLETE TEXT;
+			ALTER TABLE nomenclator_attribute ADD AUTOCOMPLETE_TYPE TEXT;
+			ALTER TABLE nomenclator_attribute ADD NOMENCLATOR_ATTRIBUTE_KEY_FOR_AUTOCOMPLETE TEXT;
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0035-adaugare-coloana-required_check_expression-in-nomenclator_attribute" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			ALTER TABLE nomenclator_attribute ADD REQUIRED_CHECK_EXPRESSION TEXT;
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0035-adaugare-coloana-invisible_check_expression-in-nomenclator_attribute" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			ALTER TABLE nomenclator_attribute ADD INVISIBLE_CHECK_EXPRESSION TEXT;
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

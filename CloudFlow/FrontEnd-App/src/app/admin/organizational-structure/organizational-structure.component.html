@@ -1,0 +1,78 @@
+
+<p-splitButton [label]="'LABELS.ADD' | translate" [model]="addMenuItems" class="p-split-button"></p-splitButton>
+<p-button [label]="'LABELS.EDIT' | translate" (onClick)="onEdit($event)" [disabled]="isEditButtonDisabled"></p-button>
+<p-button [label]="'LABELS.MOVE' | translate" (onClick)="onMove($event)" [disabled]="isMoveButtonDisabled"></p-button>
+<p-button [label]="'LABELS.IMPORT' | translate" (onClick)="onImport($event)"></p-button>
+<p-splitButton [label]="'LABELS.DELETE' | translate" [model]="deleteMenuItems" class="p-split-button"></p-splitButton>
+<p-button [label]="'LABELS.REFRESH' | translate" (onClick)="onRefresh($event)"></p-button>
+<p-splitButton [label]="'LABELS.TOOLS' | translate" [model]="toolsMenuItems" class="p-split-button"></p-splitButton>
+
+<div style="margin-top: 10px;">
+	<app-organization-selector 
+			selectionMode="single" 
+			[selectableEntityTypes]="['user', 'ou', 'organization']"
+			(selectionChanged)="onOrganizationSelectionChanged($event)">
+	</app-organization-selector>
+</div>
+
+<app-user-window 
+		*ngIf="userWindowVisible" 
+		[mode]="userWindowMode" 
+		[userId]="userId" 
+		[directoryUser]="directoryUser"
+		[organizationId]="organizationId"
+		[organizationUnitId]="organizationUnitId" 
+		(windowClosed)="onUserWindowClosed($event)">
+</app-user-window>
+
+<app-organization-unit-window
+		*ngIf="organizationUnitWindowVisible"
+		[mode]="organizationUnitWindowMode"
+		[organizationId]="organizationId"
+		[organizationUnitId]="organizationUnitId"
+		(windowClosed)="onOrganizationUnitWindowClosed($event)">
+</app-organization-unit-window>
+
+<app-directory-user-search-window 
+		*ngIf="directoryUserSearchWindowVisible" 
+		[organizationId]="organizationId"
+		[organizationUnitId]="organizationUnitId"
+		(windowClosed)="onDirectoryUserSearchWindowClosed($event)"
+		(dataSearched)="onDirectoryUserSearchDone($event)">
+</app-directory-user-search-window>
+
+<app-users-found-in-directory-window
+		*ngIf="usersFoundInDirectoryWindowVisible"
+		[usersFoundInDirectory]="usersFoundInDirectory"
+		[organizationId]="organizationId"
+		[organizationUnitId]="organizationUnitId"
+		(windowClosed)="onUsersFoundInDirectoryWindowClosed($event)"
+		(directoryUserSelected)="onDirectoryUserSelected($event)">
+</app-users-found-in-directory-window>
+
+<p-dialog *ngIf="deactivateUserWindowVisible" [visible]="deactivateUserWindowVisible" [width]="width" [modal]="true" (onHide)="onHideDeactivateUserWindow($event)">
+	<p-header>{{ "LABELS.DEACTIVATE_USER" | translate }}:</p-header>
+	<div>{{ "MESSAGES.CONFIRM_DEACTIVATE_USER" | translate }}</div><br>
+	<div>
+		<p-checkbox [(ngModel)]="deactivateAllUserAccounts" binary="true"></p-checkbox>
+		{{ "LABELS.DEACTIVATE_ALL_ACCOUNTS_OF_USER" | translate }}
+	</div>
+	<p-footer>
+		<p-button (onClick)="onAcceptDeactivateUserAction($event)" [label]="'LABELS.YES' | translate"></p-button>
+		<p-button (onClick)="onRejectDeactivateUserAction($event)" [label]="'LABELS.NO' | translate"></p-button>
+	</p-footer>
+</p-dialog>
+
+<p-dialog *ngIf="moveItemWindowVisible" [visible]="moveItemWindowVisible" [width]="500" [modal]="true" (onHide)="onHideMoveItemWindow($event)">
+	<p-header>{{ "MESSAGES.MOVE_ENTITY" | translate:selectedNodeModelNameParam }}</p-header>
+	<app-organization-selector 
+			selectionMode="single" 
+			[selectableEntityTypes]="['ou', 'organization']" 
+			[visibleEntityTypes]="['ou', 'organization']"
+			(selectionChanged)="onOrganizationSelectionForMoveItemChanged($event)">
+	</app-organization-selector>
+	<p-footer>
+		<p-button (onClick)="onOkForMoveItemAction($event)" label="Ok"></p-button>
+		<p-button (onClick)="onCancelForMoveItemAction($event)" [label]="'LABELS.CANCEL' | translate"></p-button>
+	</p-footer>
+</p-dialog>

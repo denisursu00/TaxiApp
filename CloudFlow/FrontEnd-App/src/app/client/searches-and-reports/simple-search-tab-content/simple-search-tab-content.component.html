@@ -1,0 +1,83 @@
+<div class="ui-g">
+	<form [formGroup]="searchForm" novalidate>
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-sm-12 ui-md-3">{{"LABELS.WORKSPACE" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-9">
+				<app-document-location-selector formControlName="documentLocation"></app-document-location-selector>
+			</div>
+		</div>
+		<p-fieldset [toggleable]="true" [legend]="'LABELS.DOCUMENT_CREATION_DATE' | translate">
+			<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-3">{{"LABELS.DOCUMENT_CREATION_DATE_FROM" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-9">
+					<p-calendar 
+						[(ngModel)]="createdStart" 
+						[showIcon]="true" 
+						[monthNavigator]="true" 
+						[yearNavigator]="true"
+						[dateFormat]="dateFormat" 
+						[yearRange]="yearRange" 
+						readonlyInput="true" 
+						formControlName="createdStart">
+					</p-calendar>
+				</div>
+				<div *ngIf="createdStartFormControl.invalid && (createdStartFormControl.dirty || createdStartFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="createdStartFormControl.errors['toDateGreaterThanFromDate'] ">{{'MESSAGES.START_DATE_MUST_BE_LOWER_THAT_END_DATE' | translate}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-3">{{"LABELS.DOCUMENT_CREATION_DATE_TO" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-9">
+					<p-calendar 
+						[(ngModel)]="createdEnd" 
+						[showIcon]="true" 
+						[monthNavigator]="true" 
+						[yearNavigator]="true"
+						[dateFormat]="dateFormat" 
+						[yearRange]="yearRange" 
+						readonlyInput="true" 
+						formControlName="createdEnd">
+					</p-calendar>
+				</div>
+				<div *ngIf="createdEndFormControl.invalid && (createdEndFormControl.dirty || createdEndFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="createdEndFormControl.errors['fromDateLowerThanToDate']">{{'MESSAGES.END_DATE_MUST_BE_GRATER_THAT_START_DATE' | translate}} </span>
+					</div>
+				</div>
+			</div>
+		</p-fieldset>
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-sm-12 ui-md-3">{{"LABELS.DOCUMENT_TYPES" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-9">
+				<p-pickList 
+						[source]="sourceDocumentTypes"
+						[target]="targetDocumentTypes"
+						[responsive]="true"
+						[showSourceControls]="false"
+						[showTargetControls]="false"
+						(onMoveToTarget)="onChangeDocumentTypes($event)"
+						(onMoveToSource)="onChangeDocumentTypes($event)"
+						(onMoveAllToTarget)="onChangeDocumentTypes($event)"
+						(onMoveAllToSource)="onChangeDocumentTypes($event)">
+					<ng-template let-documentType pTemplate="item">
+							<div class="ui-helper-clearfix">
+								<div style="margin: 5px 10px">
+									{{ documentType.name }}
+								</div>
+							</div>
+					</ng-template>
+				</p-pickList>
+			</div>
+		</div>
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-sm-12 ui-md-3">{{"LABELS.DOCUMENT_STATES" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-9">
+				<app-document-states-selector [(documentTypeIds)]="documentTypeIds" [showControls]="false" formControlName="documentStates"></app-document-states-selector>
+			</div>
+		</div>
+	</form>
+</div>

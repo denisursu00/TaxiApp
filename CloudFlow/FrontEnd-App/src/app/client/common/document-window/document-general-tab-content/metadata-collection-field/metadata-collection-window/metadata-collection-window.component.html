@@ -1,0 +1,34 @@
+<app-loading *ngIf="loadingVisible"></app-loading>
+<p-dialog #pDialog [(visible)]="windowVisible" [modal]="true" appendTo="body"
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onShow)="onShow($event)" (onHide)="onHide($event)">
+	<p-header>
+		{{title}}
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+	</p-header>
+    <app-metadata-collection-dynamic-content *ngIf="dynamicContentEnabled"
+        [inputData]="inputData"
+        [documentMode]="documentMode">
+    </app-metadata-collection-dynamic-content>
+    <app-metadata-collection-informatii-participanti-of-prezenta-comisii-gl-content *ngIf="informatiiParticipantiOfPrezentaComisiiGlContentEnabled"
+        [inputData]="inputData"
+        [documentMode]="documentMode">
+    </app-metadata-collection-informatii-participanti-of-prezenta-comisii-gl-content>
+    <app-metadata-collection-window-prezenta-membrii-of-prezenta-aga-content *ngIf="prezentaMembriiOfPrezentaAgaContentEnabled"
+        [inputData]="inputData"
+        [documentMode]="documentMode">
+    </app-metadata-collection-window-prezenta-membrii-of-prezenta-aga-content>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <p-button (onClick)="onSaveAction($event)" [label]="'LABELS.SAVE' | translate"></p-button>
+            <p-button (onClick)="onCloseAction($event)" [label]="'LABELS.CLOSE' | translate"></p-button>
+        </div>
+    </p-footer>
+</p-dialog>
+
+<app-messages-window *ngIf="documentMessagesWindowVisible"
+	[messages]="documentMessagesWindowMessages"
+	(windowClosed)="onDocumentMessagesWindowClosed($event)">
+</app-messages-window>

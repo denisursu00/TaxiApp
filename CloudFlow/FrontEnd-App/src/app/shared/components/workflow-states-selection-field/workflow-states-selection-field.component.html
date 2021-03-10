@@ -1,0 +1,12 @@
+<p-button (onClick)="onSelectAction($event)" 
+	[label]="'LABELS.SELECT' | translate" 
+	[disabled]="!selectActionEnabled">
+</p-button>
+<span>{{selectedStatesForDisplay}}</span>
+<app-workflow-states-selection-window *ngIf="workflowStatesSelectionWindowVisible"
+	[selectionMode]="selectionMode"
+	[possibleStates]="workflowStatesSelectionWindowPossibleStates"
+	[selectedStateCodes]="workflowStatesSelectionWindowSelectedStateCodes"
+	(statesSelected)="onWorkflowStatesSelectionWindowStatesSelected($event)"
+	(windowClosed)="onWorkflowStatesSelectionWindowWindowClosed($event)">
+</app-workflow-states-selection-window>

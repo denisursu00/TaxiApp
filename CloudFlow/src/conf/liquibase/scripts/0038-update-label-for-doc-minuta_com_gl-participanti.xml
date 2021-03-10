@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0038-update-label-for-doc-minuta_com_gl-participanti" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE listmetadataitem  
+			SET label='Membri Comisie'
+			WHERE  value = 'membru_comisie' 
+					AND list_id=(SELECT id 
+								FROM metadatadefinition 
+								WHERE name='participant'
+										AND collection_id = (SELECT id
+															FROM metadatacollection
+															WHERE name='participanti'
+																	AND documenttype_id = (SELECT id
+																	FROM documenttype
+																	WHERE name='Minuta sedinta Comisie GL')
+															)
+									) ;
+			
+		]]>
+		</sql>
+	</changeSet>
+	
+	
+</databaseChangeLog>

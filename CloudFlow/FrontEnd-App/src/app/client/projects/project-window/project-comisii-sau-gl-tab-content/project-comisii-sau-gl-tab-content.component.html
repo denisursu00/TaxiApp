@@ -1,0 +1,24 @@
+<p-table [value]="comisiiSauGl" selectionMode="single" [(selection)]="selectedComisieSauGl" 
+        [scrollable]="true" [scrollHeight]="scrollHeight"
+		(onRowSelect)="onComisieSauGlSelected()" (onRowUnselect)="onComisieSauGlUnselected()">
+	<ng-template pTemplate="caption">
+        <div class="ui-helper-clearfix" style="text-align: right">
+			<p-button icon="fa fa-plus" [disabled]="addButtonDisabled" (onClick)="onAddComisieSauGl()"></p-button>
+			<p-button icon="fa fa-minus" [disabled]="deleteButtonDisabled" (onClick)="onDeleteComisieSauGl()"></p-button>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>{{"LABELS.NAME" | translate}}</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-comisieSauGl>
+        <tr [pSelectableRow]="comisieSauGl">
+            <td>{{comisieSauGl.denumire}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<app-nomenclator-values-selection-window *ngIf="comisiiGLNomenclatorWindowVisible" [nomenclatorId]="comisiiGLNomenclatorId"
+		(valuesSelected)="comisiiGLNomenclatorValueSelected($event)" (windowClosed)="comisiiGLNomenclatorWindowClosed()">
+</app-nomenclator-values-selection-window>

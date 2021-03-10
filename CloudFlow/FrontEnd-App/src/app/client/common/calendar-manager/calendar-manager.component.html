@@ -1,0 +1,24 @@
+<div class="ui-g">
+	<div class="ui-g-12 ui-md-12 ui-lg-2">
+		<app-calendar-selector [userId]="loggedInUserId" [allCalendarsSelected]="true" [multipleSelection]="true"
+			(selectionChanged)="calendarsSelectionChanged($event)"></app-calendar-selector>
+	</div>
+	<div class="ui-g-12 ui-md-12 ui-lg-10">
+		<span *ngIf="!scheduleReady">{{'MESSAGES.LOADING' | translate}}</span>
+		<p-schedule *ngIf="scheduleReady" 
+			[events]="events" 
+			[header]="header" 
+			[locale]="locale" 
+			[options]="options" 
+			[aspectRatio]="aspectRatio"
+			(onViewRender)="onViewRender($event)" 
+			(onDayClick)="onDayClick($event)" 
+			(onEventClick)="onEventClick($event)" 
+			[dayRender]="dayRender">
+		</p-schedule>
+	</div>
+</div>
+
+<app-calendar-event-window *ngIf="calendarEventWindowVisible" (windowClosed)="onCalendarEventWindowClosed()" 
+		[mode]="calendarEventWindowMode" [eventId]="calendarEventWindowEventId" [maximized]="true">
+</app-calendar-event-window>

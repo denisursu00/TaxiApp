@@ -1,0 +1,58 @@
+<p-table [value]="items" 
+		[(selection)]="selectedItem"
+		selectionMode="single"
+		[responsive]="true"
+		[resizableColumns]="true"
+		columnResizeMode="expand"
+		[scrollable]="true"
+		scrollHeight="300px"
+		(onRowSelect)="onItemSelect($event)" 
+		(onRowUnselect)="onItemUnselect($event)">
+	<ng-template pTemplate="colgroup" let-columns>
+		<colgroup>
+			<col style="width: 34%">
+			<col style="width: 33%">
+			<col style="width: 33%">
+		</colgroup>
+	</ng-template>
+	<ng-template pTemplate="caption">
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-12" style="text-align: left;">
+					<p-button (onClick)="onAddAction($event)" [label]="'LABELS.ADD' | translate"></p-button>
+					<p-button (onClick)="onEditAction($event)" [label]="'LABELS.EDIT' | translate" [disabled]="!editActionEnabled"></p-button>
+					<p-button (onClick)="onDeleteAction($event)" [label]="'LABELS.DELETE' | translate" [disabled]="!deleteActionEnabled"></p-button>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+	<ng-template pTemplate="header" let-columns>
+		<tr> 
+			<th pResizableColumn>{{'LABELS.LABEL' | translate}}</th>
+			<th pResizableColumn>{{'LABELS.VALUE' | translate}}</th>
+			<th pResizableColumn>{{'LABELS.ORDER_NUMBER' | translate}}</th>
+		</tr>
+	</ng-template>
+	<ng-template pTemplate="body" let-rowData>
+		<tr [pSelectableRow]="rowData">
+			<td class="ui-resizable-column">
+				{{rowData.label}}
+			</td>
+			<td class="ui-resizable-column">
+				{{rowData.value}}
+			</td>
+			<td class="ui-resizable-column">
+				{{rowData.orderNumber}}
+			</td>
+		</tr>
+	</ng-template>
+</p-table>
+
+<app-metadata-list-item-window *ngIf="metadataListItemWindowVisible"
+	[takenValues]="metadataListItemWindowTakenValues"
+	[takenLabels]="metadataListItemWindowTakenLabels"
+	[suggestedOrderNumber]="metadataListItemWindowSuggestedOrderNumber"
+	[listItem]="metadataListItemWindowListItem"
+	(saved)="onMetadataListItemWindowSaved($event)"
+	(canceled)="onMetadataListItemWindowCanceled($event)">
+</app-metadata-list-item-window>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0027-eliminare-constrangere-null-din-repr-comisie-gl" author="CloudSoft.User3">
+		<sql endDelimiter=";"><![CDATA[
+			ALTER TABLE reprezentanti_comisie_gl 
+			ALTER COLUMN presedinte_id DROP NOT NULL,
+			ALTER COLUMN data_inc_mandat_presedinte DROP NOT NULL,
+			ALTER COLUMN data_exp_mandat_presedinte DROP NOT NULL,
+			ALTER COLUMN vicepresedinte1_id DROP NOT NULL,
+			ALTER COLUMN data_inc_mandat_vicepresedint1 DROP NOT NULL,
+			ALTER COLUMN data_exp_mandat_vicepresedint1 DROP NOT NULL,
+			ALTER COLUMN membru_cd_coordonator_id DROP NOT NULL,
+			ALTER COLUMN data_inc_mandat_membru_cd_crdt DROP NOT NULL,
+			ALTER COLUMN data_exp_mandat_membru_cd_crdt DROP NOT NULL ;
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

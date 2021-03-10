@@ -1,0 +1,1 @@
+Sedinta ${sedinta} la ${locatie}

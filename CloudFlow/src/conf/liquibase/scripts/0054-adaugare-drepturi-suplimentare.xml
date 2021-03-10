@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0054-adaugare-drepturi-suplimentare-de-vizualizare-pentru-toti-pasii-de-la-Minuta_sedinta_Comisie_GL-pentru-organizatia-Presedinte_Executiv" author="CloudSoft.User4">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((SELECT id FROM workflowtransition WHERE name='Task completare Minuta asignat si initiat' AND workflow_id=(SELECT id FROM workflow WHERE name='Minuta sedinta Comisie GL')), (SELECT ou_org_entity_id FROM edocuser WHERE username = 'florin.danescu'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((SELECT id FROM workflowtransition WHERE name='Metadate Minuta completate' AND workflow_id=(SELECT id FROM workflow WHERE name='Minuta sedinta Comisie GL')), (SELECT ou_org_entity_id FROM edocuser WHERE username = 'florin.danescu'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((SELECT id FROM workflowtransition WHERE name='Minuta verificata - corectie necesara' AND workflow_id=(SELECT id FROM workflow WHERE name='Minuta sedinta Comisie GL')), (SELECT ou_org_entity_id FROM edocuser WHERE username = 'florin.danescu'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((SELECT id FROM workflowtransition WHERE name='Minuta corectata' AND workflow_id=(SELECT id FROM workflow WHERE name='Minuta sedinta Comisie GL')), (SELECT ou_org_entity_id FROM edocuser WHERE username = 'florin.danescu'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((SELECT id FROM workflowtransition WHERE name='Minuta verificata - nu necesita corectii' AND workflow_id=(SELECT id FROM workflow WHERE name='Minuta sedinta Comisie GL')), (SELECT ou_org_entity_id FROM edocuser WHERE username = 'florin.danescu'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((SELECT id FROM workflowtransition WHERE name='Comentariu, atasament adaugat' AND workflow_id=(SELECT id FROM workflow WHERE name='Minuta sedinta Comisie GL')), (SELECT ou_org_entity_id FROM edocuser WHERE username = 'florin.danescu'));
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0054-adaugare-drepturi-suplimentare-de-vizualizare-pentru-toti-pasii-de-la-Prezenta_Comisie_GL-pentru-organizatia-Presedinte_Executiv" author="CloudSoft.User4">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((SELECT id FROM workflowtransition WHERE name='Task asignat si initiat' AND workflow_id=(SELECT id FROM workflow WHERE name='Prezenta Comisie GL')), (SELECT ou_org_entity_id FROM edocuser WHERE username = 'florin.danescu'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((SELECT id FROM workflowtransition WHERE name='Sedinta planificata' AND workflow_id=(SELECT id FROM workflow WHERE name='Prezenta Comisie GL')), (SELECT ou_org_entity_id FROM edocuser WHERE username = 'florin.danescu'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((SELECT id FROM workflowtransition WHERE name='Sedinta marcata in calendar' AND workflow_id=(SELECT id FROM workflow WHERE name='Prezenta Comisie GL')), (SELECT ou_org_entity_id FROM edocuser WHERE username = 'florin.danescu'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((SELECT id FROM workflowtransition WHERE name='Metadate prezenta completate' AND workflow_id=(SELECT id FROM workflow WHERE name='Prezenta Comisie GL')), (SELECT ou_org_entity_id FROM edocuser WHERE username = 'florin.danescu'));
+			INSERT INTO workflowviewer_oe (workflowtransition_id, extraviewers_org_entity_id) VALUES ((SELECT id FROM workflowtransition WHERE name='Atasament adaugat' AND workflow_id=(SELECT id FROM workflow WHERE name='Prezenta Comisie GL')), (SELECT ou_org_entity_id FROM edocuser WHERE username = 'florin.danescu'));
+		]]>
+		</sql>
+	</changeSet>
+
+</databaseChangeLog>

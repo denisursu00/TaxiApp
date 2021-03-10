@@ -1,0 +1,180 @@
+
+=========================================================
+Deploy pe mediul TESTING (Cloud Soft) : 192.168.13.96
+=========================================================
+
+A) Creare branch de release
+----------------------------------------------------------
+	1) Se face PULL la branch-ul "develop".
+	
+	2) Se creaza branch din develop numit RELEASE-<version>, unde <version> este noua versiune din "FrontEnd-App/package.json" cu urmatoarea
+conventie, daca version este 0.4.82 version pt release va fi 0.5.x, denumire branch: RELEASE-0.5.x (x este variabila de build).
+	(Alt exemplu, daca version este 0.5.3 atunci branch-ul pt realease va fi RELEASE-0.6.x)
+		
+	3) Se face push la branch-ul nou. Team -> Push Branch 'RELEASE-0.x.y'.
+	
+	NOTA: Acest pas se poate crea si din GitLab (browser).
+
+B) Build din branch-ul de release
+-----------------------------------------------------------
+
+	1) Te muti pe branch-ul de release.
+	
+	2) Se face PULL la branch-ul de realease (in principiu cand a mai facut cineva build din el).
+	
+	ATENTIE: Se verifica sa nu existe fisiere modificate local si la care nu s-a facut push. In caz contrar 
+trebuie sa fie aduse la forma de pe git. Pentru a evita astfel de cazuri se poate face un workspace special 
+pentru build/deploy.
+
+	3) Se incrementeaza versiunea aplicatiei in fisierul "FrontEnd-App/package.json" de la proprietatea "version" in functie numele
+release-ul, adica 0.x.y va deveni 0.x+1.0 (ex daca branch-ul de release este RELEASE-0.5.x, versiunea va fi 0.5.0).
+	Daca e vorba de al doilea build din acest release atunci y creste cu o unitate. (0.5.0 devine 0.5.1).
+
+	4) Angular build
+	Se merge cu cmd in FrontEnd-App si se executa comanda: npm run build
+
+	Nota: Daca sunt erori de Angular build sau Java se rezolva si eventual commit/push cu ce s-a rezolvat (si apoi pasul 5).
+
+	5) Se face Commit/Push la fisierul cu versiunea (package.json). Messajul de commit va fi versiunea din package.json (ex: 0.5.0, sau 0.5.1).
+
+	6) Project clean, Menu -> Project -> Clean (Build Automatically sa fie bifat)
+
+	7) Export War (click dreapta pe proiect Export - WAR file...)
+	Numele war-ul e bine sa fie de forma "CloudFlow_version.war" (ex: CloudFlow_0.5.0.war) ca sa poata fi folosit apoi pt
+deploy-urile pe STAGING si PRODUCTION (ca sa nu se mai faca alte build-uri care necesita mutarea pe branch-ul de release etc).
+
+C) Deploy pe 192.168.13.96:8080
+-----------------------------------------------------------------
+- Connect cu Winscp
+- Remove war CloudFlow.war din "/opt/tomcat/apache-tomcat-8.5.33/webapps"
+- Se asteapta pana cand folderul "CloudFlow" dispare si el.
+- OPRIRE server tomcat prin rulare din terminal: tomcatdown
+- Se copiaza noul war in "/opt/tomcat/apache-tomcat-8.5.33/webapps"
+- PORNIRE server tomcat prin rulare din terminal: tomcatup
+- Se verifica aplicatia ca ruleaza eventual se consulta log-ul de server (catalina.out) pentru eventuale probleme daca sunt.
+- http://192.168.13.96:8080/CloudFlow (In general parola: password1)
+
+
+
+=========================================================
+Merge branch-uri release / tag
+=========================================================
+
+NOTA: Acest pas se va executa cand branch-ul de release poate fi dus in productie.
+
+Modalitate 1: Din GitLab (browser)
+	- Se face merge request cu Sursa RELEASE-0.x.y catre "master" si apoi se da Accept merge.
+	- Se creeaza tag din master cu versiunea din package.json.
+	- Se face merge request cu Sursa RELEASE-0.x.y catre "develop" si apoi se da Accept merge.
+		
+Modalitate 2: Din Eclipse
+	- Se intra pe branch-ul de release acceptat, se face PULL, apoi te muti pe branchul de master, apoi te duci pe branch-ul de 
+	release si dai click dreapta Merge.
+	- Te uiti in package.json la version si creezi tag pe git (Team -> Advanced -> Tag...). Tag-ul va fi versiunea (mesajul de commit la fel).
+	- La fel pentru develop in ce priveste merge-ul (deci nu creezi tag).
+
+
+
+=========================================================
+Rezolvare probleme in productie
+=========================================================
+- Se creaza branch din master cu denumirea HOTFIX-<version>, unde <version> este versiunea din package.json de pe master, care va
+fi crescuta cu o unitate la ultima cifra. De exemplu daca in package.json version este 0.5.2, atunci branch-ul se va numi HOTFIX-0.5.3.
+- Dupa ce se rezolva problema se face build schimband in package.json noua versiune cea din numele hotfix-ului.
+- Se face deploy in productie.
+- Se face merge in master si develop cu acest hotfix.
+
+
+
+=========================================================
+Deploy pe mediul STAGING (arb):  10.100.0.12
+=========================================================
+
+Conectare VPN.
+
+Conectare WinSCP cu user "vasile".
+Conectare PUTTY cu user "vasile".
+
+sudo su
+(parola de la root)
+
+1. Undeploy war
+rm -rf /opt/tomcat/apache-tomcat-8.5.33/webapps/CloudFlow.war
+
+2. Se asteapta 30 secunde si apoi Stop server
+cd /opt/tomcat/apache-tomcat-8.5.33/bin
+./shutdown.sh
+
+3. Cu WinSCP se copiaza war-ul in "home/vasile/CloudFlowDeploy"
+War-ul este cel cu care s-a facut deploy pe TESTING.
+
+4. Copiere war pe server
+cp /home/vasile/CloudFlowDeploy/CloudFlow.war /opt/tomcat/apache-tomcat-8.5.33/webapps
+
+5. Start server
+cd /opt/tomcat/apache-tomcat-8.5.33/bin
+./startup.sh
+
+6. Se verifica functionalitatea si versiunea noua la link-ul:
+http://10.100.0.12:8080/CloudFlow
+sau
+http://cloudflow.arb.ro:8081/CloudFlow 
+
+7. (Optional) Se verifica log-urile daca pct. 6) nu e functional
+cp /opt/tomcat/apache-tomcat-8.5.33/logs/* /home/vasile/CloudFlowDeploy/tomcat_logs
+chmod -R 755 /home/vasile/CloudFlowDeploy/tomcat_logs
+
+
+
+=========================================================
+Deploy pe mediul PRODUCTION (arb)  :  10.100.0.11
+=========================================================
+
+Conectare VPN.
+
+Conectare WinSCP cu user "vasile".
+Conectare PUTTY cu user "vasile".
+
+sudo su
+(parola de la root)
+
+1. Undeploy war
+rm -rf /opt/tomcat/apache-tomcat-8.5.33/webapps/CloudFlow.war
+
+2. Se asteapta 30 secunde si apoi Stop server
+cd /opt/tomcat/apache-tomcat-8.5.33/bin
+./shutdown.sh
+
+3. Cu WinSCP se copiaza war-ul in "home/vasile/CloudFlowDeployProd"
+War-ul este cel cu care s-a facut deploy pe STAGING.
+
+4. Copiere war pe server
+cp /home/vasile/CloudFlowDeployProd/CloudFlow.war /opt/tomcat/apache-tomcat-8.5.33/webapps
+
+5. Start server
+cd /opt/tomcat/apache-tomcat-8.5.33/bin
+./startup.sh
+
+6. Se verifica functionalitatea si versiunea noua la link-ul:
+http://10.100.0.11:8080/CloudFlow
+sau
+http://cloudflow.arb.ro:8080/CloudFlow
+
+7. (Optional) Se verifica log-urile daca pct. 6) nu e functional
+cp /opt/tomcat/apache-tomcat-8.5.33/logs/* /home/vasile/CloudFlowDeployProd/tomcat_logs
+chmod -R 755 /home/vasile/CloudFlowDeployProd/tomcat_logs
+
+
+
+=========================================================
+Utils
+=========================================================
+
+// Reda drepturi pe folder si subfoldere.
+chmod -R 755 tomcat_logs 
+
+// Se vad toate procesele java.
+ps -ef | grep java
+
+// Inchide fortat un proces dupa id.
+kill -9 id_process

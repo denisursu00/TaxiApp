@@ -1,0 +1,373 @@
+<app-loading *ngIf="loadingVisible"></app-loading>
+<p-dialog #pDialog [(visible)]="windowVisible" [modal]="true" appendTo="body" 
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onShow)="onShow($event)" (onHide)="onHide($event)">
+		
+	<p-header>
+		{{"LABELS.REGISTRU_INTRARI" | translate}} - {{title}}
+		{{ (isEdit() || isView()) ? ( " - " + ( "LABELS.REGISTRU_IESIRI_NR_INREGISTRARE" | translate ) +": "+ registruIntrariModel?.numarInregistrare ) : null }} 
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+	</p-header>
+
+	<form [formGroup]="formGroup" [ngStyle]="{'height':'70vh'}">
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_DATA_INREGISTRARE" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-calendar 
+						[showIcon]="true"
+						[dateFormat]="dateFormat"
+						formControlName="dataInregistrare"
+						appendTo="body">
+				</p-calendar>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid" *ngIf="!emitentFormControl.disabled">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_EMITENT_EXISTENT" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<app-nomenclator-value-field
+						formControlName="emitent"
+						[readonly]="readonly"
+						[customFilters]="emitentExistentFilters"
+						(valueChanged)="onEmitentValueChanged()">
+				</app-nomenclator-value-field>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_EMITENT_NOU" | translate}}<span *ngIf="!numeEmitentFormControl.disabled">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="text" formControlName="numeEmitent" [readonly]="numeEmitentReadonly">
+			</div>
+			<div *ngIf="numeEmitentFormControl.invalid && (numeEmitentFormControl.dirty || numeEmitentFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_DEPARTAMENT_EMITENT" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="text" formControlName="departamentEmitent">
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_NUMAR_DOCUMENT_EMITENT" | translate}}<span *ngIf="!numarDocumentEmitentFormControl.disabled">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="text" formControlName="numarDocumentEmitent">
+			</div>
+			<div *ngIf="numarDocumentEmitentFormControl.invalid && (numarDocumentEmitentFormControl.dirty || numarDocumentEmitentFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_DATA_DOCUMENT_EMITENT" | translate}}<span *ngIf="!dataDocumentEmitentFormControl.disabled">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-calendar 
+						[showIcon]="true"
+						[dateFormat]="dateFormat"
+						[maxDate]="dataDocumentEmitentMaxDate"
+						[monthNavigator]="true" 
+						[yearNavigator]="true"
+						[yearRange]="yearRange"
+						formControlName="dataDocumentEmitent"
+						appendTo="body" 
+						showButtonBar="true"
+						(onSelect)="onDataDocumentEmitentValueSelected($event)"
+						(onClearClick)="onDataDocumentEmitentValueCleared($event)">
+				</p-calendar>
+			</div>
+			<div *ngIf="dataDocumentEmitentFormControl.invalid && (dataDocumentEmitentFormControl.dirty || dataDocumentEmitentFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_TIP_DOCUMENT" | translate}}<span *ngIf="!tipDocumentReadonly">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<app-nomenclator-value-field
+						formControlName="tipDocument"
+						[readonly]="tipDocumentReadonly"
+						[customSortedAttributes]="customSortedAttributes"
+						(valueChanged)="onTipDocumentChanged()">
+				</app-nomenclator-value-field>
+			</div>
+			<div *ngIf="tipDocumentFormControl.invalid && (tipDocumentFormControl.dirty || tipDocumentFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					<span *ngIf="tipDocumentFormControl.errors['required']">{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_TRIMIS_PE_MAIL" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-checkbox formControlName="trimisPeMail" binary="true"></p-checkbox>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_CONTINUT" | translate}}<span *ngIf="!continutFormControl.disabled">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="text" formControlName="continut">
+			</div>
+			<div *ngIf="continutFormControl.invalid && (continutFormControl.dirty || continutFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_NUMAR_PAGINI" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="number" formControlName="numarPagini">
+			</div>
+			<div *ngIf="numarPaginiFormControl.invalid && (numarPaginiFormControl.dirty || numarPaginiFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					<span *ngIf="numarPaginiFormControl.errors.required">{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}</span>
+					<span *ngIf="numarPaginiFormControl.errors.min">{{"MESSAGES.VALIDATOR_MIN_VALUE" | translate:validationMessageMinValueParameter}}</span>	
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_NUMAR_ANEXE" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="number" formControlName="numarAnexe" id="anexaId">
+			</div>
+			<div *ngIf="numarAnexeFormControl.invalid && (numarAnexeFormControl.dirty || numarAnexeFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					<span *ngIf="numarAnexeFormControl.errors.required">{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}</span>
+					<span *ngIf="numarAnexeFormControl.errors.min">{{"MESSAGES.VALIDATOR_MIN_VALUE" | translate:validationMessageMinValueParameter}}</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_REPARTIZAT_CATRE" | translate}}<span *ngIf="!repartizatCatreUserFormControl.disabled">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<app-user-selector formControlName="repartizatCatreUser"></app-user-selector>
+			</div>
+			<div *ngIf="repartizatCatreUserFormControl.invalid && (repartizatCatreUserFormControl.dirty || repartizatCatreUserFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_COMISII_SAU_GL" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<app-nomenclator-value-field
+						[selectionMode]="comisiiSauGLNomenclatorValueFieldSelectionMode"
+						[readonly]="comisiiGlReadonly"
+						formControlName="comisiiSauGL">
+				</app-nomenclator-value-field>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_PROIECTE" | translate}}<span *ngIf="!proiecteFormControl.disabled">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-multiSelect #proiectMultiselect
+						[options]="proiecteItems" 
+						[panelStyle]="{'width':widthDropdownProiect}" 
+						(onClick)="onClickProiect()"
+						(onChange)="onProiectSelectionChanged($event, proiectMultiselect)"
+						formControlName="proiecte">
+				</p-multiSelect>
+			</div>
+			<div *ngIf="proiecteFormControl.invalid && (proiecteFormControl.dirty || proiecteFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.PROJECT_SUBACTIVITY" | translate}}: </div>
+		<div class="ui-g-12 ui-sm-12 ui-md-10">
+			<p-dropdown 
+				[filter]="true"
+				[options]="subproiecteItems"
+				[autoDisplayFirst]="false"
+				[showClear]="true"
+				formControlName="subproiect"
+				[style]="{'width':'100%'}"
+				appendTo="body">
+			</p-dropdown>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_NECESITA_RASPUNS" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-checkbox formControlName="necesitaRaspuns" binary="true" (onChange)="onNecesitaRaspunsValueChanged($event)"></p-checkbox>
+			</div>
+		</div>
+
+		<div *ngIf="necesitaRaspunsFormControl.value" class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_TERMEN_RASPUNS" | translate}}<span *ngIf="!termenRaspunsFormControl.disabled">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-calendar 
+						[showIcon]="true"
+						[dateFormat]="dateFormat"
+						[minDate]="termenRaspunsMinDate"
+						[monthNavigator]="true" 
+						[yearNavigator]="true"
+						[yearRange]="yearRange"
+						formControlName="termenRaspuns"
+						appendTo="body" 
+						showButtonBar="true">
+				</p-calendar>
+			</div>
+			<div *ngIf="termenRaspunsFormControl.invalid && (termenRaspunsFormControl.dirty || termenRaspunsFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_NUMAR_INREGISTRARE_IESIRI" | translate}}<span *ngIf="!numarInregistrareRegistruIesiriFormControl.disabled">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<app-registru-iesiri-field [inputData]="registruIesiriFieldInputData" (registruIesiriChanged)="onRegistruIesiriChanged($event)" formControlName="numarInregistrareOfRegistruIesiri"></app-registru-iesiri-field>
+			</div>
+			<div *ngIf="numarInregistrareRegistruIesiriFormControl.invalid && (numarInregistrareRegistruIesiriFormControl.dirty || numarInregistrareRegistruIesiriFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_OBSERVATII" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="text" formControlName="observatii">
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_RASPUNSURI_BANCI_CU_PROPUNERI" | translate}}<span *ngIf="!raspunsuriBanciCuPropuneriFormControl.disabled">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-dropdown 
+						[options]="raspunsuriBanciCuPropuneriItems"
+						[placeholder]="'LABELS.SELECT' | translate" 
+						[style]="{'width':'100%'}" 
+						filter="true"
+						formControlName="raspunsuriBanciCuPropuneri"
+						appendTo="body">
+				</p-dropdown>
+			</div>
+			<div *ngIf="raspunsuriBanciCuPropuneriFormControl.invalid && (raspunsuriBanciCuPropuneriFormControl.dirty || raspunsuriBanciCuPropuneriFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.REGISTRU_INTRARI_ATASAMENTE" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-fileUpload name="fileUpload[]" 
+						multiple="multiple"
+						customUpload="true" 
+						[disabled]="fileUploadDisabled"
+						(uploadHandler)="onUpload($event)"
+						(onRemove)="onRemoveFile($event.file)">
+					<ng-template pTemplate="content">
+						<div class="ui-fileupload-row" *ngFor="let uploadedAttachment of uploadedAttachments; let i = index;">
+							<div>{{i+1}}) {{uploadedAttachment.fileName}}</div>
+							<div><button pButton type="button" icon="fa fa-fw fa-download" (click)="onDownloadAtasament(uploadedAttachment)"></button></div>
+							<div *ngIf="!fileUploadDisabled"><button pButton type="button" icon="fa fa-close" (click)="onRemoveAtasament(uploadedAttachment)" [disabled]="fileUploadDisabled"></button></div>
+						</div>
+					</ng-template>        
+				</p-fileUpload>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_INTRARE_EMITENT" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText [ngStyle]="nrZileIntrareEmitentStyle" type="number" formControlName="nrZileIntrareEmitent" readonly>
+			</div>
+			<div *ngIf="nrZileIntrareEmitentFormControl.invalid && (nrZileIntrareEmitentFormControl.dirty || nrZileIntrareEmitentFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_RASPUNS_INTRARE" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText [ngStyle]="nrZileRaspunsIntrareStyle" type="number" formControlName="nrZileRaspunsIntrare" readonly>
+			</div>
+			<div *ngIf="nrZileRaspunsIntrareFormControl.invalid && (nrZileRaspunsIntrareFormControl.dirty || nrZileRaspunsIntrareFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_RASPUNS_EMITENT" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText [ngStyle]="nrZileRaspunsEmitentStyle" type="number" formControlName="nrZileRaspunsEmitent" readonly>
+			</div>
+			<div *ngIf="nrZileRaspunsEmitentFormControl.invalid && (nrZileRaspunsEmitentFormControl.dirty || nrZileRaspunsEmitentFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.REGISTRU_INTRARI_TERMEN_DATA_RASPUNS" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText [ngStyle]="nrZileTermenDataRaspunsStyle" type="number" formControlName="nrZileTermenDataRaspuns" readonly>
+			</div>
+			<div *ngIf="nrZileTermenDataRaspunsFormControl.invalid && (nrZileTermenDataRaspunsFormControl.dirty || nrZileTermenDataRaspunsFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+	</form>
+
+	<p-footer>
+		<p-button (onClick)="onSaveAction($event)" [disabled]="!saveActionEnabled" [label]="'LABELS.SAVE' | translate"></p-button>
+		<p-button (onClick)="onCloseAction($event)" [label]="'LABELS.CLOSE' | translate"></p-button>
+	</p-footer>
+</p-dialog>
+
+<app-confirmation-window *ngIf="confirmationWindow.visible"
+	[messages]="confirmationWindow.messages"
+	[confirmationCallback]="confirmationWindow.callback">
+</app-confirmation-window>

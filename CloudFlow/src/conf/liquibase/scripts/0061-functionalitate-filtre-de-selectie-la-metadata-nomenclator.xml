@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0061-creare-tabel-metadata_definition_nomenclator_value_selection_filter" author="CloudSoft.User1">
+		<sql endDelimiter=";">
+			CREATE TABLE metadata_definition_nomenclator_value_selection_filter (
+				id BIGINT NOT NULL,
+				metadata_definition_id BIGINT NOT NULL,
+				filter_attribute_id BIGINT NOT NULL,
+				default_filter_value TEXT NULL,
+				metadata_name_for_autocomplete_filter_value TEXT NULL,
+				
+				CONSTRAINT mtdt_def_nom_val_selection_filter_pk PRIMARY KEY (id),
+				CONSTRAINT mtdt_def_nom_val_selection_filter_metadata_definition_id_fk FOREIGN KEY (metadata_definition_id) REFERENCES metadatadefinition(id),
+				CONSTRAINT mtdt_def_nom_val_selection_filter_filter_attribute_id_fk FOREIGN KEY (filter_attribute_id) REFERENCES nomenclator_attribute(id)
+			);
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0061-adaugare-filtru-selectie-valoare-metadata-denumire_comisie_gl-din-prezenta_comisie_gl" author="CloudSoft.User1">
+		<sql endDelimiter=";">
+			INSERT INTO metadata_definition_nomenclator_value_selection_filter (
+				id, 
+				metadata_definition_id, 
+				filter_attribute_id, 
+				default_filter_value, 
+				metadata_name_for_autocomplete_filter_value
+			) VALUES (
+				nextval('HIBERNATE_SEQUENCE'), 
+				(SELECT ID FROM METADATADEFINITION WHERE DOCUMENTTYPE_ID = (SELECT ID FROM DOCUMENTTYPE WHERE NAME = 'Prezenta Comisie GL') AND NAME = 'denumire_comisie_gl'), 
+				(select id from nomenclator_attribute where nomenclator_id = (select id from nomenclator where code='comisii_sau_gl') and key='attribute1'), 
+				NULL, 
+				'sedinta'
+			);
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

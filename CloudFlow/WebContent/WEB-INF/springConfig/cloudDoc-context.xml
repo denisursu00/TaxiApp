@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+	<bean id="dataSourceSpring" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${app.database.jdbc.driver_class}" />     
+		<property name="jdbcUrl" value="${app.database.jdbc.url}" />
+		<property name="user" value="${app.database.username}" />
+		<property name="password" value="${app.database.password}" />
+		
+		<property name="initialPoolSize" value="${app.database.connection_pool.initial_connections_count}" />
+		<property name="minPoolSize" value="${app.database.connection_pool.minimum_connections_count}" />
+		<property name="maxPoolSize" value="${app.database.connection_pool.maximum_connections_count}" />
+		
+		<property name="idleConnectionTestPeriod" value="${app.database.connection_pool.idle_connection_test_period_in_seconds}" />
+		<property name="preferredTestQuery" value="${app.database.connection_pool.test_query}" />
+	</bean>
+    
+    <bean id="hibernateSchemaSqlExporter" class="ro.cloudSoft.cloudDoc.exporters.HibernateSchemaSqlExporter">
+    	<constructor-arg index="0" value="${app.hibernate.schema_sql_exporter.generate_files}" />
+    	
+    	<constructor-arg index="1" value="${app.hibernate.schema_sql_exporter.file_path_create}" />
+    	<constructor-arg index="2" value="${app.hibernate.schema_sql_exporter.file_path_drop}" />
+    </bean>
+
+    <bean id="sessionFactory" class="ro.cloudSoft.cloudDoc.config.CustomHibernateAnnotationSessionFactoryBean">
+        <property name="schemaSqlExporter" ref="hibernateSchemaSqlExporter" />
+        
+        <property name="dataSource" ref="dataSourceSpring"/>
+        
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${app.database.hibernate.dialect}</prop>
+                <prop key="hibernate.default_schema">${app.database.schema}</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="connection.autocommit">true</prop>
+                <prop key="hibernate.jdbc.use_streams_for_binary">true</prop>
+            </props>
+        </property>
+        
+        <property name="configLocation">
+                <value>classpath:conf/jbpm.hibernate.cfg.xml</value>
+        </property>
+        
+        <property name="mappingLocations">
+			<list>
+                <value>classpath:jbpm.repository.hbm.xml</value>
+				<value>classpath:jbpm.execution.hbm.xml</value>
+				<value>classpath:jbpm.history.hbm.xml</value>
+                <value>classpath:jbpm.task.hbm.xml</value>
+				<value>classpath:jbpm.identity.hbm.xml</value>
+			</list>
+		</property>
+		<property name="basePackagesToScan">
+			<set>
+				<value>ro.cloudSoft.cloudDoc.domain</value>
+			</set>
+		</property>
+    </bean>
+
+    <bean id="repositoryPerformanceMonitor" class="ro.cloudSoft.cloudDoc.internal.aspects.RepositoryPerformanceMonitor">
+		<constructor-arg ref="monitorFactory"/>
+	</bean>
+
+	<bean id="monitorFactory" class="ro.cloudSoft.cloudDoc.internal.monitor.jamon.JamonMonitorFactory"/>
+
+	<aop:aspectj-autoproxy>
+		<aop:include name="repositoryPerformanceMonitor"/>
+	</aop:aspectj-autoproxy>
+	
+</beans>

@@ -1,0 +1,10 @@
+{
+	"/rest": {
+		"target": "http://localhost:8080/CloudFlow",
+		"secure": false
+	},
+	"/viewWorkflowGraph.do": {
+		"target": "http://localhost:8080/CloudFlow",
+		"secure": false
+	}
+}

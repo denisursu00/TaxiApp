@@ -1,0 +1,234 @@
+<app-loading *ngIf="loading"></app-loading>
+<p-panel [toggleable]="true">
+    <p-header>
+         {{'LABELS.RAPORT_DEPLASARI_DECONTURI_CHELTUIELI_REPREZENTANT_ARB' | translate}}
+    </p-header>
+    <form [formGroup]="formGroup">		
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.ALTE_DECONTURI_TITULAR_DECONT' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-dropdown 
+						[options]="titularSelectItems" 
+						[placeholder]="'LABELS.ALL' | translate"
+						showClear="true"
+						[style]="{'width':'100%'}" 
+						(onChange)="onChangeFiltruTitular()"
+						filter="true"
+						formControlName="titular"></p-dropdown>
+				</div>
+			</div>			
+			<div class="ui-grid-row"  *ngIf="!filtruDataDecontDisabled">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_DATA_DECONT' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-calendar formControlName="dataDecont"
+							showIcon="true" 
+							[dateFormat]="dateFormat"
+							[disabled]="filtruDataDecontDisabled"
+							monthNavigator="true" 
+							yearNavigator="true"
+							[yearRange]="yearRange"
+							showButtonBar="true"
+							appendTo="body" 
+							[dataType]="'date'">
+					</p-calendar>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3"></div>
+				<div class="ui-grid-col-9">
+					<div *ngIf="dataDecontFormControl.invalid && (dataDecontFormControl.dirty || dataDecontFormControl.touched)" class="ui-message ui-widget ui-corner-all ui-message-error">
+						<span class="ui-message-icon pi pi-times"></span>
+						<span *ngIf="dataDecontFormControl.errors['required']" class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-row" *ngIf="filtruDataDecontDisabled">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_DATA_DE_LA_DECONT' | translate}}*:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-calendar formControlName="dataDecontDeLa"
+							showIcon="true" 
+							[dateFormat]="dateFormat"
+							[disabled]="filtruDataDecontDeLaDisabled"
+							monthNavigator="true" 
+							yearNavigator="true"
+							[yearRange]="yearRange"
+							showButtonBar="true"
+							appendTo="body" 
+							[dataType]="'date'">
+					</p-calendar>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3"></div>
+				<div class="ui-grid-col-9">
+					<div *ngIf="dataDecontDeLaFormControl.invalid && (dataDecontDeLaFormControl.dirty || dataDecontDeLaFormControl.touched)" class="ui-message ui-widget ui-corner-all ui-message-error">
+						<span class="ui-message-icon pi pi-times"></span>
+						<span *ngIf="dataDecontDeLaFormControl.errors['required']" class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-row" *ngIf="filtruDataDecontDisabled">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_DATA_PANA_LA_DECONT' | translate}}*:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-calendar formControlName="dataDecontPanaLa"
+							showIcon="true" 
+							[dateFormat]="dateFormat"
+							[disabled]="filtruDataDecontPanaLaDisabled"
+							monthNavigator="true" 
+							yearNavigator="true"
+							[yearRange]="yearRange"
+							showButtonBar="true"
+							appendTo="body" 
+							[dataType]="'date'">
+					</p-calendar>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3"></div>
+				<div class="ui-grid-col-9">
+					<div *ngIf="dataDecontPanaLaFormControl.invalid && (dataDecontPanaLaFormControl.dirty || dataDecontPanaLaFormControl.touched)" class="ui-message ui-widget ui-corner-all ui-message-error">
+						<span class="ui-message-icon pi pi-times"></span>
+						<span *ngIf="dataDecontPanaLaFormControl.errors['required']" class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<p-footer>
+		<p-button [label]="'LABELS.REPORT_VIEW' | translate" (onClick)="onView()"></p-button>
+		<p-button [label]="'LABELS.EXPORT_CSV' | translate" (onClick)="exportCSV()"></p-button>
+	</p-footer>
+</p-panel>
+<p-table *ngIf="reportAllTitularVisible"
+		[value]="report.rows" 
+		[columns]="columns" 
+		[selectionMode]="'multiple'"
+		[responsive]="true"
+		[resizableColumns]="true"
+		[loading]="loading"
+		[style]="{'margin-top':'5px'}"
+		[scrollable]="true" 
+		[scrollHeight]="scrollHeight">
+	<ng-template pTemplate="colgroup">
+		<colgroup>
+			<col style="width: 33%">
+			<col style="width: 33%">
+			<col style="width: 33%">
+		</colgroup>
+	</ng-template>
+	<ng-template pTemplate="header">
+			<tr>
+				<th pResizableColumn>{{"LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_TITULAR" | translate}}</th>
+				<th pResizableColumn>{{"LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_DATA_DOC_JUSTIFICATIV" | translate}}</th>
+				<th pResizableColumn>{{"LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_NR_DOC_JUSTIFICATIV" | translate}}</th>
+			</tr>
+	</ng-template>
+	<ng-template pTemplate="body" let-row let-index="rowIndex">
+			<tr [pSelectableRow]="row">						
+				<td>{{row.titular}}</td>							
+				<td>{{row.dataDocumentJustificativ | appDateFormater}}</td>
+				<td>{{row.nrDocumentJustificativ}}</td>		
+			</tr>
+	</ng-template>
+	<ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td [attr.colspan]="6">
+                {{"LABELS.NO_RECORDS_FOUND" | translate}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<div class="ui-grid-row" *ngIf="reportOneTitularVisible">
+	<div class="ui-grid-col-12" *ngIf="report.numarInregistrareDecont!=null">
+		{{'LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_NR_DECONT' | translate}}:
+		{{report.numarInregistrareDecont  + "/" }}  {{ dataDecontFormControl.value | appDateFormater }}
+	</div>
+	<div class="ui-grid-col-12" *ngIf="report.numarInregistrareDecont==null">
+		{{'LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_NR_DECONT' | translate}}:
+	</div>
+</div>
+<p-table *ngIf="reportOneTitularVisible"
+		[value]="report.rows"  
+		[selectionMode]="'multiple'"
+		[responsive]="true"
+		[resizableColumns]="true"
+		[loading]="loading"
+		[style]="{'margin-top':'5px'}"
+		[scrollable]="true" 
+		[scrollHeight]="scrollHeight">
+	<ng-template pTemplate="colgroup">
+		<colgroup>
+			<col style="width: 25%">
+			<col style="width: 25%">
+			<col style="width: 25%">
+			<col style="width: 25%">
+		</colgroup>
+	</ng-template>
+	<ng-template pTemplate="header">
+			<tr>
+				<th pResizableColumn>{{"LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_DATA_DOC_JUSTIFICATIV" | translate}}</th>
+				<th pResizableColumn>{{"LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_NR_DOC_JUSTIFICATIV" | translate}}</th>
+				<th pResizableColumn>{{"LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_EXPLICATIA" | translate}}</th>
+				<th pResizableColumn>{{"LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_SUMA" | translate}}</th>
+			</tr>
+	</ng-template>
+	<ng-template pTemplate="body" let-row let-index="rowIndex">
+			<tr [pSelectableRow]="row">							
+				<td>{{row.dataDocumentJustificativ | appDateFormater}}</td>
+				<td>{{row.nrDocumentJustificativ}}</td>						
+				<td>{{row.explicatie}}</td>							
+				<td>{{row.suma  | number:'1.2-2'}}</td>			
+			</tr>
+	</ng-template>
+	<ng-template pTemplate="footer" *ngIf="reportOneTitularVisible && !emptymessage">
+        <tr>
+            <th colspan="3">{{"LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_TOTAL" | translate}}</th>
+            <td>{{report.totalCheltuieli  | number:'1.2-2'}}</td>	
+        </tr>
+    </ng-template>
+	<ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td [attr.colspan]="6">
+                {{"LABELS.NO_RECORDS_FOUND" | translate}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<p-table *ngIf="reportOneTitularVisible"
+		[value]="report"  
+		[selectionMode]="'multiple'"
+		[responsive]="true"
+		[resizableColumns]="true"
+		[loading]="loading"
+		[style]="{'margin-top':'5px'}">
+	<ng-template pTemplate="header" >
+			<tr>							
+				<th pResizableColumn style="width: 25%" rowspan="2">{{"LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_AVANS_PRIMIT" | translate}}</th>
+				<th pResizableColumn style="width: 25%">{{"LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_AVANS_PRIMIT_CARD" | translate}}</th>
+				<th pResizableColumn style="width: 25%">{{report.avansPrimitCard | number:'1.2-2'}}</th>			
+			</tr>
+			<tr>							
+				<th pResizableColumn style="width: 25%">{{"LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_AVANS_PRIMIT_NUMERAR" | translate}}</th>
+				<th pResizableColumn style="width: 25%">{{report.avansPrimitNumerar | number:'1.2-2'}}</th>			
+			</tr>
+			<tr>							
+				<th pResizableColumn style="width: 25%" rowspan="2">{{"LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_DIFERENTA" | translate}}</th>
+				<th pResizableColumn style="width: 25%">{{"LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_DIFERENTA_DE_INCASAT" | translate}}</th>
+				<th pResizableColumn style="width: 25%">{{report.diferentaDeIncasat | number:'1.2-2'}}</th>			
+			</tr>
+			<tr>							
+				<th pResizableColumn style="width: 25%">{{"LABELS.REPORT_CHELTUIELI_REPREZENTANT_ARB_DIFERENTA_DE_RESTITUIT" | translate}}</th>
+				<th pResizableColumn style="width: 25%">{{report.diferentaDeRestituit | number:'1.2-2'}}</th>			
+			</tr>
+	</ng-template>
+	
+</p-table>

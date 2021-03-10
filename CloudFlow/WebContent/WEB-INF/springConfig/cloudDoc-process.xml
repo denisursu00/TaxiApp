@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    
+    <aop:aspectj-autoproxy/>
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+   <!--   <aop:config>
+        <aop:pointcut id="pluginsOperation" expression="execution(* ro.cloudSoft.cloudDoc.services.bpm.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pluginsOperation" />
+    </aop:config>-->
+    
+     <!-- Spring JBPM 4.3 configuration -->     
+    <bean id="springHelper" class="org.jbpm.pvm.internal.processengine.SpringHelper" depends-on="liquibaseMigrator">
+    	<property name="jbpmCfg" value="conf/jbpm.cfg.xml"/>
+    </bean>
+    
+    <bean id="jbpmProcessEngine" factory-bean="springHelper" factory-method="createProcessEngine" destroy-method="close" />
+    
+    <bean id="workflowPlugin" class="ro.cloudSoft.cloudDoc.plugins.bpm.WorkflowJbpmPlugin">
+    <!-- <property name="repositoryService" ref="jbpmRepositoryService"></property>  -->
+    <!-- <property name="configuration" ref="jbpmConfiguration"></property> -->
+    	<property name="processEngine" ref="jbpmProcessEngine"></property>
+    	<property name="workflowJbpmProcessDefinitionXmlGenerator" ref="workflowJbpmProcessDefinitionXmlGenerator"></property>
+    	<property name="workflowDao" ref="workflowDao"/>
+    </bean>
+    
+    <bean id="workflowDao" class="ro.cloudSoft.cloudDoc.dao.bpm.WorkflowDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="workflowService" class="ro.cloudSoft.cloudDoc.services.bpm.WorkflowServiceImpl">
+    	<property name="documentTypeService" ref="documentTypeService" />
+    	
+    	<property name="auditService" ref="auditService" />
+    	
+    	<property name="workflowPlugin" ref="workflowPlugin" />
+    	<property name="workflowDao" ref="workflowDao" />
+    	<property name="workflowInstanceDao" ref="workflowInstanceDao" />
+    </bean>
+        
+    <bean id="workflowInstanceDao" class="ro.cloudSoft.cloudDoc.dao.bpm.WorkflowInstanceDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="workflowExecutionPlugin" class="ro.cloudSoft.cloudDoc.plugins.bpm.WorkflowExecutionJbpmPlugin">
+    	<property name="processEngine" ref="jbpmProcessEngine"></property>
+    	<property name="workflowInstanceDao" ref="workflowInstanceDao"/>
+    	<property name="workflowDao" ref="workflowDao"/>
+    	<property name="documentService" ref="documentService"/>
+    </bean> 
+    
+    <bean id="workflowExecutionService" class="ro.cloudSoft.cloudDoc.services.bpm.WorkflowExecutionServiceImpl">
+    	<property name="workflowDao" ref="workflowDao" />
+    	<property name="workflowExecutionPlugin" ref="workflowExecutionPlugin"/>
+ 		<property name="workflowInstanceDao" ref="workflowInstanceDao"/>
+ 		<property name="documentService" ref="documentService"/>
+ 		<property name="documentTypeDao" ref="documentTypeDao"/>
+    	<property name="workflowPlugin" ref="workflowPlugin" />
+    	<property name="documentWorkflowHistoryPlugin" ref="documentWorkflowHistoryPlugin" />
+    	<property name="securityManagerFactory" ref="securityManagerFactory" />        
+        <property name="businessConstants" ref="businessConstants"></property>
+    </bean>
+    
+    <bean id="documentWorkflowHistoryPlugin" class="ro.cloudSoft.cloudDoc.plugins.bpm.DocumentWorkflowHistoryJbpmPlugin" >
+     <property name="processEngine" ref="jbpmProcessEngine"></property>
+     <property name="workflowInstanceDao" ref="workflowInstanceDao"/>
+    </bean>
+    
+    <bean id="documentWorkflowHistoryService" class="ro.cloudSoft.cloudDoc.services.bpm.DocumentWorkflowHistoryServiceImpl">
+        <property name="documentWorkflowHistoryPlugin" ref="documentWorkflowHistoryPlugin"/>
+    </bean>
+    
+    <bean id="workflowJbpmProcessDefinitionXmlGenerator" class="ro.cloudSoft.cloudDoc.plugins.bpm.TemplateBasedWorkflowJbpmProcessDefinitionXmlGenerator">
+    	<property name="templateEngine" ref="templateEngine" />
+    	<property name="templateName" value="/bpm/workflowJbpmProcessDefinitionXml.ftl" />
+    </bean>
+    
+    <!--
+    <bean id="generator" class="ro.cloudSoft.cloudDoc.plugins.bpm.Generator">
+    	<property name="assigmentHandlerClassesMap">
+    		<map key-type="java.lang.String" value-type="java.lang.String">
+    			<entry key="HIERARCHICAL_SUP" value="ro.cloudSoft.cloudDoc.plugins.bpm.assignment.HierarchicalSuperiorAssignmentHandler" />
+    			<entry key="HIERARCHICAL_SUB" value="ro.cloudSoft.cloudDoc.plugins.bpm.assignment.HierarchicalSubalternAssignmentHandler" />
+    			<entry key="HIERARCHICAL_INF" value="ro.cloudSoft.cloudDoc.plugins.bpm.assignment.HierarchicalInferiorAssignmentHandler" />
+    			<entry key="GROUP" value="ro.cloudSoft.cloudDoc.plugins.bpm.assignment.GroupAssignmentHandler" />
+    			<entry key="INITIATOR" value="ro.cloudSoft.cloudDoc.plugins.bpm.assignment.InitiatorAssignmentHandler" />
+    			<entry key="MANUAL" value="ro.cloudSoft.cloudDoc.plugins.bpm.assignment.ManualAssignmentHandler" />
+    			<entry key="OU" value="ro.cloudSoft.cloudDoc.plugins.bpm.assignment.OrganizationUnitAssignmentHandler" />
+    			<entry key="PARAMETER" value="ro.cloudSoft.cloudDoc.plugins.bpm.assignment.ParameterAssignmentHandler" />
+    			<entry key="PREVIOUS" value="ro.cloudSoft.cloudDoc.plugins.bpm.assignment.PreviousAssignmentHandler" />
+    		</map>
+    	</property>
+    </bean>
+    -->
+    
+    <bean id="assignmentHandlerDispatcher" class="ro.cloudSoft.cloudDoc.plugins.bpm.assignment.AssignmentHandlerDispatcher">
+    	<property name="workflowDao" ref="workflowDao" />
+    </bean>
+    
+    <bean id="assignmentHelperFactory" class="ro.cloudSoft.cloudDoc.plugins.bpm.assignment.helpers.ReplacementProfilesAwareAssignmentHelperFactory">
+    	<property name="replacementProfilesService" ref="replacementProfilesService" />
+    	<property name="replacementProfileInstanceService" ref="replacementProfileInstanceService" />
+    	<property name="workflowService" ref="workflowService" />
+    	<property name="documentService" ref="documentService" />
+    	<property name="mailService" ref="mailService" />
+    	
+    	<property name="userPersistencePlugin" ref="userPersistencePlugin" />
+    	<property name="organizationUnitPersistencePlugin" ref="organizationUnitPersistencePlugin" />
+    	<property name="groupPersistencePlugin" ref="groupPersistencePlugin" />
+    	
+    	<property name="gatherReplacementProfilesForEntitiesIncludingForReplacementsHelper" ref="gatherReplacementProfilesForEntitiesIncludingForReplacementsHelper" />
+    	<property name="transitionNotificationsHandlerFactory" ref="transitionNotificationsHandlerFactory" />
+    </bean>
+    
+    <bean id="transitionNotificationsHandlerFactory" class="ro.cloudSoft.cloudDoc.plugins.bpm.notifications.TransitionNotificationsHandlerFactory">
+    	<property name="mailService" ref="mailService" />
+    	<property name="documentService" ref="documentService" />
+    	<property name="userService" ref="userService" />
+    	
+    	<property name="userPersistencePlugin" ref="userPersistencePlugin" />
+    	<property name="organizationUnitPersistencePlugin" ref="organizationUnitPersistencePlugin" />
+    	<property name="groupPersistencePlugin" ref="groupPersistencePlugin" />
+    </bean>
+    
+    <bean id="workflowGraphViewGenerator" class="ro.cloudSoft.cloudDoc.utils.bpm.graph.WebServiceBasedWorkflowGraphViewGenerator">
+    </bean>
+</beans>

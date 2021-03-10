@@ -1,0 +1,39 @@
+<app-loading *ngIf="loadingVisible"></app-loading>
+<p-dialog #pDialog [(visible)]="windowVisible" [modal]="true" appendTo="body"
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}"
+		(onShow)="onShow($event)" (onHide)="onHide($event)">
+	<p-header>
+		<span>{{title}}</span>
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+	</p-header>
+	<p-tabView [activeIndex]="activeTabIndex" (onChange)="onTabChanged($event)" [style]="{'height':'70vh'}">
+		<p-tabPanel [header]="'LABELS.GENERAL' | translate" [selected]="true">
+			<span *ngIf="!tabContentVisible">{{'MESSAGES.LOADING' | translate}}</span>
+			<app-admin-update-document-general-tab-content *ngIf="tabContentVisible" 
+				[inputData]="tabContentInputData">
+			</app-admin-update-document-general-tab-content>
+		</p-tabPanel>
+		<p-tabPanel [header]="'LABELS.ATTACHMENTS' | translate">
+			<span *ngIf="!tabContentVisible">{{'MESSAGES.LOADING' | translate}}</span>
+			<app-admin-update-document-attachments-tab-content *ngIf="tabContentVisible" 
+				[inputData]="tabContentInputData">
+			</app-admin-update-document-attachments-tab-content>
+		</p-tabPanel>
+	</p-tabView>
+	<p-footer>
+		<p-button (onClick)="onSaveAction($event)" [label]="'LABELS.SAVE' | translate"></p-button>
+		<p-button (onClick)="onCloseAction($event)" [label]="'LABELS.CLOSE' | translate"></p-button>
+	</p-footer>
+</p-dialog>
+
+<app-messages-window *ngIf="documentMessagesWindowVisible"
+	[messages]="documentMessagesWindowMessages"
+	(windowClosed)="onDocumentMessagesWindowClosed($event)">
+</app-messages-window>
+
+<app-confirmation-window *ngIf="confirmationWindow.visible"
+	[messages]="confirmationWindow.messages"
+	[confirmationCallback]="confirmationWindow.callback">
+</app-confirmation-window>

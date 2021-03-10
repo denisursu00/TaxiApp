@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0033-adaugare-validare-pe-beneficiar-cerere-concediu" author="CloudSoft.User3">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO document_validation_definition(
+				id, 
+				document_type_id, 
+				condition_expression, 
+				validation_in_states, 
+				message,
+				validation_order
+			) VALUES (
+				nextval('HIBERNATE_SEQUENCE'), 
+				(select id from documenttype where name='Cerere concediu'), 
+				'user:hasRecordInConcediiPersonalArbForCurrentYear({beneficiar_concediu})', 
+				'initiere_cerere_concediu', 
+				'Beneficiar concediu trebuie sa fie inregistrat in nomenclatorul de concedii personal ARB pentru anul curent', 
+				1
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

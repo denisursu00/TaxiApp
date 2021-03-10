@@ -1,0 +1,9 @@
+.admin-button{
+	margin-left: auto !important;
+	margin-right: 0 !important;
+}
+
+.ui-tooltip .ui-tooltip-text {
+	width: 25em;
+	margin-left: -6.25em;
+}

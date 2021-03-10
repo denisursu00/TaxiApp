@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    
+	<changeSet id="0032-adaugare-metadata-locatie-la-prezenta_comisie_gl" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO metadatadefinition (basemetadatatype, id, default_value, indexed, label, mandatory, mandatorystates, metadatatype, name, ordernumber, representative, restrictedonedit, restrictedoneditstates, numberlength, prefix, extendable, multipleselection, collection_id, documenttype_id, only_users_from_group, id_of_group_of_permitted_users, auto_compl_with_current_user, auto_cpl_w_crt_usr_state_code, nomenclator_id, auto_compl_with_current_date, invisible, invisible_in_states, auto_compl_with_current_month, md_name_for_auto_cmpl_wth_md, type_of_auto_cmpl_wth_md, nom_atr_ky_for_aut_cmpl_wth_md, auto_compl_with_crnt_date_time, jr_property_name, metadata_document_type_id, multiple_documents_selection, multiple_projects_selection, class_name_for_aut_cmpl_wth_md) VALUES ('SIMPLE', nextval('HIBERNATE_SEQUENCE'), null, FALSE, 'Locatie', TRUE, 'completare_metadate_prezenta;planificare_sedinta', 'TEXT', 'locatie', 9, FALSE, TRUE, 'adaugare_atasament;asignare_task_user;finalizare_prezenta;marcare_sedinta_in_calendar', null, null, null, null, null, (select id from documenttype where name='Prezenta Comisie GL'), null, null, null, null, null, null, TRUE, 'asignare_task_user;marcare_sedinta_in_calendar', null, null, null, null, null, 'th:metadataString_8', null, null, null, null);
+		]]>
+		</sql>	
+	</changeSet>
+	
+	<changeSet id="0032-update-metadata-oras_intermediar-la-decizie_deplasare" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE METADATADEFINITION
+			SET MANDATORY = false, MANDATORYSTATES = NULL
+			WHERE DOCUMENTTYPE_ID = (SELECT ID FROM DOCUMENTTYPE WHERE NAME = 'Decizie deplasare')
+				AND NAME = 'oras_intermediar';
+		]]>
+		</sql>	
+	</changeSet>
+	
+	<changeSet id="0032-update-label-listitem-value-domn-la-metadata-apelativ-din-decizie_deplasare" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE LISTMETADATAITEM
+			SET LABEL = 'Domnul'
+			WHERE LIST_ID = (SELECT ID FROM METADATADEFINITION 
+				WHERE DOCUMENTTYPE_ID = (SELECT ID FROM DOCUMENTTYPE WHERE NAME = 'Decizie deplasare') AND NAME = 'apelativ')
+					AND VALUE = 'domn';
+		]]>
+		</sql>	
+	</changeSet>
+	
+</databaseChangeLog>

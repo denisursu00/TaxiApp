@@ -1,0 +1,214 @@
+<app-loading *ngIf="loadingVisible"></app-loading>
+<p-dialog #pDialog [(visible)]="windowVisible" [modal]="true" appendTo="body"
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onShow)="onShow($event)" (onHide)="onHide($event)">
+	<p-header>
+		<span>{{"LABELS.USER" | translate}}</span>
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+	</p-header>
+	<form [formGroup]="form" [ngStyle]="{'height':'70vh'}">
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					{{"LABELS.LAST_NAME" | translate}} *:
+				</div>
+				<div class="ui-grid-col-10">
+					<input pInputText formControlName="lastName" type="text" />
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2"></div>
+				<div class="ui-grid-col-10">
+					<div *ngIf="lastNameFormControl.invalid && (lastNameFormControl.dirty || lastNameFormControl.touched)" class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="lastNameFormControl.errors['required']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					{{"LABELS.FIRST_NAME" | translate}} *:
+				</div>
+				<div class="ui-grid-col-10">
+					<input pInputText formControlName="firstName" type="text" />
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2"></div>
+				<div class="ui-grid-col-10">
+					<div *ngIf="firstNameFormControl.invalid && (firstNameFormControl.dirty || firstNameFormControl.touched)" class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="firstNameFormControl.errors['required']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					{{"LABELS.TITLE" | translate}} *:
+				</div>
+				<div class="ui-grid-col-10">
+					<p-dropdown formControlName="titleText"
+							[options]="titleSelectItems"
+							[style]="{'width':'100%'}"
+							editable="true" 
+							filter="true"
+							showClear="true"
+							autoDisplayFirst="false"
+							filter="true"
+							appendTo="body">
+					</p-dropdown>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2"></div>
+				<div class="ui-grid-col-10">
+					<div *ngIf="titleTextFormControl.invalid && (titleTextFormControl.dirty || titleTextFormControl.touched)" class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="titleTextFormControl.errors['required']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					{{"LABELS.EMPLOYEE_ID" | translate}}:
+				</div>
+				<div class="ui-grid-col-10">
+					<input pInputText formControlName="employeeId" type="text" />
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					{{"LABELS.USERNAME" | translate}} *:
+				</div>
+				<div class="ui-grid-col-10">
+					<input pInputText formControlName="username" type="text" />
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2"></div>
+				<div class="ui-grid-col-10">
+					<div *ngIf="usernameFormControl.invalid && (usernameFormControl.dirty || usernameFormControl.touched)" class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="usernameFormControl.errors['required']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					{{"LABELS.PASSWORD" | translate}} <span *ngIf="isPasswordRequired">*</span>:
+				</div>
+				<div class="ui-grid-col-10">
+					<input formControlName="password" type="password" pPassword  [feedback]="false" />
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2"></div>
+				<div class="ui-grid-col-10">
+					<div *ngIf="passwordFormControl.invalid && (passwordFormControl.dirty || passwordFormControl.touched)" class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="passwordFormControl.errors['required']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					{{"LABELS.EMAIL" | translate}} *:
+				</div>
+				<div class="ui-grid-col-10">
+					<input pInputText formControlName="email" type="text" />
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2"></div>
+				<div class="ui-grid-col-10">
+					<div *ngIf="emailFormControl.invalid && (emailFormControl.dirty || emailFormControl.touched)" class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="emailFormControl.errors['required']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+						<span *ngIf="emailFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+						<span *ngIf="emailFormControl.errors['email']">{{'MESSAGES.INVALID_EMAIL' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					{{"LABELS.PHONE" | translate}}:
+				</div>
+				<div class="ui-grid-col-10">
+					<input pInputText formControlName="phone" type="text" />
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					{{"LABELS.FAX" | translate}}:
+				</div>
+				<div class="ui-grid-col-10">
+					<input pInputText formControlName="fax" type="text" />
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					{{"LABELS.MOBILE" | translate}}:
+				</div>
+				<div class="ui-grid-col-10">
+					<input pInputText formControlName="mobile" type="text" />
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					{{"LABELS.MANAGER" | translate}}:
+				</div>
+				<div class="ui-grid-col-10">
+					<p-checkbox formControlName="isManager" binary="true"></p-checkbox>
+				</div>
+			</div>
+		</div>
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.ROLES" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-8">
+				<p-pickList 
+						[source]="sourceUserRoles"
+						[target]="targetUserRoles"
+						[responsive]="true"
+						[showSourceControls]="false"
+						[showTargetControls]="false">
+					<ng-template let-role pTemplate="item">
+							<div class="ui-helper-clearfix">
+								<div style="margin: 5px 10px">
+									{{ role.name }}
+								</div>
+							</div>
+					</ng-template>
+				</p-pickList>
+			</div>
+		</div>
+	</form>
+	<p-footer>
+		<p-button *ngIf="addButtonVisible" (onClick)="onAddAction($event)" [label]="'LABELS.ADD' | translate"></p-button>
+		<p-button *ngIf="saveButtonVisible" (onClick)="onSaveAction($event)" [label]="'LABELS.SAVE' | translate"></p-button>
+		<p-button *ngIf="importButtonVisible" (onClick)="onImportAction($event)" [label]="'LABELS.IMPORT' | translate"></p-button>
+		<p-button (onClick)="onCancelAction($event)" [label]="'LABELS.CANCEL' | translate"></p-button>
+	</p-footer>
+</p-dialog>

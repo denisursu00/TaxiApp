@@ -1,0 +1,311 @@
+<app-loading *ngIf="loading"></app-loading>
+<p-panel [toggleable]="true">
+    <p-header>
+         {{'LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB' | translate}}
+    </p-header>
+    <form [formGroup]="formGroup">		
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_FILTER_TITULAR' | translate}}*:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-dropdown 
+						[options]="titularSelectItems" 
+						[placeholder]="'LABELS.SELECT' | translate"
+						showClear="true"
+						[style]="{'width':'100%'}" 
+						filter="true"
+						formControlName="titular">
+					</p-dropdown>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3"></div>
+				<div class="ui-grid-col-9">
+					<div *ngIf="titularFormControl.invalid && (titularFormControl.dirty || titularFormControl.touched)" class="ui-message ui-widget ui-corner-all ui-message-error">
+						<span class="ui-message-icon pi pi-times"></span>
+						<span *ngIf="titularFormControl.errors['required']" class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_FILTER_ORGANISM' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-dropdown 
+						[options]="organismSelectItems" 
+						[placeholder]="'LABELS.ALL' | translate"
+						showClear="true"
+						[style]="{'width':'100%'}" 
+						(onChange)="onChangeFiltruOrganism()"
+						filter="true"
+						formControlName="organism">
+					</p-dropdown>
+				</div>
+			</div>
+
+			<div class="ui-grid-row" *ngIf="showComitet">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_FILTER_COMITET' | translate}}:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-dropdown 
+						[options]="comitetSelectItems" 
+						[placeholder]="'LABELS.ALL' | translate"
+						showClear="true"
+						[style]="{'width':'100%'}" 
+						filter="true"
+						formControlName="comitet">
+					</p-dropdown>
+				</div>
+			</div>
+
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_FILTER_DE_LA_DATA' | translate}}*:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-calendar formControlName="dataDecontDeLa"
+							showIcon="true" 
+							[dateFormat]="dateFormat"
+							monthNavigator="true" 
+							yearNavigator="true"
+							[yearRange]="yearRange"
+							showButtonBar="true"
+							appendTo="body" 
+							[dataType]="'date'"
+							(onSelect)="dataDecontDeLaChange()">
+					</p-calendar>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3"></div>
+				<div class="ui-grid-col-9">
+					<div *ngIf="dataDecontDeLaFormControl.invalid && (dataDecontDeLaFormControl.dirty || dataDecontDeLaFormControl.touched)" class="ui-message ui-widget ui-corner-all ui-message-error">
+						<span class="ui-message-icon pi pi-times"></span>
+						<span *ngIf="dataDecontDeLaFormControl.errors['required']" class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_FILTER_PANA_LA_DATA' | translate}}*:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-calendar formControlName="dataDecontPanaLa"
+							showIcon="true" 
+							[dateFormat]="dateFormat"
+							monthNavigator="true" 
+							yearNavigator="true"
+							[yearRange]="yearRange"
+							showButtonBar="true"
+							appendTo="body" 
+							[dataType]="'date'"
+							(onSelect)="dataDecontPanaLaChange()">
+					</p-calendar>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3"></div>
+				<div class="ui-grid-col-9">
+					<div *ngIf="dataDecontPanaLaFormControl.invalid && (dataDecontPanaLaFormControl.dirty || dataDecontPanaLaFormControl.touched)" class="ui-message ui-widget ui-corner-all ui-message-error">
+						<span class="ui-message-icon pi pi-times"></span>
+						<span *ngIf="dataDecontPanaLaFormControl.errors['required']" class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_FILTER_NUMAR_DECIZIE' | translate}}*:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-dropdown 
+						[options]="numarDecizieSelectItems" 
+						[placeholder]="'LABELS.SELECT' | translate"
+						showClear="true"
+						[style]="{'width':'100%'}" 
+						filter="true"
+						formControlName="numarDecizie">
+					</p-dropdown>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3"></div>
+				<div class="ui-grid-col-9">
+					<div *ngIf="numarDecizieFormControl.invalid && (numarDecizieFormControl.dirty || numarDecizieFormControl.touched)" class="ui-message ui-widget ui-corner-all ui-message-error">
+						<span class="ui-message-icon pi pi-times"></span>
+						<span *ngIf="numarDecizieFormControl.errors['required']" class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3">
+					{{'LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_FILTER_VALUTA' | translate}}*:
+				</div>
+				<div class="ui-grid-col-9">
+					<p-dropdown 
+						[options]="valutaSelectItems" 
+						[placeholder]="'LABELS.SELECT' | translate"
+						showClear="true"
+						[style]="{'width':'100%'}" 
+						formControlName="valuta">
+					</p-dropdown>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-3"></div>
+				<div class="ui-grid-col-9">
+					<div *ngIf="valutaFormControl.invalid && (valutaFormControl.dirty || valutaFormControl.touched)" class="ui-message ui-widget ui-corner-all ui-message-error">
+						<span class="ui-message-icon pi pi-times"></span>
+						<span *ngIf="valutaFormControl.errors['required']" class="ui-message-text">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<p-footer>
+		<p-button [label]="'LABELS.REPORT_VIEW' | translate" (onClick)="onView()"></p-button>
+	</p-footer>
+</p-panel>
+
+<p-table *ngIf="reportVisible"
+		#cheltuieliArbDataTable
+		[value]="report.cheltuieliArb.rows"  
+		[columns]="columns"
+		[selectionMode]="'multiple'"
+		[responsive]="true"
+		[resizableColumns]="true"
+		[loading]="loading"
+		[style]="{'margin-top':'5px'}"
+		[scrollable]="true" 
+		[scrollHeight]="scrollHeight">
+
+	<ng-template pTemplate="caption">
+		<div >
+				{{"LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_CHELTIELI_ARB" | translate}}
+		</div>
+		<div class="ui-helper-clearfix">
+			<p-button [label]="'LABELS.EXPORT_CSV' | translate" (onClick)="exportCSV()" style="float:left"></p-button>
+		</div>
+	</ng-template>
+	<ng-template pTemplate="colgroup">
+        <colgroup>
+            <col style="width: 25%">
+            <col style="width: 25%">
+            <col style="width: 25%">
+            <col style="width: 25%">
+        </colgroup>
+	</ng-template>
+	<ng-template pTemplate="header">
+			<tr>
+				<th pResizableColumn>{{"LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_EXPLICATIE" | translate}}</th>
+				<th pResizableColumn>{{"LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_SUMA" | translate}}</th>
+				<th pResizableColumn>{{"LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_VALUTA" | translate}}</th>
+				<th pResizableColumn>{{"LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_NUMERAR_SAU_CARD" | translate}}</th>
+			</tr>
+	</ng-template>
+	<ng-template pTemplate="body" let-row let-index="rowIndex">
+			<tr [pSelectableRow]="row">							
+				<td>{{row.explicatie}}</td>
+				<td>{{row.suma}}</td>						
+				<td>{{row.valuta}}</td>							
+				<td>{{row.numerarSauCard}}</td>			
+			</tr>
+	</ng-template>
+	<ng-template pTemplate="footer" *ngIf="!emptymessage">
+	   <tr>
+			<td > <b> {{"LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_TOTAL_CHELTUIELI_ARB" | translate}} </b> </td>  
+			<td> <b> {{report.cheltuieliArb.total}} </b> </td>  
+			<td> <b> {{valuta}} </b> </td>  
+			<td></td>
+	   </tr>
+    </ng-template>
+	<ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td [attr.colspan]="4">
+                {{"LABELS.NO_RECORDS_FOUND" | translate}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<br>
+
+<p-table *ngIf="reportVisible"
+		#cheltuieliReprezentantArbDataTable
+		[value]="report.cheltuieliReprezentantArb.rows"  
+		[columns]="cheltuieliReprezentantArbColumns"
+		[selectionMode]="'multiple'"
+		[responsive]="true"
+		[resizableColumns]="true"
+		[loading]="loading"
+		[style]="{'margin-top':'5px'}"
+		[scrollable]="true" 
+		[scrollHeight]="scrollHeight">
+	<ng-template pTemplate="colgroup">
+		<colgroup>
+			<col style="width: 25%">
+			<col style="width: 25%">
+			<col style="width: 25%">
+			<col style="width: 25%">
+		</colgroup>
+	</ng-template>
+	<ng-template pTemplate="caption">
+		<div >
+				{{"LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_CHELTIELI_ARB" | translate}}
+		</div>
+		<div class="ui-helper-clearfix">
+			<p-button [label]="'LABELS.EXPORT_CSV' | translate" (onClick)="cheltuieliReprezentantArbDataTable.exportCSV()" style="float:left"></p-button>
+		</div>
+	</ng-template>
+	<ng-template pTemplate="header">
+			<tr>
+				<th pResizableColumn>{{"LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_EXPLICATIE" | translate}}</th>
+				<th pResizableColumn>{{"LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_SUMA" | translate}}</th>
+				<th pResizableColumn>{{"LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_VALUTA" | translate}}</th>
+				<th pResizableColumn>{{"LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_NUMERAR_SAU_CARD" | translate}}</th>
+			</tr>
+	</ng-template>
+	<ng-template pTemplate="body" let-row let-index="rowIndex">
+			<tr [pSelectableRow]="row">							
+				<td>{{row.explicatie}}</td>
+				<td>{{row.suma}}</td>						
+				<td>{{row.valuta}}</td>							
+				<td>{{row.numerarSauCard}}</td>			
+			</tr>
+	</ng-template>
+	<ng-template pTemplate="footer" *ngIf="!emptymessage">
+	   <tr>
+			<td > <b> {{"LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_TOTAL_CHELTUIELI_REPREZENTANT_ARB" | translate}} </b> </td>  
+			<td> <b> {{report.cheltuieliReprezentantArb.total}} </b> </td>  
+			<td> <b> {{valuta}} </b> </td>  
+			<td></td>
+	   </tr>
+	   <tr>
+			<td > <b> {{"LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_AVANS" | translate}} </b> </td>  
+			<td> <b> {{report.cheltuieliReprezentantArb.avans}} </b> </td>  
+			<td> <b> {{valuta}} </b> </td>  
+			<td> <b> {{"LABELS." + report.cheltuieliReprezentantArb.avansModalitatePlata  | translate}} </b> </td>  
+			<td></td>
+		</tr>
+		<tr>
+			<td> <b> {{"LABELS.REPORT_CHETUIELI_ARB_SI_REPREZENTANT_ARB_DIFERENTA" | translate}} </b> </td>  
+			<td> <b> {{report.cheltuieliReprezentantArb.diferenta}} </b> </td>  
+			<td> <b> {{valuta}} </b> </td>  
+			<td></td>
+	   </tr>
+    </ng-template>
+	<ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td [attr.colspan]="4">
+                {{"LABELS.NO_RECORDS_FOUND" | translate}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

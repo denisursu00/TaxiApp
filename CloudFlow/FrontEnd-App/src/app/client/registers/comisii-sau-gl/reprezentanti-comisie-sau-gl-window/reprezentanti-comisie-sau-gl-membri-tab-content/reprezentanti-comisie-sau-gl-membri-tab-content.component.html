@@ -1,0 +1,71 @@
+<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+	<div class="ui-g-12">
+		<p-button [label]="'LABELS.ADD' | translate" (onClick)="onAdd($event)" [disabled]="!addEnabled"></p-button>
+		<p-button [label]="'LABELS.EDIT' | translate" (onClick)="onEdit($event)" [disabled]="!editEnabled"></p-button>
+		<p-button [label]="'LABELS.VIEW' | translate" (onClick)="onView($event)" [disabled]="!viewEnabled"></p-button>
+		<p-button [label]="'LABELS.DELETE' | translate" (onClick)="onDelete($event)" [disabled]="!deleteEnabled"></p-button>
+		<p-button [label]="'LABELS.EXPORT_CSV' | translate" (onClick)="onExportCSV()" ></p-button>
+	</div>
+	<div class="ui-g-12">
+        <p-table #dt 
+                [(selection)]="selectedMembru"
+                [columns]="columns" 
+                [value]="membriViews" 
+                [selectionMode]="'single'"
+                [responsive]="true"
+                [resizableColumns]="true"
+                [loading]="loading"
+                [paginator]="true" 
+                [rows]="pageSize"
+                [totalRecords]="totalRecords"
+                [scrollable]="true" 
+		        [scrollHeight]="scrollHeight"
+                (onRowSelect)="onMembruSelected($event)"
+				(onRowUnselect)="onMembruUnselected($event)">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                    </th>
+                </tr>
+                <tr>
+                    <th *ngFor="let column of columns" [ngSwitch]="column.field">
+                        <input  *ngIf="column.field!='stare'"
+                            pInputText
+                            [(ngModel)]="dataFilters[column.field]"
+                            type="text"
+                            (input)="dt.filter($event.target.value, column.field, 'contains')">
+                        <input  *ngIf="column.field=='stare'"
+                            pInputText 
+                            value="activ"
+                            type="text"
+                            (input)="dt.filter($event.target.value, column.field, 'startsWith')">
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                    <td *ngFor="let col of columns">
+                        {{rowData[col.field]}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<app-membru-reprezentanti-comisie-sau-gl-window *ngIf="membruWindowVisible"
+    [inputData]="membruWindowInputData"
+    [existingMembersByInstitutieIdAndMembruId]="existingMembersByInstitutieIdAndMembruId"
+    [existingMembersByInstitutieNameAndMembruName]="existingMembersByInstitutieNameAndMembruName"
+    [existingMembriModels]="existingMembriModels"
+    [mode]="membruWindowMode"
+    (saved)="onMembruWindowSaved($event)"
+    (closed)="onMembruWindowClosed($event)">
+</app-membru-reprezentanti-comisie-sau-gl-window>
+
+<app-confirmation-window *ngIf="confirmationWindow.visible"
+	[messages]="confirmationWindow.messages"
+	[confirmationCallback]="confirmationWindow.callback">
+</app-confirmation-window>

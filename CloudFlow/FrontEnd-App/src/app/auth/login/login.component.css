@@ -1,0 +1,28 @@
+.login-panel {
+	height: 350px;
+}
+.logo-text { 
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #ffffff;
+}
+.logo-text-environment {
+	font-size: 1.1em;
+	padding-left: 4px;
+	color: #f3f722;
+}
+.login-panel .login-panel-title {
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #EB4C2B;
+	height: 28px;
+    width: auto;
+}
+
+.login-panel .login-panel-message-container {
+	font-size: 1em;
+	color: red;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	vertical-align: middle;
+}

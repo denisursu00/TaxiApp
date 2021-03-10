@@ -1,0 +1,277 @@
+ <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+	<form [formGroup]="form" novalidate>
+
+		<div class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT" | translate}}*:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<app-user-projects-selector formControlName="projectId" (selectionChanged)="onProjectChanged($event)"></app-user-projects-selector>
+			</div>
+			<div *ngIf="projectIdFormControl.invalid && projectIdFormControl.touched" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_SUBACTIVITY" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-dropdown 
+					[style]="{'width':'100%'}" 
+					[options]="subactivitySelectItems"
+					formControlName="subactivity" 
+					appendTo="body"
+					[autoDisplayFirst]="false" 
+					showClear="true" 
+					[filter]="true">
+				</p-dropdown>
+			</div>
+		</div>
+	
+		<div class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_NAME" | translate}}*:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText type="text" formControlName="name" />
+			</div>
+			<div *ngIf="nameFormControl.invalid && nameFormControl.touched" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+		
+		<div class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_DESCRIPTION" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<textarea pInputTextarea formControlName="description"></textarea>
+			</div>
+		</div>
+	
+		<div class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_START_DATE" | translate}}*:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-calendar
+					[showIcon]="true" 
+					[monthNavigator]="true" 
+					[yearNavigator]="true"
+					[dateFormat]="dateFormat" 
+					[yearRange]="yearRange"
+					appendTo="body"
+					[readonlyInput]="false" 
+					formControlName="startDate"
+					(onSelect)="onStartDateSelectEvent($event)">
+				</p-calendar>
+			</div>
+			<div *ngIf="startDateFormControl.invalid && startDateFormControl.touched" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+	
+		<div class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_END_DATE" | translate}}*:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-calendar
+					[showIcon]="true" 
+					[minDate]="startDate"
+					[monthNavigator]="true" 
+					[yearNavigator]="true"
+					[dateFormat]="dateFormat" 
+					[disabled]="!endDateVisible"
+					[yearRange]="yearRange"
+					appendTo="body"
+					[readonlyInput]="false" 
+					formControlName="endDate">
+				</p-calendar>
+			</div>
+			<div *ngIf="endDateFormControl.invalid && endDateFormControl.touched" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+	
+		<div class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_PRIORITY" | translate}}*:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-dropdown 
+					[style]="{'width':'100%'}"
+					[options]="prioritySelectItems" 
+					formControlName="priority" 
+					appendTo="body" 
+					filter="true"
+					[autoDisplayFirst]="false"></p-dropdown>
+			</div>
+			<div *ngIf="priorityFormControl.invalid && priorityFormControl.touched" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+	
+		<div class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_PERMANENT" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-checkbox binary="false" formControlName="permanent" (onChange)="onPermanentChanged($event)"></p-checkbox>
+			</div>
+		</div>
+	
+		<div class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_PARTICIPATIONS_TO" | translate}}*:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-dropdown 
+					[style]="{'width':'100%'}"
+					[options]="participantsToSelectItems" 
+					formControlName="participantsTo" 
+					appendTo="body"
+					[autoDisplayFirst]="false" 
+					showClear="true" 
+					filter="true"
+					(onChange)="onParticipantsToChanged($event)">
+					<ng-template let-target pTemplate="item">
+						<div [pTooltip]="getParticipationsToDescription(target)" showDelay="600" tooltipPosition="top">
+							<div *ngIf="hasEditEventDescriptionPermission(); else elseBlock">
+								<div class="ui-g">
+									<div class="ui-g-6" [ngStyle]="{'vertical-align':'middle'}">
+										<span>{{ target.label }}</span>
+									</div>
+									<div class="ui-g-6" [ngStyle]="{'text-align':'right'}">
+										<p-button [label]="'LABELS.EDIT' | translate" (onClick)="onEditTaskEventDescriptions(target, $event)" [ngClass]="'admin-button'"></p-button>
+									</div>
+								</div>
+							</div>
+							<ng-template #elseBlock>
+								<span>{{ target.label }}</span>
+							</ng-template>
+						</div>
+					</ng-template>
+				</p-dropdown>
+			</div>
+			<div *ngIf="participantsToFormControl.invalid && participantsToFormControl.touched" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+		
+		<div *ngIf="evenimentDatesVisible" class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_EVENIMENT_START_DATE" | translate}}*:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<p-calendar
+					[showIcon]="true" 
+					[monthNavigator]="true" 
+					[yearNavigator]="true"
+					[dateFormat]="dateFormat" 
+					[yearRange]="yearRange"
+					appendTo="body"					
+					showTime="true"
+					[readonlyInput]="false" 
+					formControlName="evenimentStartDate"
+					(onSelect)="onEvenimentStartDateSelectEvent($event)">
+				</p-calendar>
+			</div>
+			<div *ngIf="evenimentStartDateFormControl.invalid && evenimentStartDateFormControl.touched" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="evenimentDatesVisible" class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_EVENIMENT_END_DATE" | translate}}*:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<p-calendar
+					[showIcon]="true" 
+					[monthNavigator]="true" 
+					[minDate]="evenimentStartDate"
+					[yearNavigator]="true"
+					[dateFormat]="dateFormat" 
+					[yearRange]="yearRange"
+					appendTo="body"					
+					showTime="true"
+					[readonlyInput]="false" 
+					formControlName="evenimentEndDate">
+				</p-calendar>
+			</div>
+			<div *ngIf="evenimentEndDateFormControl.invalid && evenimentEndDateFormControl.touched" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					<span *ngIf="evenimentEndDateFormControl.errors['required']">{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}</span>
+					<span *ngIf="evenimentEndDateFormControl.errors['endDateLowerThendStartDate']">{{'MESSAGES.EVENIMENT_END_DATE_MUST_BE_GRATER_THAT_EVENIMENT_START_DATE' | translate}} </span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_EXPLICATIONS" | translate}}
+				<span *ngIf="explicationMandatory">*</span>:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<textarea pInputTextarea formControlName="explications"></textarea>
+			</div>
+			<div *ngIf="explicationMandatory && explicationsFormControl.invalid && (explicationsFormControl.touched || explicationsFormControl.dirty)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_COMMENTS" | translate}}</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<textarea pInputTextarea formControlName="comments"></textarea>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad ">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">
+				{{"LABELS.PROJECT_TASK_ATTACHMENTS" | translate}}
+			</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-fileUpload name="fileUpload[]" 
+						multiple="multiple"
+						customUpload="true" 
+						[disabled]="perspective === 'view' || isUpdatingAttachments"
+						(uploadHandler)="onUpload($event)"
+						(onRemove)="onRemoveFile($event.file)">
+					<ng-template pTemplate="content">
+						<div class="ui-fileupload-row" *ngFor="let uploadedAttachment of uploadedAttachments; let i = index;">
+							<div>{{i+1}}) {{uploadedAttachment.name}}</div>
+							<div><button pButton type="button" icon="fa fa-fw fa-download" (click)="onDownloadAttachment(uploadedAttachment)"></button></div>
+							<div><button pButton type="button" icon="fa fa-close" (click)="onRemoveAttachment(uploadedAttachment)" [disabled]="perspective === 'view' || isUpdatingAttachments"></button></div>
+						</div>
+					</ng-template>        
+				</p-fileUpload>
+			</div>
+		</div>
+	
+	</form>
+</div>
+
+<app-confirmation-window *ngIf="confirmationWindow.visible"
+	[messages]="confirmationWindow.messages"
+	[confirmationCallback]="confirmationWindow.callback">
+</app-confirmation-window>
+
+<p-dialog
+	[(visible)]="displayDescriptionWindow"
+	appendTo="body"
+	[style]="{'height':'20vh','width':'30vw'}"
+	[contentStyle]="{'min-height':'20vh','min-width':'30vw'}"
+	[resizable]="false">
+	<p-header>
+		{{ descriptionWindowHeader }}
+	</p-header>
+	<textarea pInputTextarea [(ngModel)]="taskEventDescription" [ngStyle]="{'resize':'none', 'width':'100%', 'min-height':'20vh'}"></textarea>
+	<p-footer>
+		<p-button [label]="'LABELS.SAVE' | translate" (onClick)="descriptionChanged()"></p-button>
+	</p-footer>
+</p-dialog>

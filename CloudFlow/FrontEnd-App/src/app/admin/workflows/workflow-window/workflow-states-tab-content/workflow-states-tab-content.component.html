@@ -1,0 +1,110 @@
+<div class="ui-g ui-grid-responsive ui-grid-pad ui-fluid">
+	<div class="ui-g-4">
+		<div class="ui-g-12">
+			<p-button [label]="'LABELS.ADD_STATE' | translate" (onClick)="onAddState($event)"></p-button>
+			<p-button [label]="'LABELS.DELETE_STATE' | translate" [disabled]="!isStateSelected()" (onClick)="onDeleteState($event)"></p-button>
+		</div>
+		<div class="ui-g-12">
+			<p-table
+					[(selection)]="selectedState"
+					[value]="states"
+					[scrollable]="true"
+					[scrollHeight]="scrollHeight"
+					(onRowSelect)="onStateSelected($event)"
+					selectionMode="single"
+					sortField="code">
+				<ng-template pTemplate="header">
+					<tr>
+						<th>{{"LABELS.CODE" | translate}}</th>
+						<th>{{"LABELS.NAME" | translate}}</th>
+						<th>{{"LABELS.TYPE" | translate}}</th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-state>
+					<tr [pSelectableRow]="state">
+						<td class="wrap-text">{{state.code}}</td>
+						<td class="wrap-text">{{state.name}}</td>
+						<td class="wrap-text">{{"LABELS." + state.stateTypeAsLabelCode | translate}}</td>
+					</tr>
+				</ng-template>
+			</p-table>
+		</div>
+	</div>
+	<div class="ui-g-8">
+		<form *ngIf="stateFormVisible" [formGroup]="stateForm" novalidate>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.STATE_CODE" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<input pInputText type="text" formControlName="stateCode"/>
+				</div>
+				<div *ngIf="stateCodeFormControl.invalid && (stateCodeFormControl.dirty || stateCodeFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="stateCodeFormControl.errors['required'] || stateCodeFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+						<span *ngIf="stateCodeFormControl.errors['duplicateStateCode']">{{'MESSAGES.STATE_WITH_THIS_CODE_ALREADY_EXISTS' | translate}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.STATE_NAME" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<input pInputText type="text" formControlName="stateName"/>
+				</div>
+				<div *ngIf="stateNameFormControl.invalid && (stateNameFormControl.dirty || stateNameFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="stateNameFormControl.errors['required'] || stateNameFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+						<span *ngIf="stateNameFormControl.errors['duplicateStateName']">{{'MESSAGES.STATE_WITH_THIS_NAME_ALREADY_EXISTS' | translate}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.STATE_TYPE" | translate}}*:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<p-selectButton [options]="stateTypeSelectItems" (onChange)="onStateTypeChanged($event)" formControlName="stateType">
+						<ng-template let-stateType>
+							<span>{{stateType.label | translate}}</span>
+						</ng-template>
+					</p-selectButton>
+				</div>
+			</div>
+
+			<div *ngIf="stateAutomaticRunningFormControl.enabled"  class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.AUTOMATIC_RUNNING" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<p-checkbox [formControl]="stateAutomaticRunningFormControl" (onChange)="onAutomaticRunningChanged($event)" binary="true"></p-checkbox>
+				</div>
+			</div>
+			
+			<div *ngIf="stateClassPathFormControl.enabled" class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.CLASS_PATH" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<input type="text" pInputText formControlName="classPath"/>
+				</div>
+				<div *ngIf="stateClassPathFormControl.invalid && (stateClassPathFormControl.dirty || stateClassPathFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-offset-2 ui-md-10">
+					<div class="ui-message ui-messages-error ui-corner-all">
+						<i class="fa fa-close"></i>
+						<span *ngIf="stateClassPathFormControl.errors['required'] || stateClassPathFormControl.errors['blank']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+					</div>
+				</div>
+			</div>
+
+			<p-fieldset [legend]="'LABELS.ATTACHMENTS_MANAGEMENT_PERMISSIONS' | translate">
+				<p-checkbox
+					[label]="'LABELS.ATTACHMENTS_MANAGEMENT_PERMISSIONS_ADD' | translate"
+					[binary]="true"
+					[formControl]="stateForm.get('stateAttachmentPermissionAdd')"
+					name="stateAttachmentPermissios">
+				</p-checkbox>
+				<p-checkbox
+					[label]="'LABELS.ATTACHMENTS_MANAGEMENT_PERMISSIONS_DELELTE' | translate"
+					[binary]="true"
+					[formControl]="stateForm.get('stateAttachmentPermissionDelete')"
+					name="stateAttachmentPermissios">
+				</p-checkbox>
+			</p-fieldset>
+			<br>
+			<p-button [label]="'LABELS.SAVE_STATE' | translate" (onClick)="onSaveState($event)" style="float: right"></p-button>
+		</form>
+	</div>
+</div>

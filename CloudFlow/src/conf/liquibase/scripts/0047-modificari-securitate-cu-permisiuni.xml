@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0047-creare-tabel-permission_group" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			CREATE TABLE permission_group (
+				id BIGINT NOT NULL,
+				name TEXT NOT NULL,
+				label TEXT NOT NULL,
+				description TEXT,
+				ui_order INTEGER NOT NULL,
+				
+				CONSTRAINT permission_group_pk PRIMARY KEY (id)
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0047-creare-tabel-permission" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			CREATE TABLE permission (
+				id BIGINT NOT NULL,
+				name TEXT NOT NULL,
+				label TEXT NOT NULL,
+				description TEXT,
+				permission_group_id BIGINT NOT NULL,
+				ui_order INTEGER NOT NULL,
+				
+				CONSTRAINT permission_pk PRIMARY KEY (id),
+				CONSTRAINT permission_permission_group_id_fk FOREIGN KEY (permission_group_id) REFERENCES permission_group (id)
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0047-creare-tabel-role_permission" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			CREATE TABLE role_permission (
+				role_id BIGINT NOT NULL,
+				permission_id BIGINT NOT NULL,
+				
+				CONSTRAINT role_permission_pk PRIMARY KEY (role_id, permission_id),
+				CONSTRAINT role_permission_role_id_fk FOREIGN KEY (role_id) REFERENCES role (id),
+				CONSTRAINT role_permission_permission_id_fk FOREIGN KEY (permission_id) REFERENCES permission (id)
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0047-adaugare-valori-permisiuni-si-mapare-roluri" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO permission_group (id, name, label, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client', 'Client', 10);
+			INSERT INTO permission_group (id, name, label, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin', 'Admin', 20);
+			
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.ACCESS_DASHBOARD', 'Access Dashboard', null, (select id from permission_group where name='client'), 10);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.MANAGE_DOCUMENTS', 'Manage Documente', null, (select id from permission_group where name='client'), 20);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.MANAGE_PROJECTS', 'Manage Proiecte', null, (select id from permission_group where name='client'), 30);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.ACCESS_REPORTS', 'Access Rapoarte', null, (select id from permission_group where name='client'), 40);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.VIEW_CALENDAR', 'View Calendar', null, (select id from permission_group where name='client'), 50);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.EDIT_CALENDAR', 'Edit Calendar', null, (select id from permission_group where name='client'), 60);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.VIEW_NOMENCLATORS', 'View Nomenclatoare', null, (select id from permission_group where name='client'), 70);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.EDIT_NOMENCLATORS', 'Edit Nomenclatoare', null, (select id from permission_group where name='client'), 80);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.VIEW_REGISTRU_DOCUMENTE_JUSTIFICATIVE_PLATI', 'View Registru facturi', null, (select id from permission_group where name='client'), 90);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.EDIT_REGISTRU_DOCUMENTE_JUSTIFICATIVE_PLATI', 'Edit Registru facturi', null, (select id from permission_group where name='client'), 100);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.VIEW_COMISII_GL', 'View Comisii/GL', null, (select id from permission_group where name='client'), 110);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.EDIT_COMISII_GL', 'Edit Comisii/GL', null, (select id from permission_group where name='client'), 120);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.VIEW_REGISTRU_INTRARI_IESIRI', 'View Registru Intrari/Iesiri', null, (select id from permission_group where name='client'), 130);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.EDIT_REGISTRU_INTRARI_IESIRI', 'Edit Registru Intrari/Iesiri', null, (select id from permission_group where name='client'), 140);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.VIEW_DEPLASARI_DECONTURI', 'View Deplasari deconturi', null, (select id from permission_group where name='client'), 150);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.EDIT_DEPLASARI_DECONTURI', 'Edit Deplasari deconturi', null, (select id from permission_group where name='client'), 160);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.VIEW_ALTE_DECONTURI', 'View Alte deconturi', null, (select id from permission_group where name='client'), 170);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.EDIT_ALTE_DECONTURI', 'Edit Alte deconturi', null, (select id from permission_group where name='client'), 180);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_ORGANIZATIONAL_STRUCTURE', 'Manage Structura organizatorica', null, (select id from permission_group where name='admin'), 10);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_GROUPS', 'Manage Grupuri de utilizatori', null, (select id from permission_group where name='admin'), 20);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_ROLES_AND_PERMISSIONS', 'Manage Roles and permissions', null, (select id from permission_group where name='admin'), 30);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_DOCUMENT_TYPES', 'Manage Tipuri de documente', null, (select id from permission_group where name='admin'), 40);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_MIME_TYPES', 'Manage Tipuri de atasamente', null, (select id from permission_group where name='admin'), 50);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_WORKFLOWS', 'Manage Fluxuri', null, (select id from permission_group where name='admin'), 60);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_CALENDARS', 'Manage Calendare', null, (select id from permission_group where name='admin'), 70);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_NOMENCLATORS', 'Manage Nomenclatoare', null, (select id from permission_group where name='admin'), 80);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_REPLACEMENT_PROFILES', 'Manage Profile de inlocuire', null, (select id from permission_group where name='admin'), 90);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_PARAMETERS', 'Manage Parametri', null, (select id from permission_group where name='admin'), 100);
+			
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_DASHBOARD'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_DASHBOARD'), (select id from role where name = 'SECRETARIAT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_DASHBOARD'), (select id from role where name = 'CONSILIER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_DASHBOARD'), (select id from role where name = 'RESPONSABIL_PROIECT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_DASHBOARD'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_DASHBOARD'), (select id from role where name = 'MANAGER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_DASHBOARD'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_DASHBOARD'), (select id from role where name = 'HR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_DASHBOARD'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_DASHBOARD'), (select id from role where name = 'LEGAL'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_DOCUMENTS'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_DOCUMENTS'), (select id from role where name = 'SECRETARIAT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_DOCUMENTS'), (select id from role where name = 'CONSILIER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_DOCUMENTS'), (select id from role where name = 'RESPONSABIL_PROIECT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_DOCUMENTS'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_DOCUMENTS'), (select id from role where name = 'MANAGER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_DOCUMENTS'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_DOCUMENTS'), (select id from role where name = 'HR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_DOCUMENTS'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_DOCUMENTS'), (select id from role where name = 'LEGAL'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_PROJECTS'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_PROJECTS'), (select id from role where name = 'SECRETARIAT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_PROJECTS'), (select id from role where name = 'CONSILIER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_PROJECTS'), (select id from role where name = 'RESPONSABIL_PROIECT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_PROJECTS'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_PROJECTS'), (select id from role where name = 'MANAGER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_PROJECTS'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_PROJECTS'), (select id from role where name = 'HR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_PROJECTS'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.MANAGE_PROJECTS'), (select id from role where name = 'LEGAL'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_REPORTS'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_REPORTS'), (select id from role where name = 'SECRETARIAT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_REPORTS'), (select id from role where name = 'CONSILIER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_REPORTS'), (select id from role where name = 'RESPONSABIL_PROIECT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_REPORTS'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_REPORTS'), (select id from role where name = 'MANAGER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_REPORTS'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_REPORTS'), (select id from role where name = 'HR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_REPORTS'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.ACCESS_REPORTS'), (select id from role where name = 'LEGAL'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_CALENDAR'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_CALENDAR'), (select id from role where name = 'SECRETARIAT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_CALENDAR'), (select id from role where name = 'CONSILIER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_CALENDAR'), (select id from role where name = 'RESPONSABIL_PROIECT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_CALENDAR'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_CALENDAR'), (select id from role where name = 'MANAGER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_CALENDAR'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_CALENDAR'), (select id from role where name = 'HR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_CALENDAR'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_CALENDAR'), (select id from role where name = 'LEGAL'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_CALENDAR'), (select id from role where name = 'SECRETARIAT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_CALENDAR'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_NOMENCLATORS'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_NOMENCLATORS'), (select id from role where name = 'SECRETARIAT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_NOMENCLATORS'), (select id from role where name = 'CONSILIER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_NOMENCLATORS'), (select id from role where name = 'RESPONSABIL_PROIECT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_NOMENCLATORS'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_NOMENCLATORS'), (select id from role where name = 'MANAGER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_NOMENCLATORS'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_NOMENCLATORS'), (select id from role where name = 'HR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_NOMENCLATORS'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_NOMENCLATORS'), (select id from role where name = 'LEGAL'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_NOMENCLATORS'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_NOMENCLATORS'), (select id from role where name = 'SECRETARIAT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_NOMENCLATORS'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_NOMENCLATORS'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_DOCUMENTE_JUSTIFICATIVE_PLATI'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_DOCUMENTE_JUSTIFICATIVE_PLATI'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_DOCUMENTE_JUSTIFICATIVE_PLATI'), (select id from role where name = 'MANAGER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_DOCUMENTE_JUSTIFICATIVE_PLATI'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_DOCUMENTE_JUSTIFICATIVE_PLATI'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_REGISTRU_DOCUMENTE_JUSTIFICATIVE_PLATI'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_REGISTRU_DOCUMENTE_JUSTIFICATIVE_PLATI'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_REGISTRU_DOCUMENTE_JUSTIFICATIVE_PLATI'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_COMISII_GL'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_COMISII_GL'), (select id from role where name = 'SECRETARIAT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_COMISII_GL'), (select id from role where name = 'CONSILIER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_COMISII_GL'), (select id from role where name = 'RESPONSABIL_PROIECT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_COMISII_GL'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_COMISII_GL'), (select id from role where name = 'MANAGER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_COMISII_GL'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_COMISII_GL'), (select id from role where name = 'HR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_COMISII_GL'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_COMISII_GL'), (select id from role where name = 'LEGAL'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_COMISII_GL'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_COMISII_GL'), (select id from role where name = 'CONSILIER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_COMISII_GL'), (select id from role where name = 'RESPONSABIL_PROIECT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_COMISII_GL'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_COMISII_GL'), (select id from role where name = 'MANAGER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_COMISII_GL'), (select id from role where name = 'LEGAL'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_INTRARI_IESIRI'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_INTRARI_IESIRI'), (select id from role where name = 'SECRETARIAT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_INTRARI_IESIRI'), (select id from role where name = 'CONSILIER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_INTRARI_IESIRI'), (select id from role where name = 'RESPONSABIL_PROIECT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_INTRARI_IESIRI'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_INTRARI_IESIRI'), (select id from role where name = 'MANAGER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_INTRARI_IESIRI'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_INTRARI_IESIRI'), (select id from role where name = 'HR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_INTRARI_IESIRI'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_REGISTRU_INTRARI_IESIRI'), (select id from role where name = 'LEGAL'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_REGISTRU_INTRARI_IESIRI'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_REGISTRU_INTRARI_IESIRI'), (select id from role where name = 'SECRETARIAT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_REGISTRU_INTRARI_IESIRI'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_REGISTRU_INTRARI_IESIRI'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_DEPLASARI_DECONTURI'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_DEPLASARI_DECONTURI'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_DEPLASARI_DECONTURI'), (select id from role where name = 'MANAGER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_DEPLASARI_DECONTURI'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_DEPLASARI_DECONTURI'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_DEPLASARI_DECONTURI'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_DEPLASARI_DECONTURI'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_DEPLASARI_DECONTURI'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_ALTE_DECONTURI'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_ALTE_DECONTURI'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_ALTE_DECONTURI'), (select id from role where name = 'MANAGER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_ALTE_DECONTURI'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.VIEW_ALTE_DECONTURI'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_ALTE_DECONTURI'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_ALTE_DECONTURI'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'client.EDIT_ALTE_DECONTURI'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_ORGANIZATIONAL_STRUCTURE'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_GROUPS'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_ROLES_AND_PERMISSIONS'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_DOCUMENT_TYPES'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_MIME_TYPES'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_WORKFLOWS'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_CALENDARS'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_NOMENCLATORS'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_REPLACEMENT_PROFILES'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_PARAMETERS'));
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0047-stergere-rol-responsabil_comisie_gl" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			delete from USER_ROLE where role_id = (select id from ROLE where name = 'RESPONSABIL_COMISIE_GL');
+			delete from ROLE where name = 'RESPONSABIL_COMISIE_GL';
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

@@ -1,0 +1,45 @@
+<div class="ui-g ui-g-nopad">
+    <div class="ui-g-5 ui-g-nopad">
+        <div class="ui-g-12 ui-g-nopad">
+            <div class="ui-g-12">
+                <p-button [label]="'LABELS.ADD' | translate" (onClick)="onAddAction($event)"></p-button>
+                <p-button [label]="'LABELS.DELETE' | translate" (onClick)="onDeleteAction($event)" [disabled]="!deleteActionEnabled"></p-button>
+            </div>
+            <div class="ui-g-12">
+                <app-nomenclator-attributes-list-component [nomenclatorAttributes]="nomenclatorAttributes"
+                    (selectionChanged)="onNomenclatorAttributeSelectionChanged($event)">
+                </app-nomenclator-attributes-list-component>
+            </div>
+            <form [formGroup]="form" >
+                <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-3">
+                            {{'LABELS.UI_ATTRIBUTES_AND_ORDER' | translate}}:
+                        </div>
+                        <div class="ui-grid-col-9">
+                            <app-nomenclator-ui-attributes-selection-field
+                                formControlName="uiNomenclatorAttributes">
+                            </app-nomenclator-ui-attributes-selection-field>
+                        </div>
+                    </div>
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-3"></div>
+                        <div class="ui-grid-col-9">
+                            <div *ngIf="uiNomenclatorAttributesFormControl.invalid && (uiNomenclatorAttributesFormControl.dirty || uiNomenclatorAttributesFormControl.touched)" class="ui-message ui-messages-error ui-corner-all">
+                                <span class="fa fa-close"></span>					
+                                <span *ngIf="uiNomenclatorAttributesFormControl.errors['required']">{{'MESSAGES.VALIDATOR_MANDATORY_FIELD' | translate}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="ui-g-7">
+        <app-nomenclator-attribute-definition-component *ngIf="nomenclatorAttributeDefinitionComponentVisible" 
+            [inputData]="nomenclatorAttributeDefinitionInputData"
+            (canceled)="onNomenclatorAttributeDefinitionCanceled($event)"
+            (dataSaved)="onNomenclatorAttributeDataSaved($event)">
+        </app-nomenclator-attribute-definition-component>
+    </div>
+</div>

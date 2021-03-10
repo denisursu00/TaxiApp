@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0060-creare-tabel-prezenta_online_finalizata" author="CloudSoft.User4">
+		<sql endDelimiter=";">
+			CREATE TABLE prezenta_online_finalizata (
+				id BIGINT NOT NULL,
+				document_id TEXT NOT NULL,
+				document_location_real_name TEXT NOT NULL,
+				has_imported boolean,
+				
+				CONSTRAINT pk_prezenta_online_finalizata PRIMARY KEY (id)
+			);
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0060-creare-tabel-prezenta_online_participanti" author="CloudSoft.User4">
+		<sql endDelimiter=";">
+			CREATE TABLE prezenta_online_participanti (
+				id BIGINT NOT NULL,
+				document_id TEXT NOT NULL,
+				document_location_real_name TEXT NOT NULL,
+				institutie_id BIGINT NOT NULL,
+				membru_institutie_id BIGINT,
+				nume TEXT,
+				prenume TEXT,
+				functie TEXT,
+				departament TEXT,
+				telefon TEXT,
+				email TEXT,
+				calitate TEXT,
+								
+				CONSTRAINT pk_prezenta_online_participanti PRIMARY KEY (ID),
+				CONSTRAINT fk_prezenta_online_participanti_institutie_id FOREIGN KEY (institutie_id) REFERENCES NOMENCLATOR_VALUES (ID),
+				CONSTRAINT fk_prezenta_online_participanti_membru_institutie_id FOREIGN KEY (membru_institutie_id) REFERENCES NOMENCLATOR_VALUES (ID)
+			);
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0060-adaugare-user-prezenta" author="CloudSoft.User4">
+		<sql endDelimiter=";">
+			WITH userRow AS (
+				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
+			    RETURNING ORG_ENTITY_ID
+			) INSERT INTO EDOCUSER (
+				ORG_ENTITY_ID, 
+				FIRSTNAME, 
+				LASTNAME, 
+				USERNAME, 
+				TITLE,
+				ORGANIZATION_ID
+			) VALUES (
+				(select ORG_ENTITY_ID from userRow), 
+				'Prezenta', 
+				'Online', 
+				'prezenta', 
+				'Prezenta', 
+				(select ID from ORGANIZATION where NAME = 'Asociatia Romana a Bancilor')
+			);
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0060-adaugare-parola-user-prezenta" author="CloudSoft.User4" context="dev,test,staging">
+		<sql endDelimiter=";">
+			UPDATE edocuser
+			SET password = 'vwXXuUIZ7Molh0iYVaGxBw=='
+			WHERE username ='prezenta';
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0060-adaugare-parola-user-prezenta-prod" author="CloudSoft.User4" context="prod">
+		<sql endDelimiter=";">
+			UPDATE edocuser
+			SET password = 'BpmS9PyEQzt1U8bgpwJzFw=='
+			WHERE username = 'prezenta';
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0060-adaugare-permisiuni-prezenta" author="CloudSoft.User4">
+		<sql endDelimiter=";">
+			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'PREZENTA_ONLINE');
+			
+			INSERT INTO permission_group (id, name, label, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'prezenta', 'Prezenta', 30);
+			
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'prezenta.COMPLETARE', 'Completare Prezenta', null, (select id from permission_group where name='prezenta'), 10);
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'prezenta.IMPORTARE', 'Importare Prezenta', null, (select id from permission_group where name='prezenta'), 20);
+		
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.COMPLETARE'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.COMPLETARE'), (select id from role where name = 'SECRETARIAT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.COMPLETARE'), (select id from role where name = 'CONSILIER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.COMPLETARE'), (select id from role where name = 'RESPONSABIL_PROIECT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.COMPLETARE'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.COMPLETARE'), (select id from role where name = 'MANAGER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.COMPLETARE'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.COMPLETARE'), (select id from role where name = 'HR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.COMPLETARE'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.COMPLETARE'), (select id from role where name = 'LEGAL'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.COMPLETARE'), (select id from role where name = 'PREZENTA_ONLINE'));
+			
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.IMPORTARE'), (select id from role where name = 'ADMIN'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.IMPORTARE'), (select id from role where name = 'SECRETARIAT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.IMPORTARE'), (select id from role where name = 'CONSILIER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.IMPORTARE'), (select id from role where name = 'RESPONSABIL_PROIECT'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.IMPORTARE'), (select id from role where name = 'DIRECTOR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.IMPORTARE'), (select id from role where name = 'MANAGER'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.IMPORTARE'), (select id from role where name = 'LOGISTICA'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.IMPORTARE'), (select id from role where name = 'HR'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.IMPORTARE'), (select id from role where name = 'BOM'));
+			INSERT INTO role_permission (permission_id, role_id) VALUES ((select id from permission where name = 'prezenta.IMPORTARE'), (select id from role where name = 'LEGAL'));
+		
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0060-adaugare-user-role-prezenta" author="CloudSoft.User4">
+		<sql endDelimiter=";">
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'prezenta'),
+				ID
+			FROM ROLE WHERE NAME IN ('PREZENTA_ONLINE');
+			
+			INSERT INTO GROUP_USER (
+				GROUP_ID,
+				USER_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCGROUP where NAME = 'All'),
+				ORG_ENTITY_ID
+			FROM EDOCUSER WHERE USERNAME = 'prezenta';
+		</sql>
+	</changeSet>
+	
+	
+</databaseChangeLog>

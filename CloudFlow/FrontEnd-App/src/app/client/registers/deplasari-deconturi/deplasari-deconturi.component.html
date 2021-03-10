@@ -1,0 +1,163 @@
+<app-loading *ngIf="loadingVisible"></app-loading>
+<div class="ui-g-12">
+	<p-button [label]="'LABELS.ADD' | translate" (onClick)="onAdd()" [disabled]="!addButtonEnabled"></p-button>
+	<p-button [label]="'LABELS.EDIT' | translate" (onClick)="onEdit()" [disabled]="!editButtonEnabled"></p-button>
+	<p-button [label]="'LABELS.VIEW' | translate" (onClick)="onView()" [disabled]="!viewButtonEnabled"></p-button>
+	<span style="padding-left: 3px;padding-right: 3px;">-</span>
+	<p-button [label]="'LABELS.FINALIZE' | translate" (onClick)="onFinalize()" [disabled]="!finalizeButtonEnabled"></p-button>
+	<p-button [label]="'LABELS.DELETE' | translate" (onClick)="onRemove()" [disabled]="!deleteButtonEnabled"></p-button>
+	<p-button [label]="'LABELS.CANCEL' | translate" (onClick)="onCancel()" [disabled]="!cancelButtonEnabled"></p-button>
+	<p-button [label]="'LABELS.REFRESH' | translate" (onClick)="onRefresh()"></p-button>
+</div>
+
+<div class="ui-g-12 ui-sm-12 ui-md-6">
+	<p-dropdown 
+			[(ngModel)]="selectedYear" 
+			[options]="yearItems"
+			[placeholder]="'LABELS.SELECT' | translate"
+			appendTo="body" 
+			(onChange)="onYearValueChanged($event)">
+	</p-dropdown>
+</div>
+
+<div class="ui-g-12">
+	<p-table
+			#deplasariDeconturiDataTable 
+			[(selection)]="selectedDeplasareDecont" 
+			[columns]="columns" 
+			[value]="deplasareDecontViewModels" 
+			[paginator]="true" 
+			[totalRecords]="getNumberOfTotalRecords()" 
+			[first]="pageOffset" 
+			[rows]="pageRows"
+			[rowsPerPageOptions]="rowsPerPageOptions" 
+			[scrollable]="true" 
+			[scrollHeight]="scrollHeight"
+			[loading]="dataLoading" 
+			selectionMode="single" 
+			(onRowSelect)="onDataSelected($event)"
+			(onRowUnselect)="onDataUnselected($event)">
+
+		<ng-template pTemplate="colgroup" let-columns>
+			<colgroup>
+				<col *ngFor="let column of columns" style="width:250px">
+			</colgroup>
+		</ng-template>
+
+		<ng-template pTemplate="header" let-columns>
+			<tr>
+				<th *ngFor="let column of columns" [pSortableColumn]="column.field">
+					{{column.header}}
+					<p-sortIcon [field]="column.field"></p-sortIcon>
+				</th>
+			</tr>
+			<tr>
+				<th *ngFor="let column of columns">
+					<p-multiSelect *ngIf="column.field === 'monthForDisplay' && column.filter" 
+							[(ngModel)]="selectedFilterValueMap[column.field]"
+							[options]="monthFilterValues" 
+							[style]="{'width' :'100%'}" 
+							[disabled]="!column.filter"
+							maxSelectedLabels="1" 
+							appendTo="body"
+							(onChange)="deplasariDeconturiDataTable.filter($event.value, column.filterField, column.filterMatchMode)">
+					</p-multiSelect>
+					<p-multiSelect *ngIf="column.field === 'apelativForDisplay' && column.filter" 
+							[(ngModel)]="selectedFilterValueMap[column.field]"
+							[options]="apelativFilterValues" 
+							[style]="{'width' :'100%'}" 
+							[disabled]="!column.filter"
+							maxSelectedLabels="1" 
+							appendTo="body"
+							(onChange)="deplasariDeconturiDataTable.filter($event.value, column.filterField, column.filterMatchMode)">
+					</p-multiSelect>
+					<p-selectButton *ngIf="column.field === 'anulatForDisplay' || column.field === 'minutaIntalnireTransmisaForDisplay' && column.filter"
+							[(ngModel)]="selectedFilterValueMap[column.field]"
+							[options]="booleanFilterTypes" 
+							[multiple]="true"
+							[disabled]="!column.filter"
+							(onChange)="deplasariDeconturiDataTable.filter($event.value, column.filterField, column.filterMatchMode)">
+					</p-selectButton>
+					<p-selectButton *ngIf="column.field === 'finalizatForDisplay' && column.filter"
+							[(ngModel)]="selectedFilterValueMap[column.field]"
+							[options]="booleanFilterTypes" 
+							[multiple]="true"
+							[disabled]="!column.filter"
+							(onChange)="deplasariDeconturiDataTable.filter($event.value, column.filterField, column.filterMatchMode)">
+					</p-selectButton>
+
+					<input *ngIf="column.filterType === 'TEXT'" pInputText type="text" 
+							[(ngModel)]="selectedFilterValueMap[column.field]"
+							(input)="deplasariDeconturiDataTable.filter($event.target.value, column.filterField, column.filterMatchMode)">
+
+					<p-calendar *ngIf="column.filterType === 'DATE'" 
+							[showIcon]="true" 
+							[(ngModel)]="selectedFilterValueMap[column.field]"
+							[monthNavigator]="true" 
+							[yearNavigator]="true" 
+							[readonlyInput]="true"
+							[dateFormat]="dateFormat" 
+							[yearRange]="yearRange"
+							appendTo="body" 
+							showButtonBar="true" 
+							[style]="{'width' :'auto'}"
+							[disabled]="!column.filter"
+							(onSelect)="deplasariDeconturiDataTable.filter($event, column.filterField, column.filterMatchMode)"
+							(onClearClick)="deplasariDeconturiDataTable.filter('', column.field, column.filterMatchMode)">
+					</p-calendar>
+				</th>
+			</tr>
+		</ng-template>
+		
+		<ng-template pTemplate="body" let-deplasareDecontData let-columns="columns">
+			<tr [pSelectableRow]="deplasareDecontData">
+				<td *ngFor="let column of columns">
+					<span *ngIf="isColumnCheltuieliArb(column)">
+						<p-button [label]="'LABELS.CHELTUIELI_ARB' | translate" (onClick)="onViewCheltuieliArb(deplasareDecontData.cheltuieliArb)"></p-button>
+					</span>
+					<span *ngIf="isColumnCheltuieliReprezentantArb(column)">
+						<p-button [label]="'LABELS.CHELTUIELI_REPREZENTANT_ARB' | translate" (onClick)="onViewCheltuieliReprezentantArb(deplasareDecontData.cheltuieliReprezentantArb)"></p-button>
+					</span>
+					<span *ngIf="isColumnTranslatable(column)">
+						{{ deplasareDecontData[column.field] | translate}}
+					</span>
+					<span *ngIf="isColumnDecimalNumber(column)">
+						{{ deplasareDecontData[column.field] | number:'1.2-2'}}
+					</span>
+					<span *ngIf="!isColumnCheltuieliArb(column) && !isColumnCheltuieliReprezentantArb(column) && !isColumnTranslatable(column) && !isColumnDecimalNumber(column)">{{ deplasareDecontData[column.field] }}</span>
+				</td>
+			</tr>
+		</ng-template>
+
+		<ng-template pTemplate="emptymessage" let-columns>
+			<tr>
+				<td [attr.colspan]="columns.length">
+					{{'LABELS.NO_RECORDS_FOUND' | translate}}
+				</td>
+			</tr>
+		</ng-template>
+	</p-table>
+</div>
+
+<app-deplasari-deconturi-window *ngIf="deplasariDeconturiWindowVisible" [deplasareDecontId]="deplasariDeconturiWindowDecontId" 
+		[mode]="deplasariDeconturiWindowMode" (windowClosed)="onDeplasariDeconturiWindowClosed()">
+</app-deplasari-deconturi-window>
+
+<app-anulare-deplasare-window *ngIf="anulareDeplasareIesiriWindowVisible" [deplasareDecontId]="selectedDeplasareDecontId"
+		(windowClosed)="onAnulareDeplasareWindowClosed()">
+</app-anulare-deplasare-window>
+
+<app-cheltuieli-arb-manager-window *ngIf="cheltuieliArbManagerWindowVisible"
+		[cheltuieliArb]="cheltuieliArbManagerCheltuieliArb"
+		(windowClosed)="onCheltuieliArbManagerWindowClosed()">
+</app-cheltuieli-arb-manager-window>
+
+<app-cheltuieli-reprezentant-arb-manager-window *ngIf="cheltuieliReprezentantArbManagerWindowVisible"
+		[cheltuieliReprezentantArb]="cheltuieliReprezentantArbManagerCheltuieliArb"
+		(windowClosed)="onCheltuieliReprezentantArbManagerWindowClosed()">
+</app-cheltuieli-reprezentant-arb-manager-window>
+
+<app-confirmation-window *ngIf="confirmationWindow.visible"
+	[messages]="confirmationWindow.messages"
+	[confirmationCallback]="confirmationWindow.callback">
+</app-confirmation-window>

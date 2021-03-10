@@ -1,0 +1,47 @@
+<div class="ui-g">
+	<div class="ui-g-12">
+		<p-button [label]="'LABELS.ADD' | translate" (onClick)="onAdd($event)"></p-button>
+		<p-button [label]="'LABELS.EDIT' | translate" (onClick)="onEdit($event)"></p-button>
+		<p-button [label]="'LABELS.DELETE' | translate" (onClick)="onDelete($event)"></p-button>
+		<p-button [label]="'LABELS.REFRESH' | translate" (onClick)="onRefresh($event)"></p-button>
+	</div>
+
+	<div class="ui-g-12">
+		<p-table [(selection)]="selectedGroup"
+				[value]="groups" 
+				[responsive]="true"
+				[resizableColumns]="true"
+				[loading]="loading"
+				selectionMode="single"
+				[scrollable]="true" 
+				[scrollHeight]="scrollHeight">
+
+			<ng-template pTemplate="colgroup">
+				<colgroup>
+					<col style="width: 30%">
+					<col style="width: 70%">
+				</colgroup>
+			</ng-template>
+			<ng-template pTemplate="header">
+				<tr>
+					<th pResizableColumn>{{"LABELS.NAME" | translate}}</th>
+					<th pResizableColumn>{{"LABELS.DESCRIPTION" | translate}}</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-group>
+				<tr [pSelectableRow]="group">
+					<td>{{group.name}}</td>
+					<td>{{group.description}}</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
+</div>
+
+<app-group-window
+		*ngIf="groupWindowVisible" 
+		[mode]="mode" 
+		[groupId]="groupId"
+		[groups]="groups"
+		(windowClosed)="onGroupWindowClosed($event)">
+</app-group-window>

@@ -1,0 +1,131 @@
+<div [formGroup]="formGroup" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-2">
+			<span>{{metadataDefinition.label}}</span>:
+		</div>
+		<div [ngSwitch]="metadataDefinition.type" class="ui-grid-col-10">
+
+			<!-- Metadata TEXT -->
+			<input *ngSwitchCase="'TEXT'"
+					type="text" 
+					[formControlName]="metadataDefinition.name" 
+					[readonly]="readonly" 
+					pInputText
+					(change)="onMetadataValueChanged()">
+
+			<!-- Metadata NUMERIC -->
+			<app-metadata-numeric-field *ngSwitchCase="'NUMERIC'" 
+					[formControlName]="metadataDefinition.name" 
+					[readonly]="readonly">
+			</app-metadata-numeric-field>
+
+			<!-- Metadata AUTO_NUMBER -->
+			<input *ngSwitchCase="'AUTO_NUMBER'" 
+					type="text" 
+					[formControlName]="metadataDefinition.name" 
+					readonly="true" 
+					[placeholder]="'LABELS.AUTO_GENERATED' | translate" 
+					pInputText>
+
+			<!-- Metadata DATE -->
+			<app-metadata-date-field *ngSwitchCase="'DATE'"
+					[formControlName]="metadataDefinition.name"
+					[metadataDefinition]="metadataDefinition"
+					[readonly]="readonly">
+			</app-metadata-date-field>
+
+			<!-- Metadata DATE_TIME -->
+			<app-metadata-date-time-field *ngSwitchCase="'DATE_TIME'"
+					[formControlName]="metadataDefinition.name"
+					[metadataDefinition]="metadataDefinition"
+					[readonly]="readonly">
+			</app-metadata-date-time-field>
+
+			<!-- Metadata MONTH -->
+			<app-metadata-month-field *ngSwitchCase="'MONTH'"
+					[formControlName]="metadataDefinition.name"
+					[metadataDefinition]="metadataDefinition"
+					[readonly]="readonly">
+			</app-metadata-month-field>
+
+			<!-- Metadata TEXT_AREA -->
+			<textarea *ngSwitchCase="'TEXT_AREA'" 
+					[formControlName]="metadataDefinition.name" 
+					[readonly]="readonly" 
+					pInputTextarea
+					(change)="onMetadataValueChanged()">
+			</textarea>
+
+			<!-- Metadata USER -->
+			<app-metadata-user-field *ngSwitchCase="'USER'" 
+					[formControlName]="metadataDefinition.name"
+					[readonly]="readonly" 
+					[metadataDefinition]="metadataDefinition"
+					(valueChanged)="onMetadataValueChanged()">
+			</app-metadata-user-field>
+			
+			<!-- Metadata LIST -->
+			<app-metadata-list-field *ngSwitchCase="'LIST'" 
+					[formControlName]="metadataDefinition.name"
+					[readonly]="readonly" 
+					[metadataDefinition]="metadataDefinition">
+			</app-metadata-list-field>
+
+			<!-- Metadata NOMENCLATOR -->
+			<app-metadata-nomenclator-field *ngSwitchCase="'NOMENCLATOR'" 
+					[formControlName]="metadataDefinition.name"
+					[readonly]="readonly" 
+					[metadataDefinition]="metadataDefinition"
+					(valueChanged)="onMetadataValueChanged()">
+			</app-metadata-nomenclator-field>
+
+			<!-- Metadata COLLECTION -->
+			<app-admin-update-document-metadata-collection-field *ngSwitchCase="'METADATA_COLLECTION'" 
+					[formControlName]="metadataDefinition.name"
+					[readonly]="readonly" 
+					[inputData]="metadataCollectionFieldInputData">
+			</app-admin-update-document-metadata-collection-field>
+
+			<!-- Metadata GROUP -->
+			<app-metadata-group-field *ngSwitchCase="'GROUP'" 
+					[formControlName]="metadataDefinition.name"
+					[readonly]="readonly" 
+					[metadataDefinition]="metadataDefinition"
+					(valueChanged)="onMetadataValueChanged()">
+			</app-metadata-group-field>
+
+			<!-- Metadata DOCUMENT -->
+			<app-metadata-document-field *ngSwitchCase="'DOCUMENT'" 
+					[formControlName]="metadataDefinition.name"
+					[readonly]="readonly"
+					[metadataDefinition]="metadataDefinition" 
+					(valueChanged)="onMetadataValueChanged()">
+			</app-metadata-document-field>
+
+			<!-- Metadata CALENDAR -->
+			<app-metadata-calendar-field *ngSwitchCase="'CALENDAR'" 
+					[formControlName]="metadataDefinition.name"
+					[readonly]="readonly"
+					[metadataDefinition]="metadataDefinition" 
+					(valueChanged)="onMetadataValueChanged()">
+			</app-metadata-calendar-field>
+
+			<!-- Metadata PROJECT -->
+			<app-metadata-project-field *ngSwitchCase="'PROJECT'" 
+					[formControlName]="metadataDefinition.name"
+					[readonly]="readonly"
+					[metadataDefinition]="metadataDefinition" 
+					(valueChanged)="onMetadataValueChanged()">
+			</app-metadata-project-field>
+		</div>
+	</div>
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-2"></div>
+		<div class="ui-grid-col-10">
+			<div *ngIf="metadataFormControl.invalid && (metadataFormControl.dirty || metadataFormControl.touched)" class="ui-message ui-widget ui-corner-all ui-message-error">
+				<span class="ui-message-icon pi pi-times"></span>
+				<span *ngIf="metadataFormControl.errors['numericValidation']" class="ui-message-text">{{'MESSAGES.VALUE_MUST_BE_NUMERIC' | translate}}</span>
+			</div>
+		</div>
+	</div>	
+</div>

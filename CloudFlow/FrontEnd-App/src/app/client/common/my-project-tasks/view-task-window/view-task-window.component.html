@@ -1,0 +1,86 @@
+<app-loading *ngIf="loadingVisible"></app-loading>
+<p-dialog #pDialog [(visible)]="windowVisible" [modal]="true" appendTo="body"
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onShow)="onShow($event)" (onHide)="onHide($event)">
+	<p-header>
+		{{"LABELS.PROJECT_TASK" | translate}} 
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+	</p-header>
+	<p-tabView [style]="{'height':'70vh'}">
+		<div class="ui-g ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10"><input readonly pInputText type="text" [(ngModel)]="task.projectName" /></div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_NAME" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10"><input readonly pInputText type="text" [(ngModel)]="task.name" /></div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_SUBACTIVITY" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10"><input readonly pInputText type="text" [(ngModel)]="task.subactivity" /></div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_DESCRIPTION" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10"><input readonly pInputText type="text" [(ngModel)]="task.description" /></div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_START_DATE" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10"><input readonly pInputText type="text" [(ngModel)]="task.startDate" /></div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_END_DATE" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10"><input readonly pInputText type="text" [(ngModel)]="task.endDate" /></div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_PRIORITY" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10"><input readonly pInputText type="text" [(ngModel)]="task.priority" /></div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_COMMENTS" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10"><textarea pInputTextarea readonly [(ngModel)]="task.comments"></textarea></div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_STATUS" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10"><input readonly pInputText type="text" [(ngModel)]="task.status" /></div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_INITIATOR" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10"><input readonly pInputText type="text" [(ngModel)]="task.initiator" /></div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_PERMANENT" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<span *ngIf="task.permanent">{{"LABELS.YES" | translate}}</span>
+					<span *ngIf="!task.permanent">{{"LABELS.NO" | translate}}</span>
+				</div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_PARTICIPATIONS_TO" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10"><input readonly pInputText type="text" [(ngModel)]="task.participationsTo" /></div>
+			</div>
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_EXPLICATIONS" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10"><input readonly pInputText type="text" [(ngModel)]="task.explications" /></div>
+			</div>
+			<!--
+			<div class="ui-g-12 ui-g-nopad ">
+				<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.PROJECT_TASK_ATTACHMENTS" | translate}}:</div>
+				<div class="ui-g-12 ui-sm-12 ui-md-10">
+					<div *ngFor="let attachment of task.attachments">
+						<a [href]="buildDownloadUrl(attachment)" target="_blank">
+							<i class="fa fa-download" aria-hidden="true"></i>
+							{{attachment.name}}
+						</a>
+					</div>
+				</div>
+			</div>
+			-->
+		</div>
+	</p-tabView>
+	<p-footer>
+		<p-button (onClick)="onHide($event)" [label]="'LABELS.CANCEL' | translate"></p-button>
+	</p-footer>
+</p-dialog>

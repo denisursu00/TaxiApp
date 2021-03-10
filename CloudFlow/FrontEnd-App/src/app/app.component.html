@@ -1,0 +1,41 @@
+<span *ngIf="!simplePageLayout && !fullPageLayout" translate>MESSAGES.LOADING</span>
+<p-toast baseZIndex="5000"></p-toast>
+<div *ngIf="simplePageLayout">
+    <router-outlet></router-outlet>
+</div>
+<div *ngIf="fullPageLayout" class="layout-wrapper" [ngClass]="{'layout-menu-horizontal': menuMode === 'horizontal',
+                                        'layout-menu-overlay': menuMode === 'overlay',
+                                        'layout-menu-static': menuMode === 'static',
+                                        'layout-menu-slim': menuMode === 'slim',
+                                        'layout-menu-light': lightMenu === true,
+                                        'layout-menu-overlay-active': overlayMenuActive,
+                                        'layout-menu-mobile-active': staticMenuMobileActive,
+                                        'layout-menu-static-inactive': staticMenuDesktopInactive}" (click)="onLayoutClick()">
+    
+    <app-topbar></app-topbar>
+
+    <app-menu [reset]="resetMenu"></app-menu>
+
+    <div class="layout-main">
+        <app-breadcrumb></app-breadcrumb>
+
+        <div class="layout-content">
+            <router-outlet></router-outlet>
+            <p-confirmDialog id="generalConfirmationDialog"></p-confirmDialog>
+        </div>
+    </div>    
+</div>
+
+<p-dialog [(visible)]="appUpdateDialogVisible" 
+        [modal]="true" 
+        [closable]="false" 
+        [showHeader]="true"
+        [style]="{'max-width':'550px'}"
+        appendTo="body">				
+    <p-header>{{appUpdateDialogHeader}}</p-header>
+    <p-message severity="info" [text]="'MESSAGES.APP_WAS_UPDATED_AND_RELOAD_NEED' | translate"></p-message>			
+    <p-footer>
+        <p-button (onClick)="onAppUpdateConfirmed()" [label]="'LABELS.APP_UPDATE_RELOAD' | translate"></p-button>
+        <p-button (onClick)="onAppUpdatePostponed()" [label]="'LABELS.APP_UPDATE_POSTPONE' | translate"></p-button>
+    </p-footer>
+</p-dialog>

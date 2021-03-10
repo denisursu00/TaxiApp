@@ -1,0 +1,183 @@
+{
+
+"dataSedinta":null,
+
+"oraMinute":null,
+
+"locatie":"Alpha Leasing din Piaţa Gheorghe Cantacuzino, nr. 6, sector 2 ",
+
+"consiliuDirector":[
+	{
+	"iteratorConsiliu":"1",
+	"membru":"Costica Tudose",
+	"functieMembru":"Director Executiv"
+	},
+	{
+	"iteratorConsiliu":"2",
+	"membru":"Membru 2",
+	"functieMembru":"Director Adjunct"
+	},
+	{
+	"iteratorConsiliu":"3",
+	"membru":"Membru 3",
+	"functieMembru":"Avocat Contracte"
+	}
+],
+
+"invitatiExecutiv":[
+	{
+	"iteratorInvitati":"1",
+	"numeInvitat":"Nume Invitat 1",
+	"functieInvitat":"c1"
+	},
+	{
+	"iteratorInvitati":"2",
+	"numeInvitat":"Nume Invita 2",
+	"functieInvitat":"c2"
+	},
+	{
+	"iteratorInvitati":"3",
+	"numeInvitat":"Nume Invita 3",
+	"functieInvitat":"c3"
+	},
+	{
+	"iteratorInvitati":"4",
+	"numeInvitat":"Nume Invita 4",
+	"functieInvitat":"c4"
+	}
+],
+
+
+"aprobareConsiliuDirector":[
+	{
+		"iteratorConsiliuDirector":"1",
+		"numeCapitol":"PENTRU APROBAREA CONSILIULUI DIRECTOR",
+		"subiecte":[
+			{
+				"iteratorSubiecte":"a", 
+				"continutSubiect":"Aici se va scrie ceva legat de subiectul din acest raport.", 
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":null
+			}, 
+			{
+				"iteratorSubiecte":"b", "continutSubiect":"Aici se va scrie ceva legat de subiectul din acest raport.",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":null
+			}, 
+			{
+				"iteratorSubiecte":"c", "continutSubiect":"Aici se va scrie ceva legat de subiectul din acest raport.",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":null
+			}
+				]
+	
+	},
+	{
+		"iteratorConsiliuDirector":"2",
+		"numeCapitol":"INIŢIATIVE LEGISLATIVE RECENTE ȘI PROIECTE DE TRANSPUNERE A REGLEMENTĂRILOR EUROPENE",
+		"subiecte":[
+			{
+				"iteratorSubiecte":"a", 
+				"continutSubiect":"Aici se va scrie ceva legat de subiectul din acest raport.",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":null
+			}, 
+			{
+				"iteratorSubiecte":"b", 
+				"continutSubiect":"Aici se va scrie ceva legat de subiectul din acest raport.",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":null
+			}
+	]
+	
+	},
+	{
+		"iteratorConsiliuDirector":"3",
+		"numeCapitol":"stadiul PROIECTELOR ŞI activităţilor curente (informare şi discuţii la solicitarea membrilor Consiliului Director",
+		"subiecte":[
+			{
+				"iteratorSubiecte":"a", 
+				"continutSubiect":"Aici se va scrie ceva legat de subiectul din acest raport.",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":null
+			}, 
+			{
+				"iteratorSubiecte":"b", 
+				"continutSubiect":"Aici se va scrie ceva legat de subiectul din acest raport.",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":null
+			}, 
+			{	
+				"iteratorSubiecte":"c", 
+				"continutSubiect":"Aici se va scrie ceva legat de subiectul din acest raport.",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":null
+			}, 
+			{
+				"iteratorSubiecte":"d", 
+				"continutSubiect":"Aici se va scrie ceva legat de subiectul din acest raport.",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":null
+			}
+	]
+
+	},
+	{
+		"iteratorConsiliuDirector":"4",
+		"numeCapitol":"GUVERNANŢ",
+		"subiecte":[
+			{
+				"iteratorSubiecte":"a", 
+				"continutSubiect":"Aici se va scrie ceva legat de subiectul din acest raport.",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":null
+			}, 
+			{
+				"iteratorSubiecte":"b", 
+				"continutSubiect":"Aici se va scrie ceva legat de subiectul din acest raport.",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":null
+			}, 
+			{
+				"iteratorSubiecte":"c", "continutSubiect":"Aici se va scrie ceva legat de subiectul din acest raport.",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":null
+			}, 
+			{
+				"iteratorSubiecte":"d", 
+				"continutSubiect":"Aici se va scrie ceva legat de subiectul din acest raport.",
+				"discutii":"Numele Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"decizii":"Decizii Proiectului Aici se va scrie ceva legat de subiectul din acest raport, Aici se va scrie ceva legat de subiectul din acest raport",
+				"responsabil":"Resposabil 1",
+				"termen":null
+			}
+				]		
+
+	}
+]
+
+}

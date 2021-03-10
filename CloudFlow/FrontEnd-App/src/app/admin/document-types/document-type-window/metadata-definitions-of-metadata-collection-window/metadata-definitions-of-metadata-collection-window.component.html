@@ -1,0 +1,18 @@
+<p-dialog #pDialog [(visible)]="windowVisible" [modal]="true" appendTo="body"
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onShow)="onShow($event)" (onHide)="onHide($event)">
+	<p-header>
+		{{"LABELS.METADATAS_OF_COLLECTION" | translate}}
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+	</p-header>
+	<app-metadata-definitions-manager *ngIf="metadataDefinitionsManagerVisible"
+		[usageMode]="'metadataCollection'"
+		[inputData]="metadataDefinitionsManagerInputData">	
+	</app-metadata-definitions-manager>
+	<p-footer>
+		<p-button (onClick)="onOKAction($event)" [label]="'OK'"></p-button>
+		<p-button (onClick)="onCancelAction($event)" [label]="'LABELS.CANCEL' | translate"></p-button>
+	</p-footer>
+</p-dialog>

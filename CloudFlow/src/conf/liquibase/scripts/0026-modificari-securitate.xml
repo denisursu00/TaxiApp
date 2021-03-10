@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0026-creare-tabel-role" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			CREATE TABLE ROLE
+			(
+				ID BIGINT NOT NULL,
+				NAME TEXT NOT NULL,
+				DESCRIPTION TEXT,
+				CONSTRAINT ROLE_PK PRIMARY KEY (ID),
+				CONSTRAINT ROLE_NAME_UQ UNIQUE (NAME)
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0026-creare-tabel-user_role" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			CREATE TABLE USER_ROLE
+			(
+				USER_ID BIGINT NOT NULL,
+				ROLE_ID BIGINT NOT NULL,	
+				CONSTRAINT USER_ROLE_PK PRIMARY KEY (USER_ID, ROLE_ID)
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0026-adaugare-constrangeri-user_role" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			ALTER TABLE USER_ROLE ADD CONSTRAINT USER_ROLE_USER_ID_FK FOREIGN KEY (USER_ID) REFERENCES EDOCUSER;
+			ALTER TABLE USER_ROLE ADD CONSTRAINT USER_ROLE_ROLE_ID_FK FOREIGN KEY (ROLE_ID) REFERENCES ROLE;
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0026-adaugare-roluri" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'ADMIN');
+			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'SECRETARIAT');
+			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'CONSILIER');
+			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'RESPONSABIL_PROIECT');
+			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'RESPONSABIL_COMISIE_GL');
+			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'DIRECTOR');
+			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'MANAGER');
+			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'LOGISTICA');
+			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'HR');
+			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'BOM');
+			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'LEGAL');
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0026-adaugare-useri-in-roluri" author="CloudSoft.User1">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'vlad.barabas'),
+				ID
+			FROM ROLE WHERE NAME IN ('ADMIN', 'SECRETARIAT', 'CONSILIER', 'RESPONSABIL_PROIECT', 'RESPONSABIL_COMISIE_GL', 'DIRECTOR', 'MANAGER', 'LOGISTICA', 'HR', 'BOM', 'LEGAL');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'luminita.soitu'),
+				ID
+			FROM ROLE WHERE NAME IN ('ADMIN', 'SECRETARIAT', 'CONSILIER', 'RESPONSABIL_PROIECT', 'RESPONSABIL_COMISIE_GL', 'DIRECTOR', 'MANAGER', 'LOGISTICA', 'HR', 'BOM', 'LEGAL');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'tatiana.grafcenco'),
+				ID
+			FROM ROLE WHERE NAME IN ('ADMIN', 'SECRETARIAT', 'CONSILIER', 'RESPONSABIL_PROIECT', 'RESPONSABIL_COMISIE_GL', 'DIRECTOR', 'MANAGER', 'LOGISTICA', 'HR', 'BOM', 'LEGAL');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'cristina.dumitrescu'),
+				ID
+			FROM ROLE WHERE NAME IN ('CONSILIER', 'RESPONSABIL_PROIECT', 'RESPONSABIL_COMISIE_GL', 'HR');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'stefan.dina'),
+				ID
+			FROM ROLE WHERE NAME IN ('CONSILIER', 'RESPONSABIL_PROIECT', 'RESPONSABIL_COMISIE_GL', 'HR');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'constantin.rotaru'),
+				ID
+			FROM ROLE WHERE NAME IN ('CONSILIER', 'RESPONSABIL_PROIECT', 'RESPONSABIL_COMISIE_GL', 'HR');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'gabriela.folcut'),
+				ID
+			FROM ROLE WHERE NAME IN ('RESPONSABIL_PROIECT', 'RESPONSABIL_COMISIE_GL', 'DIRECTOR', 'HR');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'rodica.tuchila'),
+				ID
+			FROM ROLE WHERE NAME IN ('RESPONSABIL_PROIECT', 'RESPONSABIL_COMISIE_GL', 'DIRECTOR', 'HR');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'cati.ursu'),
+				ID
+			FROM ROLE WHERE NAME IN ('RESPONSABIL_PROIECT', 'RESPONSABIL_COMISIE_GL', 'DIRECTOR', 'HR');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'florin.danescu'),
+				ID
+			FROM ROLE WHERE NAME IN ('RESPONSABIL_PROIECT', 'RESPONSABIL_COMISIE_GL', 'DIRECTOR', 'HR');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'luminita.malanciuc'),
+				ID
+			FROM ROLE WHERE NAME IN ('RESPONSABIL_PROIECT', 'RESPONSABIL_COMISIE_GL', 'DIRECTOR', 'HR');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'bogdan.martimof'),
+				ID
+			FROM ROLE WHERE NAME IN ('RESPONSABIL_PROIECT', 'RESPONSABIL_COMISIE_GL', 'DIRECTOR', 'HR');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'sorina.sirbu'),
+				ID
+			FROM ROLE WHERE NAME IN ('SECRETARIAT', 'RESPONSABIL_PROIECT', 'RESPONSABIL_COMISIE_GL', 'HR', 'BOM');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'adriana.tudor'),
+				ID
+			FROM ROLE WHERE NAME IN ('SECRETARIAT', 'LOGISTICA', 'HR');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'andreea.rosu'),
+				ID
+			FROM ROLE WHERE NAME IN ('SECRETARIAT', 'LOGISTICA', 'HR');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'liviu.chitu'),
+				ID
+			FROM ROLE WHERE NAME IN ('SECRETARIAT', 'LOGISTICA', 'HR');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'florin.ninu'),
+				ID
+			FROM ROLE WHERE NAME IN ('SECRETARIAT', 'LOGISTICA', 'HR');
+			
+			INSERT INTO USER_ROLE (
+				USER_ID, 
+				ROLE_ID
+			) SELECT
+				(select ORG_ENTITY_ID from EDOCUSER where USERNAME = 'lina.visan'),
+				ID
+			FROM ROLE WHERE NAME IN ('HR');
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

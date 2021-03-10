@@ -1,0 +1,68 @@
+<div class="ui-g ui-g-nopad ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+	<form [formGroup]="form" class="ui-g-12">
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-sm-12 ui-md-2 ">{{"LABELS.NAME" | translate}}*:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<input pInputText formControlName="name" type="text" required/>
+			</div>
+			<div *ngIf="nameFormControl.invalid && (nameFormControl.dirty || nameFormControl.touched)" class="ui-g-12 ui-sm-12 ui-md-10 ui-md-offset-2">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+	
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.DESCRIPTION" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<textarea pInputTextarea formControlName="description" type="text"></textarea>
+			</div>
+		</div>
+	
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.KEEP_ALL_VERSIONS" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-10">
+				<p-checkbox formControlName="keepAllVersions" binary="true"></p-checkbox>
+			</div>
+		</div>
+
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-sm-12 ui-md-2">{{"LABELS.DEFAULT_LOCATION" | translate}}:</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-2">
+				<p-button [label]="'LABELS.SELECT' | translate" (onClick)="onSelectDefaultLocation()"></p-button>
+				<p-button [label]="'LABELS.RESET' | translate" (onClick)="onResetDefaultLocation()"></p-button>
+			</div>
+			<div class="ui-g-12 ui-sm-12 ui-md-4">
+				<div>{{"LABELS.WORKSPACE" | translate}}: {{ selectedDocumentLocation.name }}</div>
+				<div>{{"LABELS.FOLDER" | translate}}: {{ selectedFolder.name }}</div>
+			</div>
+		</div>
+	</form>
+	
+		<div class="ui-g-12 ui-g-nopad">
+			<p-fieldset [legend]="'LABELS.TEMPLATES_FOR_EXPORT' | translate">
+				<app-document-template
+						[documentTypeId]="documentTypeId"
+						[documentTemplates]="uploadedDocumentTemplates"
+						[allowedDocumentTemplateTypes]="allowedDocumentTemplateTypes">
+				</app-document-template>
+			</p-fieldset>
+		</div>
+
+	<p-dialog #pDialogDlfsw *ngIf="documentLocationAndFolderSelectorWindowVisible" [(visible)]="documentLocationAndFolderSelectorWindowVisible" [modal]="true" 
+			appendTo="body" [contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+			(onShow)="onShowDocumentLocationAndFolderSelectorWindow($event, pDialogDlfsw)"  (onHide)="onHideDocumentLocationAndFolderSelectorWindow($event)" >
+		<p-header>
+			{{"LABELS.FOLDER" | translate}} 
+			<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimizeDocumentLocationAndFolderSelectorWindow(pDialogDlfsw)" (keydown.enter)="onToggleMinimizeDocumentLocationAndFolderSelectorWindow(pDialogDlfsw)">
+				<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+			</a>
+		</p-header>
+		<app-folder-selector [documentLocations]="documentLocations" (folderSelected)="onFolderSelected($event)"></app-folder-selector>
+		<p-footer>
+			<p-button (onClick)="onOkAction($event)" label="Ok"></p-button>
+			<p-button (onClick)="onCancelAction($event)" [label]="'LABELS.CANCEL' | translate"></p-button>
+		</p-footer>
+	</p-dialog>
+</div>

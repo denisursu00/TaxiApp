@@ -1,0 +1,1 @@
+export * from "./aderare-oioro-report.component";

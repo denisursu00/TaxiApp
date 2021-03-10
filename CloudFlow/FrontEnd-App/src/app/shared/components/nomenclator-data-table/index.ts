@@ -1,0 +1,1 @@
+export * from "./nomenclator-data-table.component";
