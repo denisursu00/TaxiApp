@@ -3,7 +3,6 @@ package ro.cloudSoft.cloudDoc.integrityCheck;
 import org.springframework.beans.factory.InitializingBean;
 
 import ro.cloudSoft.cloudDoc.core.constants.BusinessConstants;
-import ro.cloudSoft.cloudDoc.services.organization.GroupService;
 import ro.cloudSoft.cloudDoc.utils.log.LogHelper;
 import ro.cloudSoft.common.utils.DependencyInjectionUtils;
 
@@ -17,23 +16,20 @@ public class ConstantsIntegrityCheck implements InitializingBean {
 	private static final LogHelper LOGGER = LogHelper.getInstance(ConstantsIntegrityCheck.class);
 	
 	private final boolean throwExceptionOnFailure;
-	private final BusinessConstants businessConstants;	
-	private final GroupService groupService;
+	private final BusinessConstants businessConstants;
 	
 	public ConstantsIntegrityCheck(boolean throwExceptionOnFailure,
-			BusinessConstants businessConstants, GroupService groupService) {
+			BusinessConstants businessConstants) {
 		
 		this.throwExceptionOnFailure = throwExceptionOnFailure;		
-		this.businessConstants = businessConstants;		
-		this.groupService = groupService;
+		this.businessConstants = businessConstants;
 	}
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {		
 		DependencyInjectionUtils.checkRequiredDependencies(
 			throwExceptionOnFailure,
-			businessConstants,
-			groupService
+			businessConstants
 		);
 	}
 	
@@ -48,15 +44,6 @@ public class ConstantsIntegrityCheck implements InitializingBean {
 	
 	private void checkBusinessConstants() {		
 		String groupNameAdmins = businessConstants.getGroupNameAdmins();
-		boolean groupAdminsExists = groupService.groupWithNameExists(groupNameAdmins);
-		String groupAdminsExistsMessage = "Grupul pentru administratori " +
-			"(cu numele [" + groupNameAdmins + "]) " +
-			"exista: [" + yesOrNo(groupAdminsExists) + "].";
-		if (groupAdminsExists) {
-			notifyOk(groupAdminsExistsMessage);
-		} else {
-			fail(groupAdminsExistsMessage);
-		}
 	}
 	
 	/** Notifica aplicatia ca s-a gasit o constanta. */

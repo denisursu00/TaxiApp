@@ -26,20 +26,7 @@
     	<property name="autoNumberMetadataSequenceValueDao" ref="autoNumberMetadataSequenceValueDao" />    	
     </bean>
 
-    <bean id="searchService" class="ro.cloudSoft.cloudDoc.services.content.SearchServiceImpl">
     
-    	<property name="workflowService" ref="workflowService" />
-    	<property name="workflowExecutionService" ref="workflowExecutionService" />
-    	<property name="userService" ref="userService" />
-    	<property name="documentTypeService" ref="documentTypeService" />
-    	<property name="documentService" ref="documentService" />
-    	<property name="nomenclatorService" ref="nomenclatorService" />
-    	<property name="groupService" ref="groupService" />
-    	<property name="calendarService" ref="calendarService" />
-    	<property name="projectService" ref="projectService" />
-    
-        <property name="plugin" ref="searchPlugin"/>
-    </bean>
 
     <bean id="documentLocationService" class="ro.cloudSoft.cloudDoc.services.content.DocumentLocationServiceImpl">
         <property name="plugin" ref="documentLocationPlugin"/>
@@ -50,55 +37,11 @@
     </bean>
 
     
-    <bean id="documentService" class="ro.cloudSoft.cloudDoc.services.content.DocumentServiceImpl">
-    	<property name="workflowExecutionService" ref="workflowExecutionService" />
-
-        <property name="auditService" ref="auditService" />
-    	
-    	<property name="documentLocationPlugin" ref="documentLocationPlugin" />
-        <property name="documentPlugin" ref="documentPlugin" />
-        
-        <property name="autoNumberMetadataValueGenerator" ref="autoNumberMetadataValueGenerator" />
-        
-    	<property name="userService" ref="userService" />
-        
-    	<property name="securityManagerFactory" ref="securityManagerFactory" />
-        
-        <property name="businessConstants" ref="businessConstants"></property>
-        
-        <property name="timesheetsForLeavesIntegrationEnabled" value="${app.integration.timesheets.leaves.is_enabled}" />
-        
-        <property name="documentTypeDao" ref="documentTypeDao"></property>
-        <property name="workflowService" ref="workflowService" />
-        <property name="jasperReportsService" ref="jasperReportsService" />
-        <property name="documentTypeTemplateDao" ref="documentTypeTemplateDao" />
-        <property name="nomenclatorService" ref="nomenclatorService" />
-        <property name="groupService" ref="groupService" />
-        <property name="documentService" ref="documentService" />
-        <property name="calendarService" ref="calendarService" />
-        <property name="projectService" ref="projectService" />
-        <property name="documentTypeService" ref="documentTypeService" />
-        <property name="importedDocumentDao" ref="importedDocumentDao" />
-        <property name="xDocReportsService" ref="xDocReportsService" />
-        <property name="arbConstants" ref="arbConstants" />
-        <property name="workflowInstanceDao" ref="workflowInstanceDao" />
-        <property name="documentAttachmentDetailDao" ref="documentAttachmentDetailDao" />
-    </bean>
+    
 
     <bean id="folderService" class="ro.cloudSoft.cloudDoc.services.content.FolderServiceImpl">
     	<property name="documentLocationService" ref="documentLocationService" />
         <property name="plugin" ref="folderPlugin"/>
-    </bean>
-    
-    <bean id="documentTypeService" class="ro.cloudSoft.cloudDoc.services.content.DocumentTypeServiceImpl">
-    	<property name="folderService" ref="folderService" />
-    	<property name="documentService" ref="documentService" />
-        
-        <property name="auditService" ref="auditService" />
-    	
-    	<property name="documentTypeDao" ref="documentTypeDao" />
-    	<property name="documentTypeTemplateDao" ref="documentTypeTemplateDao" />
-    	<property name="autoNumberMetadataSequenceValueDao" ref="autoNumberMetadataSequenceValueDao" />
     </bean>
     
     <bean id="mimeTypeService" class="ro.cloudSoft.cloudDoc.services.content.MimeTypeServiceImpl">

@@ -5,93 +5,20 @@
         xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
         	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-
-	<changeSet id="0007-adaugare-mime-types" author="CloudSoft.User1">
-		<sql endDelimiter=";"><![CDATA[
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Text', 'txt');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Rich Text', 'rtf');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'PDF Document', 'pdf');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Microsoft Word 97-2003', 'doc');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Microsoft Word 2007-2013 XML', 'docx');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Microsoft Excel 97-2003', 'xls');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Microsoft Excel 2007-2013 XML', 'xlsx');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Microsoft PowerPoint 97-2003', 'ppt');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Microsoft PowerPoint 2007-2013 XML', 'pptx');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'ODF Text Document', 'odt');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'ODF Spreadsheet', 'ods');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Text CSV', 'csv');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'HTML Document', 'html');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'XML', 'xml');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'JPG Image', 'jpg');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'JPEG Image', 'jpeg');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'BMP Image', 'bmp');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'PNG Image', 'png');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'TIF Image', 'tif');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'TIFF Image', 'tiff');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'GIF Image', 'gif');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Zip Archive', 'zip');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Rar Archive', 'rar');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Tar Archive', 'tar');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'XML Schema Definition', 'xsd');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Photoshop Document', 'psd');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Audio Video Interleave File', 'avi');
-			INSERT INTO MIMETYPE (ID, NAME, EXTENSION) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Email Message', 'msg');
-		]]>
-		</sql>
-	</changeSet>
-	
-	<changeSet id="0007-adaugare-organizatie" author="CloudSoft.User1">
-		<sql endDelimiter=";"><![CDATA[
-			INSERT INTO ORGANIZATION (ID, NAME) VALUES (nextval('HIBERNATE_SEQUENCE'), 'Asociatia Romana a Bancilor');
-		]]>
-		</sql>
-	</changeSet>
-	
-	<changeSet id="0007-adaugare-grupuri-de-baza" author="CloudSoft.User1">
-		<sql endDelimiter=";"><![CDATA[
-			WITH groupRow AS (
-				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
-			    RETURNING ORG_ENTITY_ID
-			) INSERT INTO EDOCGROUP (
-				ORG_ENTITY_ID, 
-				NAME
-			) VALUES (
-				(select ORG_ENTITY_ID from groupRow), 
-				'All'
-			);
-			WITH groupRow AS (
-				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
-			    RETURNING ORG_ENTITY_ID
-			) INSERT INTO EDOCGROUP (
-				ORG_ENTITY_ID, 
-				NAME
-			) VALUES (
-				(select ORG_ENTITY_ID from groupRow), 
-				'Admin'
-			);
-		]]>
-		</sql>
-	</changeSet>
 	
 	<changeSet id="0007-adaugare-utilizator-application_user" author="CloudSoft.User1">
 		<sql endDelimiter=";"><![CDATA[
-			WITH userRow AS (
-				INSERT INTO ORGANIZATIONENTITY (ORG_ENTITY_ID) VALUES (nextval('HIBERNATE_SEQUENCE'))
-			    RETURNING ORG_ENTITY_ID
-			) INSERT INTO EDOCUSER (
-				ORG_ENTITY_ID, 
+		
+			INSERT INTO USERS (
+				ID, 
 				FIRSTNAME, 
 				LASTNAME, 
-				TITLE, 
-				USERNAME, 
-				ORGANIZATION_ID
+				USERNAME
 			) VALUES (
-				(select ORG_ENTITY_ID from userRow), 
-				'Application', 
-				'User', 
-				'Bot User', 
-				'application.user', 
-				(select ID from ORGANIZATION where NAME = 'Asociatia Romana a Bancilor')
+				nextval('HIBERNATE_SEQUENCE'), 
+				'Admin', 
+				'Admin', 
+				'admin'
 			);
 		]]>
 		</sql>

@@ -30,9 +30,9 @@ import ro.cloudSoft.cloudDoc.web.security.UserWithAccountAuthentication;
 
 public class AuthServiceImpl implements AuthService {
 	
-	private AuthenticationManager authenticationManager;	
+	private AuthenticationManager authenticationManager;
 	
-	private JwtTokenProvider jwtTokenProvider;	
+	private JwtTokenProvider jwtTokenProvider;
 	
 	private UserService userService;
 	
@@ -82,7 +82,6 @@ public class AuthServiceImpl implements AuthService {
 		loggedInUser.setUsername(user.getUsername());
 		loggedInUser.setFirstName(user.getFirstName());
 		loggedInUser.setLastName(user.getLastName());
-		loggedInUser.setTitle(user.getTitle());	
 		Set<String> permissionNames = new HashSet<>();
 		Set<Role> roles = user.getRoles();
 		if (CollectionUtils.isNotEmpty(roles)) {
@@ -100,6 +99,21 @@ public class AuthServiceImpl implements AuthService {
 		return loggedInUser;
 	}
 	
+	@Override
+	public void changePassword(PasswordChangeModel passwordChangeModel, SecurityManager securityManager) throws AppException {
+		User user = userService.getUserById(securityManager.getUserId());
+		if (user == null) {
+			throw new AppException(AppExceptionCodes.AUTHENTICATION_EXCEPTION);
+		}
+		if (!user.getPassword().equals(passwordEncoder.generatePasswordHash(passwordChangeModel.getCurrentPassword()))) {
+			throw new AppException(AppExceptionCodes.INVALID_PASSWORD);
+		}
+		
+		user.setPassword(passwordEncoder.generatePasswordHash(passwordChangeModel.getNewPassword()));
+		userService.setUser(user, securityManager);
+		
+	}
+	
 	public void setAuthenticationManager(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
 	}
@@ -114,21 +128,6 @@ public class AuthServiceImpl implements AuthService {
 	
 	public void setSecurityManagerFactory(SecurityManagerFactory securityManagerFactory) {
 		this.securityManagerFactory = securityManagerFactory;
-	}
-
-	@Override
-	public void changePassword(PasswordChangeModel passwordChangeModel, SecurityManager securityManager) throws AppException {
-		User user = userService.getUserById(securityManager.getUserId());
-		if (user == null) {
-			throw new AppException(AppExceptionCodes.AUTHENTICATION_EXCEPTION);
-		}
-		if (!user.getPassword().equals(passwordEncoder.generatePasswordHash(passwordChangeModel.getCurrentPassword()))) {
-			throw new AppException(AppExceptionCodes.INVALID_PASSWORD);
-		}
-		
-		user.setPassword(passwordEncoder.generatePasswordHash(passwordChangeModel.getNewPassword()));
-		userService.setUser(user, securityManager);
-		
 	}
 
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {

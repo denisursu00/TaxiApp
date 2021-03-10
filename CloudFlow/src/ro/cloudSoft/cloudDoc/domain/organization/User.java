@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -22,66 +25,39 @@ import com.google.common.base.Objects;
 
 @Entity
 @Table(
-	name = "EDOCUSER",
+	name = "USERS",
 	uniqueConstraints = @UniqueConstraint(columnNames = { "username", "title" })
 )
-public class User extends OrganizationEntity {
+public class User {
 	
+	private Long id;
 	private String firstName;
 	private String lastName;
 	private String password;
-	private String title;
-	private String customTitleTemplate;
 	private String username;
 	private String email;
-	private String phone;
-	private String fax;
 	private String mobile;
 	private String employeeNumber;
-	private OrganizationUnit ou;
-	private Organization organization;
-	private UserTypeEnum type;
-	private Set<Group> groups;
 	private Set<Role> roles;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	@Transient
 	public String getName() {
 		return firstName + " " + lastName;
 	}
 
-	@Column(name = "title", nullable = false)
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	
-	@Column(name = "custom_title_template")
-	public String getCustomTitleTemplate() {
-		return customTitleTemplate;
-	}
-	
-	public void setCustomTitleTemplate(String customTitleTemplate) {
-		this.customTitleTemplate = customTitleTemplate;
-	}
-
-	@Override
 	@Transient
 	public String getDisplayName() {
 		return firstName + " " + lastName;
-	}
-
-	@Transient
-	public String getDisplayNameWithTitle() {
-		String displayName = getDisplayName();
-		String title = getTitle();
-		if (StringUtils.isNotBlank(title)) {
-			return (displayName + " - " + title);
-		} else {
-			return displayName;
-		}
 	}
 
 	public String getFirstName() {
@@ -125,24 +101,6 @@ public class User extends OrganizationEntity {
 		this.email = email;
 	}
 	
-	@Column(name = "phone")
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	@Column(name = "fax")
-	public String getFax() {
-		return fax;
-	}
-
-	public void setFax(String fax) {
-		this.fax = fax;
-	}
-	
 	@Column(name = "mobile")
 	public String getMobile() {
 		return mobile;
@@ -158,44 +116,6 @@ public class User extends OrganizationEntity {
 
 	public void setEmployeeNumber(String employeeNumber) {
 		this.employeeNumber = employeeNumber;
-	}
-
-	public void setOu(OrganizationUnit ou) {
-		this.ou = ou;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	public OrganizationUnit getOu() {
-		return ou;
-	}
-
-	public void setGroups(Set<Group> groups) {
-		this.groups = groups;
-	}
-
-	@ManyToMany(mappedBy = "users", targetEntity = Group.class)
-	public Set<Group> getGroups() {
-		return groups;
-	}
-
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
-	}
-
-	@ManyToOne(targetEntity = Organization.class)
-	@JoinColumn(name = "organization_id", nullable = true)
-	public Organization getOrganization() {
-		return organization;
-	}
-	
-	public void setType(UserTypeEnum type) {
-		this.type = type;
-	}
-	
-	@Column(name = "type")
-	@Enumerated(EnumType.STRING)
-	public UserTypeEnum getType() {
-		return type;
 	}
 
 	@ManyToMany(targetEntity = Role.class, cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
@@ -230,8 +150,7 @@ public class User extends OrganizationEntity {
 			);
 		} else {
 			return (
-				Objects.equal(usernameInLowercase, otherUsernameInLowercase) &&
-				Objects.equal(getTitle(), other.getTitle())
+				Objects.equal(usernameInLowercase, otherUsernameInLowercase)
 			);
 		}
 	}
@@ -242,7 +161,7 @@ public class User extends OrganizationEntity {
 			return Objects.hashCode(getId());
 		}
 		String usernameInLowercase = StringUtils.lowerCase(getUsername());
-		return Objects.hashCode(usernameInLowercase, getTitle());
+		return Objects.hashCode(usernameInLowercase);
 	}
 	
 	public static enum UserTypeEnum {

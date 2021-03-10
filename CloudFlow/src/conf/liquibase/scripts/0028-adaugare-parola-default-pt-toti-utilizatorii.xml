@@ -8,7 +8,7 @@
 
 	<changeSet id="0028-adaugare-parola-default-pt-toti-utilizatorii" author="CloudSoft.User3" context="dev,test,staging">
 		<sql endDelimiter=";"><![CDATA[
-			UPDATE edocuser
+			UPDATE users
 			SET password = '2WWCMlCAgSJzYJEtgcUjBw=='
 			WHERE username <> 'application.user';
 		]]>
@@ -17,7 +17,7 @@
 	
 	<changeSet id="0028-adaugare-parola-default-pt-toti-utilizatorii" author="CloudSoft.User3" context="prod">
 		<sql endDelimiter=";"><![CDATA[
-			UPDATE edocuser
+			UPDATE users
 			SET password = 'C2eT1YI7TnDkgPOS6AKSaw=='
 			WHERE username <> 'application.user';
 		]]>

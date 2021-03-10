@@ -5,12 +5,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
-import ro.cloudSoft.cloudDoc.web.security.MultipleAccountsAuthenticationHelper.AuthenticationRequestInfo;
+import ro.cloudSoft.cloudDoc.web.security.AuthenticationHelper.AuthenticationRequestInfo;
 
 
 public class UsernamePasswordAuthenticationProvider implements AuthenticationProvider {
 	
-	private MultipleAccountsAuthenticationHelper authenticationHelper;
+	private AuthenticationHelper authenticationHelper;
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {		
@@ -27,7 +27,7 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
 		return authentication.isAssignableFrom(UsernamePasswordAuthenticationToken.class);
 	}
 	
-	public void setAuthenticationHelper(MultipleAccountsAuthenticationHelper authenticationHelper) {
+	public void setAuthenticationHelper(AuthenticationHelper authenticationHelper) {
 		this.authenticationHelper = authenticationHelper;
 	}	
 }

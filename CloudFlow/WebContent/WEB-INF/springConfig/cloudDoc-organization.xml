@@ -142,30 +142,7 @@
 	</bean>
 
 	<bean id="userService" class="ro.cloudSoft.cloudDoc.services.organization.UserServiceImpl">
-		<property name="organizationService" ref="organizationService" />
-		<property name="organizationUnitService" ref="organizationUnitService" />
-		<property name="groupService" ref="groupService" />
-		
-		<property name="auditService" ref="auditService" />
-	
 		<property name="userPersistencePlugin" ref="userPersistencePlugin" />
-		<property name="organizationPersistencePlugin" ref="organizationPersistencePlugin" />
-		<property name="organizationUnitPersistencePlugin" ref="organizationUnitPersistencePlugin" />
-		<property name="groupPersistencePlugin" ref="groupPersistencePlugin" />
-		
-		<property name="directoryUserDao" ref="directoryUserDao" />
-		<property name="userDeactivationDao" ref="userDeactivationDao" />
-		
-		<property name="userDeactivationHelperFactory" ref="userDeactivationHelperFactory" />
-		
-		<!--
-		grup implicit unde va fi adaugat user-ul la adaugare - valoarea este
-		numele grupului
-		-->
-		<property name="nameOfGroupForAllUsers" value="${app.constants.organizational_structure.groups.names.users}" />
-		<property name="nomenclatorDao" ref="nomenclatorDao" />
-		<property name="nomenclatorValueDao" ref="nomenclatorValueDao" />
-		<property name="nomenclatorService" ref="nomenclatorService" />
 	</bean>
 	
 	<bean id="organizationalStructureImportService" class="ro.cloudSoft.cloudDoc.services.organization.OrganizationalStructureImportServiceImpl">

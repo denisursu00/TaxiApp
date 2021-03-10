@@ -9,9 +9,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import ro.cloudSoft.cloudDoc.core.ApplicationVersionHolder;
-import ro.cloudSoft.cloudDoc.services.bpm.WorkflowService;
-import ro.cloudSoft.cloudDoc.services.jasperReports.JasperReportsService;
-import ro.cloudSoft.common.utils.spring.SpringUtils;
 
 public class AppConfigurationListener implements ServletContextListener {
 
@@ -24,34 +21,11 @@ public class AppConfigurationListener implements ServletContextListener {
 			e.printStackTrace();
 		}
 		
-		try {
-			deployImportedWorkflows();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-		
-		try {
-			prepareJasperReportsTemplates();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}		
 	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
 		// Nothing.
-	}
-	
-	private void deployImportedWorkflows() {
-		WorkflowService workflowService = SpringUtils.getBean("workflowService");
-		workflowService.deployImportedWorkflows();
-	}
-	
-	private void prepareJasperReportsTemplates() {
-		JasperReportsService jasperReportsService = SpringUtils.getBean("jasperReportsService");
-		jasperReportsService.prepareTemplates();
 	}
 	
 	private void prepareApplicationVersion(ServletContextEvent sce) throws Exception {

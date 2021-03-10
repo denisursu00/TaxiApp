@@ -46,16 +46,6 @@
     <bean id="workflowDao" class="ro.cloudSoft.cloudDoc.dao.bpm.WorkflowDaoImpl">
     	<property name="sessionFactory" ref="sessionFactory" />
     </bean>
-    
-    <bean id="workflowService" class="ro.cloudSoft.cloudDoc.services.bpm.WorkflowServiceImpl">
-    	<property name="documentTypeService" ref="documentTypeService" />
-    	
-    	<property name="auditService" ref="auditService" />
-    	
-    	<property name="workflowPlugin" ref="workflowPlugin" />
-    	<property name="workflowDao" ref="workflowDao" />
-    	<property name="workflowInstanceDao" ref="workflowInstanceDao" />
-    </bean>
         
     <bean id="workflowInstanceDao" class="ro.cloudSoft.cloudDoc.dao.bpm.WorkflowInstanceDaoImpl">
     	<property name="sessionFactory" ref="sessionFactory" />
@@ -67,18 +57,6 @@
     	<property name="workflowDao" ref="workflowDao"/>
     	<property name="documentService" ref="documentService"/>
     </bean> 
-    
-    <bean id="workflowExecutionService" class="ro.cloudSoft.cloudDoc.services.bpm.WorkflowExecutionServiceImpl">
-    	<property name="workflowDao" ref="workflowDao" />
-    	<property name="workflowExecutionPlugin" ref="workflowExecutionPlugin"/>
- 		<property name="workflowInstanceDao" ref="workflowInstanceDao"/>
- 		<property name="documentService" ref="documentService"/>
- 		<property name="documentTypeDao" ref="documentTypeDao"/>
-    	<property name="workflowPlugin" ref="workflowPlugin" />
-    	<property name="documentWorkflowHistoryPlugin" ref="documentWorkflowHistoryPlugin" />
-    	<property name="securityManagerFactory" ref="securityManagerFactory" />        
-        <property name="businessConstants" ref="businessConstants"></property>
-    </bean>
     
     <bean id="documentWorkflowHistoryPlugin" class="ro.cloudSoft.cloudDoc.plugins.bpm.DocumentWorkflowHistoryJbpmPlugin" >
      <property name="processEngine" ref="jbpmProcessEngine"></property>

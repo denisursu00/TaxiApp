@@ -27,7 +27,7 @@ public class SpringSecurityDatabaseAuthenticationVerifier implements Authenticat
 	@Override
 	public boolean userExists(String username, String password) {
 		try {
-			User user = userService.getActiveUserByUsername(username);	
+			User user = userService.getUserByUsername(username);	
 			String passwordHash = passwordEncoder.generatePasswordHash(password);
 			return (user != null && user.getPassword().equals(passwordHash));
 		} catch (Exception ex) {

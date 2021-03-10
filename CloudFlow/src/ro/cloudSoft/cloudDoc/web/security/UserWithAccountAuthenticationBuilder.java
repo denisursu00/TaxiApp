@@ -34,34 +34,14 @@ public class UserWithAccountAuthenticationBuilder implements InitializingBean {
 		return new UserWithAccountAuthentication(user.getId(), user.getUsername(), authorities);
 	}
 	
-	public UserWithAccountAuthentication buildForUniqueAccount(String username) {
-		
-		User user = userService.getActiveUserByUsername(username);
-		if (user == null) {
-			throw new IllegalArgumentException("Nu s-a gasit utilizator cu username-ul [" + username + "].");
-		}
-		
-		checkUserAccountActiveness(user);
-		
-		return buildForUser(user);
-	}
-	
 	public UserWithAccountAuthentication buildForId(Long userId) {
 		
 		User user = userService.getUserById(userId);
 		if (user == null) {
 			throw new IllegalArgumentException("Nu s-a gasit utilizator cu ID-ul [" + userId + "].");
 		}
-
-		checkUserAccountActiveness(user);
 		
 		return buildForUser(user);
-	}
-	
-	private void checkUserAccountActiveness(User userAccount) {
-		if (!userService.isUserAccountActive(userAccount)) {
-			throw new IllegalArgumentException("Contul de utilizator cu ID-ul [" + userAccount.getId() + "] si username-ul [" + userAccount.getUsername() + "] NU este activ.");
-		}
 	}
 	
 	public void setUserService(UserService userService) {

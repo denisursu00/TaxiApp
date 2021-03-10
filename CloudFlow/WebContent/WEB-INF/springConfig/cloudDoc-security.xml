@@ -19,7 +19,7 @@
 		<property name="saltKeyValue" value="${app.security.authentication.passwordEncoder.saltKeyValue}" />
 	</bean>
 	
-	<bean name="authenticationHelper" class="ro.cloudSoft.cloudDoc.web.security.MultipleAccountsAuthenticationHelper">
+	<bean name="authenticationHelper" class="ro.cloudSoft.cloudDoc.web.security.AuthenticationHelper">
 		<property name="userService" ref="userService" />
 		<property name="authenticationVerifier">
 			<bean class="ro.cloudSoft.cloudDoc.web.security.SpringSecurityDatabaseAuthenticationVerifier">

@@ -393,7 +393,6 @@
    	
    	<bean id="securityManagerFactory" class="ro.cloudSoft.cloudDoc.security.SecurityManagerFactory">
    		<property name="userService" ref="userService" />
-		<property name="groupService" ref="groupService" />
 	</bean>
   	
   	<bean id="reprezentantiComisieSauGLDao" class="ro.cloudSoft.cloudDoc.dao.arb.ReprezentantiComisieSauGLDaoImpl">

@@ -7,7 +7,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import ro.cloudSoft.cloudDoc.domain.organization.User;
 import ro.cloudSoft.cloudDoc.domain.security.SecurityManager;
-import ro.cloudSoft.cloudDoc.services.organization.GroupService;
 import ro.cloudSoft.cloudDoc.services.organization.UserService;
 import ro.cloudSoft.cloudDoc.web.security.UserWithAccountAuthentication;
 
@@ -16,7 +15,6 @@ public class SecurityManagerFactory {
 	private static final String SESSION_ATTRIBUTE_NAME_SECURITY_MANAGER = "SECURITY_MANAGER";
 	
 	private UserService userService;
-	private GroupService groupService;
 	
 	public SecurityManager getSecurityManager(HttpSession session) {
 		return getHttpSessionSecurityManager(session);
@@ -59,14 +57,6 @@ public class SecurityManagerFactory {
         userSecurity = new SecurityManager();
         userSecurity.setUserIdAsString(user.getId().toString());
         userSecurity.setUserUsername(user.getUsername());
-        userSecurity.setUserTitle(user.getTitle());
-
-        // Adauga ID-urile tuturor unitatilor organizatorice din care utilizatorul face parte.
-        userSecurity.setOrganizationUnitIds(userService.getOrganizationUnitIds(user.getId()));            
-        // Adauga ID-urile tuturor grupurilor din care utilizatorul face parte.
-        userSecurity.setGroupIds(userService.getGroupIds(user.getId()));
-        
-        userSecurity.setGroupNames(groupService.getGroupNamesOfUserWithId(userId));
 
         session.setAttribute(SESSION_ATTRIBUTE_NAME_SECURITY_MANAGER, userSecurity);
         
@@ -84,12 +74,6 @@ public class SecurityManagerFactory {
         SecurityManager userSecurity = new SecurityManager();
         userSecurity.setUserIdAsString(user.getId().toString());
         userSecurity.setUserUsername(user.getUsername());
-        userSecurity.setUserTitle(user.getTitle());
-
-        userSecurity.setOrganizationUnitIds(userService.getOrganizationUnitIds(user.getId()));            
-        userSecurity.setGroupIds(userService.getGroupIds(user.getId()));
-        
-        userSecurity.setGroupNames(groupService.getGroupNamesOfUserWithId(user.getId()));
         
         return userSecurity;
 	}
@@ -105,21 +89,11 @@ public class SecurityManagerFactory {
         SecurityManager userSecurity = new SecurityManager();
         userSecurity.setUserIdAsString(user.getId().toString());
         userSecurity.setUserUsername(user.getUsername());
-        userSecurity.setUserTitle(user.getTitle());
-
-        userSecurity.setOrganizationUnitIds(userService.getOrganizationUnitIds(user.getId()));            
-        userSecurity.setGroupIds(userService.getGroupIds(user.getId()));
-        
-        userSecurity.setGroupNames(groupService.getGroupNamesOfUserWithId(user.getId()));
         
         return userSecurity;
 	}
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
-	}
-
-	public void setGroupService(GroupService groupService) {
-		this.groupService = groupService;
 	}
 }
