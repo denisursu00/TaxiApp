@@ -22,30 +22,5 @@ import ro.cloudSoft.cloudDoc.presentation.client.shared.services.content.MimeTyp
 @Produces({MediaType.APPLICATION_JSON})
 public class MimeTypeGxtServiceResource {
 	
-	@Autowired
-	private MimeTypeGxtService mimeTypeGxtService;
-
-	@POST
-	@Path("/getAllMimeTypes")
-	public List<MimeTypeModel> getAllMimeTypes() throws PresentationException {
-		return mimeTypeGxtService.getAllMimeTypes();
-	}
-
-	@POST
-	@Path("/getMimeTypeById/{mimeTypeId}")
-	public MimeTypeModel getMimeTypeById(@PathParam("mimeTypeId") Long mimeTypeId) throws PresentationException {
-		return mimeTypeGxtService.getMimeTypeById(mimeTypeId);
-	}
-
-	@POST
-	@Path("/saveMimeType")
-	public void saveMimeType(MimeTypeModel mimeTypeModel) throws PresentationException{
-		mimeTypeGxtService.saveMimeType(mimeTypeModel);
-	}
-
-	@POST
-	@Path("/deleteMimeType/{mimeTypeId}")
-	public void deleteMimeType(@PathParam("mimeTypeId") Long mimeTypeId) throws PresentationException {
-		mimeTypeGxtService.deleteMimeType(mimeTypeId);
-	}
+	
 }

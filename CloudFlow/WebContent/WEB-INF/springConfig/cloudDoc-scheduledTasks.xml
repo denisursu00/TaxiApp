@@ -4,169 +4,28 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 	
-	<bean id="activateOrExpireReplacementProfilesScheduledTask" class="ro.cloudSoft.cloudDoc.scheduledTasks.ActivateOrExpireReplacementProfilesScheduledTask">
-		<property name="replacementProfilesService" ref="replacementProfilesService" />
-	</bean>
-	<bean id="activateOrExpireReplacementProfilesScheduledTaskJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-  		<property name="targetObject" ref="activateOrExpireReplacementProfilesScheduledTask" />
-		<property name="targetMethod" value="activateOrExpire" />
-		<property name="concurrent" value="false" />
-	</bean>
-	<bean id="activateOrExpireReplacementProfilesScheduledTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="activateOrExpireReplacementProfilesScheduledTaskJobDetail" />
-		<property name="cronExpression" value="${app.scheduled_tasks.activate_or_expire_replacement_profiles.cron_expression}" />
-	</bean>
 	
 	<bean id="deleteLeftoverTemporaryFilesScheduledTask" class="ro.cloudSoft.cloudDoc.scheduledTasks.DeleteLeftoverTemporaryFilesScheduledTask">
 		<property name="temporaryFilesFolderPath" value="${app.temporary_files.folder_path}" />
 		<property name="minimumFileAgeInMinutes" value="${app.temporary_files.maximum_file_age_in_minutes}" />
 	</bean>
+	
 	<bean id="deleteLeftoverTemporaryFilesScheduledTaskJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
   		<property name="targetObject" ref="deleteLeftoverTemporaryFilesScheduledTask" />
 		<property name="targetMethod" value="deleteLeftoverFiles" />
 		<property name="concurrent" value="false" />
 	</bean>
+	
 	<bean id="deleteLeftoverTemporaryFilesScheduledTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="deleteLeftoverTemporaryFilesScheduledTaskJobDetail" />
 		<property name="cronExpression" value="${app.scheduled_tasks.delete_leftover_temporary_files.cron_expression}" />
 	</bean>
 	
-	<bean id="loadExchangeRateScheduledTask" class="ro.cloudSoft.cloudDoc.scheduledTasks.LoadExchangeRateScheduledTask">
-		<property name="cursValutarService" ref="cursValutarService"></property>
-	</bean>
-	<bean id="loadExchangeRateScheduledTaskJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-  		<property name="targetObject" ref="loadExchangeRateScheduledTask" />
-		<property name="targetMethod" value="loadExchangeRate" />
-		<property name="concurrent" value="false" />
-	</bean>
-	<bean id="loadExchangeRateScheduledTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="loadExchangeRateScheduledTaskJobDetail" />
-		<property name="cronExpression" value="${app.scheduled_tasks.load_exchange_rate.cron_expression}" />
-	</bean>
-
-	<bean name="prepareJRDocExportScheduledTaskJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-		<property name="jobClass" value="ro.cloudSoft.cloudDoc.scheduledTasks.PrepareJRDocExportScheduledTask" />
-		<property name="jobDataAsMap">
-			<map>
-				<entry key="securityManagerExposed" value="true" />
-				<entry key="businessConstants" value-ref="businessConstants" />
-				<entry key="securityManagerFactory" value-ref="securityManagerFactory" />
-				<entry key="documentLocationPlugin" value-ref="documentLocationPlugin" />
-				<entry key="documentPlugin" value-ref="documentPlugin" />
-				<entry key="documentTypeDao" value-ref="documentTypeDao" />
-				<entry key="exportJRDao" value-ref="exportJRDao" />
-				<entry key="userService" value-ref="userService" />
-				<entry key="nomenclatorService" value-ref="nomenclatorService" />
-				<entry key="groupService" value-ref="groupService" />
-				<entry key="documentService" value-ref="documentService" />
-				<entry key="documentTypeService" value-ref="documentTypeService" />
-				<entry key="calendarService" value-ref="calendarService" />
-				<entry key="projectService" value-ref="projectService" />
-				<entry key="arbConstants" value-ref="arbConstants" />
-				<entry key="workflowService" value-ref="workflowService" />
-				<entry key="parametersService" value-ref="parametersService" />
-			</map>
-		</property>
-		<property name="durability" value="true"></property>
-	</bean>
-	<bean id="prepareJRDocExportScheduledTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="prepareJRDocExportScheduledTaskJobDetail" />
-		<property name="cronExpression" value="${app.scheduled_tasks.prepare_jr_doc_export.cron_expression}" />
-	</bean>
-
-	<bean name="completeWorkflowAutomaticTasksJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-		<property name="jobClass" value="ro.cloudSoft.cloudDoc.scheduledTasks.CompleteWorkflowAutomaticTasksJob" />
-		<property name="jobDataAsMap">
-			<map>
-				<entry key="securityManagerExposed" value="true" />
-				<entry key="businessConstants" value-ref="businessConstants" />
-				<entry key="securityManagerFactory" value-ref="securityManagerFactory" />
-				<entry key="workflowExecutionService" value-ref="workflowExecutionService" />
-			</map>
-		</property>
-		<property name="durability" value="true"></property>
-	</bean>
-	<bean id="completeWorkflowAutomaticTasksJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="completeWorkflowAutomaticTasksJobDetail" />
-		<property name="cronExpression" value="${app.scheduled_tasks.complete_workflow_automatic_tasks.cron_expression}" />
-	</bean> 
-		
-	<bean id="notificareMailNrOrganismeBugetateScheduledTask" class="ro.cloudSoft.cloudDoc.scheduledTasks.NotificareMailNrOrganismeBugetateScheduledTask">
-		<property name="userPersistencePlugin" ref="userPersistencePlugin" />
-		<property name="parametersDao" ref="parametersDao" />
-		<property name="mailService" ref="mailService" />
-		<property name="notificareNrOrganismeBugetateDao" ref="notificareNrOrganismeBugetateDao" />
-	</bean>
-		<bean id="notificareMailNrOrganismeBugetateScheduledTaskJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-  		<property name="targetObject" ref="notificareMailNrOrganismeBugetateScheduledTask" />
-		<property name="targetMethod" value="run" />
-		<property name="concurrent" value="false" />
-	</bean>
-	<bean id="notificareMailNrOrganismeBugetateScheduledTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="notificareMailNrOrganismeBugetateScheduledTaskJobDetail" />
-		<property name="cronExpression" value="${app.scheduled_tasks.trimitere_mail_nr_org_bugetate.cron_expression}" />
-	</bean>
-		
-	<bean id="notificareMailSedintaAgaScheduledTask" class="ro.cloudSoft.cloudDoc.scheduledTasks.NotificareMailSedintaAgaScheduledTask">
-		<property name="userPersistencePlugin" ref="userPersistencePlugin" />
-		<property name="parametersDao" ref="parametersDao" />
-		<property name="mailService" ref="mailService" />
-		<property name="calendareEventDao" ref="calendarEventDao" />
-	</bean>
-		<bean id="notificareMailSedintaAgaScheduledTaskJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-  		<property name="targetObject" ref="notificareMailSedintaAgaScheduledTask" />
-		<property name="targetMethod" value="run" />
-		<property name="concurrent" value="false" />
-	</bean>
-	<bean id="notificareMailSedintaAgaScheduledTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="notificareMailSedintaAgaScheduledTaskJobDetail" />
-		<property name="cronExpression" value="${app.scheduled_tasks.trimitere_mail_sedinta_aga.cron_expression}" />
-	</bean>
-		
-	<bean id="notificareMailExpirareMandatScheduledTask" class="ro.cloudSoft.cloudDoc.scheduledTasks.NotificareMailExpirareMandatReprezentantiComisieGlScheduledTask">
-		<property name="reprezentantiComisieSauGLDao" ref="reprezentantiComisieSauGLDao" />
-		<property name="parametersDao" ref="parametersDao" />
-		<property name="mailService" ref="mailService" />
-		<property name="notificareExpirareMandatReprezentantiComisieGlDao" ref="notificareExpirareMandatReprezentantiComisieGlDao" />
-	</bean>
-		<bean id="notificareMailExpirareMandatScheduledTaskJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-  		<property name="targetObject" ref="notificareMailExpirareMandatScheduledTask" />
-		<property name="targetMethod" value="run" />
-		<property name="concurrent" value="false" />
-	</bean>
-	<bean id="notificareMailExpirareMandatScheduledTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="notificareMailExpirareMandatScheduledTaskJobDetail" />
-		<property name="cronExpression" value="${app.scheduled_tasks.trimitere_mail_expirare_mandat.cron_expression}" />
-	</bean>
-	
-	<bean id="notificareMailExpirareProiectScheduledTask" class="ro.cloudSoft.cloudDoc.scheduledTasks.NotificareMailExpirareProiectScheduledTask">
-		<property name="projectDao" ref="projectDao" />
-		<property name="parametersDao" ref="parametersDao" />
-		<property name="mailService" ref="mailService" />
-		<property name="notificareExpirareProiectDao" ref="notificareExpirareProiectDao" />
-	</bean>
-		<bean id="notificareMailExpirareProiectScheduledTaskJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-  		<property name="targetObject" ref="notificareMailExpirareProiectScheduledTask" />
-		<property name="targetMethod" value="run" />
-		<property name="concurrent" value="false" />
-	</bean>
-	<bean id="notificareMailExpirareProiectScheduledTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="notificareMailExpirareProiectScheduledTaskJobDetail" />
-		<property name="cronExpression" value="${app.scheduled_tasks.trimitere_mail_expirare_proiect.cron_expression}" />
-	</bean>
 
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" destroy-method="destroy">
 		<property name="triggers">
 			<list>
-				<ref bean="activateOrExpireReplacementProfilesScheduledTaskTrigger" />
 				<ref bean="deleteLeftoverTemporaryFilesScheduledTaskTrigger" />
-				<ref bean="loadExchangeRateScheduledTaskTrigger" />
-				<ref bean="prepareJRDocExportScheduledTaskTrigger" />
-				<ref bean="completeWorkflowAutomaticTasksJobTrigger" />
-				<ref bean="notificareMailNrOrganismeBugetateScheduledTaskTrigger" />
-				<ref bean="notificareMailSedintaAgaScheduledTaskTrigger" />
-				<ref bean="notificareMailExpirareMandatScheduledTaskTrigger" />
-				<ref bean="notificareMailExpirareProiectScheduledTaskTrigger" />
 			</list>
 		</property>
 		<property name="applicationContextSchedulerContextKey">

@@ -3,24 +3,6 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
     
-    <bean id="documentTypeDataAsSqlExporter" class="ro.cloudSoft.cloudDoc.services.export.DocumentTypeDataAsSqlExporter">
-    	<property name="documentTypeDao" ref="documentTypeDao" />
-    	<property name="groupPersistencePlugin" ref="groupPersistencePlugin" />
-    	<property name="organizationUnitPersistencePlugin" ref="organizationUnitPersistencePlugin" />
-    	<property name="nomenclatorDao" ref="nomenclatorDao" />  
-    	<property name="userPersistencePlugin" ref="userPersistencePlugin" />  	
-    	<property name="calendarDao" ref="calendarDao" />
-    </bean>
-    
-    <bean id="workflowDataAsSqlExporter" class="ro.cloudSoft.cloudDoc.services.export.WorkflowDataAsSqlExporter">
-    	<property name="workflowDao" ref="workflowDao"></property>
-    	<property name="groupPersistencePlugin" ref="groupPersistencePlugin"></property>
-    	<property name="organizationUnitPersistencePlugin" ref="organizationUnitPersistencePlugin" />
-    </bean>
-    
-    <bean id="exportDataAsSqlService" class="ro.cloudSoft.cloudDoc.services.export.ExportDataAsSqlService">
-    	<property name="workflowDataAsSqlExporter" ref="workflowDataAsSqlExporter" />
-    	<property name="documentTypeDataAsSqlExporter" ref="documentTypeDataAsSqlExporter" />
-    </bean>
+
     
 </beans>

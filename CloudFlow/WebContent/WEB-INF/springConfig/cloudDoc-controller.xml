@@ -9,39 +9,10 @@
   	<property name="urlMap">
   		<map>
   			<entry key="/redirectToDefaultModule.do" value="redirectToDefaultModuleController" />
-  			<entry key="/replaceUserPermission.do" value="replaceUserPermissionController" />
-  			<entry key="/viewWorkflowGraph.do" value="viewWorkflowGraphController" />
-  			
-  			<entry key="${app.web.pages.export_document}" value="exportDocumentController" />
-  			<entry key="${app.web.pages.document_search_report}" value="documentSearchReportController" />
-  			
-  			<entry key="/**/DocumentLocationGxtService.form" value="documentLocationController" />
-  			<entry key="/**/FolderGxtService.form" value="folderController" />
-  			<entry key="/**/DocumentGxtService.form" value="documentController" />
   			<entry key="/**/AclGxtService.form" value="aclController" />
-  			<entry key="/**/OrganizationGxtService.form" value="orgController" />
-  			<entry key="/**/AuditGxtService.form" value="auditController" />
   			<entry key="/**/LogGxtService.form" value="logController" />
   			<entry key="/**/AppGxtService.form" value="appController" />
-  			<entry key="/**/DocumentTypeGxtService.form" value="documentTypeController" />
-  			<entry key="/**/MimeTypeGxtService.form" value="mimeTypeController" />
-  			<entry key="/**/WorkflowGxtService.form" value="workflowController" />
-  			<entry key="/**/DocumentSearchGxtService.form" value="documentSearchController" />
-  			<entry key="/**/DocumentWorkflowHistoryGxtService.form" value="documentWorkflowHistoryController" />
-  			<entry key="/**/ReplacementProfilesGxtService.form" value="replacementProfilesController" />
-  			
   			<entry key="/temporaryFileDisplay.*" value="temporaryFileDisplayController" />
-  			
-			<!-- >> Previzualizare atasamente -->
-			<!--
-			ATENTIE: Internet Explorer decide ce program sa foloseasca pentru raspunsul primit in functie de extensia cu care se termina URL-ul (ignorand header-ul "Content-Type").
-			Astfel, ca sa mearga preview-ul pentru PDF-uri de exemplu, trebuie ca URL-ul sa se termine cu .pdf. Alfel, va deschide popup-ul pentru salvare fisier.
-			-->
-  			<entry key="/attachmentPreview/pdfDocumentAsPdfAttachmentPreview.pdf" value="pdfDocumentAsPdfAttachmentPreviewController" />
-  			<entry key="/attachmentPreview/pdfDocumentAsPngAttachmentPreview.jsp" value="pdfDocumentAsPngAttachmentPreviewController" />
-  			<entry key="/attachmentPreview/officeAsPdfAttachmentPreview.pdf" value="officeDocumentAsPdfAttachmentPreviewController" />
-  			<entry key="/attachmentPreview/officeAsPngAttachmentPreview.jsp" value="officeDocumentAsPngAttachmentPreviewController" />
-			<!-- << Previzualizare atasamente -->
   		</map>
   	</property>
   </bean>
@@ -49,74 +20,7 @@
 	<bean name="redirectToDefaultModuleController" class="ro.cloudSoft.cloudDoc.web.controllers.RedirectToDefaultModuleController">
 		<property name="defaultModulePageUrl" value="${app.web.pages.index}" />
 	</bean>
-	
-	<bean name="replaceUserPermissionController" class="ro.cloudSoft.cloudDoc.web.controllers.ReplaceUserPermissionController">
-		<property name="documentService" ref="documentService" />
-	</bean>
-	
-	<bean name="viewWorkflowGraphController" class="ro.cloudSoft.cloudDoc.web.controllers.ViewWorkflowGraphController">
-		<property name="workflowService" ref="workflowService" />
-		<property name="workflowGraphViewGenerator" ref="workflowGraphViewGenerator" />
-		<property name="documentWorkflowHistoryService" ref="documentWorkflowHistoryService" />
-	</bean>
-	
-	<bean name="exportDocumentController" class="ro.cloudSoft.cloudDoc.web.controllers.ExportDocumentController">
-		<property name="documentService" ref="documentService" />
-		<property name="documentTypeService" ref="documentTypeService" />
-		<property name="documentWorkflowHistoryService" ref="documentWorkflowHistoryService" />
-		<property name="userService" ref="userService" />
-		<property name="nomenclatorService" ref="nomenclatorService" />
-		<property name="groupService" ref="groupService" />
-		<property name="calendarService" ref="calendarService" />
-		<property name="projectService" ref="projectService" />
-		<property name="valueWhenNull" value="${app.reports.value_when_null}" />
-	</bean>
-	
-	<bean name="documentSearchReportController" class="ro.cloudSoft.cloudDoc.web.controllers.DocumentSearchReportController">
-		<property name="searchService" ref="searchService" />
-		<property name="documentTypeService" ref="documentTypeService" />
-		<property name="userService" ref="userService" />
-		<property name="workflowService" ref="workflowService" />
-		<property name="workflowExecutionService" ref="workflowExecutionService" />
-	</bean>
-
-	<bean name="documentLocationGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.content.DocumentLocationGxtServiceImpl">
-		<constructor-arg index="0" ref="documentLocationService"/>
-    </bean>
     
-	<bean name="documentLocationController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
-	    <property name="remoteService" ref="documentLocationGxtService" />
-	</bean>
-
-	<bean name="folderGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.content.FolderGxtServiceImpl">
-      <constructor-arg index="0" ref="folderService"/>
-    </bean>
-         
-	<bean name="folderController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
-	    <property name="remoteService" ref="folderGxtService" />
-	</bean>
-	
-	<bean name="documentGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.content.DocumentGxtServiceImpl">
-		<property name="documentService" ref="documentService" />
-		<property name="documentTypeService" ref="documentTypeService" />
-		<property name="userService" ref="userService" />
-		<property name="workflowExecutionService" ref="workflowExecutionService" />
-		<property name="workflowService" ref="workflowService" />
-		<property name="nomenclatorService" ref="nomenclatorService" />
-		<property name="groupService" ref="groupService" />
-		<property name="calendarService" ref="calendarService" />
-		<property name="projectService" ref="projectService" />
-		<property name="workflowConverter" ref="workflowConverter" />
-		<property name="businessConstants" ref="businessConstants" />
-		<property name="fileSystemAttachmentManager" ref="fileSystemAttachmentManager" />
-		<property name="workflowInstanceDao" ref="workflowInstanceDao" />
-		<property name="importedDocumentDao" ref="importedDocumentDao" />
-		<property name="documentAttachmentDetailDao" ref="documentAttachmentDetailDao" />
-    </bean>
-         
-	<bean name="documentController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
-	    <property name="remoteService" ref="documentGxtService" />
-	</bean>
   
   	<bean name="aclGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.AclGxtServiceImpl">
   		<property name="businessConstants" ref="businessConstants" />
@@ -130,31 +34,8 @@
 	<bean name="passwordEncoder" class="ro.cloudSoft.cloudDoc.utils.PasswordEncoder">
 		<property name="saltKeyValue" value="${app.security.authentication.passwordEncoder.saltKeyValue}" />
 	</bean>
-	
-	<bean name="organizationGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.OrganizationGxtServiceImpl">
-         <constructor-arg index="0" ref="userService"/>
-         <constructor-arg index="1" ref="organizationUnitService"/>
-         <constructor-arg index="2" ref="groupService"/>
-         <constructor-arg index="3" ref="organizationService"/>
-         
-         <constructor-arg index="4" ref="directoryUserService" />
-         
-         <constructor-arg index="5" ref="organizationalStructureImportService" />
-         <constructor-arg index="6" ref="passwordEncoder" />
-         <constructor-arg index="7" ref="nomenclatorValueDao" />
-    </bean>
     
-  	<bean name="orgController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
-      <property name="remoteService" ref="organizationGxtService" />
-	</bean>
 	
-  	<bean name="auditGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.AuditGxtServiceImpl">
-		<property name="auditService" ref="auditService" />
-	</bean>
-	
-	<bean name="auditController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
-		<property name="remoteService" ref="auditGxtService" />
-	</bean>
   
 	<bean name="logGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.LogGxtServiceImpl">
 		<constructor-arg index="0" ref="logService"/>
@@ -178,100 +59,9 @@
 		<property name="remoteService" ref="appGxtService" />
 	</bean>
 	
-	<bean name="documentTypeGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.content.DocumentTypeGxtServiceImpl">
-		<constructor-arg index="0" ref="documentTypeService"/>
-		<constructor-arg index="1" ref="groupService"/>
-		<constructor-arg index="2" ref="fileSystemDocumentTemplateManager"/>
-	</bean>
-			
-	<bean name="documentTypeController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
-		<property name="remoteService" ref="documentTypeGxtService" />
-	</bean>
-	
-	<bean name="mimeTypeGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.content.MimeTypeGxtServiceImpl">
-		<property name="mimeTypeService" ref="mimeTypeService" />
-	</bean>
-			
-	<bean name="mimeTypeController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
-		<property name="remoteService" ref="mimeTypeGxtService" />
-	</bean>
-	
-	<bean name="workflowGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.bpm.WorkflowGxtServiceImpl">
-		<property name="workflowService" ref="workflowService" />
-		<property name="workflowExecutionService" ref="workflowExecutionService" />
-		<property name="workflowConverter" ref="workflowConverter" />
-	</bean>
-				
-	<bean name="workflowController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
-		<property name="remoteService" ref="workflowGxtService" />
-	</bean>
-	
-	<bean name="documentSearchGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.search.DocumentSearchGxtServiceImpl">
-		<property name="searchService" ref="searchService" />
-		<property name="documentTypeService" ref="documentTypeService" />
-		<property name="userService" ref="userService" />
-		<property name="workflowService" ref="workflowService" />
-		<property name="workflowExecutionService" ref="workflowExecutionService" />
-	</bean>
-			
-	<bean name="documentSearchController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
-		<property name="remoteService" ref="documentSearchGxtService" />
-	</bean>
-	
-	<bean name="documentWorkflowHistoryGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.bpm.DocumentWorkflowHistoryGxtServiceImpl">
-	  <constructor-arg index="0" ref="documentWorkflowHistoryService"/>
-	  <constructor-arg index="1" ref="userService"/>
-	</bean>
-			
-	<bean name="documentWorkflowHistoryController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
-		<property name="remoteService" ref="documentWorkflowHistoryGxtService" />
-	</bean>
-	
-	<bean name="replacementProfilesGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.replacementProfiles.ReplacementProfilesGxtServiceImpl">
-		<property name="replacementProfilesService" ref="replacementProfilesService" />
-		<property name="replacementProfileConverter" ref="replacementProfileGwtConverter" />
-	</bean>
-	<bean name="replacementProfilesController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
-		<property name="remoteService" ref="replacementProfilesGxtService" />
-	</bean>
-	
-	<bean name="workflowConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.bpm.WorkflowConverter">
-		<property name="workflowService" ref="workflowService" />
-	</bean>
-	<bean name="replacementProfileGwtConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.replacementProfiles.ReplacementProfileConverter">
-		<property name="organizationService" ref="organizationService" />
-		<property name="organizationUnitService" ref="organizationUnitService" />
-		<property name="replacementProfilesService" ref="replacementProfilesService" />
-		<property name="userService" ref="userService" />
-	</bean>
 	
 	<bean name="temporaryFileDisplayController" class="ro.cloudSoft.cloudDoc.web.controllers.TemporaryFileDisplayController">
 		<property name="temporaryFilesFolderPath" value="${app.temporary_files.folder_path}" />
 	</bean>
-	
-	
-	<!-- >> Previzualizare atasamente -->
-	
-	<bean name="abstractAttachmentPreviewController" class="ro.cloudSoft.cloudDoc.web.controllers.attachmentsPreview.AbstractAttachmentPreviewController" abstract="true">
-		<property name="documentService" ref="documentService" />
-	</bean>
-	
-	<bean name="pdfDocumentAsPdfAttachmentPreviewController" class="ro.cloudSoft.cloudDoc.web.controllers.attachmentsPreview.PdfDocumentAsPdfAttachmentPreviewController" parent="abstractAttachmentPreviewController" />
-	
-	<bean name="pdfDocumentAsPngAttachmentPreviewController" class="ro.cloudSoft.cloudDoc.web.controllers.attachmentsPreview.PdfDocumentAsPngAttachmentPreviewController" parent="abstractAttachmentPreviewController">
-		<property name="pdfDocumentToPngConverter" ref="pdfDocumentToPngConverter" />
-		<property name="temporaryFilesFolderPath" value="${app.temporary_files.folder_path}" />
-	</bean>
-	
-	<bean name="officeDocumentAsPdfAttachmentPreviewController" class="ro.cloudSoft.cloudDoc.web.controllers.attachmentsPreview.OfficeDocumentAsPdfAttachmentPreviewController" parent="abstractAttachmentPreviewController">
-		<property name="officeDocumentToPdfConverter" ref="officeDocumentToPdfConverter" />
-	</bean>
-	
-	<bean name="officeDocumentAsPngAttachmentPreviewController" class="ro.cloudSoft.cloudDoc.web.controllers.attachmentsPreview.OfficeDocumentAsPngAttachmentPreviewController" parent="abstractAttachmentPreviewController">
-		<property name="officeDocumentToPngConverter" ref="officeDocumentToPngConverter" />
-		<property name="temporaryFilesFolderPath" value="${app.temporary_files.folder_path}" />
-	</bean>
-	
-	<!-- << Previzualizare atasamente -->
 
 </beans>

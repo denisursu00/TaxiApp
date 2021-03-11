@@ -4,171 +4,21 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-	<bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource">
-		<property name="url" value="${app.ldap.url}" />
-		<property name="base" value="${app.ldap.base}" />
-		<property name="userDn" value="${app.ldap.login.user}" />
-		<property name="password" value="${app.ldap.login.password}" />
-		<property name="pooled" value="true" />
-	</bean>
-
-	<bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
-		<constructor-arg ref="contextSource" />
-	</bean>
 	
-	<bean id="ldapClassNames" class="ro.cloudSoft.cloudDoc.plugins.organization.constants.LdapClassNames">
-		<property name="organizationClass" value="${app.ldap.entity.classes.organization}" />
-		<property name="groupClass" value="${app.ldap.entity.classes.group}" />
-		<property name="organizationUnitClass" value="${app.ldap.entity.classes.organization_unit}" />
-		<property name="userClass" value="${app.ldap.entity.classes.user}" />
-	</bean>
-	
-	<bean id="ldapAttributeNames" class="ro.cloudSoft.cloudDoc.plugins.organization.constants.LdapAttributeNames">
-		<property name="organizationId" value="${app.ldap.entity.properties.organization.id}" />
-		<property name="organizationName" value="${app.ldap.entity.properties.organization.name}" />
-		<property name="organizationManager" value="${app.ldap.entity.properties.organization.manager}" />
 
-		<property name="groupId" value="${app.ldap.entity.properties.group.id}" />
-		<property name="groupName" value="${app.ldap.entity.properties.group.name}" />
-		<property name="groupDescription" value="${app.ldap.entity.properties.group.description}" />
-		<property name="groupMember" value="${app.ldap.entity.properties.group.member}" />
-
-		<property name="organizationUnitId" value="${app.ldap.entity.properties.org-unit.id}" />
-		<property name="organizationUnitName" value="${app.ldap.entity.properties.org-unit.name}" />
-		<property name="organizationUnitDescription" value="${app.ldap.entity.properties.org-unit.description}" />
-		<property name="organizationUnitOrganizationName" value="${app.ldap.entity.properties.org-unit.organization_name}" />
-		<property name="organizationUnitParentOrganizationUnitId" value="${app.ldap.entity.properties.org-unit.parent_org_unit_id}" />
-		<property name="organizationUnitManagerId" value="${app.ldap.entity.properties.org-unit.manager_id}" />
-
-		<property name="userId" value="${app.ldap.entity.properties.user.id}" />
-		<property name="userUsername" value="${app.ldap.entity.properties.user.username}" />
-		<property name="userFirstName" value="${app.ldap.entity.properties.user.first_name}" />
-		<property name="userLastName" value="${app.ldap.entity.properties.user.last_name}" />
-		<property name="userDisplayName" value="${app.ldap.entity.properties.user.display_name}" />
-		<property name="userPassword" value="${app.ldap.entity.properties.user.password}" />
-		<property name="userMail" value="${app.ldap.entity.properties.user.mail}" />
-		<property name="userTitle" value="${app.ldap.entity.properties.user.title}" />
-		<property name="userOrganizationUnitId" value="${app.ldap.entity.properties.user.org_unit_id}" />
-		<property name="userOrganizationUnitName" value="${app.ldap.entity.properties.user.org_unit_name}" />
-		<property name="userGroupId" value="${app.ldap.entity.properties.user.group_id}" />
-		<property name="userEmployeeNumber" value="${app.ldap.entity.properties.user.employee_number}" />
-		<property name="userManager" value="${app.ldap.entity.properties.user.manager}" />
-	</bean>
-	
-	<bean id="directoryGroupContextMapper" class="ro.cloudSoft.cloudDoc.domain.directory.organization.contextMappers.DirectoryGroupContextMapper">
-		<constructor-arg index="0" ref="ldapAttributeNames" />
-		<constructor-arg index="1" value="${app.ldap.base}" />
-	</bean>
-	<bean id="directoryOrganizationUnitContextMapper" class="ro.cloudSoft.cloudDoc.domain.directory.organization.contextMappers.DirectoryOrganizationUnitContextMapper">
-		<constructor-arg index="0" ref="ldapAttributeNames" />
-	</bean>
-	<bean id="directoryUserContextMapper" class="ro.cloudSoft.cloudDoc.domain.directory.organization.contextMappers.DirectoryUserContextMapper">
-		<constructor-arg index="0" ref="ldapAttributeNames" />
-	</bean>
-	
-	<bean id="directoryGroupDao" class="ro.cloudSoft.cloudDoc.dao.directory.organization.DirectoryGroupDaoImpl">
-		<constructor-arg index="0" ref="ldapTemplate" />
-		
-		<constructor-arg index="1" ref="ldapClassNames" />
-		<constructor-arg index="2" ref="ldapAttributeNames" />
-		
-		<constructor-arg index="3" ref="directoryGroupContextMapper" />
-	</bean>
-	<bean id="directoryOrganizationUnitDao" class="ro.cloudSoft.cloudDoc.dao.directory.organization.DirectoryOrganizationUnitDaoImpl">
-		<constructor-arg index="0" ref="ldapTemplate" />
-		
-		<constructor-arg index="1" ref="ldapClassNames" />
-		<constructor-arg index="2" ref="ldapAttributeNames" />
-		
-		<constructor-arg index="3" ref="directoryOrganizationUnitContextMapper" />
-	</bean>
-	<bean id="directoryUserDao" class="ro.cloudSoft.cloudDoc.dao.directory.organization.DirectoryUserDaoImpl">
-		<constructor-arg index="0" ref="ldapTemplate" />
-		
-		<constructor-arg index="1" ref="ldapClassNames" />
-		<constructor-arg index="2" ref="ldapAttributeNames" />
-		
-		<constructor-arg index="3" ref="directoryUserContextMapper" />
-	</bean>
-	
-	<bean id="userDeactivationDao" class="ro.cloudSoft.cloudDoc.dao.organizaiton.HibernateUserDeactivationDao">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	
-	<bean id="directoryUserService" class="ro.cloudSoft.cloudDoc.services.directory.organization.DirectoryUserServiceImpl">
-		<property name="directoryUserDao" ref="directoryUserDao" />
-	</bean>
-
-	<bean id="organizationPersistencePlugin" class="ro.cloudSoft.cloudDoc.plugins.organization.OrganizationPersistenceDbPlugin" init-method="afterPropertiesSetOverride">
-		<property name="sessionFactory" ref="sessionFactory" />
-		<property name="organizationName" value="${app.constants.organizational_structure.organization.name}" /> <!-- NOTA: numele organizatiei folosite de aplicatie -->
-	</bean>
-
-	<bean id="groupPersistencePlugin" class="ro.cloudSoft.cloudDoc.plugins.organization.GroupPersistenceDbPlugin">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
-	<bean id="organizationUnitPersistencePlugin" class="ro.cloudSoft.cloudDoc.plugins.organization.OrganizationUnitPersistenceDbPlugin">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
 
 	<bean id="userPersistencePlugin" class="ro.cloudSoft.cloudDoc.plugins.organization.UserPersistenceDbPlugin">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
 
-	<bean id="groupService" class="ro.cloudSoft.cloudDoc.services.organization.GroupServiceImpl">
-		<property name="auditService" ref="auditService" />
-		
-		<property name="groupPersistencePlugin" ref="groupPersistencePlugin" />
-		
-		<property name="restrictedSecurityGroups">
-			<list>
-				<value>${app.constants.organizational_structure.groups.names.users}</value>
-				<value>${app.constants.organizational_structure.groups.names.admins}</value>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="organizationService" class="ro.cloudSoft.cloudDoc.services.organization.OrganizationServiceImpl">
-		<property name="organizationPersistencePlugin" ref="organizationPersistencePlugin" />
-	</bean>
 	
-	<bean id="organizationUnitService" class="ro.cloudSoft.cloudDoc.services.organization.OrganizationUnitServiceImpl">
-		<property name="auditService" ref="auditService" />
-		
-		<property name="organizationPersistencePlugin" ref="organizationPersistencePlugin" />
-		<property name="organizationUnitPersistencePlugin" ref="organizationUnitPersistencePlugin" />
-	</bean>
 
 	<bean id="userService" class="ro.cloudSoft.cloudDoc.services.organization.UserServiceImpl">
 		<property name="userPersistencePlugin" ref="userPersistencePlugin" />
 	</bean>
 	
-	<bean id="organizationalStructureImportService" class="ro.cloudSoft.cloudDoc.services.organization.OrganizationalStructureImportServiceImpl">
-		
-		<constructor-arg index="0" ref="directoryUserDao" />
-		<constructor-arg index="1" ref="directoryOrganizationUnitDao" />
-		<constructor-arg index="2" ref="directoryGroupDao" />
-		
-		<constructor-arg index="3" ref="organizationService" />
-		<constructor-arg index="4" ref="userService" />
-		<constructor-arg index="5" ref="organizationUnitService" />
-		<constructor-arg index="6" ref="groupService" />
-		
-		<constructor-arg index="7" value="${app.ldap.organization_root_dn}" />
-		
-		<constructor-arg index="8" value="${app.import_organizational_structure.defaults.user.title}" />
-	</bean>
 	
-	<bean id="userDeactivationHelperFactory" class="ro.cloudSoft.cloudDoc.helpers.organization.UserDeactivationHelperFactory">
-		<property name="titleSuffixForDeactivatedUsers" value="${app.constants.organizational_structure.user_deactivation.title_suffix_for_deactivated_users}" />
-		<property name="nameForOrganizationUnitWithDeactivatedUsers" value="${app.constants.organizational_structure.user_deactivation.name_for_organization_unit_with_deactivated_users}" />
-		
-		<property name="organizationUnitService" ref="organizationUnitService" />
-		<property name="groupService" ref="groupService" />
-		<property name="userService" ref="userService" />		
-	</bean>
 	
 	<bean id="roleDao" class="ro.cloudSoft.cloudDoc.dao.organizaiton.RoleDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory" />

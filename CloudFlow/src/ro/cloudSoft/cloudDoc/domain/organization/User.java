@@ -25,8 +25,7 @@ import com.google.common.base.Objects;
 
 @Entity
 @Table(
-	name = "USERS",
-	uniqueConstraints = @UniqueConstraint(columnNames = { "username", "title" })
+	name = "USERS"
 )
 public class User {
 	

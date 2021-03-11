@@ -6,7 +6,6 @@
 	<bean name="constantsIntegrityCheck" class="ro.cloudSoft.cloudDoc.integrityCheck.ConstantsIntegrityCheck">
 		<constructor-arg index="0" value="${app.integrity_check.constants.throw_exception_on_failure}" />
 		<constructor-arg index="1" ref="businessConstants" />
-		<constructor-arg index="2" ref="groupService" />
 	</bean>
 	
 </beans>

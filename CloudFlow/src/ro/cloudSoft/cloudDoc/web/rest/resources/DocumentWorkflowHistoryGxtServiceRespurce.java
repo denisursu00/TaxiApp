@@ -22,12 +22,4 @@ import ro.cloudSoft.cloudDoc.presentation.client.shared.services.bpm.DocumentWor
 @Produces({MediaType.APPLICATION_JSON})
 public class DocumentWorkflowHistoryGxtServiceRespurce {
 
-	@Autowired
-	private DocumentWorkflowHistoryGxtService documentWorkflowHistoryGxtService;
-
-	@POST
-	@Path("/getDocumentHistory/{documentId}")
-	public List<DocumentHistoryViewModel> getDocumentHistory(@PathParam("documentId") String documentId) throws PresentationException {
-		return documentWorkflowHistoryGxtService.getDocumentHistory(documentId);
-	}
 }
