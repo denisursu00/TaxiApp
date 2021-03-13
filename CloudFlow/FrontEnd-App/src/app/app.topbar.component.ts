@@ -35,10 +35,7 @@ export class AppTopBarComponent implements OnInit {
 	}
 
 	ngOnInit(): void  {		
-		if (this.authManager.hasOnlyOnePermission(AUTH_ACCESS.PREZENTA.COMPLETARE.permissions.toString())) {
-			this.homeRouterLink = RouteConstants.PREZENTA_ONLINE;
-			this.isUserPrezenta = true;
-		}		
+			
 	}
 
 	public get loggedInUserInfo(): string {

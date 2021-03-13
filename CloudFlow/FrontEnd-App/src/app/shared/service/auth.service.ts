@@ -7,7 +7,7 @@ import { LoginRequestModel } from "../model/auth/login-request.model";
 import { LoginResponseModel } from "../model/auth/login-response.model";
 import { LoggedInUserModel } from "../model/auth/logged-in-user.model";
 import { ApiPathUtils } from "../utils";
-import { PasswordChangeModel } from "../model/organization/password-change.model";
+import { PasswordChangeModel } from "../model/auth/password-change.model";
 
 @Injectable()
 export class AuthService {

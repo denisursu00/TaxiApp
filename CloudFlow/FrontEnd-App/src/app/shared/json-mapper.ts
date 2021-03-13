@@ -3,8 +3,7 @@ import { environment } from "@app/../environments/environment";
 import { JsonConvert, JsonConverter, JsonCustomConvert, OperationMode, ValueCheckingMode } from "json2typescript";
 import { ObjectUtils } from "./utils/object-utils";
 import { ArrayUtils } from "./utils/array-utils";
-import { ManuallyChosenEntitiesTransitionNotificationModel, UserMetadataTransitionNotificationModel, TransitionNotificationModel, HierarchicalSuperiorOfUserMetadataTransitionNotificationModel } from "./model/bpm/notifications";
-import { OrganizationEntityModel } from "./model/organization-entity.model";
+
 
 @Injectable()
 export class JsonMapper {
@@ -43,99 +42,5 @@ export class JsonDateConverter implements JsonCustomConvert<Date> {
 			return new Date(date);
 		}
 		return null;
-	}
-}
-
-
-
-@JsonConverter
-export class JsonTransitionNotificationsConverter implements JsonCustomConvert<TransitionNotificationModel[]> {
-
-	serialize(notifications: TransitionNotificationModel[]): TransitionNotificationModel[] {
-		if (ArrayUtils.isEmpty(notifications)) {
-			return [];
-		}
-		let notificationSerialized: any[] = [];
-		notifications.forEach((notification: TransitionNotificationModel) => {
-			if (notification instanceof ManuallyChosenEntitiesTransitionNotificationModel) {
-				let manuallyChosenEntityNotification: ManuallyChosenEntitiesTransitionNotificationModel = new ManuallyChosenEntitiesTransitionNotificationModel();
-				manuallyChosenEntityNotification.id = notification.id;
-				manuallyChosenEntityNotification.emailContentTemplate = notification.emailContentTemplate;
-				manuallyChosenEntityNotification.emailSubjectTemplate = notification.emailSubjectTemplate;
-				manuallyChosenEntityNotification.manuallyChosenEntities = notification.manuallyChosenEntities;
-				manuallyChosenEntityNotification.type = notification.type;
-				notificationSerialized.push(manuallyChosenEntityNotification); 
-			} else if (notification instanceof UserMetadataTransitionNotificationModel) {
-				let userMetadataNotification: UserMetadataTransitionNotificationModel = new UserMetadataTransitionNotificationModel();
-				userMetadataNotification.id = notification.id;
-				userMetadataNotification.emailContentTemplate = notification.emailContentTemplate;
-				userMetadataNotification.emailSubjectTemplate = notification.emailSubjectTemplate;
-				userMetadataNotification.metadataName = notification.metadataName;
-				userMetadataNotification.type = notification.type;
-				notificationSerialized.push(userMetadataNotification);
-			} else if (notification instanceof HierarchicalSuperiorOfUserMetadataTransitionNotificationModel) {
-				let hierarchicalSuperiorOfUserMetadataTransitionNotificationModel: HierarchicalSuperiorOfUserMetadataTransitionNotificationModel = new HierarchicalSuperiorOfUserMetadataTransitionNotificationModel();
-				hierarchicalSuperiorOfUserMetadataTransitionNotificationModel.id = notification.id;
-				hierarchicalSuperiorOfUserMetadataTransitionNotificationModel.emailContentTemplate = notification.emailContentTemplate;
-				hierarchicalSuperiorOfUserMetadataTransitionNotificationModel.emailSubjectTemplate = notification.emailSubjectTemplate;
-				hierarchicalSuperiorOfUserMetadataTransitionNotificationModel.metadataName = notification.metadataName;
-				hierarchicalSuperiorOfUserMetadataTransitionNotificationModel.type = notification.type;
-				notificationSerialized.push(hierarchicalSuperiorOfUserMetadataTransitionNotificationModel);
-			} else {
-				notificationSerialized.push(notification);
-			}
-		});
-		return notificationSerialized;
-	}
-
-	deserialize(notifications: any[]): TransitionNotificationModel[] {
-		if (ArrayUtils.isEmpty(notifications)) {
-			return [];
-		}
-		let notificationsDeserialized: any[] = [];		
-		notifications.forEach(notification => {
-			if (ObjectUtils.isNotNullOrUndefined(notification.manuallyChosenEntities)) {
-				let manuallyChosenEntityNotification: ManuallyChosenEntitiesTransitionNotificationModel = new ManuallyChosenEntitiesTransitionNotificationModel();
-				manuallyChosenEntityNotification.id = notification.id;
-				manuallyChosenEntityNotification.emailContentTemplate = notification.emailContentTemplate;
-				manuallyChosenEntityNotification.emailSubjectTemplate = notification.emailSubjectTemplate;
-				manuallyChosenEntityNotification.manuallyChosenEntities = [];
-				
-				notification.manuallyChosenEntities.forEach((manuallyChosenEntity: OrganizationEntityModel) => {
-					let entity: OrganizationEntityModel = new OrganizationEntityModel();
-					entity.id = manuallyChosenEntity.id;
-					entity.type = manuallyChosenEntity.type;
-					manuallyChosenEntityNotification.manuallyChosenEntities.push(entity);
-				});
-
-				manuallyChosenEntityNotification.type = notification.type;
-				notificationsDeserialized.push(manuallyChosenEntityNotification);
-			} else if (ObjectUtils.isNotNullOrUndefined(notification.metadataName)) {
-				let userMetadataNotification: UserMetadataTransitionNotificationModel = new UserMetadataTransitionNotificationModel();
-				userMetadataNotification.id = notification.id;
-				userMetadataNotification.emailContentTemplate = notification.emailContentTemplate;
-				userMetadataNotification.emailSubjectTemplate = notification.emailSubjectTemplate;
-				userMetadataNotification.metadataName = notification.metadataName;
-				userMetadataNotification.type = notification.type;
-				notificationsDeserialized.push(userMetadataNotification);
-			} else if (ObjectUtils.isNotNullOrUndefined(notification.metadataName)) {
-				let hierarchicalSuperiorOfUserMetadataTransitionNotificationModel: HierarchicalSuperiorOfUserMetadataTransitionNotificationModel = new HierarchicalSuperiorOfUserMetadataTransitionNotificationModel();
-				hierarchicalSuperiorOfUserMetadataTransitionNotificationModel.id = notification.id;
-				hierarchicalSuperiorOfUserMetadataTransitionNotificationModel.emailContentTemplate = notification.emailContentTemplate;
-				hierarchicalSuperiorOfUserMetadataTransitionNotificationModel.emailSubjectTemplate = notification.emailSubjectTemplate;
-				hierarchicalSuperiorOfUserMetadataTransitionNotificationModel.metadataName = notification.metadataName;
-				hierarchicalSuperiorOfUserMetadataTransitionNotificationModel.type = notification.type;
-				notificationsDeserialized.push(hierarchicalSuperiorOfUserMetadataTransitionNotificationModel);
-			} else {
-				let transitionNotification: TransitionNotificationModel = {
-					id: notification.id,
-					emailContentTemplate: notification.emailContentTemplate,
-					emailSubjectTemplate: notification.emailSubjectTemplate,
-					type: notification.type
-				};
-				notificationsDeserialized.push(transitionNotification);
-			}
-		});
-		return notificationsDeserialized;
 	}
 }

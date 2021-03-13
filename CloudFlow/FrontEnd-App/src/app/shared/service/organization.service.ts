@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { ApiCaller } from "./../api-caller";
-import { AppError, OrganizationUnitModel, OrganizationTreeModel, UserModel, DirectoryUserSearchCriteriaModel, DirectoryUserModel, OrganizationTreeNodeModel, GroupModel, RoleModel, RolePermissionMappingViewModel } from "./../model";
+import { AppError/*, OrganizationUnitModel, OrganizationTreeModel, UserModel, DirectoryUserSearchCriteriaModel, DirectoryUserModel, OrganizationTreeNodeModel, GroupModel, RoleModel, RolePermissionMappingViewModel*/ } from "./../model";
 import { ApiPathConstants } from "./../constants";
 import { AsyncCallback } from "./../async-callback";
 import { ApiPathUtils } from "../utils";
-import { DeactivationUserModel } from "../model/organization/deactivation-user.model";
-import { OrganizationEntityModel } from "../model/organization-entity.model";
+//import { DeactivationUserModel } from "../model/organization/deactivation-user.model";
+//import { OrganizationEntityModel } from "../model/organization-entity.model";
 
 @Injectable()
 export class OrganizationService {
@@ -16,19 +16,19 @@ export class OrganizationService {
 		this.apiCaller = apiCaller;
 	}
 
-	public getOrganizationTree(callback: AsyncCallback<OrganizationTreeModel, AppError>): void {
+	/*public getOrganizationTree(callback: AsyncCallback<OrganizationTreeModel, AppError>): void {
 		this.apiCaller.call(ApiPathConstants.GET_ORGANIZATION_TREE, null, OrganizationTreeModel, callback);
 	}
 
 	public getSortedUsers(callback: AsyncCallback<UserModel[], AppError>): void {
 		this.apiCaller.call(ApiPathConstants.GET_SORTED_USERS, null, UserModel, callback);
-	}
+	}*/
 
 	public getAllUsernames(callback: AsyncCallback<String[], AppError>): void {
 		this.apiCaller.call(ApiPathConstants.GET_ALL_USERNAMES, null, String, callback);
 	}
 
-	public getUsersWithUsername(username: string, callback: AsyncCallback<UserModel[], AppError>): void {
+	/*public getUsersWithUsername(username: string, callback: AsyncCallback<UserModel[], AppError>): void {
 		this.apiCaller.call(ApiPathUtils.appendParametersToPath(ApiPathConstants.GET_USERS_WITH_USERNAME, username), null, UserModel, callback);
 	}
 	
@@ -70,13 +70,13 @@ export class OrganizationService {
 	
 	public findUsersInDirectory(searchCriteria: DirectoryUserSearchCriteriaModel, callback: AsyncCallback<DirectoryUserModel[], AppError>): void {
 		this.apiCaller.call(ApiPathConstants.FIND_USERS_IN_DIRECTORY, searchCriteria, DirectoryUserModel, callback);
-	}
+	}*/
 	
 	public importOrganizationalStructureFromDirectory(callback: AsyncCallback<null, AppError>): void {
 		this.apiCaller.call(ApiPathConstants.IMPORT_ORGANIZATIONAL_STRUCTURE_FROM_DIRECTORY, null, null, callback);
 	}
 	
-	public deleteOrgUnit(oraganizationUnitModel: OrganizationUnitModel, callback: AsyncCallback<null, AppError>): void {
+	/*public deleteOrgUnit(oraganizationUnitModel: OrganizationUnitModel, callback: AsyncCallback<null, AppError>): void {
 		this.apiCaller.call(ApiPathConstants.DELETE_ORGANIZATION_UNIT, oraganizationUnitModel, null, callback);
 	}
 	
@@ -86,7 +86,7 @@ export class OrganizationService {
 
 	public deactivateUser(deactivationUserModel: DeactivationUserModel, callback: AsyncCallback<null, AppError>): void {
 		this.apiCaller.call(ApiPathConstants.DEACTIVATE_USER, deactivationUserModel, null, callback);
-	}
+	}*/
 
 	public reactivateUser(id: string, callback: AsyncCallback<null, AppError>): void {
 		this.apiCaller.call(ApiPathUtils.appendParametersToPath(ApiPathConstants.REACTIVATE_USER_WITH_ID, id), null, null, callback);
@@ -108,7 +108,7 @@ export class OrganizationService {
 		this.apiCaller.call(ApiPathUtils.appendParametersToPath(ApiPathConstants.MOVE_ORGANIZATION_UNIT_TO_ORGANIZATION_UNIT, idOfOrganizationUnitToMove, idOfOrganizationUnitToMoveTo), null, null, callback);
 	}
 
-	public getNamesForOrganizationEntities(organizations: OrganizationEntityModel[], callback: AsyncCallback<string[], AppError>): void {
+	/*public getNamesForOrganizationEntities(organizations: OrganizationEntityModel[], callback: AsyncCallback<string[], AppError>): void {
 		this.apiCaller.call(ApiPathConstants.GET_NAMES_FOR_ORGANIZATION_ENTITIES, organizations, String, callback);
 	}
 	
@@ -138,5 +138,5 @@ export class OrganizationService {
 
 	public getAllRolePermissionMappingViews(callback: AsyncCallback<RolePermissionMappingViewModel[], AppError>): void {
 		this.apiCaller.call(ApiPathConstants.GET_ALL_ROLE_PERMISSION_MAPPING_VIEWS, null, RolePermissionMappingViewModel, callback);
-	}
+	}*/
 }

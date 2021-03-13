@@ -1,1 +1,0 @@
-export * from "./document-selection-window.component";

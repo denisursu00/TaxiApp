@@ -1,1 +1,0 @@
-export * from "./folder-general-tab-content.component";

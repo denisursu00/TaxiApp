@@ -1,1 +1,0 @@
-export * from "./participari-la-evenimente-report.component";

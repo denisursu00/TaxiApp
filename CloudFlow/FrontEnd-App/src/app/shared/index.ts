@@ -9,7 +9,6 @@ export * from "./app-event-mediator";
 export * from "./service";
 export * from "./components";
 export * from "./app-translate-loader";
-export * from "./components/document-type-selector";
 export * from "./validators";
 export * from "./pipe";
 export * from "./enums";

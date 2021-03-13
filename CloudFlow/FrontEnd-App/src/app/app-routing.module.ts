@@ -4,17 +4,9 @@ import { AuthRouteGuard } from "@app/shared/auth";
 
 const routes: Routes = [
 	{
-		path: "client",
-		loadChildren: "./client/client.module#ClientModule"
-	},
-	{
 		path: "admin",
 		loadChildren: "./admin/admin.module#AdminModule"
 	},
-	{
-		path: "prezenta-online",
-		loadChildren: "./prezenta-online/prezenta-online.module#PrezentaOnlineModule"
-	},	
 	{
 		path: "auth",
 		loadChildren: "./auth/auth.module#AuthModule"
@@ -25,7 +17,7 @@ const routes: Routes = [
 	},
 	{
 		path: "",
-		redirectTo: "client",
+		redirectTo: "admin",
 		pathMatch: "full"
 	},
 	{

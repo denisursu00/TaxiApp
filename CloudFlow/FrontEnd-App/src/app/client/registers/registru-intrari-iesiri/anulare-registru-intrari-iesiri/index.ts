@@ -1,1 +1,0 @@
-export * from "./anulare-registru-intrari-iesiri-window.component";
