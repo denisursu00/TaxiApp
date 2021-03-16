@@ -15,63 +15,18 @@
     	</constructor-arg>
     	<constructor-arg index="2" value="ro" /> <!-- defaultLocaleCode -->
     </bean>
-    
-    <bean id="messageSource" class="ro.cloudSoft.common.utils.spring.MultiplePrefixedLocalizablePropertiesMessageSource">
-    	<constructor-arg index="0"> <!-- propertiesPackagePathForBaseNameByPrefix -->
-    		<map>
-    			<entry key="constants" value="/ro/cloudSoft/cloudDoc/presentation/client/shared/locale/LocaleConstants" />
-    			<entry key="messages" value="/ro/cloudSoft/cloudDoc/presentation/client/shared/locale/LocaleMessages" />
-    			<entry key="errors" value="/ro/cloudSoft/cloudDoc/presentation/client/shared/locale/LocaleExceptions" />
-    		</map>
-    	</constructor-arg>
-    	<constructor-arg index="1"> <!-- localeCodes -->
-    		<set>
-    			<value>ro</value>
-    			<value>en</value>
-    		</set>
-    	</constructor-arg> 	
-    </bean>
-       
-      <!-- LOG service -->
-    <bean id="logService" class="ro.cloudSoft.cloudDoc.services.log.LogServiceImpl">
-        <property name="logDao" ref="logDao"/>
-    </bean>    
-	<!-- end LOG service -->
-    
-    <!-- LOG DAO -->
-    <bean id="logDao" class="ro.cloudSoft.cloudDoc.dao.log.LogDaoImpl">
-  		<property name="sessionFactory" ref="sessionFactory" />
-  	</bean>
-  	<!-- end LOG DAO -->
-	
-	
-  	
-   	
-   	<bean id="templateEngine" class="ro.cloudSoft.cloudDoc.templating.FreeMarkerTemplateEngine" />
    	
    	<bean id="liquibaseMigrator" class="ro.cloudSoft.cloudDoc.liquibase.AppEnvironmentAwareSpringLiquibaseMigrator">
    		<property name="dataSource" ref="dataSourceSpring" />
    		<property name="changelogFilePath" value="classpath:/conf/liquibase/changelog-main.xml" />
    	</bean>
    	
-	
-	
-	
-	<bean id="fileSystemDocumentTemplateManager" class="ro.cloudSoft.cloudDoc.utils.FileSystemDocumentTemplateManager">
-		<property name="temporaryFilesFolderPath" value="${app.temporary_files.folder_path}" />
-	</bean>
-	
-   	
    	<!-- SecurityManager  -->
    	
    	<bean id="securityManagerFactory" class="ro.cloudSoft.cloudDoc.security.SecurityManagerFactory">
    		<property name="userService" ref="userService" />
 	</bean>
-  	
-  	
-   	
 	
-   	
    	<!-- Parameters -->
    	
    	<bean id="parametersDao" class="ro.cloudSoft.cloudDoc.dao.parameters.ParamentersDaoImpl">
@@ -86,12 +41,6 @@
    		<property name="parametersDao" ref="parametersDao"></property>
    		<property name="parametersConverter" ref="parametersConverter"></property>
    	</bean>
-   	
-   	
-    
-        
-    <bean id="xDocReportsService" class="ro.cloudSoft.cloudDoc.services.xDocReports.XDocReportsServiceImpl">
-    </bean>
     
     
 </beans>

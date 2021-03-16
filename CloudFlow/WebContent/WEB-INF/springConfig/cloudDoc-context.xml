@@ -64,7 +64,7 @@
 		</property>
     </bean>
 
-    <bean id="repositoryPerformanceMonitor" class="ro.cloudSoft.cloudDoc.internal.aspects.RepositoryPerformanceMonitor">
+    <!-- <bean id="repositoryPerformanceMonitor" class="ro.cloudSoft.cloudDoc.internal.aspects.RepositoryPerformanceMonitor">
 		<constructor-arg ref="monitorFactory"/>
 	</bean>
 
@@ -72,6 +72,6 @@
 
 	<aop:aspectj-autoproxy>
 		<aop:include name="repositoryPerformanceMonitor"/>
-	</aop:aspectj-autoproxy>
+	</aop:aspectj-autoproxy> -->
 	
 </beans>

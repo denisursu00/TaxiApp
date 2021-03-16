@@ -5,29 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 	
 	
-	<bean id="deleteLeftoverTemporaryFilesScheduledTask" class="ro.cloudSoft.cloudDoc.scheduledTasks.DeleteLeftoverTemporaryFilesScheduledTask">
-		<property name="temporaryFilesFolderPath" value="${app.temporary_files.folder_path}" />
-		<property name="minimumFileAgeInMinutes" value="${app.temporary_files.maximum_file_age_in_minutes}" />
-	</bean>
-	
-	<bean id="deleteLeftoverTemporaryFilesScheduledTaskJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-  		<property name="targetObject" ref="deleteLeftoverTemporaryFilesScheduledTask" />
-		<property name="targetMethod" value="deleteLeftoverFiles" />
-		<property name="concurrent" value="false" />
-	</bean>
-	
-	<bean id="deleteLeftoverTemporaryFilesScheduledTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="deleteLeftoverTemporaryFilesScheduledTaskJobDetail" />
-		<property name="cronExpression" value="${app.scheduled_tasks.delete_leftover_temporary_files.cron_expression}" />
-	</bean>
-	
-
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" destroy-method="destroy">
-		<property name="triggers">
-			<list>
-				<ref bean="deleteLeftoverTemporaryFilesScheduledTaskTrigger" />
-			</list>
-		</property>
 		<property name="applicationContextSchedulerContextKey">
 			<value>applicationContext</value>
 		</property>

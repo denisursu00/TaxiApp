@@ -36,7 +36,6 @@ public class User {
 	private String username;
 	private String email;
 	private String mobile;
-	private String employeeNumber;
 	private Set<Role> roles;
 	
 	@Id
@@ -107,14 +106,6 @@ public class User {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
-	}
-
-	public String getEmployeeNumber() {
-		return employeeNumber;
-	}
-
-	public void setEmployeeNumber(String employeeNumber) {
-		this.employeeNumber = employeeNumber;
 	}
 
 	@ManyToMany(targetEntity = Role.class, cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)

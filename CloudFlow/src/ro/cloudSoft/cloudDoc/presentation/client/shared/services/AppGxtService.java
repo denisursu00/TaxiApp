@@ -1,13 +1,11 @@
 package ro.cloudSoft.cloudDoc.presentation.client.shared.services;
 
-import ro.cloudSoft.cloudDoc.presentation.client.shared.constants.GwtConstantsPayload;
 import ro.cloudSoft.cloudDoc.presentation.client.shared.model.ApplicationInfoModel;
 
 public interface AppGxtService extends GxtServiceBase {
 	
 	void setLocale(String locale);
 	
-	GwtConstantsPayload getConstants();
 	
 	/**
 	 * Returneaza perioada, in secunde, dupa care sesiunea utilizatorului pe server va expira,

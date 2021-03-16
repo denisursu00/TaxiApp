@@ -1,9 +1,3 @@
 eclipse.preferences.version=1
-encoding//DBScripts/UATLocal/002_DocumentTypes.sql=UTF-8
-encoding//DBScripts/UATLocal/003_Workflows.sql=UTF-8
-encoding//DBScripts/UATLocal/007_UpdateDocType_UAT\ Local\ -\ Proces\ verbal\ CD.sql=UTF-8
 encoding//FrontEnd-App/src/app/shared/locale/en.json=UTF-8
 encoding//FrontEnd-App/src/app/shared/locale/ro.json=UTF-8
-encoding//src/ro/cloudSoft/cloudDoc/presentation/client/shared/locale/LocaleConstants_ro.properties=UTF-8
-encoding//src/ro/cloudSoft/cloudDoc/presentation/client/shared/locale/LocaleExceptions_ro.properties=UTF-8
-encoding//src/ro/cloudSoft/cloudDoc/presentation/client/shared/locale/LocaleMessages_ro.properties=UTF-8
