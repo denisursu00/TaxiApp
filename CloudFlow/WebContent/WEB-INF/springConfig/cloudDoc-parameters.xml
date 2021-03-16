@@ -7,7 +7,6 @@
 		<property name="commonPropertyFilePackagePaths">
 			<list>
 				<value>/conf/commonParameters.properties</value>
-				<value>/conf/arbParameters.properties</value>
 			</list>
 		</property>
 		<property name="environmentDependentPropertyFilePackagePaths">

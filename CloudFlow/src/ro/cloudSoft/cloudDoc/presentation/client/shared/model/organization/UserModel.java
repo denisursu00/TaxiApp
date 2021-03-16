@@ -1,137 +1,85 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ro.cloudSoft.cloudDoc.presentation.client.shared.model.organization;
 
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
+
 public class UserModel implements IsSerializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	public static final String USER_PROPERTY_USERID = "userId";
-    public static final String USER_PROPERTY_USERNAME = "userName";
-    public static final String USER_PROPERTY_NAME = "name";
-    public static final String USER_PROPERTY_FIRSTNAME = "firstName";
-    public static final String USER_PROPERTY_LASTNAME = "lastName";
-    public static final String USER_PROPERTY_PASSWORD = "password";
-    public static final String USER_PROPERTY_PHONE = "phone";
-    public static final String USER_PROPERTY_EMAIL = "email";
     
-    public static final String USER_PROPERTY_DISPLAY_NAME = "displayName";
-    
+	private Long id;
+	private String firstName;
+	private String lastName;
+	private String password;
+	private String username;
+	private String email;
     private String mobile;
-    private String type;
     private List<RoleModel> roles;  
     
     public UserModel() {}
 
-    /*public UserModel(String userId, String userName) {
+    public UserModel(String userId, String username) {
         this();
-        setUserId(userId);
-        setUserName(userName);
+        setId(Long.getLong(userId));
+        setUsername(username);
     }
     
-    public String getUserId(){
-        return (String)get(USER_PROPERTY_USERID);
-    }
-    
-    @Override
-    public Object getId() {
-    	return getUserId();
-    }
-    
-    public Long getUserIdAsLong() {
-    	String userIdAsString = getUserId();
-    	if (userIdAsString != null) {
-    		return Long.valueOf(userIdAsString);
-    	}
-    	return null;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setUserId(String userId){
-        set(USER_PROPERTY_USERID, userId);
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getUserName(){
-        return (String)get(USER_PROPERTY_USERNAME);
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public void setUserName(String userName){
-        set(USER_PROPERTY_USERNAME, userName);
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public String getName(){
-        return (String)get(USER_PROPERTY_NAME);
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public void setName(String name){
-        set(USER_PROPERTY_NAME, name);
-    }
-    
-    public String getLastName(){
-        return (String)get(USER_PROPERTY_LASTNAME);
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public void setLastName(String lastName){
-        set(USER_PROPERTY_LASTNAME, lastName);
-    }
-    
-    public String getFirstName(){
-        return (String)get(USER_PROPERTY_FIRSTNAME);
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setFirstName(String firstName){
-        set(USER_PROPERTY_FIRSTNAME, firstName);
-    }
-    
-    public String getPassword(){
-        return (String)get(USER_PROPERTY_PASSWORD);
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public void setPassword(String password){
-        set(USER_PROPERTY_PASSWORD, password);
-    }
-    
-    public String getEmail(){
-        return (String)get(USER_PROPERTY_EMAIL);
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public void setEmail(String email){
-        set(USER_PROPERTY_EMAIL, email);
-    }
-    
-    public String getPhone(){
-        return (String)get(USER_PROPERTY_PHONE);
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public void setPhone(String phone){
-        set(USER_PROPERTY_PHONE, phone);
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    @Override
-    public String getDisplayName() {
-    	return getName();
-    }
-    
-    public String getMobile() {
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getMobile() {
 		return mobile;
 	}
-    
-    public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-    
-    public String getType() {
-		return type;
-	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 	public List<RoleModel> getRoles() {
@@ -144,6 +92,6 @@ public class UserModel implements IsSerializable {
 
 	@Override
     public String toString() {
-    	return ("Utilizator (" + getDisplayName() + ")");
-    }*/
+    	return ("Utilizator (" + getUsername() + ")");
+    }
 }

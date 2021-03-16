@@ -23,10 +23,9 @@ public class UserConverter {
 		
         UserModel userModel = new UserModel();
         
-        /*userModel.setUserId(user.getId().toString());
+        userModel.setId(user.getId());
         
-        userModel.setUserName(user.getUsername());
-        userModel.setName(user.getName());
+        userModel.setUsername(user.getUsername());
         userModel.setFirstName(user.getFirstName());
         userModel.setLastName(user.getLastName());
         userModel.setPassword(user.getPassword());
@@ -36,7 +35,7 @@ public class UserConverter {
         for (Role role : user.getRoles()) {
 			roleModels.add(RoleConverter.getModelFromEntity(role));
 		}
-        userModel.setRoles(roleModels);*/
+        userModel.setRoles(roleModels);
         
         return userModel;
     }
@@ -50,10 +49,10 @@ public class UserConverter {
 			user = userEntity;
 		}
         
-        /*if (StringUtils.isNotBlank(userModel.getUserId())) {
-        	user.setId(new Long(userModel.getUserId()));
+        if (userModel.getId() != null) {
+        	user.setId(new Long(userModel.getId()));
         }
-        user.setUsername(userModel.getUserName());
+        user.setUsername(userModel.getUsername());
         user.setFirstName(userModel.getFirstName());
         user.setLastName(userModel.getLastName());
         user.setEmail(userModel.getEmail());
@@ -95,7 +94,7 @@ public class UserConverter {
 			}
 		}
 
-        user.setRoles(userEntityRoles);*/
+        user.setRoles(userEntityRoles);
         
         return user;
     }

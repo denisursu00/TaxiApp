@@ -25,10 +25,8 @@
 
     
      <!-- Spring JBPM 4.3 configuration -->     
-    <bean id="springHelper" class="org.jbpm.pvm.internal.processengine.SpringHelper" depends-on="liquibaseMigrator">
+    <!-- <bean id="springHelper" class="org.jbpm.pvm.internal.processengine.SpringHelper" depends-on="liquibaseMigrator">
     	<property name="jbpmCfg" value="conf/jbpm.cfg.xml"/>
-    </bean>
-    
-    <!-- <bean id="jbpmProcessEngine" factory-bean="springHelper" factory-method="createProcessEngine" destroy-method="close" /> -->
+    </bean> -->
     
 </beans>
