@@ -4,9 +4,6 @@ import ro.cloudSoft.cloudDoc.presentation.client.shared.model.ApplicationInfoMod
 
 public interface AppGxtService extends GxtServiceBase {
 	
-	void setLocale(String locale);
-	
-	
 	/**
 	 * Returneaza perioada, in secunde, dupa care sesiunea utilizatorului pe server va expira,
 	 * in cazul in care acesta nu mai face request-uri.
