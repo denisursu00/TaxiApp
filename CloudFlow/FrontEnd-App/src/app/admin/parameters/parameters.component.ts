@@ -3,7 +3,8 @@ import { ParameterModel, ParametersService, AppError, MessageDisplayer, ObjectUt
 
 @Component({
 	selector: "app-parameters",
-	templateUrl: "./parameters.component.html"
+	templateUrl: "./parameters.component.html",
+	styleUrls: ["./parameters.component.css"]
 })
 export class ParametersComponent {
 
