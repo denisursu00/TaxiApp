@@ -11,7 +11,6 @@ import { ConfirmationService } from "primeng/api";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 import { 
-	OrganizationService, 
 	AclService, 
 	AppConstantsService,
 	AuthService
@@ -123,7 +122,6 @@ import { DateFormatterPipeFromStorageFormat } from "./pipe/date-formatter-from-s
 		ConfirmationService,
 		ConfirmationUtils,
 		TranslateUtils,
-		OrganizationService,
 		AclService,
 		AppConstantsService,
 		ParametersService,

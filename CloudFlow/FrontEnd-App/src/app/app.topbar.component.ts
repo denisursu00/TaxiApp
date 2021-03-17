@@ -42,9 +42,6 @@ export class AppTopBarComponent implements OnInit {
 		let loggedInUserInfo: string = "";
 		if (this.authManager.isAuthenticated()) {
 			loggedInUserInfo = this.authManager.getLoggedInUser().firstName + " " + this.authManager.getLoggedInUser().lastName;
-			if (StringUtils.isNotBlank(this.authManager.getLoggedInUser().title)) {
-				loggedInUserInfo = loggedInUserInfo + " (" + this.authManager.getLoggedInUser().title + ")";
-			}
 		}
 		return loggedInUserInfo;
 	}

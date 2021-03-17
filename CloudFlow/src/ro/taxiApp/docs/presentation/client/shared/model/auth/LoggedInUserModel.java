@@ -8,7 +8,6 @@ public class LoggedInUserModel {
 	private String username;
 	private String firstName;
 	private String lastName;
-	private String title;
 	private Set<String> permissions;
 	
 	public Long getId() {
@@ -34,12 +33,6 @@ public class LoggedInUserModel {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
 	}
 	public Set<String> getPermissions() {
 		return permissions;

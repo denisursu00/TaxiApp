@@ -9,6 +9,4 @@ export class SecurityManagerModel {
 	@JsonProperty("userUsername", String)
 	public userUsername: string = null;
 	
-	@JsonProperty("userAdmin", Boolean)
-	public userAdmin: boolean = false;
 }
