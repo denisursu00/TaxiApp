@@ -9,54 +9,54 @@
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 	
 	<context:annotation-config />
-	<context:component-scan base-package="ro.cloudSoft.cloudDoc.web.security" />
+	<context:component-scan base-package="ro.taxiApp.docs.web.security" />
 	
 	<security:authentication-manager alias="authenticationManager">
 		<security:authentication-provider ref="authenticationProvider" />
 	</security:authentication-manager>
 	
-	<bean name="passwordEncoder" class="ro.cloudSoft.cloudDoc.utils.PasswordEncoder">
+	<bean name="passwordEncoder" class="ro.taxiApp.docs.utils.PasswordEncoder">
 		<property name="saltKeyValue" value="${app.security.authentication.passwordEncoder.saltKeyValue}" />
 	</bean>
 	
-	<bean name="authenticationHelper" class="ro.cloudSoft.cloudDoc.web.security.AuthenticationHelper">
+	<bean name="authenticationHelper" class="ro.taxiApp.docs.web.security.AuthenticationHelper">
 		<property name="userService" ref="userService" />
 		<property name="authenticationVerifier">
-			<bean class="ro.cloudSoft.cloudDoc.web.security.SpringSecurityDatabaseAuthenticationVerifier">
+			<bean class="ro.taxiApp.docs.web.security.SpringSecurityDatabaseAuthenticationVerifier">
 				<property name="userService" ref="userService" />
 				<property name="passwordEncoder" ref="passwordEncoder" />
 			</bean>
 		</property>
 		<property name="userWithAccountAuthenticationBuilder">
-			<bean class="ro.cloudSoft.cloudDoc.web.security.UserWithAccountAuthenticationBuilder">
+			<bean class="ro.taxiApp.docs.web.security.UserWithAccountAuthenticationBuilder">
 				<property name="userService" ref="userService" />
 			</bean>
 		</property>
 	</bean>
 	
-	<bean name="authenticationProvider" class="ro.cloudSoft.cloudDoc.web.security.UsernamePasswordAuthenticationProvider">
+	<bean name="authenticationProvider" class="ro.taxiApp.docs.web.security.UsernamePasswordAuthenticationProvider">
 		<property name="authenticationHelper" ref="authenticationHelper" />
 	</bean>
 	
-	<bean name="jwtAuthenticationEntryPoint" class="ro.cloudSoft.cloudDoc.web.security.JwtAuthenticationEntryPoint" />
+	<bean name="jwtAuthenticationEntryPoint" class="ro.taxiApp.docs.web.security.JwtAuthenticationEntryPoint" />
 	
-	<bean name="jwtSettings" class="ro.cloudSoft.cloudDoc.web.security.JwtSettings">
+	<bean name="jwtSettings" class="ro.taxiApp.docs.web.security.JwtSettings">
 		<property name="secretKey" value="${app.security.authentication.jwt.secretKey}" />
 	 	<property name="tokenValidityInDays" value="${app.security.authentication.jwt.tokenValidityInDays}" />
 	 	<property name="tokenValidityInDaysForRememberMe" value="${app.security.authentication.jwt.tokenValidityInDaysForRememberMe}" />
 	</bean>
 	
-	<bean name="jwtTokenProvider" class="ro.cloudSoft.cloudDoc.web.security.JwtTokenProvider">
+	<bean name="jwtTokenProvider" class="ro.taxiApp.docs.web.security.JwtTokenProvider">
 		<property name="jwtSettings" ref="jwtSettings" />
 	</bean>
 	
-	<bean class="ro.cloudSoft.cloudDoc.web.security.JwtAuthenticationFilter">
+	<bean class="ro.taxiApp.docs.web.security.JwtAuthenticationFilter">
 		<property name="jwtAuthenticationEntryPoint" ref="jwtAuthenticationEntryPoint" />
 		<property name="jwtTokenProvider" ref="jwtTokenProvider" />
 		<property name="securityManagerFactory" ref="securityManagerFactory" />
 	</bean>
 
-	<bean class="ro.cloudSoft.cloudDoc.services.security.AuthServiceImpl">
+	<bean class="ro.taxiApp.docs.services.security.AuthServiceImpl">
 		<property name="authenticationManager" ref="authenticationManager" />
 		<property name="jwtTokenProvider" ref="jwtTokenProvider" />
 		<property name="userService" ref="userService" />

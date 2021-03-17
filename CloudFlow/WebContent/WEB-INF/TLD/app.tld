@@ -9,7 +9,7 @@
 
     <function>
         <name>getCurrentLocale</name>
-        <function-class>ro.cloudSoft.cloudDoc.presentation.server.utils.LocaleUtils</function-class>
+        <function-class>ro.taxiApp.docs.presentation.server.utils.LocaleUtils</function-class>
         <function-signature>java.lang.String getLocale(javax.servlet.http.HttpSession)</function-signature>
     </function>
   

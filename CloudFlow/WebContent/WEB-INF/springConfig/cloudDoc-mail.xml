@@ -17,7 +17,7 @@
         </property>
 	</bean>
 
-	<bean id="mailService" class="ro.cloudSoft.cloudDoc.spring.services.SpringMailService">
+	<bean id="mailService" class="ro.taxiApp.docs.spring.services.SpringMailService">
 		<property name="mailSender" ref="mailSender" />
 		<property name="fromAddress" value="${app.mail.from}" />
 	</bean>

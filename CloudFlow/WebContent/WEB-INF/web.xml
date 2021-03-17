@@ -34,7 +34,7 @@
         </param-value>
   </context-param>
   <listener>
-    <listener-class>ro.cloudSoft.cloudDoc.web.listeners.Log4jWebLifecycleManagerListener</listener-class>
+    <listener-class>ro.taxiApp.docs.web.listeners.Log4jWebLifecycleManagerListener</listener-class>
   </listener>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -46,7 +46,7 @@
     <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
   </listener>
   <listener>
-  	<listener-class>ro.cloudSoft.cloudDoc.web.listeners.AppConfigurationListener</listener-class>
+  	<listener-class>ro.taxiApp.docs.web.listeners.AppConfigurationListener</listener-class>
   </listener>
   <filter>
     <filter-name>RequestContextFilter</filter-name>
@@ -54,7 +54,7 @@
   </filter>
   <filter>
     <filter-name>HibernateCustomOpenSessionInViewFilter</filter-name>
-    <filter-class>ro.cloudSoft.cloudDoc.web.filters.HibernateCustomOpenSessionInViewFilter</filter-class>
+    <filter-class>ro.taxiApp.docs.web.filters.HibernateCustomOpenSessionInViewFilter</filter-class>
   </filter>
   <filter>
 	<filter-name>springSecurityFilterChain</filter-name>
@@ -66,7 +66,7 @@
   </filter-mapping>  	
   <filter>
     <filter-name>LocaleResolverInNonSpringRequestFilter</filter-name>
-    <filter-class>ro.cloudSoft.common.utils.spring.LocaleResolverInNonSpringRequestFilter</filter-class>
+    <filter-class>ro.taxiApp.common.utils.spring.LocaleResolverInNonSpringRequestFilter</filter-class>
   </filter> 
   <filter-mapping>
     <filter-name>RequestContextFilter</filter-name>
@@ -83,7 +83,7 @@
   </filter-mapping>  
   <servlet>
     <servlet-name>ExceptionLoggingServlet</servlet-name>
-    <servlet-class>ro.cloudSoft.cloudDoc.web.servlets.ExceptionLoggingServlet</servlet-class>
+    <servlet-class>ro.taxiApp.docs.web.servlets.ExceptionLoggingServlet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>SpringDispatcherServlet</servlet-name>
@@ -101,7 +101,7 @@
 	<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
 	<init-param>
 		<param-name>com.sun.jersey.config.property.packages</param-name>
-		<param-value>ro.cloudSoft.cloudDoc.web.rest.config</param-value>
+		<param-value>ro.taxiApp.docs.web.rest.config</param-value>
 	</init-param>
 	<init-param>
 		<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
@@ -109,7 +109,7 @@
 	</init-param>
 	<init-param>
 		<param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
-		<param-value>ro.cloudSoft.cloudDoc.web.filters.JerseyCORSFilter,ro.cloudSoft.cloudDoc.web.filters.AppVersionFilter</param-value>
+		<param-value>ro.taxiApp.docs.web.filters.JerseyCORSFilter,ro.taxiApp.docs.web.filters.AppVersionFilter</param-value>
 	</init-param>	
 	<init-param>
 		<param-name>com.sun.jersey.config.feature.DisableWADL</param-name>

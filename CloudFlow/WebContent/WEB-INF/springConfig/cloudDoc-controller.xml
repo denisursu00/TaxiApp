@@ -15,25 +15,25 @@
   	</property>
   </bean>
   
-	<bean name="redirectToDefaultModuleController" class="ro.cloudSoft.cloudDoc.web.controllers.RedirectToDefaultModuleController">
+	<bean name="redirectToDefaultModuleController" class="ro.taxiApp.docs.web.controllers.RedirectToDefaultModuleController">
 		<property name="defaultModulePageUrl" value="${app.web.pages.index}" />
 	</bean>
     
   
-  	<bean name="aclGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.AclGxtServiceImpl"></bean>
+  	<bean name="aclGxtService" class="ro.taxiApp.docs.presentation.server.services.AclGxtServiceImpl"></bean>
   	
-	<bean name="aclController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
+	<bean name="aclController" class="ro.taxiApp.docs.presentation.server.GWTController">
 		<property name="remoteService" ref="aclGxtService" />
 	</bean>
 
 	
-	<bean name="passwordEncoder" class="ro.cloudSoft.cloudDoc.utils.PasswordEncoder">
+	<bean name="passwordEncoder" class="ro.taxiApp.docs.utils.PasswordEncoder">
 		<property name="saltKeyValue" value="${app.security.authentication.passwordEncoder.saltKeyValue}" />
 	</bean>
 
-	<bean name="appGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.AppGxtServiceImpl"></bean>
+	<bean name="appGxtService" class="ro.taxiApp.docs.presentation.server.services.AppGxtServiceImpl"></bean>
 			
-	<bean name="appController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
+	<bean name="appController" class="ro.taxiApp.docs.presentation.server.GWTController">
 		<property name="remoteService" ref="appGxtService" />
 	</bean>
 

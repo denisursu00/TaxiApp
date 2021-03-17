@@ -1,10 +1,10 @@
 {
 	"/rest": {
-		"target": "http://localhost:8080/CloudFlow",
+		"target": "http://localhost:8080/TaxiApp",
 		"secure": false
 	},
 	"/viewWorkflowGraph.do": {
-		"target": "http://localhost:8080/CloudFlow",
+		"target": "http://localhost:8080/TaxiApp",
 		"secure": false
 	}
 }

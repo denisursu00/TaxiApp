@@ -12,6 +12,6 @@
 </listAttribute>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.google.gwt.dev.HostedMode"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-port 8080&#13;&#10;-logLevel WARN&#13;&#10;-war &quot;${workspace_loc}\CloudDoc\WebContent&quot;&#13;&#10;-gen &quot;${workspace_loc}\CloudDoc\GWT compile\Hosted mode extra dirs\gen&quot;&#13;&#10;-extra &quot;${workspace_loc}\CloudDoc\GWT compile\Hosted mode extra dirs\extra&quot;&#13;&#10;-startupUrl http://localhost:8080/CloudDocClient.jsp&#13;&#10;ro.cloudSoft.cloudDoc.presentation.ClientModule_prod"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-port 8080&#13;&#10;-logLevel WARN&#13;&#10;-war &quot;${workspace_loc}\CloudDoc\WebContent&quot;&#13;&#10;-gen &quot;${workspace_loc}\CloudDoc\GWT compile\Hosted mode extra dirs\gen&quot;&#13;&#10;-extra &quot;${workspace_loc}\CloudDoc\GWT compile\Hosted mode extra dirs\extra&quot;&#13;&#10;-startupUrl http://localhost:8080/CloudDocClient.jsp&#13;&#10;ro.taxiApp.docs.presentation.ClientModule_prod"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="CloudDoc"/>
 </launchConfiguration>
