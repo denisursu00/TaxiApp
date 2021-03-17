@@ -1,4 +1,5 @@
 /.apt_generated
+/WebContent/WEB-INF/classes
 
 # IDEs and editors
 /.idea
