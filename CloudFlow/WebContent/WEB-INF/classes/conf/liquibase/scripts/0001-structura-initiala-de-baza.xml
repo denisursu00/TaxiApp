@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	
+	<changeSet id="0001-creare-tabele" author="CloudSoft.User1">
+		<sql endDelimiter=";">
+		
+			CREATE TABLE USERS (
+			
+				ID BIGINT NOT NULL,
+				EMAIL TEXT,
+				EMPLOYEENUMBER TEXT,
+				FIRSTNAME TEXT,
+				LASTNAME TEXT,
+				PASSWORD TEXT,
+				USERNAME TEXT NOT NULL,
+				MOBILE TEXT,
+				
+				CONSTRAINT EDOCUSER_PK PRIMARY KEY (ID)
+			);
+			
+			CREATE TABLE PARAMETERS (
+				ID BIGINT NOT NULL,
+				NAME TEXT NOT NULL,
+				DESCRIPTION TEXT NOT NULL,
+				VALUE TEXT NOT NULL,
+				TYPE TEXT NOT NULL,
+				
+				CONSTRAINT PARAMETERS_PK PRIMARY KEY(ID)
+			);
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0001-creare-secvente" author="CloudSoft.User1">
+		<sql endDelimiter=";">
+			CREATE SEQUENCE LOGS_SEQUENCE START 1;
+			CREATE SEQUENCE HIBERNATE_SEQUENCE START 1;
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>
