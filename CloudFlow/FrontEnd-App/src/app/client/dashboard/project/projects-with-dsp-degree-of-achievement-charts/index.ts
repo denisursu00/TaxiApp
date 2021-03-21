@@ -1,1 +1,0 @@
-export * from "./projects-with-dsp-degree-of-achievement-charts.component";

@@ -1,8 +1,0 @@
-<p-tabView [activeIndex]="activeTabIndex" (onChange)="onTabChanged($event)">
-	<p-tabPanel [header]="'LABELS.REGISTRU_IESIRI' | translate" [selected]="true">
-		<app-registru-iesiri (outRegisterSelectorRefreshed)="onOutRegisterRefreshed()"></app-registru-iesiri>
-	</p-tabPanel>
-	<p-tabPanel [header]="'LABELS.REGISTRU_INTRARI' | translate">
-		<app-registru-intrari (inRegisterSelectorRefreshed)="onInRegisterRefreshed()"></app-registru-intrari>
-	</p-tabPanel>
-</p-tabView>

@@ -1,1 +1,0 @@
-export * from "./numar-sedinte-si-participanti-report.component";

@@ -1,2 +1,0 @@
-INSERT INTO document_validation_definition (id, document_type_id, metadata_collection_id, condition_expression, validation_in_states, message, validation_order) 
-VALUES (nextval('HIBERNATE_SEQUENCE'), (select id from documenttype where name='UAT Local - Agenda sedinta PVG'), null, '{data_cd_arb} eq date:dateAsMetadataFormatFromMetadataDateTime({data_inceput})', 'completare_initiala_metadate;propunere_definitivare;definitivare_agenda_pvg', 'Data CD ARB trebuie sa fie egala cu Data inceput.', 1);

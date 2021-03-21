@@ -5,7 +5,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import ro.cloudSoft.cloudDoc.utils.log.LogHelper;
+import ro.taxiApp.docs.utils.log.LogHelper;
 
 /**
  * Clasa de baza pentru testele ce au nevoie de Spring

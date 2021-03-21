@@ -1,4 +1,0 @@
-<%@ page import="ro.cloudSoft.cloudDoc.presentation.server.utils.LocaleUtils" %>
-
-<% String currentLocale = LocaleUtils.getLocaleCode(session); %>
-<meta name="gwt:property" content="locale=<%= currentLocale %>">

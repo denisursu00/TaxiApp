@@ -10,58 +10,31 @@
   		<map>
   			<entry key="/redirectToDefaultModule.do" value="redirectToDefaultModuleController" />
   			<entry key="/**/AclGxtService.form" value="aclController" />
-  			<entry key="/**/LogGxtService.form" value="logController" />
   			<entry key="/**/AppGxtService.form" value="appController" />
-  			<entry key="/temporaryFileDisplay.*" value="temporaryFileDisplayController" />
   		</map>
   	</property>
   </bean>
   
-	<bean name="redirectToDefaultModuleController" class="ro.cloudSoft.cloudDoc.web.controllers.RedirectToDefaultModuleController">
+	<bean name="redirectToDefaultModuleController" class="ro.taxiApp.docs.web.controllers.RedirectToDefaultModuleController">
 		<property name="defaultModulePageUrl" value="${app.web.pages.index}" />
 	</bean>
     
   
-  	<bean name="aclGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.AclGxtServiceImpl">
-  		<property name="businessConstants" ref="businessConstants" />
-  	</bean>
+  	<bean name="aclGxtService" class="ro.taxiApp.docs.presentation.server.services.AclGxtServiceImpl"></bean>
   	
-	<bean name="aclController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
+	<bean name="aclController" class="ro.taxiApp.docs.presentation.server.GWTController">
 		<property name="remoteService" ref="aclGxtService" />
 	</bean>
 
 	
-	<bean name="passwordEncoder" class="ro.cloudSoft.cloudDoc.utils.PasswordEncoder">
+	<bean name="passwordEncoder" class="ro.taxiApp.docs.utils.PasswordEncoder">
 		<property name="saltKeyValue" value="${app.security.authentication.passwordEncoder.saltKeyValue}" />
 	</bean>
-    
-	
-  
-	<bean name="logGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.LogGxtServiceImpl">
-		<constructor-arg index="0" ref="logService"/>
-	</bean>
-	
-  	<bean name="logController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
-		<property name="remoteService" ref="logGxtService" />
-  	</bean>
 
-	<bean name="appGxtService" class="ro.cloudSoft.cloudDoc.presentation.server.services.AppGxtServiceImpl">
-		<constructor-arg index="0" ref="guiConstants" />
-		<constructor-arg index="1" ref="businessConstants" />
-		<constructor-arg index="2" ref="cereriDeConcediuConstants" />
-		<constructor-arg index="3" ref="webConstants" />
-		<constructor-arg index="4" ref="appComponentsAvailabilityConstants" />
-		<constructor-arg index="5" ref="replacementProfilesOutOfOfficeConstants" />
-		<constructor-arg index="6" ref="supportedAttachmentTypesForPreviewConstants" />
-	</bean>
+	<bean name="appGxtService" class="ro.taxiApp.docs.presentation.server.services.AppGxtServiceImpl"></bean>
 			
-	<bean name="appController" class="ro.cloudSoft.cloudDoc.presentation.server.GWTController">
+	<bean name="appController" class="ro.taxiApp.docs.presentation.server.GWTController">
 		<property name="remoteService" ref="appGxtService" />
-	</bean>
-	
-	
-	<bean name="temporaryFileDisplayController" class="ro.cloudSoft.cloudDoc.web.controllers.TemporaryFileDisplayController">
-		<property name="temporaryFilesFolderPath" value="${app.temporary_files.folder_path}" />
 	</bean>
 
 </beans>

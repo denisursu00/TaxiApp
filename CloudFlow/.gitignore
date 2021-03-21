@@ -1,13 +1,11 @@
-#/.apt_generated
-#/WebContent/cloudDocAdminModule
-#/WebContent/cloudDocClientModule
-#/WebContent/WEB-INF/classes
+/.apt_generated
+/WebContent/WEB-INF/classes
 
 # IDEs and editors
-#/.idea
-#.project
-#.classpath
-#.c9/
-#*.launch
-#.settings/
-#*.sublime-workspace
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace

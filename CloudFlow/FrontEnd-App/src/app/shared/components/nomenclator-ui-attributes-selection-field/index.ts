@@ -1,1 +1,0 @@
-export * from "./nomenclator-ui-attributes-selection-field.component";

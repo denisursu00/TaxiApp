@@ -1,2 +1,0 @@
-INSERT INTO document_validation_definition (id, document_type_id, metadata_collection_id, condition_expression, validation_in_states, message, validation_order) 
-VALUES (nextval('HIBERNATE_SEQUENCE'), (select id from documenttype where name='UAT Local - Prezenta AGA'), null, '{data_sfarsit} > {data_inceput}', 'planificare_sedinta;completare_metadate_prezenta', 'Data sfarsit trebuie sa fie mai mare ca Data inceput.', 1);

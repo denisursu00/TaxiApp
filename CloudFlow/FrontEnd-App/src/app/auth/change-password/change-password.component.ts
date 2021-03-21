@@ -7,7 +7,7 @@ import { AuthManager } from "@app/shared/auth";
 import { LoginRequestModel } from "@app/shared/model/auth";
 import { RouteConstants } from "@app/shared/constants/route.constants";
 import { AuthService } from "@app/shared/service/auth.service";
-import { PasswordChangeModel } from "@app/shared/model/organization/password-change.model";
+import { PasswordChangeModel } from "@app/shared/model/auth/password-change.model";
 import { ApplicationInfoManager } from "@app/shared/application-info-manager";
 import { environment } from "./../../../environments/environment";
 

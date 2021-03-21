@@ -15,9 +15,6 @@ export class LoggedInUserModel {
 	@JsonProperty("lastName", String)
 	public lastName: string = null;
 
-	@JsonProperty("title", String)
-	public title: string = null;
-
 	@JsonProperty("permissions", [String])
 	public permissions: string[] = [];
 }

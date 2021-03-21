@@ -15,7 +15,6 @@ import { AppFooterComponent } from "./app.footer.component";
 import { BreadcrumbService } from "./breadcrumb.service";
 import { AppRoutingModule } from "./app-routing.module";
 import { SharedModule } from "@app/shared";
-import { ClientModule } from "@app/client";
 import { AppInitializer } from "./app-initializer";
 import { AppMenuService } from "./app.menu.service";
 import { ApiCaller } from "@app/shared/api-caller";

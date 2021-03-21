@@ -76,10 +76,6 @@ export class LoginComponent implements OnInit {
 			onSuccess: () => {
 				let route: string = RouteConstants.HOME;
 				
-				if (this.authManager.hasOnlyOnePermission(AUTH_ACCESS.PREZENTA.COMPLETARE.permissions.toString())) {
-					route = RouteConstants.PREZENTA_ONLINE;
-				}
-				
 				this.router.navigate([route])
 					.then(() => {
 						this.unlock();

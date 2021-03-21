@@ -1,1 +1,0 @@
-export * from "./reprezentanti-comisie-sau-gl-membri-tab-content.component";

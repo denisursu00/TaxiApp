@@ -17,20 +17,9 @@
         </property>
 	</bean>
 
-	<bean id="mailService" class="ro.cloudSoft.cloudDoc.spring.services.SpringMailService">
+	<bean id="mailService" class="ro.taxiApp.docs.spring.services.SpringMailService">
 		<property name="mailSender" ref="mailSender" />
 		<property name="fromAddress" value="${app.mail.from}" />
-	</bean>
-	
-	<bean id="outOfOfficeMailService" class="ro.cloudSoft.cloudDoc.services.mail.WebServiceBasedOutOfOfficeMailService">	
-		<property name="wsdlLocation" value="${app.external.web_services.out_of_office_mail.wsdl_location}" />
-		
-		<property name="enabled" value="${app.external.web_services.out_of_office_mail.is_enabled}" />
-	
-		<property name="dateFormat" value="${app.external.web_services.out_of_office_mail.date_format}" />
-		
-		<property name="operationResponseOk" value="${app.external.web_services.out_of_office_mail.operation_response.ok}" />
-		<property name="operationResponseError" value="${app.external.web_services.out_of_office_mail.operation_response.error}" />
 	</bean>
 
 </beans>

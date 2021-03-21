@@ -1,6 +1,0 @@
-Pentru setare mediu se urmeaza instructiunile din urmatorul link: https://github.com/opensagres/xdocreport/wiki/GettingStarted
-pentru dezvoltare rapoarte lista in lista  se parcurg urmatorii pasi:
-- se adauga in document "field"-urile de tip lista 
-- documentul se deschide cu win zip si se editeaza fisierul "document.xml" din folderul "word"
-- se cauta intructiuniile foreach si end, identificate prin "#foreach" si "#end"
-- se va corecta instructiunea "#foreach"(se genereaza gresit lista care se itereaza), iar daca iteratia are loc in cadrul unui tabel se adauga si prefixele "@before-row" la "#foreach", repspectiv "@after-row" la "#end".

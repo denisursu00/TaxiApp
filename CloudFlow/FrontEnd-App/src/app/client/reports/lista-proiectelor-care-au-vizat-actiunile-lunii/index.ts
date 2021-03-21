@@ -1,1 +1,0 @@
-export * from "./lista-proiectelor-care-au-vizat-actiunile-lunii-report.component";

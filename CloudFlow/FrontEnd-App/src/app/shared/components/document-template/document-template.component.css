@@ -1,4 +1,0 @@
-/* adjust the padding of all buttons inside the file upload button bar */
-.ui-fileupload-buttonbar .ui-button-text-icon-left .ui-button-text {
-    padding-left: 2em;
-}

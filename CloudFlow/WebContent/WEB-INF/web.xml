@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="CloudFlow" version="2.5">
-  <display-name>CloudFlow</display-name>
+  <display-name>TaxiApp</display-name>
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
@@ -9,8 +9,8 @@
   </session-config>
   <context-param>
     <description>versiunea curenta a aplicatiei</description>
-    <param-name>CloudDocVersion</param-name>
-    <param-value>0.2</param-value>
+    <param-name>TaxiAppVersion</param-name>
+    <param-value>0.1</param-value>
   </context-param>
   <context-param>
     <param-name>contextConfigLocation</param-name>
@@ -34,7 +34,7 @@
         </param-value>
   </context-param>
   <listener>
-    <listener-class>ro.cloudSoft.cloudDoc.web.listeners.Log4jWebLifecycleManagerListener</listener-class>
+    <listener-class>ro.taxiApp.docs.web.listeners.Log4jWebLifecycleManagerListener</listener-class>
   </listener>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -46,7 +46,7 @@
     <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
   </listener>
   <listener>
-  	<listener-class>ro.cloudSoft.cloudDoc.web.listeners.AppConfigurationListener</listener-class>
+  	<listener-class>ro.taxiApp.docs.web.listeners.AppConfigurationListener</listener-class>
   </listener>
   <filter>
     <filter-name>RequestContextFilter</filter-name>
@@ -54,7 +54,7 @@
   </filter>
   <filter>
     <filter-name>HibernateCustomOpenSessionInViewFilter</filter-name>
-    <filter-class>ro.cloudSoft.cloudDoc.web.filters.HibernateCustomOpenSessionInViewFilter</filter-class>
+    <filter-class>ro.taxiApp.docs.web.filters.HibernateCustomOpenSessionInViewFilter</filter-class>
   </filter>
   <filter>
 	<filter-name>springSecurityFilterChain</filter-name>
@@ -66,7 +66,7 @@
   </filter-mapping>  	
   <filter>
     <filter-name>LocaleResolverInNonSpringRequestFilter</filter-name>
-    <filter-class>ro.cloudSoft.common.utils.spring.LocaleResolverInNonSpringRequestFilter</filter-class>
+    <filter-class>ro.taxiApp.common.utils.spring.LocaleResolverInNonSpringRequestFilter</filter-class>
   </filter> 
   <filter-mapping>
     <filter-name>RequestContextFilter</filter-name>
@@ -83,7 +83,7 @@
   </filter-mapping>  
   <servlet>
     <servlet-name>ExceptionLoggingServlet</servlet-name>
-    <servlet-class>ro.cloudSoft.cloudDoc.web.servlets.ExceptionLoggingServlet</servlet-class>
+    <servlet-class>ro.taxiApp.docs.web.servlets.ExceptionLoggingServlet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>SpringDispatcherServlet</servlet-name>
@@ -101,7 +101,7 @@
 	<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
 	<init-param>
 		<param-name>com.sun.jersey.config.property.packages</param-name>
-		<param-value>ro.cloudSoft.cloudDoc.web.rest.config</param-value>
+		<param-value>ro.taxiApp.docs.web.rest.config</param-value>
 	</init-param>
 	<init-param>
 		<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
@@ -109,7 +109,7 @@
 	</init-param>
 	<init-param>
 		<param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
-		<param-value>ro.cloudSoft.cloudDoc.web.filters.JerseyCORSFilter,ro.cloudSoft.cloudDoc.web.filters.AppVersionFilter</param-value>
+		<param-value>ro.taxiApp.docs.web.filters.JerseyCORSFilter,ro.taxiApp.docs.web.filters.AppVersionFilter</param-value>
 	</init-param>	
 	<init-param>
 		<param-name>com.sun.jersey.config.feature.DisableWADL</param-name>
@@ -117,22 +117,6 @@
 	</init-param>
 	<load-on-startup>1</load-on-startup>
   </servlet>
-  <servlet>
-    <servlet-name>ExportDataAsSqlServlet</servlet-name>
-    <servlet-class>ro.cloudSoft.cloudDoc.web.servlets.ExportDataAsSqlServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ExportDataAsSqlServlet</servlet-name>
-    <url-pattern>/exportDataAsSql</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>AppUtilitiesServlet</servlet-name>
-    <servlet-class>ro.cloudSoft.cloudDoc.web.servlets.AppUtilitiesServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AppUtilitiesServlet</servlet-name>
-    <url-pattern>/appUtilities</url-pattern>
-  </servlet-mapping>
   <servlet-mapping>
 	<servlet-name>JerseySpringDispatcherServlet</servlet-name>
 	<url-pattern>/rest/*</url-pattern>

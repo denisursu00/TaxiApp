@@ -1,1 +1,0 @@
-export * from "./document-location-selector.component";

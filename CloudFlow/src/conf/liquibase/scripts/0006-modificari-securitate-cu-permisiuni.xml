@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="0006-creare-tabel-permission_group" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+			CREATE TABLE permission_group (
+				id BIGINT NOT NULL,
+				name TEXT NOT NULL,
+				label TEXT NOT NULL,
+				description TEXT,
+				ui_order INTEGER NOT NULL,
+				
+				CONSTRAINT permission_group_pk PRIMARY KEY (id)
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0006-creare-tabel-permission" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+			CREATE TABLE permission (
+				id BIGINT NOT NULL,
+				name TEXT NOT NULL,
+				label TEXT NOT NULL,
+				description TEXT,
+				permission_group_id BIGINT NOT NULL,
+				ui_order INTEGER NOT NULL,
+				
+				CONSTRAINT permission_pk PRIMARY KEY (id),
+				CONSTRAINT permission_permission_group_id_fk FOREIGN KEY (permission_group_id) REFERENCES permission_group (id)
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0006-creare-tabel-role_permission" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+			CREATE TABLE role_permission (
+				role_id BIGINT NOT NULL,
+				permission_id BIGINT NOT NULL,
+				
+				CONSTRAINT role_permission_pk PRIMARY KEY (role_id, permission_id),
+				CONSTRAINT role_permission_role_id_fk FOREIGN KEY (role_id) REFERENCES role (id),
+				CONSTRAINT role_permission_permission_id_fk FOREIGN KEY (permission_id) REFERENCES permission (id)
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0006-adaugare-valori-permisiuni-si-mapare-roluri" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO permission_group (id, name, label, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client', 'Client', 10);
+			INSERT INTO permission_group (id, name, label, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin', 'Admin', 20);
+			
+			INSERT INTO permission (id, name, label, description, permission_group_id, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_PARAMETERS', 'Manage Parametri', null, (select id from permission_group where name='admin'), 100);
+			
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_PARAMETERS'));
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

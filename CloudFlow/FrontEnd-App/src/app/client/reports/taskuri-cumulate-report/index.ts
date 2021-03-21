@@ -1,1 +1,0 @@
-export * from "./taskuri-cumulate-report.componet";

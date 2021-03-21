@@ -3,9 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
     
-    <bean id="staticSpringContextAccessorHelper" class="ro.cloudSoft.common.utils.spring.StaticSpringContextAccessorHelper" />
+    <bean id="staticSpringContextAccessorHelper" class="ro.taxiApp.common.utils.spring.StaticSpringContextAccessorHelper" />
     
-    <bean id="localeResolver" class="ro.cloudSoft.common.utils.spring.HttpSessionAttributeLocaleResolver">
+    <bean id="localeResolver" class="ro.taxiApp.common.utils.spring.HttpSessionAttributeLocaleResolver">
     	<constructor-arg index="0" value="locale" /> <!-- attributeName -->
     	<constructor-arg index="1"> <!-- supportedLocaleCodes -->
     		<set>
@@ -15,83 +15,32 @@
     	</constructor-arg>
     	<constructor-arg index="2" value="ro" /> <!-- defaultLocaleCode -->
     </bean>
-    
-    <bean id="messageSource" class="ro.cloudSoft.common.utils.spring.MultiplePrefixedLocalizablePropertiesMessageSource">
-    	<constructor-arg index="0"> <!-- propertiesPackagePathForBaseNameByPrefix -->
-    		<map>
-    			<entry key="constants" value="/ro/cloudSoft/cloudDoc/presentation/client/shared/locale/LocaleConstants" />
-    			<entry key="messages" value="/ro/cloudSoft/cloudDoc/presentation/client/shared/locale/LocaleMessages" />
-    			<entry key="errors" value="/ro/cloudSoft/cloudDoc/presentation/client/shared/locale/LocaleExceptions" />
-    		</map>
-    	</constructor-arg>
-    	<constructor-arg index="1"> <!-- localeCodes -->
-    		<set>
-    			<value>ro</value>
-    			<value>en</value>
-    		</set>
-    	</constructor-arg> 	
-    </bean>
-       
-      <!-- LOG service -->
-    <bean id="logService" class="ro.cloudSoft.cloudDoc.services.log.LogServiceImpl">
-        <property name="logDao" ref="logDao"/>
-    </bean>    
-	<!-- end LOG service -->
-    
-    <!-- LOG DAO -->
-    <bean id="logDao" class="ro.cloudSoft.cloudDoc.dao.log.LogDaoImpl">
-  		<property name="sessionFactory" ref="sessionFactory" />
-  	</bean>
-  	<!-- end LOG DAO -->
-	
-	
-  	
    	
-   	<bean id="templateEngine" class="ro.cloudSoft.cloudDoc.templating.FreeMarkerTemplateEngine" />
-   	
-   	<bean id="liquibaseMigrator" class="ro.cloudSoft.cloudDoc.liquibase.AppEnvironmentAwareSpringLiquibaseMigrator">
+   	<bean id="liquibaseMigrator" class="ro.taxiApp.docs.liquibase.AppEnvironmentAwareSpringLiquibaseMigrator">
    		<property name="dataSource" ref="dataSourceSpring" />
    		<property name="changelogFilePath" value="classpath:/conf/liquibase/changelog-main.xml" />
    	</bean>
    	
-	
-	
-	
-	<bean id="fileSystemDocumentTemplateManager" class="ro.cloudSoft.cloudDoc.utils.FileSystemDocumentTemplateManager">
-		<property name="temporaryFilesFolderPath" value="${app.temporary_files.folder_path}" />
-	</bean>
-	
-   	
    	<!-- SecurityManager  -->
    	
-   	<bean id="securityManagerFactory" class="ro.cloudSoft.cloudDoc.security.SecurityManagerFactory">
+   	<bean id="securityManagerFactory" class="ro.taxiApp.docs.security.SecurityManagerFactory">
    		<property name="userService" ref="userService" />
 	</bean>
-  	
-  	
-   	
 	
-   	
    	<!-- Parameters -->
    	
-   	<bean id="parametersDao" class="ro.cloudSoft.cloudDoc.dao.parameters.ParamentersDaoImpl">
+   	<bean id="parametersDao" class="ro.taxiApp.docs.dao.parameters.ParamentersDaoImpl">
   		<property name="sessionFactory" ref="sessionFactory" />
    	</bean>
    	
-   	<bean id="parametersConverter" class="ro.cloudSoft.cloudDoc.presentation.server.converters.parameters.ParameterConverter">
+   	<bean id="parametersConverter" class="ro.taxiApp.docs.presentation.server.converters.parameters.ParameterConverter">
    		<property name="parametersDao" ref="parametersDao"></property>
    	</bean>
    	
-   	<bean id="parametersService" class="ro.cloudSoft.cloudDoc.services.parameters.ParametersServiceImpl">
+   	<bean id="parametersService" class="ro.taxiApp.docs.services.parameters.ParametersServiceImpl">
    		<property name="parametersDao" ref="parametersDao"></property>
    		<property name="parametersConverter" ref="parametersConverter"></property>
    	</bean>
-   	
-   	
-    
-        
-    <bean id="xDocReportsService" class="ro.cloudSoft.cloudDoc.services.xDocReports.XDocReportsServiceImpl">
-    </bean>
     
     
 </beans>

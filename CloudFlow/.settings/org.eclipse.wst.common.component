@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="CloudFlow">
+    <wb-module deploy-name="TaxiApp">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/test"/>
         <wb-resource deploy-path="/" source-path="/FrontEnd-App/dist"/>
-        <wb-resource deploy-path="/WEB-INF/classes/JasperReports/CommonResources" source-path="/JasperReportsProject/CommonResources"/>
-        <wb-resource deploy-path="/WEB-INF/classes/JasperReports/DocumentTypeTemplateReports" source-path="/JasperReportsProject/DocumentTypeTemplateReports"/>
-        <wb-resource deploy-path="/WEB-INF/classes/JasperReports/GeneralReports" source-path="/JasperReportsProject/GeneralReports"/>
-        <wb-resource deploy-path="/WEB-INF/classes/XDocReports/xDocTemplates" source-path="/XDocReportsProject/xDocTemplates"/>
         <property name="java-output-path" value="WebContent/WEB-INF/classes"/>
-        <property name="context-root" value="CloudFlow"/>
+        <property name="context-root" value="TaxiApp"/>
     </wb-module>
 </project-modules>

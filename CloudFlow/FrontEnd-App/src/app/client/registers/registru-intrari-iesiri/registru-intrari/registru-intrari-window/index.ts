@@ -1,1 +1,0 @@
-export * from "./registru-intrari-window.component";

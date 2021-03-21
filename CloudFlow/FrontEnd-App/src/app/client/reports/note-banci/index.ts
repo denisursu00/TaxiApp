@@ -1,1 +1,0 @@
-export * from "./note-banci-report.component";
