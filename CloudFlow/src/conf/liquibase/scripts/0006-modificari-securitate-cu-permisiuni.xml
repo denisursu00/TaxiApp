@@ -6,7 +6,7 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
         	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<changeSet id="0047-creare-tabel-permission_group" author="CloudSoft.User1">
+	<changeSet id="0006-creare-tabel-permission_group" author="Denis">
 		<sql endDelimiter=";"><![CDATA[
 			CREATE TABLE permission_group (
 				id BIGINT NOT NULL,
@@ -21,7 +21,7 @@
 		</sql>
 	</changeSet>
 	
-	<changeSet id="0047-creare-tabel-permission" author="CloudSoft.User1">
+	<changeSet id="0006-creare-tabel-permission" author="Denis">
 		<sql endDelimiter=";"><![CDATA[
 			CREATE TABLE permission (
 				id BIGINT NOT NULL,
@@ -38,7 +38,7 @@
 		</sql>
 	</changeSet>
 	
-	<changeSet id="0047-creare-tabel-role_permission" author="CloudSoft.User1">
+	<changeSet id="0006-creare-tabel-role_permission" author="Denis">
 		<sql endDelimiter=";"><![CDATA[
 			CREATE TABLE role_permission (
 				role_id BIGINT NOT NULL,
@@ -52,7 +52,7 @@
 		</sql>
 	</changeSet>
 	
-	<changeSet id="0047-adaugare-valori-permisiuni-si-mapare-roluri" author="CloudSoft.User1">
+	<changeSet id="0006-adaugare-valori-permisiuni-si-mapare-roluri" author="Denis">
 		<sql endDelimiter=";"><![CDATA[
 			INSERT INTO permission_group (id, name, label, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client', 'Client', 10);
 			INSERT INTO permission_group (id, name, label, ui_order) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin', 'Admin', 20);

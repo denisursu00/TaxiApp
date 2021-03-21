@@ -7,9 +7,9 @@
         	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 	
 	<include file="0001-structura-initiala-de-baza.xml" relativeToChangelogFile="true" />
-	<include file="0007-date-initiale-de-baza.xml" relativeToChangelogFile="true" />
-	<include file="0008-date-initiale-arb.xml" relativeToChangelogFile="true" />
-	<include file="0026-modificari-securitate.xml" relativeToChangelogFile="true" />
-	<include file="0028-adaugare-parola-default-pt-toti-utilizatorii.xml" relativeToChangelogFile="true" />
-	<include file="0047-modificari-securitate-cu-permisiuni.xml" relativeToChangelogFile="true" />
+	<include file="0002-utilizator-initial.xml" relativeToChangelogFile="true" />
+	<include file="0003-date-initiale.xml" relativeToChangelogFile="true" />
+	<include file="0004-adaugare-securitate.xml" relativeToChangelogFile="true" />
+	<include file="0005-adaugare-parola-default-pt-toti-utilizatorii.xml" relativeToChangelogFile="true" />
+	<include file="0006-modificari-securitate-cu-permisiuni.xml" relativeToChangelogFile="true" />
 </databaseChangeLog>

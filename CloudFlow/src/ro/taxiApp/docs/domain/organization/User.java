@@ -154,9 +154,4 @@ public class User {
 		return Objects.hashCode(usernameInLowercase);
 	}
 	
-	public static enum UserTypeEnum {
-		PERSON,
-		SIMPLE_USER,
-		HIDDEN
-	}
 }

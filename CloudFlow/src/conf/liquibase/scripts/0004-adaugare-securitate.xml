@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
         	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<changeSet id="0026-creare-tabel-role" author="CloudSoft.User1">
+	<changeSet id="0004-creare-tabel-role" author="Denis">
 		<sql endDelimiter=";"><![CDATA[
 			CREATE TABLE ROLE
 			(
@@ -20,7 +20,7 @@
 		</sql>
 	</changeSet>
 	
-	<changeSet id="0026-creare-tabel-user_role" author="CloudSoft.User1">
+	<changeSet id="0004-creare-tabel-user_role" author="Denis">
 		<sql endDelimiter=";"><![CDATA[
 			CREATE TABLE USER_ROLE
 			(
@@ -32,7 +32,7 @@
 		</sql>
 	</changeSet>
 	
-	<changeSet id="0026-adaugare-constrangeri-user_role" author="CloudSoft.User1">
+	<changeSet id="0004-adaugare-constrangeri-user_role" author="Denis">
 		<sql endDelimiter=";"><![CDATA[
 			ALTER TABLE USER_ROLE ADD CONSTRAINT USER_ROLE_USER_ID_FK FOREIGN KEY (USER_ID) REFERENCES USERS;
 			ALTER TABLE USER_ROLE ADD CONSTRAINT USER_ROLE_ROLE_ID_FK FOREIGN KEY (ROLE_ID) REFERENCES ROLE;
@@ -40,12 +40,21 @@
 		</sql>
 	</changeSet>
 	
-	<changeSet id="0026-adaugare-roluri" author="CloudSoft.User1">
+	<changeSet id="0004-adaugare-roluri" author="Denis">
 		<sql endDelimiter=";"><![CDATA[
 			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'ADMIN');
 			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'DISPECER');
 			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'SOFER');
 			INSERT INTO ROLE (ID, NAME) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'CLIENT');
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0004-user-role" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO user_role (user_id,role_id) VALUES (
+				(SELECT id FROM users WHERE username = 'admin'), (SELECT id FROM role WHERE name = 'ADMIN')
+			);
 		]]>
 		</sql>
 	</changeSet>

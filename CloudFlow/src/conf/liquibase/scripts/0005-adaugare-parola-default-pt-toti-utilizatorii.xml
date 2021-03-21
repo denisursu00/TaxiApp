@@ -5,23 +5,21 @@
         xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
         	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-	
-	<changeSet id="0007-adaugare-utilizator-application_user" author="CloudSoft.User1">
+
+	<changeSet id="0005-adaugare-parola-default-pt-toti-utilizatorii" author="Denis" context="dev,test,staging">
 		<sql endDelimiter=";"><![CDATA[
-		
-			INSERT INTO USERS (
-				ID, 
-				FIRSTNAME, 
-				LASTNAME, 
-				USERNAME
-			) VALUES (
-				nextval('HIBERNATE_SEQUENCE'), 
-				'Admin', 
-				'Admin', 
-				'admin'
-			);
+			UPDATE users
+			SET password = '2WWCMlCAgSJzYJEtgcUjBw==';
 		]]>
 		</sql>
 	</changeSet>
 	
+	<changeSet id="0005-adaugare-parola-default-pt-toti-utilizatorii" author="Denis" context="prod">
+		<sql endDelimiter=";"><![CDATA[
+			UPDATE users
+			SET password = 'C2eT1YI7TnDkgPOS6AKSaw==';
+		]]>
+		</sql>
+	</changeSet>
+		
 </databaseChangeLog>

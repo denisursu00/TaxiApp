@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	
+	<changeSet id="0003-adaugare-parametri" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO parameters (id, name, description, value, type) 
+			VALUES (nextval('HIBERNATE_SEQUENCE'), 'price_km_day', 'Pretul in lei pentru 1km, in timpul zilei', '2.59', 'NUMBER'),
+				   (nextval('HIBERNATE_SEQUENCE'), 'price_h_day', 'Pretul in lei pentru 1 ora, in timpul zilei', '25.9', 'NUMBER'),
+				   (nextval('HIBERNATE_SEQUENCE'), 'price_km_night', 'Pretul in lei pentru 1km, in timpul noptii', '2.99', 'NUMBER'),
+				   (nextval('HIBERNATE_SEQUENCE'), 'price_h_night', 'Pretul in lei pentru 1 ora, in timpul noptii', '29.9', 'NUMBER');
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0003-adaugare-tipuri-plata" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO payment_type (id, code, name) 
+			VALUES (nextval('HIBERNATE_SEQUENCE'), 'CARD', 'Card'),
+				   (nextval('HIBERNATE_SEQUENCE'), 'CASH', 'Cash');
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>
