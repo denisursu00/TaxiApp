@@ -41,6 +41,86 @@
    		<property name="parametersDao" ref="parametersDao"></property>
    		<property name="parametersConverter" ref="parametersConverter"></property>
    	</bean>
-    
+   	
+   	
+   	<!-- Drivers -->
+    <bean id="driverDao" class="ro.taxiApp.docs.dao.driver.DriverDao">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+   	<bean id="driverConverter" class="ro.taxiApp.docs.presentation.server.converters.drivers.DriverConverter">
+   		<property name="driverDao" ref="driverDao"></property>
+   		<property name="userPersistencePlugin" ref="userPersistencePlugin"></property>
+   	</bean>
+   	
+   	<bean id="driverService" class="ro.taxiApp.docs.services.drivers.DriverService">
+   		<property name="driverDao" ref="driverDao"></property>
+   		<property name="driverConverter" ref="driverConverter"></property>
+   	</bean>
+   	
+   	<!-- Cars -->
+    <bean id="carDao" class="ro.taxiApp.docs.dao.car.CarDao">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+   	<bean id="carConverter" class="ro.taxiApp.docs.presentation.server.converters.cars.CarConverter">
+   		<property name="carDao" ref="carDao"></property>
+   		<property name="driverConverter" ref="driverConverter"></property>
+   		<property name="driverDao" ref="driverDao"></property>
+   	</bean>
+   	
+   	<bean id="carService" class="ro.taxiApp.docs.services.CarService">
+   		<property name="carDao" ref="carDao"></property>
+   		<property name="carConverter" ref="carConverter"></property>
+   	</bean>
+   	
+   	<!-- Client -->
+   	<bean id="clientDao" class="ro.taxiApp.docs.dao.clients.ClientDao">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+   	<bean id="cardDao" class="ro.taxiApp.docs.dao.clients.CardDao">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+   	<bean id="favouritePlaceDao" class="ro.taxiApp.docs.dao.clients.FavouritePlaceDao">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+   	<bean id="clientConverter" class="ro.taxiApp.docs.presentation.server.converters.clients.ClientConverter">
+   		<property name="clientDao" ref="clientDao"></property>
+   		<property name="userPersistencePlugin" ref="userPersistencePlugin"></property>
+   	</bean>
+   	
+   	<bean id="cardConverter" class="ro.taxiApp.docs.presentation.server.converters.clients.CardConverter">
+   		<property name="cardDao" ref="cardDao"></property>
+   		<property name="clientDao" ref="clientDao"></property>
+   	</bean>
+   	
+   	<bean id="favouritePlaceConverter" class="ro.taxiApp.docs.presentation.server.converters.clients.FavouritePlaceConverter">
+   		<property name="favouritePlaceDao" ref="favouritePlaceDao"></property>
+   		<property name="clientDao" ref="clientDao"></property>
+   	</bean>
+   	
+   	<bean id="clientService" class="ro.taxiApp.docs.services.clients.ClientService">
+   		<property name="clientDao" ref="clientDao"></property>
+   		<property name="clientConverter" ref="clientConverter"></property>
+   	</bean>
+   	
+   	<!-- Ride -->
+   	<bean id="rideDao" class="ro.taxiApp.docs.dao.ride.RideDao">
+  		<property name="sessionFactory" ref="sessionFactory" />
+   	</bean>
+   	
+   	<bean id="rideConverter" class="ro.taxiApp.docs.presentation.server.converters.ride.RideConverter">
+   		<property name="rideDao" ref="rideDao"></property>
+   		<property name="driverDao" ref="driverDao"></property>
+   		<property name="clientDao" ref="clientDao"></property>
+   	</bean>
+   	
+   	<bean id="rideService" class="ro.taxiApp.docs.services.ride.RideService">
+   		<property name="rideDao" ref="rideDao"></property>
+   		<property name="rideConverter" ref="rideConverter"></property>
+   	</bean>
     
 </beans>

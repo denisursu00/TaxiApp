@@ -5,6 +5,7 @@ import java.util.List;
 import ro.taxiApp.docs.core.AppException;
 import ro.taxiApp.docs.domain.organization.User;
 import ro.taxiApp.docs.domain.security.SecurityManager;
+import ro.taxiApp.docs.presentation.client.shared.model.organization.UserModel;
 
 public interface UserService {
 	
@@ -13,6 +14,10 @@ public interface UserService {
 	 * Daca nu se gaseste utilizatorul, va returna null.
 	 */
 	User getUserById(Long id);
+	
+	public UserModel getUserByIdAsModel(Long id);
+	
+	public Long saveUserWithRole(UserModel user, String roleName, SecurityManager userSecurity) throws AppException;
 	
 	public void setUser(User user, SecurityManager userSecurity) throws AppException;
 

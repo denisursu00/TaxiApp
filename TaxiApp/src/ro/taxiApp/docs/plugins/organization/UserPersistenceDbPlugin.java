@@ -30,6 +30,12 @@ public class UserPersistenceDbPlugin extends HibernateDaoSupport implements User
 	}
 	
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
+	public Long saveUserAndReturnId(User user) {
+		return (Long) getHibernateTemplate().save(user);
+	}
+	
+	@Override
 	public boolean userExists(Long id) {
 		String query = "SELECT COUNT(*) FROM User WHERE id = ?";
 		@SuppressWarnings("unchecked")

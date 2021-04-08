@@ -36,11 +36,15 @@ import { DataViewModule } from "primeng/dataview";
 import { ParametersComponent } from "./parameters/parameters.component";
 import { ParameterWindowComponent } from "./parameters/parameter-window/parameter-window.component";
 import { AdminRoutingModule } from "./admin-routing.module";
+import { DriversComponent } from './drivers/drivers.component';
+import { DriversWindowComponent } from './drivers/drivers-window/drivers-window.component';
 
 @NgModule({
 	declarations: [
 		ParametersComponent,
-		ParameterWindowComponent
+		ParameterWindowComponent,
+		DriversComponent,
+		DriversWindowComponent
 	],
 	imports: [
 		RouterModule,

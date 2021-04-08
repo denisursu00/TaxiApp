@@ -26,6 +26,8 @@ public interface UserPersistencePlugin {
 	
 	void saveUser(User user);
 	
+	public Long saveUserAndReturnId(User user);
+	
 	/**
      * Returneaza toti utilizatorii, ordonati dupa nume si prenume.
      */

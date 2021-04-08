@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import ro.taxiApp.docs.domain.parameters.Parameter;
 
 public class ParamentersDaoImpl extends HibernateDaoSupport implements ParametersDao {
 
 	@Override
+	@Transactional
 	public Long save(Parameter parameter) {
 		if (parameter.getId() == null) {
 			return (Long) getHibernateTemplate().save(parameter);
@@ -40,6 +42,7 @@ public class ParamentersDaoImpl extends HibernateDaoSupport implements Parameter
 	}
 
 	@Override
+	@Transactional
 	public void delete(Long parameterId) {
 		Parameter parameter = getById(parameterId);
 		getHibernateTemplate().delete(parameter);

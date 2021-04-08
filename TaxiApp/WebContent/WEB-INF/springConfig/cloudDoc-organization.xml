@@ -8,14 +8,16 @@
 	<bean id="userPersistencePlugin" class="ro.taxiApp.docs.plugins.organization.UserPersistenceDbPlugin">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-
-	<bean id="userService" class="ro.taxiApp.docs.services.organization.UserServiceImpl">
-		<property name="userPersistencePlugin" ref="userPersistencePlugin" />
-	</bean>
 		
 	<bean id="roleDao" class="ro.taxiApp.docs.dao.organizaiton.RoleDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	<bean id="userService" class="ro.taxiApp.docs.services.organization.UserServiceImpl">
+		<property name="userPersistencePlugin" ref="userPersistencePlugin" />
+		<property name="roleDao" ref="roleDao" />
+	</bean>
+	
 	<bean id="roleService" class="ro.taxiApp.docs.services.organization.RoleServiceImpl">
 		<property name="roleDao" ref="roleDao" />
 		<property name="userService" ref="userService" />

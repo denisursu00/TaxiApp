@@ -61,7 +61,8 @@
 				user_id BIGINT NOT NULL,
 				
 				CONSTRAINT client_pk PRIMARY KEY (id),
-				CONSTRAINT client_user_fk FOREIGN KEY (user_id) REFERENCES users (id)
+				CONSTRAINT client_user_fk FOREIGN KEY (user_id) REFERENCES users (id),
+				CONSTRAINT client_user_uq UNIQUE (user_id)
 			);
 			
 			CREATE TABLE card (
@@ -85,14 +86,6 @@
 				CONSTRAINT saved_place_client_fk FOREIGN KEY (client_id) REFERENCES client (id)
 			);
 			
-			CREATE TABLE payment_type (
-				id BIGINT NOT NULL,
-				code TEXT NOT NULL,
-				name TEXT NOT NULL,
-				
-				CONSTRAINT payment_type_pk PRIMARY KEY (id)
-			);
-			
 			CREATE TABLE ride (
 				id BIGINT NOT NULL,
 				start_time TIMESTAMP NULL,
@@ -105,12 +98,11 @@
 				canceled BOOL NULL,
 				client_id BIGINT NOT NULL,
 				driver_id BIGINT NOT NULL,
-				payment_type_id BIGINT NOT NULL,
+				payment_type TEXT NOT NULL,
 				
 				CONSTRAINT ride_pk PRIMARY KEY (id),
 				CONSTRAINT client_ride_fk FOREIGN KEY (client_id) REFERENCES client (id),
-				CONSTRAINT driver_ride_fk FOREIGN KEY (driver_id) REFERENCES driver (id),
-				CONSTRAINT payment_type_ride_fk FOREIGN KEY (payment_type_id) REFERENCES payment_type (id)
+				CONSTRAINT driver_ride_fk FOREIGN KEY (driver_id) REFERENCES driver (id)
 			);
 			
 		</sql>

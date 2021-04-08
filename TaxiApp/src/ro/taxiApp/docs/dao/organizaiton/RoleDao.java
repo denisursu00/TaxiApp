@@ -11,5 +11,7 @@ public interface RoleDao {
 	
 	List<Role> getAllRoles();
 	
+	Role getRoleByName(String roleName);
+	
 	List<RolePermissionMappingViewModel> getAllRolePermissionMappingViews();
 }

@@ -18,6 +18,12 @@ export const MENU_STRUCTURE: MenuItemDefinition[] = [
 				icon: "fa fa-list-ul",
 				path: "admin/parameters",
 				authPermissions: AUTH_ACCESS.ADMIN.PARAMETERS.permissions
+			},
+			{
+				labelCode: "DRIVERS",
+				icon: "fa fa-user",
+				path: "admin/drivers",
+				authPermissions: AUTH_ACCESS.ADMIN.DRIVERS.permissions
 			}
 		]
 	}

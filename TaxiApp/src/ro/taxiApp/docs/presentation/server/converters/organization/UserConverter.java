@@ -82,17 +82,19 @@ public class UserConverter {
 		}
        
         //add the new roles
-        for (RoleModel roleModel : userModel.getRoles()) {
-        	boolean existsInRolesEntiy = false;
-        	for (Role role: userEntityRoles) {
-				if (roleModel.getId().equals(role.getId())) {
-					existsInRolesEntiy = true;
-				}
-			}
-			if (!existsInRolesEntiy) {
-				userEntityRoles.add(RoleConverter.getEntityFromModel(roleModel));
-			}
-		}
+        if (userModel.getRoles()!=null) {
+        	for (RoleModel roleModel : userModel.getRoles()) {
+            	boolean existsInRolesEntiy = false;
+            	for (Role role: userEntityRoles) {
+    				if (roleModel.getId().equals(role.getId())) {
+    					existsInRolesEntiy = true;
+    				}
+    			}
+    			if (!existsInRolesEntiy) {
+    				userEntityRoles.add(RoleConverter.getEntityFromModel(roleModel));
+    			}
+    		}
+        }
 
         user.setRoles(userEntityRoles);
         

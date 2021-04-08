@@ -13,7 +13,9 @@ import { TranslateModule } from "@ngx-translate/core";
 import { 
 	AclService, 
 	AppConstantsService,
-	AuthService
+	AuthService,
+	DriversService,
+	OrganizationService
 } from "./service";
 import { 
 	MessagesWindowComponent,
@@ -125,6 +127,8 @@ import { DateFormatterPipeFromStorageFormat } from "./pipe/date-formatter-from-s
 		AclService,
 		AppConstantsService,
 		ParametersService,
+		DriversService,
+		OrganizationService,
 		AuthService	
 	]
 })

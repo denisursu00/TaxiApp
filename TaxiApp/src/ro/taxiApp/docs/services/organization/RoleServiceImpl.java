@@ -31,6 +31,11 @@ public class RoleServiceImpl implements RoleService {
 	}
 	
 	@Override
+	public RoleModel getRoleByName(String roleName) {
+		return RoleConverter.getModelFromEntity(roleDao.getRoleByName(roleName));
+	}
+	
+	@Override
 	public List<RoleModel> getAvailableRolesForUser(Long userId) {
 		List<Role> allRoles = roleDao.getAllRoles();
 		//delete existing roles for user

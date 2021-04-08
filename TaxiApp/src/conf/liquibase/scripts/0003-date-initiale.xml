@@ -18,13 +18,4 @@
 		</sql>
 	</changeSet>
 	
-	<changeSet id="0003-adaugare-tipuri-plata" author="Denis">
-		<sql endDelimiter=";"><![CDATA[
-			INSERT INTO payment_type (id, code, name) 
-			VALUES (nextval('HIBERNATE_SEQUENCE'), 'CARD', 'Card'),
-				   (nextval('HIBERNATE_SEQUENCE'), 'CASH', 'Cash');
-		]]>
-		</sql>
-	</changeSet>
-	
 </databaseChangeLog>

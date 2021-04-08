@@ -24,6 +24,18 @@ public class RoleDaoImpl extends HibernateDaoSupport implements RoleDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
+	public Role getRoleByName(String roleName) {
+		String query = "SELECT role FROM Role role WHERE role.name LIKE ? ";
+		List<Role> roles = getHibernateTemplate().find(query, roleName);
+		if (roles != null) {
+			return roles.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<RolePermissionMappingViewModel> getAllRolePermissionMappingViews() {
 		
 		StringBuilder query = new StringBuilder();

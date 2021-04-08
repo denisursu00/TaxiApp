@@ -1,0 +1,54 @@
+<div class="ui-g">
+	<div class="ui-g-12">
+		<p-button [label]="'LABELS.ADD' | translate" (onClick)="onAddDriver()"></p-button>
+		<p-button [label]="'LABELS.EDIT' | translate" [disabled]="editButtonDisabled" (onClick)="onEditDriver()"></p-button>
+		<p-button [label]="'LABELS.DELETE' | translate" [disabled]="deleteButtonDisabled" (onClick)="onDeleteDriver()"></p-button>
+	</div>
+	<div class="ui-g-12">
+		<p-table [value]="drivers" selectionMode="single" [(selection)]="selectedDriver"
+				[scrollable]="true" [scrollHeight]="scrollHeight"
+				(onRowSelect)="onDriverSelected($event)" (onRowUnselect)="onDriverUnselected($event)" autoLayout="true">
+			<ng-template pTemplate="colgroup">
+				<colgroup>
+					<col style="width: 20%">
+					<col style="width: 20%">
+					<col style="width: 15%">
+					<col style="width: 15%">
+					<col style="width: 15%">
+					<col style="width: 15%">
+				</colgroup>
+			</ng-template>
+			<ng-template pTemplate="header">
+				<tr>
+					<th>{{"LABELS.DRIVER_FIRSTNAME" | translate}}</th>
+					<th>{{"LABELS.DRIVER_LASTNAME" | translate}}</th>
+					<th>{{"LABELS.DRIVER_LICENCE_NUMBER" | translate}}</th>
+					<th>{{"LABELS.DRIVER_EXPIRY_DATE" | translate}}</th>
+          			<th>{{"LABELS.DRIVER_LAST_MED_EXAM" | translate}}</th>
+          			<th>{{"LABELS.DRIVER_MOBILE" | translate}}</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-driver>
+				<tr [pSelectableRow]="driver">
+					<td>{{driver.user.firstName}}</td>
+					<td>{{driver.user.lastName}}</td>
+					<td>{{driver.licenceNumber}}</td>
+					<td>{{getDateForDisplay(driver.expiryDate)}}</td>
+					<td>{{getDateForDisplay(driver.lastMedExam)}}</td>
+					<td>{{driver.user.mobile}}</td>
+				</tr>
+			</ng-template>
+      <ng-template pTemplate="emptymessage">
+				<tr>
+					<td [attr.colspan]="6" style="text-align: center;">
+            			{{'LABELS.NO_RECORDS_FOUND' | translate}}
+          			</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
+</div>
+	
+<app-drivers-window *ngIf="driverWindowVisible" [mode]="driverWindowMode" [driverId]="driverWindowDriverId"
+		(windowClosed)="onDriverWindowClosed()" (dataSaved)="onDriverWindowDataSaved()">
+</app-drivers-window>

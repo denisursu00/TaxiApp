@@ -53,6 +53,7 @@
 		"LAST_NAME": "Nume",
 		"PASSWORD": "Parolă",
 		"USERNAME": "Username",
+		"BIRTH_DATE": "Birth date",
 		"EMAIL": "E-mail",
 		"MESSAGE": "Mesaj",
 		"MODULE": "Modul",
@@ -102,7 +103,15 @@
 		"PARAMETER_NAME": "Nume",
 		"PARAMETER_DESCRIPTION": "Descriere",
 		"PARAMETER_VALUE": "Valoare",
-		"PARAMETER_TYPE": "Tip"
+		"PARAMETER_TYPE": "Tip",
+
+		"DRIVERS": "Drivers",
+		"DRIVER_FIRSTNAME": "First name",
+		"DRIVER_LASTNAME": "Last name",
+		"DRIVER_LICENCE_NUMBER": "Licence number",
+		"DRIVER_EXPIRY_DATE": "Expiry date",
+		"DRIVER_LAST_MED_EXAM": "Last med. exam",
+		"DRIVER_MOBILE": "Phone"
 
 	},
 	"MESSAGES": {
@@ -143,6 +152,8 @@
 		"PASSWORD_CONFIRMATION_DOESNT_MATCH": "Confirmarea parolei nu se potriveste cu parola noua introdusa. Incercati din nou.",
 		"PASSWORD_CHANGED": "Parola s-a schimbat cu success!",
 		"AUTHENTICATION_EXCEPTION": "Exceptie la autentificare. Incercati din nou sau contactati administratorul.",
-		"CONFIRM_DELETE_PARAMETER":  "Are you sure you want to delete the parameter?"
+		"CONFIRM_DELETE_PARAMETER":  "Are you sure you want to delete the parameter?",
+
+		"CONFIRM_DELETE_DRIVER":  "Are you sure you want to delete the driver?"
 	}
 }
