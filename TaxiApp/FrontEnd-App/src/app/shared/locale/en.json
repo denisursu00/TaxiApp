@@ -111,7 +111,12 @@
 		"DRIVER_LICENCE_NUMBER": "Licence number",
 		"DRIVER_EXPIRY_DATE": "Expiry date",
 		"DRIVER_LAST_MED_EXAM": "Last med. exam",
-		"DRIVER_MOBILE": "Phone"
+		"DRIVER_MOBILE": "Phone",
+
+		"CARS": "Cars",
+		"CAR_MODEL": "Model",
+		"CAR_REG_NUMBER": "Reg. number",
+		"CAR_LAST_TECH_CONTROL": "Last tech control"
 
 	},
 	"MESSAGES": {

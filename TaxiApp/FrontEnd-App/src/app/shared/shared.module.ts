@@ -14,6 +14,7 @@ import {
 	AclService, 
 	AppConstantsService,
 	AuthService,
+	CarsService,
 	DriversService,
 	OrganizationService
 } from "./service";
@@ -129,6 +130,7 @@ import { DateFormatterPipeFromStorageFormat } from "./pipe/date-formatter-from-s
 		ParametersService,
 		DriversService,
 		OrganizationService,
+		CarsService,
 		AuthService	
 	]
 })

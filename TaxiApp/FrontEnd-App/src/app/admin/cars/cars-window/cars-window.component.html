@@ -1,0 +1,83 @@
+<app-loading *ngIf="loadingVisible"></app-loading>
+<p-dialog #pDialog [(visible)]="windowVisible" [modal]="true" appendTo="body"
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onShow)="onShow($event)" (onHide)="onHide($event)">
+	<p-header>
+		<span>{{"LABELS.CARS" | translate}}</span>
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+	</p-header>
+	
+	<form [formGroup]="form" [ngStyle]="{'height':'70vh'}">
+		
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.CAR_MODEL" | translate}}*:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				<input pInputText formControlName="carModel" type="text"/>
+			</div>
+			<div *ngIf="carModelFormControl.invalid && (carModelFormControl.dirty || carModelFormControl.touched)" class="ui-g-12">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.CAR_REG_NUMBER" | translate}}*:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				<input pInputText formControlName="carRegNumber" type="text"/>
+			</div>
+			<div *ngIf="carRegNumberFormControl.invalid && (carRegNumberFormControl.dirty || carRegNumberFormControl.touched)" class="ui-g-12">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.CAR_LAST_TECH_CONTROL" | translate}}*:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				<p-calendar 
+					[showIcon]="true"
+					[dateFormat]="dateFormat"
+					[monthNavigator]="true"
+					[yearNavigator]="true"
+					[yearRange]="yearRange"
+					[style]="{'width' :'100%'}"
+					formControlName="lastTechControl"
+					readonlyInput="true"
+					appendTo="body"
+					showButtonBar="true">
+				</p-calendar>
+			</div>
+			<div *ngIf="lastTechControlFormControl.invalid && (lastTechControlFormControl.dirty || lastTechControlFormControl.touched)" class="ui-g-12">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.DRIVER" | translate}}*:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				<p-dropdown [options]="driverOptions" formControlName="driver" filter=true (onChange)="onDriverChange($event)"></p-dropdown>
+			</div>
+			<div *ngIf="driverFormControl.invalid && (driverFormControl.dirty || driverFormControl.touched)" class="ui-g-12">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+	</form>
+
+	<p-footer>
+		<p-button (onClick)="onSaveAction($event)" [label]="'LABELS.SAVE' | translate"></p-button>
+		<p-button (onClick)="onCloseAction($event)" [label]="'LABELS.CLOSE' | translate"></p-button>
+	</p-footer>
+</p-dialog>

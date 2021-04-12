@@ -38,13 +38,17 @@ import { ParameterWindowComponent } from "./parameters/parameter-window/paramete
 import { AdminRoutingModule } from "./admin-routing.module";
 import { DriversComponent } from './drivers/drivers.component';
 import { DriversWindowComponent } from './drivers/drivers-window/drivers-window.component';
+import { CarsComponent } from './cars/cars.component';
+import { CarsWindowComponent } from './cars/cars-window/cars-window.component';
 
 @NgModule({
 	declarations: [
 		ParametersComponent,
 		ParameterWindowComponent,
 		DriversComponent,
-		DriversWindowComponent
+		DriversWindowComponent,
+		CarsComponent,
+		CarsWindowComponent
 	],
 	imports: [
 		RouterModule,

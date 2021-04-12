@@ -106,12 +106,19 @@
 		"PARAMETER_TYPE": "Tip",
 
 		"DRIVERS": "Soferi",
+		"DRIVER": "Sofer",
 		"DRIVER_FIRSTNAME": "Prenume",
 		"DRIVER_LASTNAME": "Nume",
 		"DRIVER_LICENCE_NUMBER": "Numar permis",
 		"DRIVER_EXPIRY_DATE": "Data exprarii",
 		"DRIVER_LAST_MED_EXAM": "Ultimul examen med.",
-		"DRIVER_MOBILE": "Telefon"
+		"DRIVER_MOBILE": "Telefon",
+
+		"CARS": "Automobile",
+		"CAR_MODEL": "Model",
+		"CAR_REG_NUMBER": "Nr. inregistrare",
+		"CAR_LAST_TECH_CONTROL": "Ultimul control tehnic"
+
 	},
 	"MESSAGES": {
 		"SAVED_SUCCESSFULLY": "Salvat cu succes.",

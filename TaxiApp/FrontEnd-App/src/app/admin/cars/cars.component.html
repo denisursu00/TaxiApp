@@ -1,0 +1,48 @@
+<div class="ui-g">
+	<div class="ui-g-12">
+		<p-button [label]="'LABELS.ADD' | translate" (onClick)="onAddCar()"></p-button>
+		<p-button [label]="'LABELS.EDIT' | translate" [disabled]="editButtonDisabled" (onClick)="onEditCar()"></p-button>
+		<p-button [label]="'LABELS.DELETE' | translate" [disabled]="deleteButtonDisabled" (onClick)="onDeleteCar()"></p-button>
+	</div>
+	<div class="ui-g-12">
+		<p-table [value]="cars" selectionMode="single" [(selection)]="selectedCar"
+				[scrollable]="true" [scrollHeight]="scrollHeight"
+				(onRowSelect)="onCarSelected($event)" (onRowUnselect)="onCarUnselected($event)" autoLayout="true">
+			<ng-template pTemplate="colgroup">
+				<colgroup>
+					<col style="width: 30%">
+					<col style="width: 30%">
+					<col style="width: 20%">
+					<col style="width: 20%">
+				</colgroup>
+			</ng-template>
+			<ng-template pTemplate="header">
+				<tr>
+					<th>{{"LABELS.CAR_MODEL" | translate}}</th>
+					<th>{{"LABELS.CAR_REG_NUMBER" | translate}}</th>
+					<th>{{"LABELS.CAR_LAST_TECH_CONTROL" | translate}}</th>
+					<th>{{"LABELS.DRIVER" | translate}}</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-car>
+				<tr [pSelectableRow]="car">
+					<td>{{car.model}}</td>
+					<td>{{car.registrationNumber}}</td>
+					<td>{{getDateForDisplay(car.lastTechControl)}}</td>
+					<td>{{getDriverForDisplay(car.driverId)}}</td>
+				</tr>
+			</ng-template>
+      <ng-template pTemplate="emptymessage">
+				<tr>
+					<td [attr.colspan]="6" style="text-align: center;">
+            			{{'LABELS.NO_RECORDS_FOUND' | translate}}
+          			</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
+</div>
+	
+<app-cars-window *ngIf="carWindowVisible" [mode]="carWindowMode" [carId]="carWindowCarId"
+		(windowClosed)="onCarWindowClosed()" (dataSaved)="onCarWindowDataSaved()">
+</app-cars-window>
