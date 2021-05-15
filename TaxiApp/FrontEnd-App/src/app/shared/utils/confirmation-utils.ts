@@ -19,21 +19,7 @@ export class ConfirmationUtils {
 		this.translateUtils = translateUtils;
 	}
 
-	// tslint:disable-next-line:max-line-length
 	public confirm(messageCode: string, callback: ConfirmationCallback, headerCode?: string, iconNearMessage?: string, confirmationDialogKey?: string) {
-		/*
-		if (ObjectUtils.isNullOrUndefined(headerCode)) {
-			headerCode = "DEFAULT_CONFIRM_HEADER_TITLE";
-		}
-		let translatedHeader: string = this.translateUtils.translateMessage(headerCode);
-		let translatedMessage: string = this.translateUtils.translateMessage(messageCode);
-		this.confirmationService.confirm(
-			this.buildConfirmationObject(translatedMessage, translatedHeader, callback, iconNearMessage, confirmationDialogKey)
-		);
-		*/
-
-		// TODO - Am ales aceasta varianta pentru confirmare intrucat varianta cu <p-confirmDialog> nu
-		// mai functioneaza cand e vorba de lazy loading pentru module.
 		let translatedMessage: string = this.translateUtils.translateMessage(messageCode);
 		if (confirm(translatedMessage)) {
 			callback.approve();
@@ -42,7 +28,6 @@ export class ConfirmationUtils {
 		}
 	}
 
-	// tslint:disable-next-line:max-line-length
 	private buildConfirmationObject(message: string, header: string, callback: ConfirmationCallback, icon?: string, key?: string): Confirmation {
 		let confirmation: Confirmation = {
 			message: message,

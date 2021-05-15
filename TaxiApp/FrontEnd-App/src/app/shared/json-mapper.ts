@@ -9,7 +9,7 @@ export class JsonMapper {
 
 	private getJsonConverter(): JsonConvert {
 		let jsonConvert: JsonConvert = new JsonConvert();
-		jsonConvert.ignorePrimitiveChecks = false; // don't allow assigning number to string etc.
+		jsonConvert.ignorePrimitiveChecks = false; 
 		jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL;
 		return jsonConvert;
 	}

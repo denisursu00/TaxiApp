@@ -39,7 +39,6 @@ export class MessageDisplayer {
 
 	public displayMessage(severity: string, messageOrMessageCode: string, translate?: boolean): void {
 		
-		// tslint:disable-next-line:no-inferrable-types
 		let titleCode: string = severity.toUpperCase();
 		let messageSeverity: string = severity;
 		let detail: string = messageOrMessageCode;

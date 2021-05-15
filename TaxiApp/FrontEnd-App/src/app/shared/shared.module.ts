@@ -11,6 +11,9 @@ import { ConfirmationService } from "primeng/api";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 import { 
+	LoadingComponent
+} from "./components";
+import { 
 	AclService, 
 	AppConstantsService,
 	AuthService,
@@ -20,11 +23,6 @@ import {
 	OrganizationService,
 	RidesService
 } from "./service";
-import { 
-	MessagesWindowComponent,
-	LoadingComponent,
-	ConfirmationWindowComponent
-} from "./components";
 import { 
 	ToolbarModule,
 	ButtonModule,
@@ -56,20 +54,14 @@ import {
 	ConfirmDialogModule
 } from "primeng/primeng";
 import { TableModule } from "primeng/table";
-import { DateFormaterPipe } from "./pipe";
 import { ParametersService } from "./service/parameters.service";
 import { AuthRouteGuard, AuthManager } from "./auth"; 
 import { HttpClientModule } from "@angular/common/http";
 import { ToastModule } from "primeng/toast";
-import { DateFormatterPipeFromStorageFormat } from "./pipe/date-formatter-from-storage-format";
 
 @NgModule({
 	declarations: [
-		MessagesWindowComponent,
-		DateFormaterPipe,
-		DateFormatterPipeFromStorageFormat,
-		LoadingComponent,
-		ConfirmationWindowComponent
+		LoadingComponent
 	],
 	imports: [
 		RouterModule,
@@ -114,11 +106,7 @@ import { DateFormatterPipeFromStorageFormat } from "./pipe/date-formatter-from-s
 		HttpModule,
 		TranslateModule,
 		ConfirmDialogModule,
-		MessagesWindowComponent,
-		DateFormaterPipe,
-		DateFormatterPipeFromStorageFormat,
-		LoadingComponent,
-		ConfirmationWindowComponent
+		LoadingComponent
 	],
 	providers: [
 		JsonMapper,

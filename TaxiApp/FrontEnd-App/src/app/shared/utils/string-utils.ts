@@ -16,8 +16,6 @@ export class StringUtils {
 	
 	public static isNumeric(value: string): boolean {
 		
-		// TODO - Trebuie revenit si cizelata aceasta metoda.
-		
 		if (StringUtils.isBlank(value)) {
 			return false;
 		}

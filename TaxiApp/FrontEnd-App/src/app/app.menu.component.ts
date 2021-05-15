@@ -138,21 +138,17 @@ export class AppSubMenuComponent {
 		if (this.root) {
 			this.app.menuHoverActive = !this.app.menuHoverActive;
 		}
-		// avoid processing disabled items
 		if (item.disabled) {
 			event.preventDefault();
 			return true;
 		}
 
-		// activate current item and deactivate active sibling if any
 		this.activeIndex = (this.activeIndex === index) ? null : index;
 
-		// execute command
 		if (item.command) {
 			item.command({ originalEvent: event, item: item });
 		}
 
-		// prevent hash change
 		if (item.items || (!item.url && !item.routerLink)) {
 			setTimeout(() => {
 				this.appMenu.layoutMenuScrollerViewChild.moveBar();
@@ -160,7 +156,6 @@ export class AppSubMenuComponent {
 			event.preventDefault();
 		}
 
-		// hide menu
 		if (!item.items) {
 			if (this.app.isHorizontal() || this.app.isSlim()) {
 				this.app.resetMenu = true;
