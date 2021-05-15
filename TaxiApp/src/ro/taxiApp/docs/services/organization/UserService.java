@@ -19,6 +19,8 @@ public interface UserService {
 	
 	public Long saveUserWithRole(UserModel user, String roleName, SecurityManager userSecurity) throws AppException;
 	
+	public List<UserModel> getUsersWithRole(String roleName);
+	
 	public void setUser(User user, SecurityManager userSecurity) throws AppException;
 
 	/**

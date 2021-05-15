@@ -87,7 +87,7 @@ export class CarsComponent {
 	}
 
 	public onDeleteCar(): void {
-		this.confirmationUtils.confirm("CONFIRM_DELETE_DRIVER", {
+		this.confirmationUtils.confirm("CONFIRM_DELETE_CAR", {
 			approve: (): void => {
 				this.carsService.deleteCarById(this.selectedCar.id, {
 					onSuccess: (): void => {
@@ -132,6 +132,8 @@ export class CarsComponent {
 
 	public onCarWindowClosed(): void {
 		this.carWindowVisible = false;
+		this.deleteButtonDisabled = true;
+		this.editButtonDisabled = true;
 	}
 
 	public onCarWindowDataSaved(): void {

@@ -2,8 +2,8 @@ package ro.taxiApp.docs.domain.rides;
 
 public enum PaymentType {
 
-	CASH("Cash"),
-	CARD("Card");
+	CASH("CASH"),
+	CARD("CARD");
 	
 	private String label;
 	

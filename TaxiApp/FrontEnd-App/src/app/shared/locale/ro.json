@@ -26,6 +26,8 @@
 		"NO_RECORDS_FOUND": "Nicio înregistrare găsită",
 		
 		"NO_DESCRIPTION": "Nicio descriere",
+
+		"ID": "Id",
 		
 		"STRUCTURE": "Structură",
 		"DETAILS": "Detalii",
@@ -62,7 +64,7 @@
 		"LABEL": "Etichetă",
 		"TYPE": "Tip",
 		"DEFAULT_VALUE": "Valoare implicită",
-		"ADMIN": "ADMIN",
+		"ADMIN": "Admin",
 		"LOGOUT": "Ieşire",
 		"CHANGE_PASSWORD": "Schimba parola",
 		
@@ -114,10 +116,20 @@
 		"DRIVER_LAST_MED_EXAM": "Ultimul examen med.",
 		"DRIVER_MOBILE": "Telefon",
 
+		"DISPATCHERS": "Dispeceri",
+		"DISPATCHER": "Dispecer",
+
 		"CARS": "Automobile",
 		"CAR_MODEL": "Model",
 		"CAR_REG_NUMBER": "Nr. inregistrare",
-		"CAR_LAST_TECH_CONTROL": "Ultimul control tehnic"
+		"CAR_LAST_TECH_CONTROL": "Ultimul control tehnic",
+
+		"CLIENT_NAME": "Numele clientului",
+
+		"RIDES": "Calatorii",
+		"START_ADRESS": "Adresa de start",
+
+		"OBSERVATIONS": "Observatii"
 
 	},
 	"MESSAGES": {
@@ -160,6 +172,8 @@
 		"AUTHENTICATION_EXCEPTION": "Exceptie la autentificare. Incercati din nou sau contactati administratorul.",
 		"CONFIRM_DELETE_PARAMETER":  "Esti sigur ca vrei sa stergi parametrul?",
 
-		"CONFIRM_DELETE_DRIVER":  "Esti sigur ca vrei sa stergi soferul?"
+		"CONFIRM_DELETE_DRIVER":  "Esti sigur ca vrei sa stergi soferul?",
+		"CONFIRM_DELETE_DISPATCHER":  "Esti sigur ca vrei sa stergi dispecerul?",
+		"CONFIRM_DELETE_CAR":  "Esti sigur ca vrei sa stergi automobilul?"
 	}
 }

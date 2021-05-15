@@ -31,19 +31,28 @@ export class RideModel {
     @JsonProperty("canceled", Boolean)
 	public canceled: boolean = null;
 
+	@JsonProperty("finished", Boolean)
+	public finished: boolean = null;
+
     @JsonProperty("clientId", Number)
 	public clientId: number = null;
 
     @JsonProperty("driverId", Number)
 	public driverId: number = null;
 
+	@JsonProperty("dispatcherId", Number)
+	public dispatcherId: number = null;
+
     @JsonProperty("paymentType", String)
 	public paymentType: string = null;
+
+	@JsonProperty("observations", String)
+	public observations: string = null;
 
 }
 
 export enum PaymentType {
 
-	CASH = "Cash",
-	CARD = "Card"
+	CASH = "CASH",
+	CARD = "CARD"
 }

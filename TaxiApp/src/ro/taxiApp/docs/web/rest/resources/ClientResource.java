@@ -37,7 +37,7 @@ public class ClientResource extends BaseResource {
 	
 	@POST
 	@Path("/getClientByUserId/{userId}")
-	public ClientModel getClientByUserId(@PathParam("id") Long userId) throws PresentationException {
+	public ClientModel getClientByUserId(@PathParam("userId") Long userId) throws PresentationException {
 		return clientService.getClientByUserId(userId);
 	}
 	

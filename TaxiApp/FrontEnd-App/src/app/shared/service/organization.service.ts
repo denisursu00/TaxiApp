@@ -27,9 +27,22 @@ export class OrganizationService {
         this.apiCaller.call(ApiPathConstants.ORGANIZATION_SAVE_USER_AS_DISPATCHER, user, Number, callback);
     }
 
-    public getDriverById(id: Number, callback: AsyncCallback<UserModel, AppError>): void {
+    public getUserById(id: Number, callback: AsyncCallback<UserModel, AppError>): void {
         let relativePath: string = ApiPathUtils.appendParametersToPath(ApiPathConstants.ORGANIZATION_GET_USER_BY_ID, id.toString());
         this.apiCaller.call(relativePath, null, UserModel, callback);
+    }
+
+    public getDispatchers(callback: AsyncCallback<UserModel[], AppError>): void {
+        this.apiCaller.call(ApiPathConstants.ORGANIZATION_GET_DISPATCHERS, null, UserModel, callback);
+    }
+
+    public getClients(callback: AsyncCallback<UserModel[], AppError>): void {
+        this.apiCaller.call(ApiPathConstants.ORGANIZATION_GET_CLIENTS, null, UserModel, callback);
+    }
+
+    public deleteUserById(id: Number, callback: AsyncCallback<null, AppError>): void {
+        let relativePath: string = ApiPathUtils.appendParametersToPath(ApiPathConstants.ORGANIZATION_DELETE_USER_BY_ID, id.toString());
+        this.apiCaller.call(relativePath, null, null, callback);
     }
 
 }

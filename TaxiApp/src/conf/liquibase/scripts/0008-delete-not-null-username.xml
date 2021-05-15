@@ -15,4 +15,14 @@
 		</sql>
 	</changeSet>
 	
+	<changeSet id="0008-alter-table-ride-driver-nullable" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+		
+			
+			ALTER TABLE ride ALTER COLUMN driver_id DROP NOT NULL;
+		
+		]]>
+		</sql>
+	</changeSet>
+	
 </databaseChangeLog>

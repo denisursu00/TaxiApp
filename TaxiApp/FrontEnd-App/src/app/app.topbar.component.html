@@ -4,11 +4,6 @@
         font-weight: bold;
         color: #ffffff;
     }
-    .logo-text-environment {
-        font-size: 1.1em;
-        padding-left: 4px;
-        color: #f3f722;
-    }
 </style>
 <div class="layout-topbar">
     <a href="#" id="topbar-menu-button" (click)="app.onMenuButtonClick($event)">
@@ -16,14 +11,8 @@
         <i class="fa fa-angle-up mobile"></i>
     </a>
 
-    <!-- <div class="search-input">
-        <i class="fa fa-search icon-search"></i>
-        <input type="text"/>
-    </div> -->
-
-    <a [routerLink]="homeRouterLink" class="logo-container" title="version: {{appVersion}}">
-        <!-- <img src="assets/layout/images/ecuador-logo.png" alt="ecuador-layout" /> -->
-        <span class="logo-text" translate>LABELS.APP_NAME</span><span *ngIf="!isProduction" class="logo-text-environment">({{appEnvironmentName}})</span>
+    <a [routerLink]="homeRouterLink" class="logo-container">
+        <span class="logo-text" translate>LABELS.APP_NAME</span>
     </a>
 
     <a id="topbar-profile-menu-button" href="#" (click)="app.onTopbarMenuButtonClick($event)">        
@@ -51,12 +40,6 @@
                     </a>
                 </li>
             </ul>
-        </li>
-        <li *ngIf="!isUserPrezenta">
-            <a href="#" (click)="onChangePassword($event)">
-                <i class="fa fa-sign-out"></i>
-                <span class="topbar-item-name" translate>LABELS.CHANGE_PASSWORD</span>
-            </a>
         </li>
         <li>
             <a href="#" (click)="onLogout($event)">

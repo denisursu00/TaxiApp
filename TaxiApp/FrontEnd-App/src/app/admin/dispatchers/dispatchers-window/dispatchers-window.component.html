@@ -1,0 +1,92 @@
+<app-loading *ngIf="loadingVisible"></app-loading>
+<p-dialog #pDialog [(visible)]="windowVisible" [modal]="true" appendTo="body"
+		[contentStyle]="{'height':'70vh'}" [style]="{'width':'90vw','height':'auto'}" 
+		(onShow)="onShow($event)" (onHide)="onHide($event)">
+	<p-header>
+		<span>{{"LABELS.DISPATCHERS" | translate}}</span>
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+	</p-header>
+	
+	<form [formGroup]="form" [ngStyle]="{'height':'70vh'}">
+		
+    <div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.FIRST_NAME" | translate}}*:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				<input pInputText formControlName="firstName" type="text"/>
+			</div>
+			<div *ngIf="firstNameFormControl.invalid && (firstNameFormControl.dirty || firstNameFormControl.touched)" class="ui-g-12">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+	</div>
+
+    <div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.LAST_NAME" | translate}}*:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				<input pInputText formControlName="lastName" type="text"/>
+			</div>
+			<div *ngIf="lastNameFormControl.invalid && (lastNameFormControl.dirty || lastNameFormControl.touched)" class="ui-g-12">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+	</div>
+
+    <div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.EMAIL" | translate}}:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				<input pInputText formControlName="email" type="text"/>
+			</div>
+	</div>
+
+    <div class="ui-g ui-fluid">
+		<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.PASSWORD" | translate}}*:</div>
+		<div class="ui-g-9 ui-sm-12 ui-md-8">
+			<input pInputText formControlName="password" type="text"/>
+		</div>
+		<div *ngIf="passwordFormControl.invalid && (passwordFormControl.dirty || passwordFormControl.touched)" class="ui-g-12">
+			<div class="ui-message ui-messages-error ui-corner-all">
+				<i class="fa fa-close"></i>
+				{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+			</div>
+		</div>
+	</div>
+
+    <div class="ui-g ui-fluid">
+		<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.USERNAME" | translate}}*:</div>
+		<div class="ui-g-9 ui-sm-12 ui-md-8">
+			<input pInputText formControlName="username" type="text"/>
+		</div>
+      	<div *ngIf="usernameFormControl.invalid && (usernameFormControl.dirty || usernameFormControl.touched)" class="ui-g-12">
+			<div class="ui-message ui-messages-error ui-corner-all">
+				<i class="fa fa-close"></i>
+				{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+			</div>
+		</div>
+	</div>
+
+    <div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.PHONE" | translate}}*:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				<input pInputText formControlName="mobile" type="text"/>
+			</div>
+			<div *ngIf="mobileFormControl.invalid && (mobileFormControl.dirty || mobileFormControl.touched)" class="ui-g-12">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+	</div>
+
+	</form>
+
+	<p-footer>
+		<p-button (onClick)="onSaveAction($event)" [label]="'LABELS.SAVE' | translate"></p-button>
+		<p-button (onClick)="onCloseAction($event)" [label]="'LABELS.CLOSE' | translate"></p-button>
+	</p-footer>
+</p-dialog>

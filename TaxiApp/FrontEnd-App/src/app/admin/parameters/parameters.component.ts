@@ -95,6 +95,8 @@ export class ParametersComponent {
 
 	public onParameterWindowClosed(): void {
 		this.parameterWindowVisible = false;
+		this.deleteButtonDisabled = true;
+		this.editButtonDisabled = true;
 	}
 
 	public onParameterWindowDataSaved(): void {

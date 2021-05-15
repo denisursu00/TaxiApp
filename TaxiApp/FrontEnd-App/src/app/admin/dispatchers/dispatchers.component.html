@@ -1,0 +1,51 @@
+<div class="ui-g">
+	<div class="ui-g-12">
+		<p-button [label]="'LABELS.ADD' | translate" (onClick)="onAddDispatcher()"></p-button>
+		<p-button [label]="'LABELS.EDIT' | translate" [disabled]="editButtonDisabled" (onClick)="onEditDispatcher()"></p-button>
+		<p-button [label]="'LABELS.DELETE' | translate" [disabled]="deleteButtonDisabled" (onClick)="onDeleteDispatcher()"></p-button>
+	</div>
+	<div class="ui-g-12">
+		<p-table [value]="dispatchers" selectionMode="single" [(selection)]="selectedDispatcher"
+				[scrollable]="true" [scrollHeight]="scrollHeight"
+				(onRowSelect)="onDispatcherSelected($event)" (onRowUnselect)="onDispatcherUnselected($event)" autoLayout="true">
+			<ng-template pTemplate="colgroup">
+				<colgroup>
+					<col style="width: 20%">
+					<col style="width: 20%">
+					<col style="width: 20%">
+					<col style="width: 20%">
+					<col style="width: 20%">
+				</colgroup>
+			</ng-template>
+			<ng-template pTemplate="header">
+				<tr>
+					<th>{{"LABELS.FIRST_NAME" | translate}}</th>
+					<th>{{"LABELS.LAST_NAME" | translate}}</th>
+					<th>{{"LABELS.USERNAME" | translate}}</th>
+					<th>{{"LABELS.EMAIL" | translate}}</th>
+					<th>{{"LABELS.PHONE" | translate}}</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-dispatcher>
+				<tr [pSelectableRow]="dispatcher">
+					<td>{{dispatcher.firstName}}</td>
+					<td>{{dispatcher.lastName}}</td>
+					<td>{{dispatcher.username}}</td>
+					<td>{{dispatcher.email}}</td>
+					<td>{{dispatcher.mobile}}</td>
+				</tr>
+			</ng-template>
+      		<ng-template pTemplate="emptymessage">
+				<tr>
+					<td [attr.colspan]="6" style="text-align: center;">
+            			{{'LABELS.NO_RECORDS_FOUND' | translate}}
+          			</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
+</div>
+	
+<app-dispatchers-window *ngIf="dispatcherWindowVisible" [mode]="dispatcherWindowMode" [dispatcherId]="dispatcherWindowDispatcherId"
+		(windowClosed)="onDispatcherWindowClosed()" (dataSaved)="onDispatcherWindowDataSaved()">
+</app-dispatchers-window>

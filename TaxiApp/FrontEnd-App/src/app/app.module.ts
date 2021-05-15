@@ -21,7 +21,6 @@ import { ApiCaller } from "@app/shared/api-caller";
 import { Router } from "@angular/router";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "@app/shared/auth/auth-interceptor";
-import { AppVersionInterceptor } from "@app/shared/app-version-interceptor";
 import { ToastModule } from "primeng/toast";
 
 export function initialize(initializer: AppInitializer) {
@@ -65,11 +64,6 @@ export function initialize(initializer: AppInitializer) {
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: AuthInterceptor,
-			multi: true
-		},
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: AppVersionInterceptor,
 			multi: true
 		},
 		BreadcrumbService,

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
+import ro.taxiApp.docs.domain.organization.Role;
 import ro.taxiApp.docs.domain.organization.User;
 
 public class UserPersistenceDbPlugin extends HibernateDaoSupport implements UserPersistencePlugin, InitializingBean {
@@ -32,7 +33,12 @@ public class UserPersistenceDbPlugin extends HibernateDaoSupport implements User
 	@Override
 	@Transactional(rollbackFor = Throwable.class)
 	public Long saveUserAndReturnId(User user) {
-		return (Long) getHibernateTemplate().save(user);
+		if (user.getId() == null) {
+			return (Long) getHibernateTemplate().save(user);
+		} else {
+			getHibernateTemplate().saveOrUpdate(user);
+			return user.getId();
+		}
 	}
 	
 	@Override

@@ -1,7 +1,6 @@
 import { JsonMapper } from "./json-mapper";
 import { AsyncCallback } from "./async-callback";
 import { Injectable } from "@angular/core";
-import { environment } from "@app/../environments/environment";
 import { Headers, Http, Response, URLSearchParams, ResponseContentType, RequestOptions } from "@angular/http";
 import { Observable } from "rxjs/";
 import { AppError } from "./model";

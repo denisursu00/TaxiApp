@@ -50,7 +50,7 @@ public class UserConverter {
 		}
         
         if (userModel.getId() != null) {
-        	user.setId(new Long(userModel.getId()));
+        	user.setId(userModel.getId());
         }
         user.setUsername(userModel.getUsername());
         user.setFirstName(userModel.getFirstName());

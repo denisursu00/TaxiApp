@@ -8,6 +8,10 @@ const routes: Routes = [
 		loadChildren: "./admin/admin.module#AdminModule"
 	},
 	{
+		path: "dispatcher",
+		loadChildren: "./dispatcher/dispatcher.module#DispatcherModule"
+	},
+	{
 		path: "auth",
 		loadChildren: "./auth/auth.module#AuthModule"
 	},

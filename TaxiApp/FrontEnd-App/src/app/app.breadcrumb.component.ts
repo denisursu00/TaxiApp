@@ -14,8 +14,6 @@ export class AppBreadcrumbComponent implements OnDestroy {
 	subscription: Subscription;
 
 	items: MenuItem[];
-
-	homeRouterLink: string = RouteConstants.HOME;
 	
 	constructor(public breadcrumbService: BreadcrumbService) {
 		this.subscription = breadcrumbService.itemsHandler.subscribe(response => {

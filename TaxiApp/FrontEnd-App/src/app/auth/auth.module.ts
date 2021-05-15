@@ -5,7 +5,6 @@ import { AuthRoutingModule } from "./auth-routing.module";
 import { LoginComponent } from "./login/login.component";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { SharedModule, AppTranslateLoader } from "@app/shared";
-import { ChangePasswordComponent } from "./change-password";
 
 @NgModule({
 	imports: [
@@ -22,8 +21,7 @@ import { ChangePasswordComponent } from "./change-password";
 		AuthRoutingModule
 	],
 	declarations: [
-		LoginComponent,
-		ChangePasswordComponent
+		LoginComponent
 	],
 	providers: [
 	]

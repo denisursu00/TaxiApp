@@ -4,7 +4,6 @@ export class ApiPathConstants {
 	public static readonly GET_SECURITY_MANAGER = "/AclGxtService/getSecurityManager";
 
 	// AppConstantsService
-	public static readonly GET_APPLICATION_INFO = "/AppConstantsService/getApplicationInfo";
 
 	// Parameters
 	public static readonly GET_ALL_PARAMETERS = "/Parameters/getAllParameters";
@@ -15,7 +14,6 @@ export class ApiPathConstants {
 	// Auth
 	public static readonly AUTH_LOGIN = "/Auth/login";
 	public static readonly AUTH_GET_LOGGED_IN_USER = "/Auth/getLoggedInUser";
-	public static readonly AUTH_CHANGE_PASSWORD = "/Auth/changePassword";
 
 	// Drivers
 	public static readonly DRIVER_SAVE = "/Drivers/saveDriver";
@@ -45,5 +43,8 @@ export class ApiPathConstants {
 	public static readonly ORGANIZATION_SAVE_USER_AS_CLIENT = "/Organization/saveUserAsClient";
 	public static readonly ORGANIZATION_SAVE_USER_AS_DISPATCHER = "/Organization/saveUserAsDispatcher";
 	public static readonly ORGANIZATION_GET_USER_BY_ID = "/Organization/getUserById";
+	public static readonly ORGANIZATION_DELETE_USER_BY_ID = "/Organization/deleteUserById";
+	public static readonly ORGANIZATION_GET_DISPATCHERS = "/Organization/getDispatchers";
+	public static readonly ORGANIZATION_GET_CLIENTS = "/Organization/getClients";
 
 }

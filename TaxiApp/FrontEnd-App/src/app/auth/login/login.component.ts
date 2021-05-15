@@ -1,13 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
-import { StringValidators, FormUtils,  MessageDisplayer, AppError, TranslateUtils, StringUtils } from "@app/shared";
+import { StringValidators, FormUtils,  MessageDisplayer, AppError, TranslateUtils, StringUtils, DispatcherPermissionEnum } from "@app/shared";
 import { Message } from "primeng/components/common/message";
 import { AuthManager, AUTH_ACCESS } from "@app/shared/auth";
-import { LoginRequestModel } from "@app/shared/model/auth";
+import { LoginRequestModel, LoginResponseModel } from "@app/shared/model/auth";
 import { RouteConstants } from "@app/shared/constants/route.constants";
-import { ApplicationInfoManager } from "@app/shared/application-info-manager";
-import { environment } from "./../../../environments/environment";
 
 @Component({
 	selector: "app-login",
@@ -19,7 +17,6 @@ export class LoginComponent implements OnInit {
 	private formBuilder: FormBuilder;
 	public formGroup: FormGroup;
 	private authManager: AuthManager;
-	private applicationInfoManager: ApplicationInfoManager;
 	private messageDisplayer: MessageDisplayer;
 	private translateUtils: TranslateUtils;
 
@@ -33,14 +30,13 @@ export class LoginComponent implements OnInit {
 
 	constructor(formBuilder: FormBuilder, router: Router, 
 			authManager: AuthManager, messageDisplayer: MessageDisplayer,
-			translateUtils: TranslateUtils, applicationInfoManager: ApplicationInfoManager) {
+			translateUtils: TranslateUtils) {
 				
 		this.formBuilder = formBuilder;
 		this.router = router;
 		this.authManager = authManager;
 		this.messageDisplayer = messageDisplayer;
 		this.translateUtils = translateUtils;
-		this.applicationInfoManager = applicationInfoManager;
 
 		this.formGroup = this.formBuilder.group([]);
 	}
@@ -73,8 +69,13 @@ export class LoginComponent implements OnInit {
 
 		this.lock();
 		this.authManager.login(loginRequest, {
-			onSuccess: () => {
+			onSuccess: (loginResponse: LoginResponseModel) => {
+
 				let route: string = RouteConstants.HOME;
+
+				if (loginResponse.loggedInUser.permissions.includes(DispatcherPermissionEnum.MANAGE_RIDES)) {
+					route = RouteConstants.DISPATCHER_RIDES;
+				}
 				
 				this.router.navigate([route])
 					.then(() => {
@@ -108,15 +109,4 @@ export class LoginComponent implements OnInit {
 		return <FormControl> this.formGroup.get("rememberMe");
 	}
 
-	public get appVersion(): string {
-		return environment.version;
-	}
-
-	public get isProduction(): boolean {
-		return this.applicationInfoManager.isProduction();
-	}
-
-	public get appEnvironmentName(): string {
-		return this.applicationInfoManager.getEnvironmentName();
-	}
 }

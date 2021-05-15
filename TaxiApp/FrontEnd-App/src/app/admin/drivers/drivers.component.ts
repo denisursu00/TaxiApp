@@ -100,6 +100,8 @@ export class DriversComponent {
 
 	public onDriverWindowClosed(): void {
 		this.driverWindowVisible = false;
+		this.deleteButtonDisabled = true;
+		this.editButtonDisabled = true;
 	}
 
 	public onDriverWindowDataSaved(): void {

@@ -23,14 +23,14 @@ export class AuthManager {
 	}
 
 	
-	public login(loginRequest: LoginRequestModel, callback: AsyncCallback<void, AppError>): void {
+	public login(loginRequest: LoginRequestModel, callback: AsyncCallback<LoginResponseModel, AppError>): void {
 		this.clearAuthData();
 		this.authService.login(loginRequest, {
 			onSuccess: (loginResponse: LoginResponseModel): void => {				
 				this._authToken = loginResponse.authToken;
 				this._loggedInUser = loginResponse.loggedInUser;
 				this.authDataStorage.saveToken(this._authToken, loginRequest.rememberMe);
-				callback.onSuccess(null);
+				callback.onSuccess(loginResponse);
 			},
 			onFailure: (error: AppError): void => {
 				callback.onFailure(error);
@@ -52,7 +52,7 @@ export class AuthManager {
 		return ObjectUtils.isNotNullOrUndefined(this._authToken) && ObjectUtils.isNotNullOrUndefined(this._loggedInUser);
 	}
 
-	public establishAuth(): Promise<any> {
+	public establishAuth(): Promise<void> {
 		return new Promise((resolve, reject) => {			
 			if (StringUtils.isBlank(this._authToken)) {
 				this._loggedInUser = null;

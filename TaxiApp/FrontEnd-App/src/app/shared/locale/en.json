@@ -26,6 +26,8 @@
 		"NO_RECORDS_FOUND": "Nicio înregistrare găsită",
 		
 		"NO_DESCRIPTION": "Nicio descriere",
+
+		"ID": "Id",
 		
 		"STRUCTURE": "Structură",
 		"DETAILS": "Detalii",
@@ -62,7 +64,7 @@
 		"LABEL": "Etichetă",
 		"TYPE": "Tip",
 		"DEFAULT_VALUE": "Valoare implicită",
-		"ADMIN": "ADMIN",
+		"ADMIN": "Admin",
 		"LOGOUT": "Ieşire",
 		"CHANGE_PASSWORD": "Schimba parola",
 		
@@ -113,10 +115,20 @@
 		"DRIVER_LAST_MED_EXAM": "Last med. exam",
 		"DRIVER_MOBILE": "Phone",
 
+		"DISPATCHERS": "Dispatchers",
+		"DISPATCHER": "Dispatcher",
+
 		"CARS": "Cars",
 		"CAR_MODEL": "Model",
 		"CAR_REG_NUMBER": "Reg. number",
-		"CAR_LAST_TECH_CONTROL": "Last tech control"
+		"CAR_LAST_TECH_CONTROL": "Last tech control",
+
+		"CLIENT_NAME": "Client name",
+
+		"RIDES": "Rides",
+		"START_ADRESS": "Start adress",
+
+		"OBSERVATIONS": "Observations"
 
 	},
 	"MESSAGES": {
@@ -159,6 +171,8 @@
 		"AUTHENTICATION_EXCEPTION": "Exceptie la autentificare. Incercati din nou sau contactati administratorul.",
 		"CONFIRM_DELETE_PARAMETER":  "Are you sure you want to delete the parameter?",
 
-		"CONFIRM_DELETE_DRIVER":  "Are you sure you want to delete the driver?"
+		"CONFIRM_DELETE_DRIVER":  "Are you sure you want to delete the driver?",
+		"CONFIRM_DELETE_DISPATCHER":  "Are you sure you want to delete the dispatcher?",
+		"CONFIRM_DELETE_CAR":  "Are you sure you want to delete the car?"
 	}
 }

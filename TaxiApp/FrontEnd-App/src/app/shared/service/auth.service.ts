@@ -7,7 +7,6 @@ import { LoginRequestModel } from "../model/auth/login-request.model";
 import { LoginResponseModel } from "../model/auth/login-response.model";
 import { LoggedInUserModel } from "../model/auth/logged-in-user.model";
 import { ApiPathUtils } from "../utils";
-import { PasswordChangeModel } from "../model/auth/password-change.model";
 
 @Injectable()
 export class AuthService {
@@ -25,8 +24,5 @@ export class AuthService {
 	public getLoggedInUser(callback: AsyncCallback<LoggedInUserModel, AppError>): void {
 		this.apiCaller.call(ApiPathConstants.AUTH_GET_LOGGED_IN_USER, null, LoggedInUserModel, callback);
 	}
-
-	public changePassword(passwordChangeModel: PasswordChangeModel, callback: AsyncCallback<null, AppError>): void {
-		this.apiCaller.call(ApiPathConstants.AUTH_CHANGE_PASSWORD, passwordChangeModel, null, callback);
-	}
+	
 }

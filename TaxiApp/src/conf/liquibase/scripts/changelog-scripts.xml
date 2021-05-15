@@ -14,5 +14,6 @@
 	<include file="0006-modificari-securitate-cu-permisiuni.xml" relativeToChangelogFile="true" />
 	<include file="0007-adaugare-permisiuni.xml" relativeToChangelogFile="true" />
 	<include file="0008-delete-not-null-username.xml" relativeToChangelogFile="true" />
+	<include file="0009-alter-ride-table.xml" relativeToChangelogFile="true" />
 	
 </databaseChangeLog>

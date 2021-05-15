@@ -14,10 +14,13 @@ public class RideModel {
 	private String endAdress;
 	private BigDecimal price;
 	private Boolean canceled;
+	private Boolean finished;
 	
 	private Long clientId;
 	private Long driverId;
+	private Long dispatcherId;
 	private String paymentType;
+	private String observations;
 	
 	public Long getId() {
 		return id;
@@ -73,6 +76,12 @@ public class RideModel {
 	public void setCanceled(Boolean canceled) {
 		this.canceled = canceled;
 	}
+	public Boolean getFinished() {
+		return finished;
+	}
+	public void setFinished(Boolean finished) {
+		this.finished = finished;
+	}
 	public String getPaymentType() {
 		return paymentType;
 	}
@@ -90,6 +99,18 @@ public class RideModel {
 	}
 	public void setDriverId(Long driverId) {
 		this.driverId = driverId;
+	}
+	public Long getDispatcherId() {
+		return dispatcherId;
+	}
+	public void setDispatcherId(Long dispatcherId) {
+		this.dispatcherId = dispatcherId;
+	}
+	public String getObservations() {
+		return observations;
+	}
+	public void setObservations(String observations) {
+		this.observations = observations;
 	}
 	
 }

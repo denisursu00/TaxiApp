@@ -1,5 +1,7 @@
 package ro.taxiApp.docs.web.rest.resources;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -63,6 +65,24 @@ public class OrganizationResource extends BaseResource {
 	@Path("/getUserById/{id}")
 	public UserModel getUserById(@PathParam("id") Long id) {
 		return userService.getUserByIdAsModel(id);
+	}
+	
+	@POST
+	@Path("/deleteUserById/{id}")
+	public void deleteUserById(@PathParam("id") Long id) {
+		userService.delete(userService.getUserById(id), getSecurity());
+	}
+	
+	@POST
+	@Path("/getDispatchers")
+	public List<UserModel> getDispatchers() {
+		return userService.getUsersWithRole(dispatcher);
+	}
+	
+	@POST
+	@Path("/getClients")
+	public List<UserModel> getClients() {
+		return userService.getUsersWithRole(client);
 	}
 	
 }

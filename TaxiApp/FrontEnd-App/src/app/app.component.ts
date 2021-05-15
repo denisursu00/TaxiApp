@@ -1,13 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, NavigationStart, NavigationEnd, ActivatedRoute} from "@angular/router";
-import { environment } from "../environments/environment";
-import { TranslateUtils, StringUtils, RoleEnum, ObjectUtils, AppEventMediator } from "@app/shared";
+import { TranslateUtils, StringUtils, RoleEnum, ObjectUtils } from "@app/shared";
 import { ActivatedRouteSnapshot } from "@angular/router";
 import { AuthManager } from "@app/shared/auth";
-import { AppMenuService } from "@app/app.menu.service";
 import { BreadcrumbService } from "@app/breadcrumb.service";
-import { AppUpdateMediator } from "@app/shared";
-import { AppUpdateEvent, AppUpdatePostponementEvent } from "@app/shared/events";
 
 @Component({
 	selector: "app-root",
@@ -52,18 +48,15 @@ export class AppComponent implements OnInit {
 
 	private authManager: AuthManager;
 	private breadcrumbService: BreadcrumbService;
-	private appVersionManager: AppUpdateMediator;
 
 	public appUpdateDialogVisible: boolean = false;
 	public appUpdateDialogHeader: string = "";
 
-	constructor(translateUtils: TranslateUtils, router: Router, authManager: AuthManager,
-			breadcrumbService: BreadcrumbService, appVersionManager: AppUpdateMediator) {
+	constructor(translateUtils: TranslateUtils, router: Router, authManager: AuthManager, breadcrumbService: BreadcrumbService) {
 		this.translateUtils = translateUtils;
 		this.router = router;
 		this.authManager = authManager;
 		this.breadcrumbService = breadcrumbService;
-		this.appVersionManager = appVersionManager;
 		this.initTranslate();
 	}
 
@@ -71,22 +64,10 @@ export class AppComponent implements OnInit {
 		this.router.events.subscribe((event: any) => {
 			if(event instanceof NavigationEnd) {
 				let navEnd: NavigationEnd = <NavigationEnd> event;
-				// WORKAROUND cu acest timeout, intrucat componenta de breadcrumb inca nu-i 
-				// initializata cand deja apare event-ul prima data. De vazut cand e timp..
 				this.preparePageLayout(this.router.routerState.snapshot.root);
 				setTimeout(() => {
 					this.breadcrumbService.setItemsByRouteUrl(navEnd.url);
 				}, 100);
-			}
-		});
-
-		AppEventMediator.subscribe(AppUpdateEvent, {
-			handle: (event: AppUpdateEvent) => {
-				if (this.appUpdateDialogVisible) {
-					return;
-				}
-				this.appUpdateDialogHeader = this.translateUtils.translateLabel("NEW_APPLICATION_VERSION") + " - " + event.newAppVersion;
-				this.appUpdateDialogVisible = true;
 			}
 		});
 	}
@@ -226,12 +207,4 @@ export class AppComponent implements OnInit {
 		this.staticMenuMobileActive = false;
 	}
 
-	public onAppUpdateConfirmed(): void {
-		window.location.reload(true);
-	}
-
-	public onAppUpdatePostponed(): void {
-		this.appUpdateDialogVisible = false;
-		AppEventMediator.fire(new AppUpdatePostponementEvent());
-	}
 }

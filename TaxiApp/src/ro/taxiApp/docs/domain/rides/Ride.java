@@ -13,12 +13,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import ro.taxiApp.docs.domain.clients.Client;
 import ro.taxiApp.docs.domain.drivers.Driver;
+import ro.taxiApp.docs.domain.organization.User;
 
 @Entity
 @Table(
@@ -35,10 +37,13 @@ public class Ride {
 	private String endAdress;
 	private BigDecimal price;
 	private Boolean canceled;
+	private Boolean finished;
 	
 	private Client client;
 	private Driver driver;
+	private User dispatcher;
 	private PaymentType paymentType;
+	private String observations;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -123,6 +128,15 @@ public class Ride {
 		this.canceled = canceled;
 	}
 	
+	@Column(name = "finished")
+	public Boolean getFinished() {
+		return finished;
+	}
+	
+	public void setFinished(Boolean finished) {
+		this.finished = finished;
+	}
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
 	public Client getClient() {
@@ -134,13 +148,32 @@ public class Ride {
 	}
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "driver_id", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "driver_id", referencedColumnName = "id", nullable = true)
 	public Driver getDriver() {
 		return driver;
 	}
 	
 	public void setDriver(Driver driver) {
 		this.driver = driver;
+	}
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "dispatcher_id", referencedColumnName = "id", nullable = true)
+	public User getDispatcher() {
+		return dispatcher;
+	}
+	
+	public void setDispatcher(User dispatcher) {
+		this.dispatcher = dispatcher;
+	}
+	
+	@Column(name = "observations")
+	public String getObservations() {
+		return observations;
+	}
+	
+	public void setObservations(String observations) {
+		this.observations = observations;
 	}
 	
 	@Enumerated(EnumType.STRING)

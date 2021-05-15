@@ -15,8 +15,10 @@ import {
 	AppConstantsService,
 	AuthService,
 	CarsService,
+	ClientsService,
 	DriversService,
-	OrganizationService
+	OrganizationService,
+	RidesService
 } from "./service";
 import { 
 	MessagesWindowComponent,
@@ -131,6 +133,8 @@ import { DateFormatterPipeFromStorageFormat } from "./pipe/date-formatter-from-s
 		DriversService,
 		OrganizationService,
 		CarsService,
+		RidesService,
+		ClientsService,
 		AuthService	
 	]
 })

@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { environment } from "@app/../environments/environment";
 import { JsonConvert, JsonConverter, JsonCustomConvert, OperationMode, ValueCheckingMode } from "json2typescript";
 import { ObjectUtils } from "./utils/object-utils";
 import { ArrayUtils } from "./utils/array-utils";
@@ -10,9 +9,6 @@ export class JsonMapper {
 
 	private getJsonConverter(): JsonConvert {
 		let jsonConvert: JsonConvert = new JsonConvert();
-		if (!environment.production) {
-			// jsonConvert.operationMode = OperationMode.LOGGING; // print some debug data
-		}
 		jsonConvert.ignorePrimitiveChecks = false; // don't allow assigning number to string etc.
 		jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL;
 		return jsonConvert;

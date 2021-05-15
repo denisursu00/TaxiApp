@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AUTH_ACCESS, AuthRouteGuard } from "@app/shared/auth";
 import { CarsComponent } from "./cars/cars.component";
+import { DispatchersComponent } from "./dispatchers/dispatchers.component";
 import { DriversComponent } from "./drivers/drivers.component";
 import { ParametersComponent } from "./parameters/parameters.component";
 
@@ -23,11 +24,19 @@ const routes: Routes = [
 		}
 	},
 	{
+		path: "dispatchers",
+		component: DispatchersComponent,
+		canActivate: [AuthRouteGuard],
+		data: {
+			authPermissions: AUTH_ACCESS.ADMIN.DISPATCHERS.permissions
+		}
+	},
+	{
 		path: "cars",
 		component: CarsComponent,
 		canActivate: [AuthRouteGuard],
 		data: {
-			authPermissions: AUTH_ACCESS.ADMIN.DRIVERS.permissions
+			authPermissions: AUTH_ACCESS.ADMIN.CARS.permissions
 		}
 	},
 	{

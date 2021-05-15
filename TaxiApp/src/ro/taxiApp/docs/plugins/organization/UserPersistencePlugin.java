@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import ro.taxiApp.docs.domain.organization.Role;
 import ro.taxiApp.docs.domain.organization.User;
 
 public interface UserPersistencePlugin {

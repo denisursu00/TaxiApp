@@ -53,7 +53,7 @@
    		<property name="userPersistencePlugin" ref="userPersistencePlugin"></property>
    	</bean>
    	
-   	<bean id="driverService" class="ro.taxiApp.docs.services.drivers.DriverService">
+   	<bean id="driverService" class="ro.taxiApp.docs.services.drivers.DriverServiceImpl">
    		<property name="driverDao" ref="driverDao"></property>
    		<property name="driverConverter" ref="driverConverter"></property>
    	</bean>
@@ -69,7 +69,7 @@
    		<property name="driverDao" ref="driverDao"></property>
    	</bean>
    	
-   	<bean id="carService" class="ro.taxiApp.docs.services.CarService">
+   	<bean id="carService" class="ro.taxiApp.docs.services.CarServiceImpl">
    		<property name="carDao" ref="carDao"></property>
    		<property name="carConverter" ref="carConverter"></property>
    	</bean>
@@ -102,7 +102,7 @@
    		<property name="clientDao" ref="clientDao"></property>
    	</bean>
    	
-   	<bean id="clientService" class="ro.taxiApp.docs.services.clients.ClientService">
+   	<bean id="clientService" class="ro.taxiApp.docs.services.clients.ClientServiceImpl">
    		<property name="clientDao" ref="clientDao"></property>
    		<property name="clientConverter" ref="clientConverter"></property>
    	</bean>
@@ -116,9 +116,10 @@
    		<property name="rideDao" ref="rideDao"></property>
    		<property name="driverDao" ref="driverDao"></property>
    		<property name="clientDao" ref="clientDao"></property>
+   		<property name="userPersistencePlugin" ref="userPersistencePlugin"></property>
    	</bean>
    	
-   	<bean id="rideService" class="ro.taxiApp.docs.services.ride.RideService">
+   	<bean id="rideService" class="ro.taxiApp.docs.services.ride.RideServiceImpl">
    		<property name="rideDao" ref="rideDao"></property>
    		<property name="rideConverter" ref="rideConverter"></property>
    	</bean>

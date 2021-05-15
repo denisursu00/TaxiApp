@@ -1,5 +1,6 @@
 package ro.taxiApp.docs.services.organization;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,17 +18,20 @@ import ro.taxiApp.docs.domain.security.SecurityManager;
 import ro.taxiApp.docs.plugins.organization.UserPersistencePlugin;
 import ro.taxiApp.docs.presentation.client.shared.model.organization.UserModel;
 import ro.taxiApp.docs.presentation.server.converters.organization.UserConverter;
+import ro.taxiApp.docs.utils.PasswordEncoder;
 
 public class UserServiceImpl implements UserService, InitializingBean {
 	
 	private UserPersistencePlugin userPersistencePlugin;
 	private RoleDao roleDao;
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {		
 		DependencyInjectionUtils.checkRequiredDependencies(
 			userPersistencePlugin,
-			roleDao
+			roleDao,
+			passwordEncoder
 		);
 	}
 	
@@ -37,11 +41,29 @@ public class UserServiceImpl implements UserService, InitializingBean {
 	}
 	
 	@Override
+	public List<UserModel> getUsersWithRole(String roleName) {
+		Role role = roleDao.getRoleByName(roleName);
+		List<User> users = userPersistencePlugin.getAllUsers();
+		List<UserModel> userModels =  new ArrayList<>();
+		for (User user : users) {
+			if (user.getRoles().contains(role)) {
+				userModels.add(UserConverter.getModelFromUser(user));
+			}
+		}
+		return userModels;
+	}
+	
+	@Override
+	@Transactional
 	public Long saveUserWithRole(UserModel user, String roleName, SecurityManager userSecurity) throws AppException {
 		User userEntity = null;
 		userEntity = UserConverter.getUserFromModel(user, userEntity, userSecurity);
 		Set<Role> userRoles = new HashSet<>();
 		userRoles.add(roleDao.getRoleByName(roleName));
+		userEntity.setRoles(userRoles);
+		if (user.getPassword()!=null) {
+			userEntity.setPassword(passwordEncoder.generatePasswordHash(user.getPassword()));
+		}
 		return userPersistencePlugin.saveUserAndReturnId(userEntity);
 	}
 	
@@ -94,6 +116,10 @@ public class UserServiceImpl implements UserService, InitializingBean {
 
 	public void setRoleDao(RoleDao roleDao) {
 		this.roleDao = roleDao;
+	}
+
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
 	}
 
 }

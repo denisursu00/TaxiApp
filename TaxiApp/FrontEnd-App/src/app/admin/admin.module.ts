@@ -40,6 +40,8 @@ import { DriversComponent } from './drivers/drivers.component';
 import { DriversWindowComponent } from './drivers/drivers-window/drivers-window.component';
 import { CarsComponent } from './cars/cars.component';
 import { CarsWindowComponent } from './cars/cars-window/cars-window.component';
+import { DispatchersComponent } from './dispatchers/dispatchers.component';
+import { DispatchersWindowComponent } from './dispatchers/dispatchers-window/dispatchers-window.component';
 
 @NgModule({
 	declarations: [
@@ -48,7 +50,9 @@ import { CarsWindowComponent } from './cars/cars-window/cars-window.component';
 		DriversComponent,
 		DriversWindowComponent,
 		CarsComponent,
-		CarsWindowComponent
+		CarsWindowComponent,
+		DispatchersComponent,
+		DispatchersWindowComponent
 	],
 	imports: [
 		RouterModule,

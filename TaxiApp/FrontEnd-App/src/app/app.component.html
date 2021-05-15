@@ -25,17 +25,3 @@
         </div>
     </div>    
 </div>
-
-<p-dialog [(visible)]="appUpdateDialogVisible" 
-        [modal]="true" 
-        [closable]="false" 
-        [showHeader]="true"
-        [style]="{'max-width':'550px'}"
-        appendTo="body">				
-    <p-header>{{appUpdateDialogHeader}}</p-header>
-    <p-message severity="info" [text]="'MESSAGES.APP_WAS_UPDATED_AND_RELOAD_NEED' | translate"></p-message>			
-    <p-footer>
-        <p-button (onClick)="onAppUpdateConfirmed()" [label]="'LABELS.APP_UPDATE_RELOAD' | translate"></p-button>
-        <p-button (onClick)="onAppUpdatePostponed()" [label]="'LABELS.APP_UPDATE_POSTPONE' | translate"></p-button>
-    </p-footer>
-</p-dialog>

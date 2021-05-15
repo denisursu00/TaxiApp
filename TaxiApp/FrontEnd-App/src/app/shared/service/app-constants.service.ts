@@ -3,7 +3,6 @@ import { AsyncCallback } from "../async-callback";
 import { AppError } from "../model/app-error";
 import { ApiPathConstants } from "../constants/api-path.constants";
 import { Injectable } from "@angular/core";
-import { ApplicationInfoModel } from "@app/shared/model/application-info.model";
 
 @Injectable()
 export class AppConstantsService {
@@ -14,7 +13,4 @@ export class AppConstantsService {
 		this.apiCaller = apiCaller;
 	}
 
-	public getApplicationInfo(callback: AsyncCallback<ApplicationInfoModel, AppError>): void {
-		this.apiCaller.call(ApiPathConstants.GET_APPLICATION_INFO, null, ApplicationInfoModel, callback);
-	}
 }

@@ -8,6 +8,7 @@ import ro.taxiApp.docs.dao.driver.DriverDao;
 import ro.taxiApp.docs.dao.ride.RideDao;
 import ro.taxiApp.docs.domain.rides.PaymentType;
 import ro.taxiApp.docs.domain.rides.Ride;
+import ro.taxiApp.docs.plugins.organization.UserPersistencePlugin;
 import ro.taxiApp.docs.presentation.client.shared.model.rides.RideModel;
 
 public class RideConverter implements InitializingBean {
@@ -15,13 +16,15 @@ public class RideConverter implements InitializingBean {
 	private RideDao rideDao;
 	private DriverDao driverDao;
 	private ClientDao clientDao;
+	private UserPersistencePlugin userPersistencePlugin;
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		DependencyInjectionUtils.checkRequiredDependencies(
 			rideDao,
 			driverDao,
-			clientDao
+			clientDao,
+			userPersistencePlugin
 		);
 	}
 	
@@ -37,10 +40,18 @@ public class RideConverter implements InitializingBean {
 		model.setEndAdress(entity.getEndAdress());
 		model.setPrice(entity.getPrice());
 		model.setCanceled(entity.getCanceled());
-		model.setClientId(entity.getClient().getId());
-		model.setDriverId(entity.getDriver().getId());
+		model.setFinished(entity.getFinished());
+		if (entity.getClient()!=null) {
+			model.setClientId(entity.getClient().getId());
+		}
+		if (entity.getDriver()!=null) {
+			model.setDriverId(entity.getDriver().getId());
+		}
+		if (entity.getDispatcher()!=null) {
+			model.setDispatcherId(entity.getDispatcher().getId());
+		}
 		model.setPaymentType(entity.getPaymentType().toString());
-		
+		model.setObservations(entity.getObservations());
 		return model;
 	}
 	
@@ -62,12 +73,20 @@ public class RideConverter implements InitializingBean {
 		entity.setEndAdress(model.getEndAdress());
 		entity.setPrice(model.getPrice());
 		entity.setCanceled(model.getCanceled());
+		entity.setFinished(model.getFinished());
 		
-		entity.setClient(clientDao.getById(model.getClientId()));
-		entity.setDriver(driverDao.getById(model.getDriverId()));
+		if (model.getClientId()!=null) {
+			entity.setClient(clientDao.getById(model.getClientId()));
+		}
+		if (model.getDriverId()!=null) {
+			entity.setDriver(driverDao.getById(model.getDriverId()));
+		}
+		if (model.getDispatcherId()!=null) {
+			entity.setDispatcher(userPersistencePlugin.getUserById(model.getDispatcherId()));
+		}
 		
 		entity.setPaymentType(PaymentType.valueOf(model.getPaymentType()));
-		
+		entity.setObservations(model.getObservations());
 		
 		return entity;
 	}
@@ -82,6 +101,10 @@ public class RideConverter implements InitializingBean {
 
 	public void setClientDao(ClientDao clientDao) {
 		this.clientDao = clientDao;
+	}
+
+	public void setUserPersistencePlugin(UserPersistencePlugin userPersistencePlugin) {
+		this.userPersistencePlugin = userPersistencePlugin;
 	}
 
 }

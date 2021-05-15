@@ -16,6 +16,7 @@
 	<bean id="userService" class="ro.taxiApp.docs.services.organization.UserServiceImpl">
 		<property name="userPersistencePlugin" ref="userPersistencePlugin" />
 		<property name="roleDao" ref="roleDao" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
 	</bean>
 	
 	<bean id="roleService" class="ro.taxiApp.docs.services.organization.RoleServiceImpl">
