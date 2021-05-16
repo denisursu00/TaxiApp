@@ -20,17 +20,8 @@
 		<property name="idleConnectionTestPeriod" value="${app.database.connection_pool.idle_connection_test_period_in_seconds}" />
 		<property name="preferredTestQuery" value="${app.database.connection_pool.test_query}" />
 	</bean>
-    
-    <bean id="hibernateSchemaSqlExporter" class="ro.taxiApp.docs.exporters.HibernateSchemaSqlExporter">
-    	<constructor-arg index="0" value="${app.hibernate.schema_sql_exporter.generate_files}" />
-    	
-    	<constructor-arg index="1" value="${app.hibernate.schema_sql_exporter.file_path_create}" />
-    	<constructor-arg index="2" value="${app.hibernate.schema_sql_exporter.file_path_drop}" />
-    </bean>
 
     <bean id="sessionFactory" class="ro.taxiApp.docs.config.CustomHibernateAnnotationSessionFactoryBean">
-        <property name="schemaSqlExporter" ref="hibernateSchemaSqlExporter" />
-        
         <property name="dataSource" ref="dataSourceSpring"/>
         
         <property name="hibernateProperties">
@@ -63,15 +54,5 @@
 			</set>
 		</property>
     </bean>
-
-    <!-- <bean id="repositoryPerformanceMonitor" class="ro.taxiApp.docs.internal.aspects.RepositoryPerformanceMonitor">
-		<constructor-arg ref="monitorFactory"/>
-	</bean>
-
-	<bean id="monitorFactory" class="ro.taxiApp.docs.internal.monitor.jamon.JamonMonitorFactory"/>
-
-	<aop:aspectj-autoproxy>
-		<aop:include name="repositoryPerformanceMonitor"/>
-	</aop:aspectj-autoproxy> -->
 	
 </beans>

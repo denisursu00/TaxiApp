@@ -4,37 +4,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
        <!-- == SPRING DISPATCH HANDLER == -->
-
-  <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-  	<property name="urlMap">
-  		<map>
-  			<entry key="/redirectToDefaultModule.do" value="redirectToDefaultModuleController" />
-  			<entry key="/**/AclGxtService.form" value="aclController" />
-  			<entry key="/**/AppGxtService.form" value="appController" />
-  		</map>
-  	</property>
-  </bean>
-  
-	<bean name="redirectToDefaultModuleController" class="ro.taxiApp.docs.web.controllers.RedirectToDefaultModuleController">
-		<property name="defaultModulePageUrl" value="${app.web.pages.index}" />
-	</bean>
-    
   
   	<bean name="aclGxtService" class="ro.taxiApp.docs.presentation.server.services.AclGxtServiceImpl"></bean>
-  	
-	<bean name="aclController" class="ro.taxiApp.docs.presentation.server.GWTController">
-		<property name="remoteService" ref="aclGxtService" />
-	</bean>
 
-	
 	<bean name="passwordEncoder" class="ro.taxiApp.docs.utils.PasswordEncoder">
 		<property name="saltKeyValue" value="${app.security.authentication.passwordEncoder.saltKeyValue}" />
-	</bean>
-
-	<bean name="appGxtService" class="ro.taxiApp.docs.presentation.server.services.AppGxtServiceImpl"></bean>
-			
-	<bean name="appController" class="ro.taxiApp.docs.presentation.server.GWTController">
-		<property name="remoteService" ref="appGxtService" />
 	</bean>
 
 </beans>

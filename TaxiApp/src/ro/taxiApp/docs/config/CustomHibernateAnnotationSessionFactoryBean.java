@@ -11,7 +11,6 @@ import com.google.common.collect.Sets;
 
 import ro.taxiApp.common.utils.DependencyInjectionUtils;
 import ro.taxiApp.common.utils.SpringHibernateUtils;
-import ro.taxiApp.docs.exporters.HibernateSchemaSqlExporter;
 
 /**
  * 
@@ -19,28 +18,22 @@ import ro.taxiApp.docs.exporters.HibernateSchemaSqlExporter;
 public class CustomHibernateAnnotationSessionFactoryBean extends AnnotationSessionFactoryBean implements InitializingBean {
 	
 	private Set<String> basePackagesToScan = Sets.newHashSet();
-	private HibernateSchemaSqlExporter schemaSqlExporter;
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		DependencyInjectionUtils.checkRequiredDependencies(
-			basePackagesToScan,
-			schemaSqlExporter
+			basePackagesToScan
 		);
 		super.afterPropertiesSet();
 	}
 	
 	@Override
 	protected void postProcessAnnotationConfiguration(AnnotationConfiguration configuration) throws HibernateException {
-		SpringHibernateUtils.addAnnotatedClassesFromBasePackages(configuration, basePackagesToScan);
-		schemaSqlExporter.doExport(configuration);		
+		SpringHibernateUtils.addAnnotatedClassesFromBasePackages(configuration, basePackagesToScan);	
 		super.postProcessAnnotationConfiguration(configuration);
 	}
 	
 	public void setBasePackagesToScan(Set<String> basePackagesToScan) {
 		this.basePackagesToScan = basePackagesToScan;
-	}
-	public void setSchemaSqlExporter(HibernateSchemaSqlExporter schemaSqlExporter) {
-		this.schemaSqlExporter = schemaSqlExporter;
 	}
 }

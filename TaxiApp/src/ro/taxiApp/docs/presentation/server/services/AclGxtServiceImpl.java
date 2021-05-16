@@ -23,14 +23,13 @@ public class AclGxtServiceImpl extends GxtServiceImplBase implements AclGxtServi
 	
 	@Override
 	public void invalidateSession() {
-		// Nu trebuie invalidata sesiunea intrucat mai exista date utile filtrului de logout.
 		// getSession().invalidate();
 	}
 
 	@Override
 	public void dummy(SecurityManagerModel securityManagerModel, UserModel userModel)
 			throws PresentationException {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }
