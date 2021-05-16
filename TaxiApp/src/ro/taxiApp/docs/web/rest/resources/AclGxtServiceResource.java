@@ -24,6 +24,6 @@ public class AclGxtServiceResource extends BaseResource {
 	@POST
 	@Path("/getSecurityManager")
 	public SecurityManagerModel getSecurityManager() {
-		return aclGxtService.getSecurityManager();
+		return aclGxtService.getSecurityManager(this.getSecurity());
 	}
 }
