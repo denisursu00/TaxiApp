@@ -5,8 +5,4 @@
   
   	<bean name="aclGxtService" class="ro.taxiApp.docs.presentation.server.services.AclGxtServiceImpl"></bean>
 
-	<bean name="passwordEncoder" class="ro.taxiApp.docs.utils.PasswordEncoder">
-		<property name="saltKeyValue" value="${app.security.authentication.passwordEncoder.saltKeyValue}" />
-	</bean>
-
 </beans>

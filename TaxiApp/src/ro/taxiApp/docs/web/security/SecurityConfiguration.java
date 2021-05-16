@@ -31,8 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
 			.antMatchers(HttpMethod.OPTIONS, "/**")
-			.antMatchers("/**/*.{js,html,ico}")
-			.antMatchers("/rest/AppConstantsService/getApplicationInfo");
+			.antMatchers("/**/*.{js,html,ico}");
 	}
 	
 	@Override
@@ -53,11 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	        	.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 	    .and()
 	    	.authorizeRequests()
-		        .antMatchers("/rest/Auth/login").permitAll()		        
-		        .antMatchers("/rest/Auth/changePassword").authenticated()
+		        .antMatchers("/rest/Auth/login").permitAll() 
 		        .antMatchers("/rest/Auth/getLoggedInUser").authenticated()
-		        .antMatchers("/exportDataAsSql").permitAll()
-		        .antMatchers("/appUtilities").permitAll()
 		        .antMatchers("/rest/**").hasAnyAuthority(allRoleNamesAsArray)
 		        .anyRequest().authenticated()
 	    .and()
