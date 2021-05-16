@@ -3,18 +3,6 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
     
-    <bean id="staticSpringContextAccessorHelper" class="ro.taxiApp.common.utils.spring.StaticSpringContextAccessorHelper" />
-    
-    <bean id="localeResolver" class="ro.taxiApp.common.utils.spring.HttpSessionAttributeLocaleResolver">
-    	<constructor-arg index="0" value="locale" /> <!-- attributeName -->
-    	<constructor-arg index="1"> <!-- supportedLocaleCodes -->
-    		<set>
-    			<value>ro</value>
-    			<value>en</value>
-    		</set>
-    	</constructor-arg>
-    	<constructor-arg index="2" value="ro" /> <!-- defaultLocaleCode -->
-    </bean>
    	
    	<bean id="liquibaseMigrator" class="ro.taxiApp.docs.liquibase.AppEnvironmentAwareSpringLiquibaseMigrator">
    		<property name="dataSource" ref="dataSourceSpring" />

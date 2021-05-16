@@ -7,7 +7,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import ro.taxiApp.docs.domain.security.SecurityManager;
 import ro.taxiApp.docs.presentation.client.shared.exceptions.PresentationException;
-import ro.taxiApp.docs.presentation.client.shared.model.PermissionModel;
 import ro.taxiApp.docs.presentation.client.shared.model.SecurityManagerModel;
 import ro.taxiApp.docs.presentation.client.shared.model.organization.UserModel;
 import ro.taxiApp.docs.presentation.client.shared.services.GxtServiceBase;
@@ -36,6 +35,6 @@ public abstract class GxtServiceImplBase implements GxtServiceBase {
 
     /** {@inheritDoc} */
 	@Override
-	public void dummy(PermissionModel permissionModel, SecurityManagerModel securityManagerModel, UserModel userModel)
+	public void dummy(SecurityManagerModel securityManagerModel, UserModel userModel)
 		throws PresentationException {}
 }

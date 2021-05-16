@@ -6,14 +6,11 @@ import ro.taxiApp.common.utils.DependencyInjectionUtils;
 import ro.taxiApp.docs.domain.organization.User;
 import ro.taxiApp.docs.services.organization.UserService;
 import ro.taxiApp.docs.utils.PasswordEncoder;
-import ro.taxiApp.docs.utils.log.LogHelper;
 
 /**
  * 
  */
 public class SpringSecurityDatabaseAuthenticationVerifier implements AuthenticationVerifier, InitializingBean {
-	
-	private static final LogHelper LOGGER = LogHelper.getInstance(SpringSecurityDatabaseAuthenticationVerifier.class);
 	
 	private UserService userService;
 	
@@ -31,7 +28,6 @@ public class SpringSecurityDatabaseAuthenticationVerifier implements Authenticat
 			String passwordHash = passwordEncoder.generatePasswordHash(password);
 			return (user != null && user.getPassword().equals(passwordHash));
 		} catch (Exception ex) {
-			LOGGER.warn("Exceptie in timpul autentificarii", ex, "userExists");
 			return false;
 		}
 	}

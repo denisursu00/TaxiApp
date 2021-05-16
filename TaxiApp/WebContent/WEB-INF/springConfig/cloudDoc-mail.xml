@@ -3,23 +3,4 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="protocol" value="${app.mail.protocol}" />
-		<property name="host" value="${app.mail.host}" />
-        <property name="port" value="${app.mail.port}" />
-        <property name="username" value="${app.mail.username}" />
-        <property name="password" value="${app.mail.password}" />
-        <property name="javaMailProperties">
-            <props>
-                <prop key="mail.smtp.auth">${app.mail.smtp.auth}</prop>
-                <prop key="mail.smtp.starttls.enable">${app.mail.smtp.starttls.enable}</prop>
-            </props>
-        </property>
-	</bean>
-
-	<bean id="mailService" class="ro.taxiApp.docs.spring.services.SpringMailService">
-		<property name="mailSender" ref="mailSender" />
-		<property name="fromAddress" value="${app.mail.from}" />
-	</bean>
-
 </beans>

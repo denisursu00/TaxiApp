@@ -4,7 +4,6 @@ import javax.sql.DataSource;
 
 import liquibase.integration.spring.SpringLiquibase;
 import ro.taxiApp.common.utils.DependencyInjectionUtils;
-import ro.taxiApp.docs.config.environment.AppEnvironmentConfig;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ResourceLoaderAware;
@@ -31,7 +30,6 @@ public class AppEnvironmentAwareSpringLiquibaseMigrator implements ResourceLoade
 		springLiquibase.setResourceLoader(resourceLoader);
 		springLiquibase.setDataSource(dataSource);
 		springLiquibase.setChangeLog(changelogFilePath);
-		springLiquibase.setContexts(AppEnvironmentConfig.SUFFIX_FOR_CURRENT_ENVIRONMENT);
 		
 		springLiquibase.afterPropertiesSet();
 	}

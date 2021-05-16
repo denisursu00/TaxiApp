@@ -3,9 +3,6 @@ package ro.taxiApp.docs.presentation.server.services;
 import org.springframework.beans.factory.InitializingBean;
 
 import ro.taxiApp.common.utils.DependencyInjectionUtils;
-import ro.taxiApp.docs.config.environment.AppEnvironment;
-import ro.taxiApp.docs.config.environment.AppEnvironmentConfig;
-import ro.taxiApp.docs.presentation.client.shared.model.ApplicationInfoModel;
 import ro.taxiApp.docs.presentation.client.shared.services.AppGxtService;
 
 public class AppGxtServiceImpl extends GxtServiceImplBase implements AppGxtService, InitializingBean {
@@ -28,11 +25,4 @@ public class AppGxtServiceImpl extends GxtServiceImplBase implements AppGxtServi
 		getSession().getAttribute("dummy");
 	}
 	
-	@Override
-	public ApplicationInfoModel getApplicationInfo() {
-		ApplicationInfoModel appInfo = new ApplicationInfoModel();
-		appInfo.setEnvironmentName(AppEnvironmentConfig.getCurrentEnvironment().name());
-		appInfo.setProduction(AppEnvironmentConfig.getCurrentEnvironment().equals(AppEnvironment.PRODUCTION));
-		return appInfo;
-	}
 }

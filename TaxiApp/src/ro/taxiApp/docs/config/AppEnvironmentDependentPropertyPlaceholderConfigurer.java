@@ -12,10 +12,9 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import com.google.common.collect.Lists;
 
 import ro.taxiApp.common.utils.DependencyInjectionUtils;
-import ro.taxiApp.docs.config.environment.AppEnvironmentConfig;
 
 /**
- * Permite incarcarea proprietatilor atat cele comune, cat si cele dependente de mediul in care ruleaza aplicatia.
+ * Permite incarcarea proprietatilor
  * 
  * 
  */
@@ -39,9 +38,8 @@ public class AppEnvironmentDependentPropertyPlaceholderConfigurer extends Proper
 		
 		propertyFilePackagePaths.addAll(commonPropertyFilePackagePaths);
 		
-		for (String environmentDependentPropertyFilePackagePath : environmentDependentPropertyFilePackagePaths) {			
-			String propertyFilePackagePathForCurrentEnvironment = AppEnvironmentConfig.getFilePackagePathWithSuffix(environmentDependentPropertyFilePackagePath);
-			propertyFilePackagePaths.add(propertyFilePackagePathForCurrentEnvironment);
+		for (String environmentDependentPropertyFilePackagePath : environmentDependentPropertyFilePackagePaths) {
+			propertyFilePackagePaths.add(environmentDependentPropertyFilePackagePath);
 		}
 
 		for (String propertyFilePackagePath : propertyFilePackagePaths) {

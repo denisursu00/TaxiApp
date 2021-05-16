@@ -1,6 +1,5 @@
 package ro.taxiApp.docs.presentation.client.shared.services;
 
-import ro.taxiApp.docs.presentation.client.shared.model.ApplicationInfoModel;
 
 public interface AppGxtService extends GxtServiceBase {
 	
@@ -15,5 +14,4 @@ public interface AppGxtService extends GxtServiceBase {
 	 */
 	void keepSessionAlive();
 	
-	ApplicationInfoModel getApplicationInfo();
 }

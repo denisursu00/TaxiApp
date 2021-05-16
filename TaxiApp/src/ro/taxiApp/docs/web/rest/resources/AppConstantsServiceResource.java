@@ -9,7 +9,6 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ro.taxiApp.docs.presentation.client.shared.model.ApplicationInfoModel;
 import ro.taxiApp.docs.presentation.client.shared.services.AppGxtService;
 
 @Component
@@ -21,9 +20,4 @@ public class AppConstantsServiceResource {
 	@Autowired
 	AppGxtService appGxtService;
 	
-	@POST
-	@Path("/getApplicationInfo")
-	public ApplicationInfoModel getApplicationInfo() {
-		return appGxtService.getApplicationInfo();
-	}
 }

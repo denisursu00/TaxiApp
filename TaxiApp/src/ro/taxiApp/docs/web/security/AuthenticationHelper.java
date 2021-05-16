@@ -12,11 +12,8 @@ import org.springframework.security.core.AuthenticationException;
 import ro.taxiApp.common.utils.DependencyInjectionUtils;
 import ro.taxiApp.docs.domain.organization.User;
 import ro.taxiApp.docs.services.organization.UserService;
-import ro.taxiApp.docs.utils.log.LogHelper;
 
 public class AuthenticationHelper implements InitializingBean {
-	
-	private static final LogHelper LOGGER = LogHelper.getInstance(AuthenticationHelper.class);
 	
 	private static final String EXCEPTION_MESSAGE_BAD_CREDENTIALS = "Bad credentials";
 	
@@ -47,10 +44,6 @@ public class AuthenticationHelper implements InitializingBean {
 		}
 		
 		if (!authenticationVerifier.userExists(username, password)) {
-			
-			String logMessage = "S-a incercat autentificarea cu username-ul " +
-				"[" + username + "], insa username-ul si/sau parola sunt gresite.";
-			LOGGER.error(logMessage, "autentificare");
 			
 			throw getBadCredentialsException();
 		}

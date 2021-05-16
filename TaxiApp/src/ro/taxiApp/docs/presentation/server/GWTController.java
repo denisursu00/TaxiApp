@@ -28,13 +28,10 @@ import ro.taxiApp.docs.domain.security.SecurityManager;
 import ro.taxiApp.docs.presentation.client.shared.exceptions.PresentationException;
 import ro.taxiApp.docs.presentation.server.services.GxtServiceImplBase;
 import ro.taxiApp.docs.presentation.server.utils.PresentationExceptionUtils;
-import ro.taxiApp.docs.utils.log.LogHelper;
 
 public class GWTController extends RemoteServiceServlet implements Controller, ServletContextAware, InitializingBean {
 
 	private static final long serialVersionUID = 1L;
-
-    private static final LogHelper LOGGER = LogHelper.getInstance(GWTController.class);
     
     private ServletContext servletContext;
 	
@@ -119,8 +116,7 @@ public class GWTController extends RemoteServiceServlet implements Controller, S
             	} else {
             		message = "Exista o incompatibilitate intre partea client si server " +
             			"a serviciului GWT RPC cu implementarea [" + remoteService.getClass().getName() + "].";
-            	}		
-            	LOGGER.error(message, irse, "Controller-ul GWT", "apel GWT RPC", remoteService.getSecurity());
+            	}
                 return RPC.encodeResponseForFailure(null, irse);
             } else if (e instanceof UnexpectedException) {
             	
@@ -151,7 +147,6 @@ public class GWTController extends RemoteServiceServlet implements Controller, S
     	} else {
     		message = "Exceptie la apelarea prin GWT RPC cu implementarea [" + remoteService.getClass().getName() + "]";
     	}
-    	LOGGER.error(message, exception, "Controller-ul GWT", "apel GWT RPC", remoteService.getSecurity());
     }
     
     /** Trimite catre partea client un mesaj encode-at ca urmare a aparitiei unei exceptii neasteptate (non-RPC GWT). */

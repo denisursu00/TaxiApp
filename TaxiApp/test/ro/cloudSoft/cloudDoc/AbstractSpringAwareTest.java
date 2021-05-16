@@ -5,7 +5,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import ro.taxiApp.docs.utils.log.LogHelper;
 
 /**
  * Clasa de baza pentru testele ce au nevoie de Spring
@@ -33,6 +32,5 @@ import ro.taxiApp.docs.utils.log.LogHelper;
 public abstract class AbstractSpringAwareTest {
 	
 	static {
-		LogHelper.initLog4j();
 	}
 }

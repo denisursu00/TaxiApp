@@ -4,7 +4,6 @@ import org.springframework.beans.factory.InitializingBean;
 
 import ro.taxiApp.common.utils.DependencyInjectionUtils;
 import ro.taxiApp.docs.presentation.client.shared.exceptions.PresentationException;
-import ro.taxiApp.docs.presentation.client.shared.model.PermissionModel;
 import ro.taxiApp.docs.presentation.client.shared.model.SecurityManagerModel;
 import ro.taxiApp.docs.presentation.client.shared.model.organization.UserModel;
 import ro.taxiApp.docs.presentation.client.shared.services.AclGxtService;
@@ -29,7 +28,7 @@ public class AclGxtServiceImpl extends GxtServiceImplBase implements AclGxtServi
 	}
 
 	@Override
-	public void dummy(PermissionModel permissionModel, SecurityManagerModel securityManagerModel, UserModel userModel)
+	public void dummy(SecurityManagerModel securityManagerModel, UserModel userModel)
 			throws PresentationException {
 		// TODO Auto-generated method stub
 		

@@ -3,7 +3,6 @@ package ro.taxiApp.docs.presentation.client.shared.services;
 import com.google.gwt.user.client.rpc.RemoteService;
 
 import ro.taxiApp.docs.presentation.client.shared.exceptions.PresentationException;
-import ro.taxiApp.docs.presentation.client.shared.model.PermissionModel;
 import ro.taxiApp.docs.presentation.client.shared.model.SecurityManagerModel;
 import ro.taxiApp.docs.presentation.client.shared.model.organization.UserModel;
 
@@ -23,6 +22,6 @@ public interface GxtServiceBase extends RemoteService {
 	 * De asemenea, ar trebui sa declare ca poate arunca toate tipurile de exceptii care ar putea fi trimise catre
 	 * partea GWT client.
 	 */
-	void dummy(PermissionModel permissionModel, SecurityManagerModel securityManagerModel, UserModel userModel)
+	void dummy(SecurityManagerModel securityManagerModel, UserModel userModel)
 		throws PresentationException;
 }

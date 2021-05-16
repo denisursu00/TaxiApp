@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 
-import ro.taxiApp.docs.utils.log.LogHelper;
-
 /**
  * Raporteaza exceptiile "scapate" din zona principala a aplicatiei.
  * 
@@ -19,8 +17,6 @@ import ro.taxiApp.docs.utils.log.LogHelper;
 public class ExceptionLoggingServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-
-	private static final LogHelper LOGGER = LogHelper.getInstance(ExceptionLoggingServlet.class);
 	
 	private static final String REQUEST_ATTRIBUTE_NAME_EXCEPTION = "javax.servlet.error.exception";
 	private static final String REQUEST_ATTRIBUTE_NAME_REQUESTED_URI = "javax.servlet.error.request_uri";
@@ -43,7 +39,6 @@ public class ExceptionLoggingServlet extends HttpServlet {
 		Throwable exception = (Throwable) request.getAttribute(REQUEST_ATTRIBUTE_NAME_EXCEPTION);		
 		if (exception != null) {
 			String requestedUri = (String) request.getAttribute(REQUEST_ATTRIBUTE_NAME_REQUESTED_URI);
-			LOGGER.error("Exceptie la accesarea [" + requestedUri + "]", exception, null);
 		}
 		
 		String exceptionClassName = exception.getClass().getName();

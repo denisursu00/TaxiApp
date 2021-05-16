@@ -1,6 +1,0 @@
-package ro.taxiApp.docs.core.constants;
-
-public interface ParameterConstants {
-	//public static String PARAM_NAME_PROIECT_GRAD_REALIZARE_PONDERE_IN_PROCENTE_PENTRU_NR_ACTIUNI_REALIZATE_PE_NR_ACTIUNI_ESTIMATE = "proiect.grad_realizare_pondere_in_procente_pentru_nr_actiuni_realizate_pe_nr_actiuni_estimate";
-	
-}

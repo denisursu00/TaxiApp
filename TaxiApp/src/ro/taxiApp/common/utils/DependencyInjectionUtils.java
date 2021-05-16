@@ -6,9 +6,6 @@ package ro.taxiApp.common.utils;
 public class DependencyInjectionUtils {
 
 	/**
-	 * Verifica dependentele necesare sa nu fie nule.
-	 * Daca oricare dependenta e nula, atunci va arunca exceptie.
-	 * 
 	 * @throws IllegalStateException daca cel putin o dependenta e nula
 	 */
 	public static void checkRequiredDependencies(Object... dependencies) {

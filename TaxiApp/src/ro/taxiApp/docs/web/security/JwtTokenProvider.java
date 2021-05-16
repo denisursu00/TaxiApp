@@ -18,14 +18,11 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
-import ro.taxiApp.docs.utils.log.LogHelper;
 
 public class JwtTokenProvider {
 	
 	private static final String CLAIM_NAME_AUTHORITIES = "authorities";
 	private static final String CLAIM_NAME_USER_ID = "user_id";
-	
-	private static final LogHelper logger = LogHelper.getInstance(JwtTokenProvider.class);
 	
 	private JwtSettings jwtSettings;
 	
@@ -81,13 +78,13 @@ public class JwtTokenProvider {
             Jwts.parser().setSigningKey(key).parseClaimsJws(authToken);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            logger.info("Invalid JWT signature.");
+            
         } catch (ExpiredJwtException e) {
-            logger.info("Expired JWT token.");
+            
         } catch (UnsupportedJwtException e) {
-            logger.info("Unsupported JWT token.");
+            
         } catch (IllegalArgumentException e) {
-            logger.info("JWT token compact of handler are invalid.");
+            
         }
         return false;
     }
