@@ -21,7 +21,6 @@ public class ClientDao extends HibernateDaoSupport {
 	}
 	
 	public Client getByUserId(Long id) {
-		System.out.println(id);
 		String query = " SELECT cl FROM Client cl "
 					+ "  JOIN cl.user us "
 					+ "  WHERE us.id = " + id.toString();

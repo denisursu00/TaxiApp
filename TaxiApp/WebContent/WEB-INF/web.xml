@@ -51,7 +51,6 @@
   </filter-mapping>  
   <filter-mapping>
     <filter-name>RequestContextFilter</filter-name>
-    <servlet-name>SpringDispatcherServlet</servlet-name>
     <servlet-name>JerseySpringDispatcherServlet</servlet-name>
   </filter-mapping>
   <filter-mapping>
@@ -61,17 +60,6 @@
   <servlet>
     <servlet-name>ExceptionLoggingServlet</servlet-name>
     <servlet-class>ro.taxiApp.docs.web.servlets.ExceptionLoggingServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>SpringDispatcherServlet</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <init-param>
-      <param-name>contextConfigLocation</param-name>
-      <param-value>
-      		/WEB-INF/springConfig/servlet.xml
-	  </param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet> 
 	<servlet-name>JerseySpringDispatcherServlet</servlet-name>
@@ -97,14 +85,6 @@
   <servlet-mapping>
     <servlet-name>ExceptionLoggingServlet</servlet-name>
     <url-pattern>/ExceptionLoggingServlet</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>SpringDispatcherServlet</servlet-name>
-    <url-pattern>*.do</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>SpringDispatcherServlet</servlet-name>
-    <url-pattern>*.form</url-pattern>
   </servlet-mapping>
   <error-page>
     <exception-type>java.lang.Throwable</exception-type>
