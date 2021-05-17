@@ -15,6 +15,8 @@
    		<property name="userService" ref="userService" />
 	</bean>
 	
+	<bean name="aclGxtService" class="ro.taxiApp.docs.presentation.server.services.AclGxtServiceImpl"></bean>
+	
    	<!-- Parameters -->
    	
    	<bean id="parametersDao" class="ro.taxiApp.docs.dao.parameters.ParamentersDaoImpl">

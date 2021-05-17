@@ -15,22 +15,13 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-			/WEB-INF/springConfig/cloudDoc-constants.xml
-			/WEB-INF/springConfig/cloudDoc-content.xml
-			/WEB-INF/springConfig/cloudDoc-context.xml
-			/WEB-INF/springConfig/cloudDoc-integrityCheck.xml
-			/WEB-INF/springConfig/cloudDoc-mail.xml
-			/WEB-INF/springConfig/cloudDoc-misc.xml
-			/WEB-INF/springConfig/cloudDoc-organization.xml
-			/WEB-INF/springConfig/cloudDoc-parameters.xml
-			/WEB-INF/springConfig/cloudDoc-process.xml
-			/WEB-INF/springConfig/cloudDoc-scheduledTasks.xml
-			/WEB-INF/springConfig/cloudDoc-security.xml
-			/WEB-INF/springConfig/cloudDoc-webServices.xml
-			/WEB-INF/springConfig/cloudDoc-rest.xml
-			/WEB-INF/springConfig/cloudDoc-controller.xml
-			/WEB-INF/springConfig/cloudDoc-parameters.xml
-			/WEB-INF/springConfig/cloudDoc-exportDataAsSql.xml
+			/WEB-INF/springConfig/context.xml
+			/WEB-INF/springConfig/misc.xml
+			/WEB-INF/springConfig/organization.xml
+			/WEB-INF/springConfig/parameters.xml
+			/WEB-INF/springConfig/process.xml
+			/WEB-INF/springConfig/security.xml
+			/WEB-INF/springConfig/rest.xml
         </param-value>
   </context-param>
   <listener>
@@ -42,9 +33,6 @@
   <listener>
     <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
   </listener>
-  <!-- <listener>
-  	<listener-class>ro.taxiApp.docs.web.listeners.AppConfigurationListener</listener-class>
-  </listener> -->
   <filter>
     <filter-name>RequestContextFilter</filter-name>
     <filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
@@ -80,7 +68,7 @@
     <init-param>
       <param-name>contextConfigLocation</param-name>
       <param-value>
-      		/WEB-INF/springConfig/cloudDoc-servlet.xml
+      		/WEB-INF/springConfig/servlet.xml
 	  </param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
@@ -96,10 +84,6 @@
 		<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
 		<param-value>true</param-value>
 	</init-param>
-	<!-- <init-param>
-		<param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
-		<param-value>ro.taxiApp.docs.web.filters.JerseyCORSFilter,ro.taxiApp.docs.web.filters.AppVersionFilter</param-value>
-	</init-param>	 -->
 	<init-param>
 		<param-name>com.sun.jersey.config.feature.DisableWADL</param-name>
 		<param-value>true</param-value>
