@@ -147,6 +147,7 @@ export class RideWindowComponent extends BaseWindow implements OnInit {
 
 	private prepareForAdd(): void {
 		this.lock();
+		this.rideId = null;
 		this.unlock();
 	}
 

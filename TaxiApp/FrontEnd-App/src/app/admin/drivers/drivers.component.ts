@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { DriversService, AppError, MessageDisplayer, ObjectUtils, ConfirmationUtils, DateUtils } from "@app/shared";
+import { DriversService, AppError, MessageDisplayer, ObjectUtils, ConfirmationUtils, DateUtils, OrganizationService } from "@app/shared";
 import { DriverModel } from "@app/shared/model/drivers";
 
 @Component({
@@ -9,6 +9,7 @@ import { DriverModel } from "@app/shared/model/drivers";
 })
 export class DriversComponent {
 
+	private organizationService: OrganizationService;
   	private driversService: DriversService;
 	private messageDisplayer: MessageDisplayer;
 	private confirmationUtils: ConfirmationUtils;
@@ -25,7 +26,8 @@ export class DriversComponent {
 
 	public scrollHeight: string;
 
-	public constructor(driverService: DriversService, messageDisplayer: MessageDisplayer, confirmationUtils: ConfirmationUtils) {
+	public constructor(organizationService: OrganizationService, driverService: DriversService, messageDisplayer: MessageDisplayer, confirmationUtils: ConfirmationUtils) {
+		this.organizationService = organizationService;
 		this.driversService = driverService;
 		this.messageDisplayer = messageDisplayer;
 		this.confirmationUtils = confirmationUtils;
@@ -67,10 +69,17 @@ export class DriversComponent {
 			approve: (): void => {
 				this.driversService.deleteDriverById(this.selectedDriver.id, {
 					onSuccess: (): void => {
-						this.messageDisplayer.displaySuccess("DELETED_SUCCESSFULLY");
-						this.selectedDriver = null;
-						this.changePerspective();
-						this.loadDrivers();
+						this.organizationService.deleteUserById(this.selectedDriver.user.id, {
+							onSuccess: (): void => {
+								this.messageDisplayer.displaySuccess("DELETED_SUCCESSFULLY");
+								this.selectedDriver = null;
+								this.changePerspective();
+								this.loadDrivers();
+							},
+							onFailure: (appError: AppError): void => {
+								this.messageDisplayer.displayAppError(appError);
+							}
+						});
 					},
 					onFailure: (appError: AppError): void => {
 						this.messageDisplayer.displayAppError(appError);
@@ -102,9 +111,13 @@ export class DriversComponent {
 		this.driverWindowVisible = false;
 		this.deleteButtonDisabled = true;
 		this.editButtonDisabled = true;
+		this.selectedDriver = null;
+		this.changePerspective();
 	}
 
 	public onDriverWindowDataSaved(): void {
+		this.selectedDriver = null;
+		this.changePerspective();
 		this.loadDrivers();
 	}
 

@@ -4,9 +4,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
+import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+import org.castor.core.util.Base64Decoder;
 import org.castor.core.util.Base64Encoder;
 
 import ro.taxiApp.docs.core.AppException;
@@ -18,6 +20,7 @@ public class PasswordEncoder {
 	private static final String SECRET_KEY_FACTORY_INSTANCE_NAME = "PBKDF2WithHmacSHA1";
 	private String saltKeyValue;
 
+	@SuppressWarnings("static-access")
 	public String generatePasswordHash(String password) throws AppException {
 		byte[] hashedPasswordBytes = null;
 

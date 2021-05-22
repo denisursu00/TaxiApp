@@ -37,6 +37,8 @@ export class DriversWindowComponent extends BaseWindow implements OnInit {
 
 	public windowVisible: boolean;
 
+	public user: UserModel;
+
 	public constructor(driversService: DriversService, organizationService: OrganizationService, messageDisplayer: MessageDisplayer, formBuilder: FormBuilder) {
 		super();
 		this.driversService = driversService;
@@ -71,6 +73,7 @@ export class DriversWindowComponent extends BaseWindow implements OnInit {
   }
 
 	public ngOnInit(): void {
+		this.user = null;
 		if (this.isAddMode()) {
 			this.prepareForAdd();
 		} else if (this.isEditMode()) {
@@ -96,6 +99,7 @@ export class DriversWindowComponent extends BaseWindow implements OnInit {
 		this.driversService.getDriverById(this.driverId, {
 			onSuccess: (driverModel: DriverModel): void => {
 				this.prepareFormFromDriverModel(driverModel);
+				this.user = driverModel.user;
 				this.unlock();
 			},
 			onFailure: (appError: AppError): void => {
@@ -109,7 +113,7 @@ export class DriversWindowComponent extends BaseWindow implements OnInit {
 		this.firstNameFormControl.setValue(driverModel.user.firstName);
 		this.lastNameFormControl.setValue(driverModel.user.lastName);
 		ObjectUtils.isNotNullOrUndefined(driverModel.user.email) ? this.emailFormControl.setValue(driverModel.user.email) : this.emailFormControl.setValue(null);
-		ObjectUtils.isNotNullOrUndefined(driverModel.user.password) ? this.passwordFormControl.setValue(driverModel.user.password) : this.passwordFormControl.setValue(null);
+		this.passwordFormControl.setValue(null);
 		ObjectUtils.isNotNullOrUndefined(driverModel.user.username) ? this.usernameFormControl.setValue(driverModel.user.username) : this.usernameFormControl.setValue(null);
 		this.mobileFormControl.setValue(driverModel.user.mobile);
 		this.birthDateFormControl.setValue(driverModel.birthDate);
@@ -133,6 +137,7 @@ export class DriversWindowComponent extends BaseWindow implements OnInit {
 	private saveDriver(): void {
 		let userModel = this.getUserModelFromForm();
 		let driverModel = this.getDriverModelFromForm();
+		driverModel.user = userModel;
 		this.organizationService.saveUserAsDriver(userModel, {
 			onSuccess: (userId: number) => {
 				userModel.id = userId;
@@ -156,6 +161,9 @@ export class DriversWindowComponent extends BaseWindow implements OnInit {
 
   	private getUserModelFromForm(): UserModel {
 		let user: UserModel = new UserModel();
+		if (this.isEditMode()) {
+			user.id = this.user.id;
+		}
 		user.firstName = this.firstNameFormControl.value;
 		user.lastName = this.lastNameFormControl.value;
 		user.password = this.passwordFormControl.value;

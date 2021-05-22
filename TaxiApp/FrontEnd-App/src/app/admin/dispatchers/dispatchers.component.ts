@@ -102,9 +102,13 @@ export class DispatchersComponent {
 		this.dispatcherWindowVisible = false;
 		this.deleteButtonDisabled = true;
 		this.editButtonDisabled = true;
+		this.selectedDispatcher = null;
+		this.changePerspective();
 	}
 
 	public onDispatcherWindowDataSaved(): void {
+		this.selectedDispatcher = null;
+		this.changePerspective();
 		this.loadDispatchers();
 	}
 

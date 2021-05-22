@@ -80,7 +80,7 @@ export class RideComponent {
           ListItemUtils.sort(rides,"id");
           for (const ride of rides) {
             if (ObjectUtils.isNotNullOrUndefined(ride.dispatcherId)) {
-              if (this.securityManager.userIdAsString === ride.dispatcherId.toString() && ride.finished !== true && ObjectUtils.isNullOrUndefined(ride.startTime)) {
+              if (this.securityManager.userIdAsString === ride.dispatcherId.toString() && ride.canceled !== true && ride.finished !== true && ObjectUtils.isNullOrUndefined(ride.startTime)) {
                 this.rides.push(ride);
                 this.clients.set(ride.clientId, await this.getClientNameById(ride.clientId));
               }
@@ -152,9 +152,13 @@ export class RideComponent {
 	public onRideWindowClosed(): void {
 		this.rideWindowVisible = false;
     this.editButtonDisabled = true;
+    this.selectedRide = null;
+    this.changePerspective();
 	}
 
 	public async onRideWindowDataSaved(): Promise<void> {
+    this.selectedRide = null;
+    this.changePerspective();
     this.tableVisible = false;
     this.loading = true;
     this.rides = [];

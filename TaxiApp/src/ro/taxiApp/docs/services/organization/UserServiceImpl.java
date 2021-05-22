@@ -68,8 +68,10 @@ public class UserServiceImpl implements UserService, InitializingBean {
 	}
 	
 	@Override
-	public UserModel getUserByIdAsModel(Long id) {
-		return UserConverter.getModelFromUser(userPersistencePlugin.getUserById(id));
+	public UserModel getUserByIdAsModel(Long id) throws AppException {
+		User user = userPersistencePlugin.getUserById(id);
+		UserModel userModel = UserConverter.getModelFromUser(user);
+		return userModel;
 	}
     
     @Override

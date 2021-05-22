@@ -134,9 +134,13 @@ export class CarsComponent {
 		this.carWindowVisible = false;
 		this.deleteButtonDisabled = true;
 		this.editButtonDisabled = true;
+		this.selectedCar = null;
+		this.changePerspective();
 	}
 
 	public onCarWindowDataSaved(): void {
+		this.selectedCar = null;
+		this.changePerspective();
 		this.loadCars();
 	}
 

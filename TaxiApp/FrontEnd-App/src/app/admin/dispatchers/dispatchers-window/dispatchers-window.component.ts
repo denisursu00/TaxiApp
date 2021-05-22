@@ -102,7 +102,7 @@ export class DispatchersWindowComponent extends BaseWindow implements OnInit {
 		this.firstNameFormControl.setValue(user.firstName);
 		this.lastNameFormControl.setValue(user.lastName);
 		ObjectUtils.isNotNullOrUndefined(user.email) ? this.emailFormControl.setValue(user.email) : this.emailFormControl.setValue(null);
-		this.passwordFormControl.setValue(user.password);
+		this.passwordFormControl.setValue(null);
 		this.usernameFormControl.setValue(user.username);
 		this.mobileFormControl.setValue(user.mobile);
 	}

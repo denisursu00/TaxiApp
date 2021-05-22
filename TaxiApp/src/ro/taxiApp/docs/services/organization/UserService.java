@@ -15,7 +15,7 @@ public interface UserService {
 	 */
 	User getUserById(Long id);
 	
-	public UserModel getUserByIdAsModel(Long id);
+	public UserModel getUserByIdAsModel(Long id) throws AppException;
 	
 	public Long saveUserWithRole(UserModel user, String roleName, SecurityManager userSecurity) throws AppException;
 	

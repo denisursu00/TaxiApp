@@ -63,8 +63,12 @@ public class OrganizationResource extends BaseResource {
 	
 	@POST
 	@Path("/getUserById/{id}")
-	public UserModel getUserById(@PathParam("id") Long id) {
-		return userService.getUserByIdAsModel(id);
+	public UserModel getUserById(@PathParam("id") Long id) throws PresentationException {
+		try {
+			return userService.getUserByIdAsModel(id);
+		} catch (AppException e) {
+			throw PresentationExceptionUtils.getPresentationException(e);
+		}
 	}
 	
 	@POST
