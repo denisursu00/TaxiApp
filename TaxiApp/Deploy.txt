@@ -1,0 +1,42 @@
+
+================================
+Export War
+================================
+
+1) Check out branch develop -> pull -> merge cu branch-ul personal.
+
+3) Se incrementeaza versiunea aplicatiei in fisierul "FrontEnd-App/package.json" si se adauga un tag cu versiunea noua 
+
+4) Angular build
+	Pe frontend se executa "npm run build"
+
+5) Se face Commit/Push la fisierul cu versiunea(package.json). Messajul de commit va fi versiunea din package.json.
+
+6) Project clean, Menu -> Project -> Clean (Build Automatically sa fie bifat)
+
+7) Export War
+	Cu el se va face deploy
+
+================================
+Deploy
+================================
+
+- Connect pe server(Se poate cu WinSCP)
+- Sterge war din "/opt/tomcat/apache-tomcat-8/webapps"
+- Se asteapta pana cand folderul "TaxiApp" dispare.
+- OPRIRE server tomcat
+- Se copiaza noul war in "/opt/tomcat/apache-tomcat-8/webapps"
+- PORNIRE server tomcat
+
+================================
+Comenzi
+================================
+
+// Acordare drepturi pe folder si subfoldere.
+chmod -R 755 "denumire folder" 
+
+// Afiseaza procesele java.
+ps -ef | grep java
+
+// Inchide fortat un proces dupa id.
+kill -9 id_process

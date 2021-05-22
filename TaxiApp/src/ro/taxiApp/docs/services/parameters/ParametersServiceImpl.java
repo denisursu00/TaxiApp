@@ -3,6 +3,7 @@ package ro.taxiApp.docs.services.parameters;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.InitializingBean;
 
 import ro.taxiApp.common.utils.DateUtils;
@@ -44,8 +45,7 @@ public class ParametersServiceImpl implements ParametersService, InitializingBea
 		if (model.getType().equals(ParameterType.STRING.name())) {
 			return;
 		} else if (model.getType().equals(ParameterType.NUMBER.name())) {
-
-			boolean isNumericValue = StringUtils.isNumeric(model.getValue());
+			boolean isNumericValue = NumberUtils.isParsable(model.getValue());
 			if (!isNumericValue) {
 				throw new AppException(AppExceptionCodes.PARAMETER_VALUE_IS_NOT_OF_TYPE_NUMBER);
 			}
@@ -56,11 +56,14 @@ public class ParametersServiceImpl implements ParametersService, InitializingBea
 				throw new AppException(AppExceptionCodes.PARAMETER_VALUE_IS_NOT_OF_TYPE_DATE);
 			}
 		} else if (model.getType().equals(ParameterType.BOOLEAN.name())) {
+			if (model.getValue().equals("null")) {
+				model.setValue("false");
+			}
 			if (!model.getValue().equals("true") && !model.getValue().equals("false")) {
 				throw new AppException(AppExceptionCodes.PARAMETER_VALUE_IS_NOT_OF_TYPE_BOOLEAN);
 			}
 		} else {
-			throw new RuntimeException("Parameter type [" + model.getType() + "] is not an known type.");
+			throw new RuntimeException("Parameter type [" + model.getType() + "] is not a known type.");
 		}
 	}
 	

@@ -3,15 +3,15 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-	<bean class="ro.taxiApp.docs.config.AppEnvironmentDependentPropertyPlaceholderConfigurer">
+	<bean class="ro.taxiApp.docs.config.AppEnvironmentPropertyPlaceholderConfigurer">
 		<property name="commonPropertyFilePackagePaths">
 			<list>
 				<value>/conf/commonParameters.properties</value>
 			</list>
 		</property>
-		<property name="environmentDependentPropertyFilePackagePaths">
+		<property name="environmentParametersFilePackagePaths">
 			<list>
-				<value>/conf/appEnvironmentDependentParameters.properties</value>
+				<value>/conf/appEnvironmentParameters.properties</value>
 			</list>
 		</property>
 	</bean>

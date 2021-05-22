@@ -23,7 +23,6 @@ public class Permission {
 	private String label;
 	private String description;
 	private PermissionGroup permissionGroup;
-	private Integer uiOrder;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -65,13 +64,5 @@ public class Permission {
 	}	
 	public void setPermissionGroup(PermissionGroup permissionGroup) {
 		this.permissionGroup = permissionGroup;
-	}
-	
-	@Column(name = "ui_order")	
-	public Integer getUiOrder() {
-		return uiOrder;
-	}
-	public void setUiOrder(Integer uiOrder) {
-		this.uiOrder = uiOrder;
 	}
 }

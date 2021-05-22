@@ -1,0 +1,46 @@
+====================================================
+CONFIGURARE PROIECT PE ECLIPSE
+====================================================
+
+Required:
+- Eclipse
+- Tomcat 8.5
+- Java 8(jre 1.8)
+- PostgreSQL 10
+- Visual Studio Code 
+Optional:
+- DBeaver
+
+============================
+BACK-END
+============================
+
+1) Start Eclipse
+
+2) Setare Java 8
+	Window -> Preferences -> Java -> Installed JREs: Se adauga Java 8(jre 1.8) si se bifeaza ca fiind default.
+
+3) Adaugare Server in Eclipse
+	La JRE sa fie setat workbench default JRE
+
+4) Baza de date
+	Se creeaza baza de date cu datele din appEnvironmentParameters.properties, care se incep cu app.database
+
+5) Adaugare aplicatie pe server (Click dreapta pe Tomcat -> Add and Remove...)
+
+6) Start server
+
+============================
+FRON-END
+============================
+
+1) Se deschide aplicatia in VSCode
+
+2) Se executa:
+npm install
+
+3) Pornire server angular:
+npm run start
+
+4) Se acceseasa din browser: http://localhost:4200
+

@@ -18,16 +18,16 @@ import ro.taxiApp.common.utils.DependencyInjectionUtils;
  * 
  * 
  */
-public class AppEnvironmentDependentPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer implements InitializingBean {
+public class AppEnvironmentPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer implements InitializingBean {
 
 	private Collection<String> commonPropertyFilePackagePaths;
-	private Collection<String> environmentDependentPropertyFilePackagePaths;
+	private Collection<String> environmentParametersFilePackagePaths;
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {		
 		DependencyInjectionUtils.checkRequiredDependencies(
 			commonPropertyFilePackagePaths,
-			environmentDependentPropertyFilePackagePaths
+			environmentParametersFilePackagePaths
 		);
 	}
 	
@@ -38,7 +38,7 @@ public class AppEnvironmentDependentPropertyPlaceholderConfigurer extends Proper
 		
 		propertyFilePackagePaths.addAll(commonPropertyFilePackagePaths);
 		
-		for (String environmentDependentPropertyFilePackagePath : environmentDependentPropertyFilePackagePaths) {
+		for (String environmentDependentPropertyFilePackagePath : environmentParametersFilePackagePaths) {
 			propertyFilePackagePaths.add(environmentDependentPropertyFilePackagePath);
 		}
 
@@ -52,7 +52,7 @@ public class AppEnvironmentDependentPropertyPlaceholderConfigurer extends Proper
 	public void setCommonPropertyFilePackagePaths(Collection<String> commonPropertyFilePackagePaths) {
 		this.commonPropertyFilePackagePaths = commonPropertyFilePackagePaths;
 	}
-	public void setEnvironmentDependentPropertyFilePackagePaths(Collection<String> environmentDependentPropertyFilePackagePaths) {
-		this.environmentDependentPropertyFilePackagePaths = environmentDependentPropertyFilePackagePaths;
+	public void setEnvironmentParametersFilePackagePaths(Collection<String> environmentParametersFilePackagePaths) {
+		this.environmentParametersFilePackagePaths = environmentParametersFilePackagePaths;
 	}
 }

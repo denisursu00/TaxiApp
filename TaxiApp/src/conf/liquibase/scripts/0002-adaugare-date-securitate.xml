@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	
+	<changeSet id="0002-adaugare-utilizator-admin" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+		
+			INSERT INTO users (id, firstname, lastname, password, username) 
+			VALUES (nextval('HIBERNATE_SEQUENCE'), 'Admin', 'Admin', '2WWCMlCAgSJzYJEtgcUjBw==', 'admin');
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0002-adaugare-roluri" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO role (id, name) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'ADMIN');
+			INSERT INTO role (id, name) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'DISPECER');
+			INSERT INTO role (id, name) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'SOFER');
+			INSERT INTO role (id, name) VALUES (NEXTVAL('HIBERNATE_SEQUENCE'), 'CLIENT');
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0002-legatura-user-role" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO user_role (user_id,role_id) VALUES (
+				(SELECT id FROM users WHERE username = 'admin'), (SELECT id FROM role WHERE name = 'ADMIN')
+			);
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0002-adaugare-permission-group" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO permission_group (id, name, label) VALUES (nextval('HIBERNATE_SEQUENCE'), 'dispatcher', 'Dispatcher');
+			INSERT INTO permission_group (id, name, label) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin', 'Admin');
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0002-adaugare-valori-permisiuni" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+		
+			INSERT INTO permission (id, name, label, description, permission_group_id) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_PARAMETERS', 'Manage Parametri', null, (select id from permission_group where name='admin'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_PARAMETERS'));
+		
+			INSERT INTO permission (id, name, label, description, permission_group_id) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_DRIVERS', 'Manage Soferi', null, (select id from permission_group where name='admin'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_DRIVERS'));
+			
+			INSERT INTO permission (id, name, label, description, permission_group_id) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_DISPATCHERS', 'Manage Dispatchers', null, (select id from permission_group where name='admin'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_DISPATCHERS'));
+			
+			INSERT INTO permission (id, name, label, description, permission_group_id) VALUES (nextval('HIBERNATE_SEQUENCE'), 'admin.MANAGE_CARS', 'Manage Cars', null, (select id from permission_group where name='admin'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'ADMIN'), (select id from permission where name = 'admin.MANAGE_CARS'));
+			
+			INSERT INTO permission (id, name, label, description, permission_group_id) VALUES (nextval('HIBERNATE_SEQUENCE'), 'dispatcher.MANAGE_RIDES', 'Manage Rides', null, (select id from permission_group where name='dispatcher'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'DISPECER'), (select id from permission where name = 'dispatcher.MANAGE_RIDES'));
+		
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

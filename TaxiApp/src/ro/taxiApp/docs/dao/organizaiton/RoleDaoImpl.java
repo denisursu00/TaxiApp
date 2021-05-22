@@ -43,7 +43,7 @@ public class RoleDaoImpl extends HibernateDaoSupport implements RoleDao {
 		query.append(" FROM Role r ");
 		query.append(" JOIN r.permissions p ");
 		query.append(" JOIN p.permissionGroup pg ");
-		query.append(" ORDER BY r.name, pg.uiOrder, p.uiOrder ");
+		query.append(" ORDER BY r.name ");
 		
 		return getHibernateTemplate().find(query.toString());
 	}

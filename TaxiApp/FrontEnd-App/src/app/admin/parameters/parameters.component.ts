@@ -97,9 +97,13 @@ export class ParametersComponent {
 		this.parameterWindowVisible = false;
 		this.deleteButtonDisabled = true;
 		this.editButtonDisabled = true;
+		this.selectedParameter = null;
+		this.changePerspective();
 	}
 
 	public onParameterWindowDataSaved(): void {
+		this.selectedParameter = null;
+		this.changePerspective();
 		this.loadParameters();
 	}
 }
