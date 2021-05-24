@@ -164,6 +164,10 @@
 		"USER_DELETED": "User-ul a fost şters.",
 		
 		"PARAMETER_NOT_FOUND": "Parametrul nu a fost gasit.",
+		"PARAMETER_VALUE_IS_NOT_OF_TYPE_BOOLEAN": "Parameter is not of type boolean!",
+		"PARAMETER_VALUE_IS_NOT_OF_TYPE_DATE": "Parameter is not of type date!",
+		"PARAMETER_VALUE_IS_NOT_OF_TYPE_NUMBER": "Parameter is not of type number!",
+		"PARAMETER_VALUE_CANNOT_BE_NULL": "Parameter value cannot be null!",
 		"BAD_CREDENTIALS": "Username/password sunt invalide. Incercati din nou.",
 		"INVALID_PASSWORD": "Parola sunt invalida. Incercati din nou.",
 		"PASSWORD_CONFIRMATION_DOESNT_MATCH": "Confirmarea parolei nu se potriveste cu parola noua introdusa. Incercati din nou.",
