@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { DispatcherPermissionEnum, LoggedInUserModel, RouteConstants } from "@app/shared";
+import { DispatcherPermissionEnum, DriverPermissionEnum, LoggedInUserModel, RouteConstants } from "@app/shared";
 import { AuthManager } from "@app/shared/auth";
 
 @Component({
@@ -25,6 +25,8 @@ export class AccessDeniedComponent implements OnInit {
 		let loggedInUser: LoggedInUserModel = this.authManager.getLoggedInUser();
 		if (loggedInUser.permissions.includes(DispatcherPermissionEnum.MANAGE_RIDES)) {
 			this.router.navigate([RouteConstants.DISPATCHER_RIDES]).then(() => {});
+		} else if (loggedInUser.permissions.includes(DriverPermissionEnum.PERSONAL_PAGE)) {
+			this.router.navigate([RouteConstants.DRIVER_PERSONAL_PAGE]).then(() => {});
 		} else {
 			this.router.navigate([RouteConstants.HOME]).then(() => {});
 		}

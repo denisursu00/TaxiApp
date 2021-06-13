@@ -11,6 +11,8 @@ public interface DriverService {
 	
 	public DriverModel getById(Long id);
 	
+	public DriverModel getDriverByUserId(Long userId);
+	
 	public List<DriverModel> getAll();
 	
 	public void deleteById(Long id);

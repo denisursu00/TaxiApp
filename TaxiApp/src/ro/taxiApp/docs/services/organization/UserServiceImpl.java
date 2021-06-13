@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService, InitializingBean {
 		Set<Role> userRoles = new HashSet<>();
 		userRoles.add(roleDao.getRoleByName(roleName));
 		userEntity.setRoles(userRoles);
-		if (user.getPassword()!=null) {
+		if (user.getId()==null) {
 			userEntity.setPassword(passwordEncoder.generatePasswordHash(user.getPassword()));
 		}
 		return userPersistencePlugin.saveUserAndReturnId(userEntity);

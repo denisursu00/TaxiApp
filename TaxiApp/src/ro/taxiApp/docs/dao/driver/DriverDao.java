@@ -22,6 +22,13 @@ public class DriverDao extends HibernateDaoSupport {
 		return (Driver) getHibernateTemplate().get(Driver.class, id);
 	}
 	
+	public Driver getDriverByUserId(Long userId) {
+		String query = "SELECT driver FROM Driver driver"
+					+ " JOIN driver.user user "
+					+ " WHERE user.id = " + userId.toString();
+		return (Driver) getHibernateTemplate().find(query).get(0);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Driver> getAll() {
 		String query = "SELECT driver FROM Driver driver";

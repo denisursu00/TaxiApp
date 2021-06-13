@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	
+	<changeSet id="0004-creare-tabel-categorii-automobile" author="Denis">
+		<sql endDelimiter=";">
+		
+			CREATE TABLE car_category (
+				id BIGINT NOT NULL,
+				code TEXT,
+				name TEXT,
+				
+				CONSTRAINT car_category_pk PRIMARY KEY (id)
+			);
+			
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0004-adaugare-coloana-category-car" author="Denis">
+		<sql endDelimiter=";">
+		
+			ALTER TABLE car
+			ADD COLUMN car_category_id BIGINT NOT NULL;
+			
+			ALTER TABLE car
+			ADD CONSTRAINT car_car_category_fk FOREIGN KEY (car_category_id) REFERENCES car_category (id);
+			
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0004-adaugare-categorii" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO car_category (id, code, name) 
+			VALUES (nextval('HIBERNATE_SEQUENCE'), 'big_trunk', 'Portbagaj mare'),
+				   (nextval('HIBERNATE_SEQUENCE'), 'basic', 'Basic'),
+				   (nextval('HIBERNATE_SEQUENCE'), 'transport_people', 'Transport oameni'),
+				   (nextval('HIBERNATE_SEQUENCE'), 'transport_goods', 'Transport marfa');
+		]]>
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

@@ -119,6 +119,7 @@
 		"DISPATCHER": "Dispatcher",
 
 		"CARS": "Cars",
+		"CAR_CATEGORY": "Car category",
 		"CAR_MODEL": "Model",
 		"CAR_REG_NUMBER": "Reg. number",
 		"CAR_LAST_TECH_CONTROL": "Last tech control",
@@ -128,7 +129,10 @@
 		"RIDES": "Rides",
 		"START_ADRESS": "Start adress",
 
-		"OBSERVATIONS": "Observations"
+		"OBSERVATIONS": "Observations",
+
+		"PERSONAL_PAGE": "Personal page",
+		"PERSONAL_DATA": "Personal data"
 
 	},
 	"MESSAGES": {

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import ro.taxiApp.docs.core.AppException;
 import ro.taxiApp.docs.presentation.client.shared.exceptions.PresentationException;
+import ro.taxiApp.docs.presentation.client.shared.model.cars.CarCategoryModel;
 import ro.taxiApp.docs.presentation.client.shared.model.cars.CarModel;
 import ro.taxiApp.docs.presentation.server.utils.PresentationExceptionUtils;
 import ro.taxiApp.docs.services.CarService;
@@ -54,4 +55,17 @@ public class CarResource extends BaseResource {
 	public void deleteCarById(@PathParam("id") Long id) throws PresentationException {
 		carService.deleteById(id);
 	}
+	
+	@POST
+	@Path("/getCarCategoryById/{id}")
+	public CarCategoryModel getCarCategoryById(@PathParam("id") Long id) throws PresentationException {
+		return carService.getCarCategoryById(id);
+	}
+	
+	@POST
+	@Path("/getAllCarCategories")
+	public List<CarCategoryModel> getAllCarCategories() throws PresentationException {
+		return carService.getAllCarCategories();
+	}
+	
 }

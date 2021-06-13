@@ -33,14 +33,13 @@ import {
 	PasswordModule
 } from "primeng/primeng";
 import { DataViewModule } from 'primeng/dataview';
-import { RideComponent } from './ride/ride.component';
-import { DispatcherRoutingModule } from './dispatcher-routing.module';
-import { RideWindowComponent } from './ride/ride-window/ride-window.component';
+import { DriverRoutingModule } from './driver-routing.module';
+import { PersonalPageDriverComponent } from './personal-page-driver/personal-page-driver.component';
 
 @NgModule({
-  declarations: [RideComponent, RideWindowComponent],
+  declarations: [PersonalPageDriverComponent],
   imports: [
-		RouterModule,
+    RouterModule,
 		HttpModule,
 		SharedModule,
 		FormsModule,
@@ -74,11 +73,11 @@ import { RideWindowComponent } from './ride/ride-window/ride-window.component';
 		AccordionModule,
 		SpinnerModule,
 		PasswordModule,
-    	DispatcherRoutingModule
-	],
+    DriverRoutingModule
+  ],
 	exports: [
 		RouterModule,
 		HttpModule
 	]
 })
-export class DispatcherModule { }
+export class DriverModule { }

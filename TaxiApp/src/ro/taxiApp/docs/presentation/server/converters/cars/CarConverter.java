@@ -7,6 +7,8 @@ import ro.taxiApp.docs.core.AppException;
 import ro.taxiApp.docs.dao.car.CarDao;
 import ro.taxiApp.docs.dao.driver.DriverDao;
 import ro.taxiApp.docs.domain.cars.Car;
+import ro.taxiApp.docs.domain.cars.CarCategory;
+import ro.taxiApp.docs.presentation.client.shared.model.cars.CarCategoryModel;
 import ro.taxiApp.docs.presentation.client.shared.model.cars.CarModel;
 import ro.taxiApp.docs.presentation.server.converters.drivers.DriverConverter;
 
@@ -33,6 +35,7 @@ public class CarConverter implements InitializingBean {
 		model.setRegistrationNumber(entity.getRegistrationNumber());
 		model.setLastTechControl(entity.getLastTechControl());
 		model.setDriverId(entity.getDriver().getId());
+		model.setCarCategoryId(entity.getCarCategory().getId());
 		
 		return model;
 	}
@@ -53,7 +56,17 @@ public class CarConverter implements InitializingBean {
 		
 		entity.setDriver(driverDao.getById(model.getDriverId()));
 		
+		entity.setCarCategory(carDao.getCarCategoryById(model.getCarCategoryId()));
+		
 		return entity;
+	}
+	
+	public CarCategoryModel toModel(CarCategory entity) {
+		CarCategoryModel model = new CarCategoryModel();
+		model.setId(entity.getId());
+		model.setCode(entity.getCode());
+		model.setName(entity.getName());
+		return model;
 	}
 
 	public void setCarDao(CarDao carDao) {

@@ -12,6 +12,10 @@ const routes: Routes = [
 		loadChildren: "./dispatcher/dispatcher.module#DispatcherModule"
 	},
 	{
+		path: "driver",
+		loadChildren: "./driver/driver.module#DriverModule"
+	},
+	{
 		path: "auth",
 		loadChildren: "./auth/auth.module#AuthModule"
 	},

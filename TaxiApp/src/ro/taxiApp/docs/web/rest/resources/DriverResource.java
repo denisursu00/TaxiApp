@@ -50,6 +50,12 @@ public class DriverResource extends BaseResource {
 	}
 	
 	@POST
+	@Path("/getDriverByUserId/{id}")
+	public DriverModel getDriverByUserId(@PathParam("id") Long id) throws PresentationException {
+		return driverService.getDriverByUserId(id);
+	}
+	
+	@POST
 	@Path("/deleteDriverById/{id}")
 	public void deleteDriverById(@PathParam("id") Long id) throws PresentationException {
 		driverService.deleteById(id);

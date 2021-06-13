@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
-import { StringValidators, FormUtils,  MessageDisplayer, AppError, TranslateUtils, StringUtils, DispatcherPermissionEnum } from "@app/shared";
+import { StringValidators, FormUtils,  MessageDisplayer, AppError, TranslateUtils, StringUtils, DispatcherPermissionEnum, DriverPermissionEnum } from "@app/shared";
 import { Message } from "primeng/components/common/message";
 import { AuthManager, AUTH_ACCESS } from "@app/shared/auth";
 import { LoginRequestModel, LoginResponseModel } from "@app/shared/model/auth";
@@ -75,6 +75,8 @@ export class LoginComponent implements OnInit {
 
 				if (loginResponse.loggedInUser.permissions.includes(DispatcherPermissionEnum.MANAGE_RIDES)) {
 					route = RouteConstants.DISPATCHER_RIDES;
+				} else if (loginResponse.loggedInUser.permissions.includes(DriverPermissionEnum.PERSONAL_PAGE)) {
+					route = RouteConstants.DRIVER_PERSONAL_PAGE;
 				}
 				
 				this.router.navigate([route])

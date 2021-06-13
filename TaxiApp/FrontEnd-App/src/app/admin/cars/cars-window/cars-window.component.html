@@ -62,6 +62,19 @@
 		</div>
 
 		<div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.CAR_CATEGORY" | translate}}*:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				<p-dropdown [options]="categoryOptions" formControlName="carCategory" filter=true (onChange)="onCategoryChange($event)"></p-dropdown>
+			</div>
+			<div *ngIf="carCategoryFormControl.invalid && (carCategoryFormControl.dirty || carCategoryFormControl.touched)" class="ui-g-12">
+				<div class="ui-message ui-messages-error ui-corner-all">
+					<i class="fa fa-close"></i>
+					{{"MESSAGES.VALIDATOR_MANDATORY_FIELD" | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g ui-fluid">
 			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.DRIVER" | translate}}*:</div>
 			<div class="ui-g-9 ui-sm-12 ui-md-8">
 				<p-dropdown [options]="driverOptions" formControlName="driver" filter=true (onChange)="onDriverChange($event)"></p-dropdown>

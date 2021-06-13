@@ -9,5 +9,7 @@
 	<include file="0001-structura-initiala-de-baza.xml" relativeToChangelogFile="true" />
 	<include file="0002-adaugare-date-securitate.xml" relativeToChangelogFile="true" />
 	<include file="0003-adaugare-date-initiale.xml" relativeToChangelogFile="true" />
+	<include file="0004-adaugare-categorii-automobile.xml" relativeToChangelogFile="true" />
+	<include file="0005-adaugare permisiuni.xml" relativeToChangelogFile="true" />
 	
 </databaseChangeLog>

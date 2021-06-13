@@ -19,6 +19,7 @@ export class ApiPathConstants {
 	public static readonly DRIVER_SAVE = "/Drivers/saveDriver";
 	public static readonly DRIVER_GET_ALL = "/Drivers/getAllDrivers";
 	public static readonly DRIVER_GET_BY_ID = "/Drivers/getDriverById";
+	public static readonly DRIVER_GET_BY_USER_ID = "/Drivers/getDriverByUserId";
 	public static readonly DRIVER_DELETE_BY_ID = "/Drivers/deleteDriverById";
 
 	// Clients
@@ -32,6 +33,8 @@ export class ApiPathConstants {
 	public static readonly CAR_GET_ALL = "/Car/getAllCars";
 	public static readonly CAR_GET_BY_ID = "/Car/getCarById";
 	public static readonly CAR_DELETE_BY_ID = "/Car/deleteCarById";
+	public static readonly CAR_GET_ALL_CAR_CATEGORIES = "/Car/getAllCarCategories";
+	public static readonly CAR_GET_CATEGORY_BY_ID = "/Car/getCarCategoryById";
 
 	// Rides
 	public static readonly RIDE_SAVE = "/Ride/saveRide";

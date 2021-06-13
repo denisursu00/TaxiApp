@@ -5,6 +5,7 @@ import { ApiPathConstants } from "../constants";
 import { ApiPathUtils } from "../utils";
 import { Injectable } from "@angular/core";
 import { CarModel } from "../model/cars/car.model";
+import { CarCategoryModel } from "../model/cars";
 
 @Injectable()
 export class CarsService {
@@ -31,6 +32,15 @@ export class CarsService {
     public deleteCarById(id: Number, callback: AsyncCallback<null, AppError>): void {
         let relativePath: string = ApiPathUtils.appendParametersToPath(ApiPathConstants.CAR_DELETE_BY_ID, id.toString());
         this.apiCaller.call(relativePath, null, null, callback);
+    }
+
+    public getAllCarCategories(callback: AsyncCallback<CarCategoryModel[], AppError>): void {
+        this.apiCaller.call(ApiPathConstants.CAR_GET_ALL_CAR_CATEGORIES, null, CarCategoryModel, callback);
+    }
+
+    public getCarCategoryById(id: Number, callback: AsyncCallback<CarCategoryModel, AppError>): void {
+        let relativePath: string = ApiPathUtils.appendParametersToPath(ApiPathConstants.CAR_GET_CATEGORY_BY_ID, id.toString());
+        this.apiCaller.call(relativePath, null, CarCategoryModel, callback);
     }
 
 }

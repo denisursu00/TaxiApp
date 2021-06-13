@@ -19,4 +19,7 @@ export class CarModel {
     @JsonProperty("driverId", Number)
 	public driverId: number = null;
 
+    @JsonProperty("carCategoryId", Number)
+	public carCategoryId: number = null;
+
 }

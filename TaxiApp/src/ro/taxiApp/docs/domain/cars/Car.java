@@ -26,6 +26,8 @@ public class Car {
 	private Date lastTechControl;
 	
 	private Driver driver;
+	
+	private CarCategory carCategory;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -72,6 +74,16 @@ public class Car {
 
 	public void setDriver(Driver driver) {
 		this.driver = driver;
+	}
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "car_category_id", referencedColumnName = "id", nullable = false)
+	public CarCategory getCarCategory() {
+		return carCategory;
+	}
+
+	public void setCarCategory(CarCategory carCategory) {
+		this.carCategory = carCategory;
 	}
 	
 }

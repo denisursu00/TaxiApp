@@ -120,6 +120,7 @@
 		"DISPATCHER": "Dispecer",
 
 		"CARS": "Automobile",
+		"CAR_CATEGORY": "Categorie automobil",
 		"CAR_MODEL": "Model",
 		"CAR_REG_NUMBER": "Nr. inregistrare",
 		"CAR_LAST_TECH_CONTROL": "Ultimul control tehnic",
@@ -129,7 +130,10 @@
 		"RIDES": "Calatorii",
 		"START_ADRESS": "Adresa de start",
 
-		"OBSERVATIONS": "Observatii"
+		"OBSERVATIONS": "Observatii",
+
+		"PERSONAL_PAGE": "Pagina personala",
+		"PERSONAL_DATA": "Date personale"
 
 	},
 	"MESSAGES": {

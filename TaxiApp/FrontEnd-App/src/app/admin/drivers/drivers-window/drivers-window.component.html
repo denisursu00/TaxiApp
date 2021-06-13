@@ -80,7 +80,7 @@
     <div class="ui-g ui-fluid">
 			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.BIRTH_DATE" | translate}}*:</div>
 			<div class="ui-g-9 ui-sm-12 ui-md-8">
-        <p-calendar 
+        		<p-calendar 
 						[showIcon]="true"
 						[dateFormat]="dateFormat"
 						[monthNavigator]="true"
@@ -117,17 +117,17 @@
     <div class="ui-g ui-fluid">
 			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.DRIVER_EXPIRY_DATE" | translate}}*:</div>
 			<div class="ui-g-9 ui-sm-12 ui-md-8">
-        <p-calendar 
-						[showIcon]="true"
-						[dateFormat]="dateFormat"
-						[monthNavigator]="true"
-						[yearNavigator]="true"
-						[yearRange]="yearRange"
-						[style]="{'width' :'100%'}"
-						formControlName="expiryDate"
-						readonlyInput="true"
-						appendTo="body"
-						showButtonBar="true">
+        		<p-calendar 
+					[showIcon]="true"
+					[dateFormat]="dateFormat"
+					[monthNavigator]="true"
+					[yearNavigator]="true"
+					[yearRange]="yearRange"
+					[style]="{'width' :'100%'}"
+					formControlName="expiryDate"
+					readonlyInput="true"
+					appendTo="body"
+					showButtonBar="true">
 				</p-calendar>
 			</div>
 			<div *ngIf="expiryDateFormControl.invalid && (expiryDateFormControl.dirty || expiryDateFormControl.touched)" class="ui-g-12">
@@ -141,7 +141,7 @@
     <div class="ui-g ui-fluid">
 			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.DRIVER_LAST_MED_EXAM" | translate}}*:</div>
 			<div class="ui-g-9 ui-sm-12 ui-md-8">
-        <p-calendar 
+        		<p-calendar 
 						[showIcon]="true"
 						[dateFormat]="dateFormat"
 						[monthNavigator]="true"

@@ -3,7 +3,7 @@ import { MessageDisplayer, StringValidators, FormUtils, DateConstants, DateUtils
 import { FormBuilder, FormGroup, Validators, AbstractControl } from "@angular/forms";
 import { SelectItem, Dialog } from "primeng/primeng";
 import { ListItemUtils } from "@app/shared/utils/list-item-utils";
-import { CarModel } from "@app/shared/model/cars";
+import { CarCategoryModel, CarModel } from "@app/shared/model/cars";
 import { UserModel } from "@app/shared/model/organization/user.model";
 import { DriverModel } from "@app/shared/model/drivers";
 
@@ -41,6 +41,9 @@ export class CarsWindowComponent extends BaseWindow implements OnInit {
 	public driverOptions: SelectItem[];
 	public selectedDriver: DriverModel;
 
+	public categoryOptions: SelectItem[];
+	public selectedCategory: CarCategoryModel;
+
 	public constructor(carsService: CarsService, driversService: DriversService, messageDisplayer: MessageDisplayer, formBuilder: FormBuilder) {
 		super();
 		this.carsService = carsService;
@@ -50,6 +53,7 @@ export class CarsWindowComponent extends BaseWindow implements OnInit {
 		this.windowClosed = new EventEmitter<void>();
 		this.dataSaved = new EventEmitter<void>();
 		this.driverOptions = [];
+		this.categoryOptions = [];
 		this.init();
 	}
 
@@ -65,6 +69,7 @@ export class CarsWindowComponent extends BaseWindow implements OnInit {
 			carModel: [null, [Validators.required, StringValidators.blank()]],
 			carRegNumber: [null, [Validators.required, StringValidators.blank()]],
 			lastTechControl: [null, [Validators.required]],
+			carCategory: [null, [Validators.required]],
 			driver: [null, [Validators.required]]
 		});
   	}
@@ -88,6 +93,7 @@ export class CarsWindowComponent extends BaseWindow implements OnInit {
 	private async prepareForAdd(): Promise<void> {
 		this.lock();
 		await this.getDrivers();
+		await this.getCarCateogries();
 		this.unlock();
 	}
 
@@ -110,9 +116,29 @@ export class CarsWindowComponent extends BaseWindow implements OnInit {
 		});
 	}
 
+	private getCarCateogries(): Promise<void> {
+		this.categoryOptions = [];
+		this.selectedCategory = null;
+		return new Promise<void>((resolve,reject) => {
+			this.carsService.getAllCarCategories({
+				onSuccess: (categories: CarCategoryModel[]): void => {
+					for (const category of categories) {
+						this.categoryOptions.push({label: category.name, value: category.id});
+					}
+					resolve();
+				},
+				onFailure: (appError: AppError): void => {
+					this.messageDisplayer.displayAppError(appError);
+					reject();
+				}
+			});
+		});
+	}
+ 
 	private async prepareForEdit(): Promise<void> {
 		this.lock();
 		await this.getDrivers();
+		await this.getCarCateogries();
 		this.carsService.getCarById(this.carId, {
 			onSuccess: (carModel: CarModel): void => {
 				this.prepareFormFromCarModel(carModel);
@@ -130,6 +156,7 @@ export class CarsWindowComponent extends BaseWindow implements OnInit {
 		this.carRegNumberFormControl.setValue(carModel.registrationNumber);
 		this.lastTechControlFormControl.setValue(carModel.lastTechControl);
 		this.driverFormControl.setValue(carModel.driverId);
+		this.carCategoryFormControl.setValue(carModel.carCategoryId);
 	}
 
 	public onSaveAction(event: any): void {
@@ -167,6 +194,7 @@ export class CarsWindowComponent extends BaseWindow implements OnInit {
 		car.registrationNumber = this.carRegNumberFormControl.value;
 		car.lastTechControl = this.lastTechControlFormControl.value;
 		car.driverId = this.driverFormControl.value;
+		car.carCategoryId = this.carCategoryFormControl.value;
 		return car;
 	}
 
@@ -188,6 +216,10 @@ export class CarsWindowComponent extends BaseWindow implements OnInit {
 		this.driverFormControl.setValue(event.value);
 	}
 
+	public onCategoryChange(event: any): void {
+		this.carCategoryFormControl.setValue(event.value);
+	}
+
 	public get carModelFormControl(): AbstractControl {
 		return FormUtils.getControlByName(this.form, "carModel");
 	}
@@ -202,6 +234,10 @@ export class CarsWindowComponent extends BaseWindow implements OnInit {
 
   	public get driverFormControl(): AbstractControl {
 		return FormUtils.getControlByName(this.form, "driver");
+	}
+
+	public get carCategoryFormControl(): AbstractControl {
+		return FormUtils.getControlByName(this.form, "carCategory");
 	}
 
 }

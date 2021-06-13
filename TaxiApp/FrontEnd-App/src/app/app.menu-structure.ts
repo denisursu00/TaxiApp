@@ -1,11 +1,11 @@
-import { AdminPermissionEnum, DispatcherPermissionEnum} from "@app/shared";
+import { AdminPermissionEnum, DispatcherPermissionEnum, DriverPermissionEnum} from "@app/shared";
 import { AUTH_ACCESS } from "@app/shared/auth";
 
 export interface MenuItemDefinition {
 	labelCode: string;
 	icon?: string;
 	path?: string;
-	authPermissions?: AdminPermissionEnum[] | DispatcherPermissionEnum[];
+	authPermissions?: AdminPermissionEnum[] | DispatcherPermissionEnum[] | DriverPermissionEnum[];
 	items?: MenuItemDefinition[];
 }
 
@@ -47,6 +47,17 @@ export const MENU_STRUCTURE: MenuItemDefinition[] = [
 				icon: "fa fa-list-ul",
 				path: "dispatcher/rides",
 				authPermissions: AUTH_ACCESS.DISPATCHER.RIDES.permissions
+			}
+		]
+	},
+	{
+		labelCode: "DRIVER",
+		items: [
+			{
+				labelCode: "PERSONAL_PAGE",
+				icon: "fa fa-user",
+				path: "driver/personal-page",
+				authPermissions: AUTH_ACCESS.DRIVER.PERSONAL_PAGE.permissions
 			}
 		]
 	}

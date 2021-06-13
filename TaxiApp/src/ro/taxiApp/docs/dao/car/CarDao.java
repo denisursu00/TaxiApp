@@ -6,6 +6,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
 import ro.taxiApp.docs.domain.cars.Car;
+import ro.taxiApp.docs.domain.cars.CarCategory;
 
 public class CarDao extends HibernateDaoSupport {
 
@@ -31,6 +32,16 @@ public class CarDao extends HibernateDaoSupport {
 	public void deleteById(Long id) {
 		Car car = getById(id);
 		getHibernateTemplate().delete(car);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<CarCategory> getAllCarCategories() {
+		String query = "SELECT carCategory FROM CarCategory carCategory";
+		return getHibernateTemplate().find(query);
+	}
+	
+	public CarCategory getCarCategoryById(Long id) {
+		return (CarCategory) getHibernateTemplate().get(CarCategory.class, id);
 	}
 	
 }

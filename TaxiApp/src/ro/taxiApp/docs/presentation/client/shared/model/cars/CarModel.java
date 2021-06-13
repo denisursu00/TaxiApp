@@ -10,6 +10,7 @@ public class CarModel {
 	private Date lastTechControl;
 	
 	private Long driverId;
+	private Long carCategoryId;
 
 	public Long getId() {
 		return id;
@@ -49,6 +50,14 @@ public class CarModel {
 
 	public void setDriverId(Long driverId) {
 		this.driverId = driverId;
+	}
+
+	public Long getCarCategoryId() {
+		return carCategoryId;
+	}
+
+	public void setCarCategoryId(Long carCategoryId) {
+		this.carCategoryId = carCategoryId;
 	}
 	
 }

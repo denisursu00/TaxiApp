@@ -3,6 +3,7 @@ package ro.taxiApp.docs.services;
 import java.util.List;
 
 import ro.taxiApp.docs.core.AppException;
+import ro.taxiApp.docs.presentation.client.shared.model.cars.CarCategoryModel;
 import ro.taxiApp.docs.presentation.client.shared.model.cars.CarModel;
 
 public interface CarService {
@@ -14,5 +15,9 @@ public interface CarService {
 	public List<CarModel> getAll();
 	
 	public void deleteById(Long id);
+	
+	public CarCategoryModel getCarCategoryById(Long id);
+	
+	public List<CarCategoryModel> getAllCarCategories();
 
 }

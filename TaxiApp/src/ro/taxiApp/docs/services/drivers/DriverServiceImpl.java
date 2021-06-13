@@ -27,16 +27,25 @@ public class DriverServiceImpl implements DriverService, InitializingBean {
 	}
 
 	@Transactional
+	@Override
 	public Long save(DriverModel driverModel) throws AppException {
 		Driver driverEntity = driverConverter.toEntity(driverModel);
 		return driverDao.save(driverEntity);
 	}
 	
+	@Override
 	public DriverModel getById(Long id) {
 		Driver driver = driverDao.getById(id);
 		return driverConverter.toModel(driver);
 	}
 	
+	@Override
+	public DriverModel getDriverByUserId(Long userId) {
+		Driver driver = driverDao.getDriverByUserId(userId);
+		return driverConverter.toModel(driver);
+	}
+	
+	@Override
 	public List<DriverModel> getAll() {
 		
 		List<DriverModel> driversModels = new ArrayList<DriverModel>();
@@ -53,6 +62,7 @@ public class DriverServiceImpl implements DriverService, InitializingBean {
 		return driversModels;
 	}
 	
+	@Override
 	public void deleteById(Long id) {
 		driverDao.deleteById(id);
 	}

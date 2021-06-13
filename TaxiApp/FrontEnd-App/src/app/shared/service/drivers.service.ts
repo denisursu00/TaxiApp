@@ -28,6 +28,11 @@ export class DriversService {
         this.apiCaller.call(relativePath, null, DriverModel, callback);
     }
 
+    public getDriverByUserId(id: Number, callback: AsyncCallback<DriverModel, AppError>): void {
+        let relativePath: string = ApiPathUtils.appendParametersToPath(ApiPathConstants.DRIVER_GET_BY_USER_ID, id.toString());
+        this.apiCaller.call(relativePath, null, DriverModel, callback);
+    }
+
     public deleteDriverById(id: Number, callback: AsyncCallback<null, AppError>): void {
         let relativePath: string = ApiPathUtils.appendParametersToPath(ApiPathConstants.DRIVER_DELETE_BY_ID, id.toString());
         this.apiCaller.call(relativePath, null, null, callback);

@@ -1,5 +1,5 @@
 import { AdminPermissionEnum } from "@app/shared";
-import { DispatcherPermissionEnum } from "../enums";
+import { DispatcherPermissionEnum, DriverPermissionEnum } from "../enums";
 
 export const AUTH_ACCESS = {
 
@@ -20,6 +20,11 @@ export const AUTH_ACCESS = {
 	DISPATCHER: {
 		RIDES: {
 			permissions: [ DispatcherPermissionEnum.MANAGE_RIDES ]
+		}
+	},
+	DRIVER: {
+		PERSONAL_PAGE: {
+			permissions: [ DriverPermissionEnum.PERSONAL_PAGE ]
 		}
 	}
 };

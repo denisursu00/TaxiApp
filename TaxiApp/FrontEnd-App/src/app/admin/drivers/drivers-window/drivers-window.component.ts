@@ -163,10 +163,13 @@ export class DriversWindowComponent extends BaseWindow implements OnInit {
 		let user: UserModel = new UserModel();
 		if (this.isEditMode()) {
 			user.id = this.user.id;
+			user.password = this.user.password;
 		}
 		user.firstName = this.firstNameFormControl.value;
 		user.lastName = this.lastNameFormControl.value;
-		user.password = this.passwordFormControl.value;
+		if (this.isAddMode()) {
+			user.password = this.passwordFormControl.value;
+		}
 		user.username = this.usernameFormControl.value;
 		user.email = this.emailFormControl.value;
 		user.mobile = this.mobileFormControl.value;
