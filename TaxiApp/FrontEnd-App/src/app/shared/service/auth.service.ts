@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ApiCaller } from "./../api-caller";
-import { AppError } from "./../model";
+import { AppError, RegisterRequestModel } from "./../model";
 import { ApiPathConstants } from "./../constants";
 import { AsyncCallback } from "./../async-callback";
 import { LoginRequestModel } from "../model/auth/login-request.model";
@@ -19,6 +19,10 @@ export class AuthService {
 
 	public login(loginRequest: LoginRequestModel, callback: AsyncCallback<LoginResponseModel, AppError>): void {
 		this.apiCaller.call(ApiPathConstants.AUTH_LOGIN, loginRequest, LoginResponseModel, callback);
+	}
+
+	public register(registerRequest: RegisterRequestModel, callback: AsyncCallback<void, AppError>): void {
+		this.apiCaller.call(ApiPathConstants.AUTH_REGISTER, registerRequest, null, callback);
 	}
 
 	public getLoggedInUser(callback: AsyncCallback<LoggedInUserModel, AppError>): void {

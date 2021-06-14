@@ -15,8 +15,10 @@ import ro.taxiApp.docs.presentation.client.shared.exceptions.PresentationExcepti
 import ro.taxiApp.docs.presentation.client.shared.model.auth.LoggedInUserModel;
 import ro.taxiApp.docs.presentation.client.shared.model.auth.LoginRequestModel;
 import ro.taxiApp.docs.presentation.client.shared.model.auth.LoginResponseModel;
+import ro.taxiApp.docs.presentation.client.shared.model.auth.RegisterRequestModel;
 import ro.taxiApp.docs.presentation.client.shared.model.organization.PasswordChangeModel;
 import ro.taxiApp.docs.presentation.server.utils.PresentationExceptionUtils;
+import ro.taxiApp.docs.services.organization.UserService;
 import ro.taxiApp.docs.services.security.AuthService;
 
 @Component
@@ -26,6 +28,9 @@ public class AuthResource extends BaseResource{
 	@Autowired
 	private AuthService authService;
 	
+	@Autowired
+	private UserService userService;
+	
 	@POST
 	@Path("/login")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -34,6 +39,19 @@ public class AuthResource extends BaseResource{
 		try {
 			LoginResponseModel loginResponse = authService.login(loginRequest);
         	return Response.ok(loginResponse).build();
+		} catch (AppException ae) {
+			throw PresentationExceptionUtils.getPresentationException(ae);
+		}
+	}
+	
+	@POST
+	@Path("/register")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response register(RegisterRequestModel registerRequest) throws PresentationException {
+		try {
+			userService.registerUser(registerRequest);
+			return Response.ok().build();
 		} catch (AppException ae) {
 			throw PresentationExceptionUtils.getPresentationException(ae);
 		}

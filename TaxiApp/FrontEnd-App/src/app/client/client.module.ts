@@ -33,13 +33,14 @@ import {
 	PasswordModule
 } from "primeng/primeng";
 import { DataViewModule } from 'primeng/dataview';
-import { DriverRoutingModule } from './driver-routing.module';
-import { PersonalPageDriverComponent } from './personal-page-driver/personal-page-driver.component';
+import { PersonalPageClientComponent } from './personal-page-client/personal-page-client.component';
+import { ClientRoutingModule } from './client-routing.module';
 
 @NgModule({
-  declarations: [PersonalPageDriverComponent],
-  imports: [
-    	RouterModule,
+	declarations: [PersonalPageClientComponent],
+	imports: [
+		CommonModule,
+		RouterModule,
 		HttpModule,
 		SharedModule,
 		FormsModule,
@@ -49,7 +50,6 @@ import { PersonalPageDriverComponent } from './personal-page-driver/personal-pag
 		InputTextModule,
 		DialogModule,
 		TabViewModule,
-		CommonModule,
 		CheckboxModule,
 		DropdownModule,
 		TableModule,
@@ -73,11 +73,11 @@ import { PersonalPageDriverComponent } from './personal-page-driver/personal-pag
 		AccordionModule,
 		SpinnerModule,
 		PasswordModule,
-    	DriverRoutingModule
+    	ClientRoutingModule
   	],
 	exports: [
 		RouterModule,
 		HttpModule
 	]
 })
-export class DriverModule { }
+export class ClientModule { }

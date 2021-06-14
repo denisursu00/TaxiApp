@@ -1,5 +1,5 @@
 .login-panel {
-	height: 350px;
+	height: 500px;
 }
 .logo-text { 
 	font-size: 1.5em;
@@ -17,12 +17,7 @@
 .login-panel .login-panel-message-container {
 	font-size: 1em;
 	color: red;
-	margin-top: 10px;
+	margin-top: 0px;
 	margin-bottom: 5px;
 	vertical-align: middle;
-}
-
-.register {
-	color: #707277;
-	margin-top: 10px;
 }

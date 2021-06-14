@@ -3,6 +3,8 @@
 		"APP_NAME": "TaxiApp",
 
 		"LANGUAGE": "Limba",
+
+		"GO_TO_REGISTER": "Register",
 		
 		"YES": "Da",
 		"NO": "Nu",
@@ -15,6 +17,8 @@
 		"MAIN_MENU": "Menu",
 		"LOGIN": "Sign in",
 		"LOGIN_REMEMBER_ME": "Remember me",
+
+		"REGISTER": "Register",
 		
 		"SUCCESS": "Succes",
 		"ERROR": "Eroare",
@@ -107,6 +111,8 @@
 		"PARAMETER_VALUE": "Valoare",
 		"PARAMETER_TYPE": "Tip",
 
+		"CLIENT": "Client",
+
 		"DRIVERS": "Drivers",
 		"DRIVER_FIRSTNAME": "First name",
 		"DRIVER_LASTNAME": "Last name",
@@ -148,7 +154,8 @@
 		"USER_EXISTS": "Există deja un utilizator cu acelasi username și cu acelasi titlu.",
 		"ERR_SAVE_USER": "A aparut o eroare la salvarea utilizatorului.",
 		
-		"REQUIRED_FIELDS_NOT_COMPLETED": "Unele câmpuri obligatorii nu sunt completate.",
+		"REQUIRED_FIELDS_NOT_COMPLETED": "Some fields are not filled.",
+		"REQUIRED_FIELDS_NOT_COMPLETED_OR_WRONG": "Some fields are not filled or are incorrect.",
 		
 		"LOADING": "Se încarcă...",
 		"PLEASE_WAIT": "Vă rugăm, aşteptaţi.",
@@ -163,9 +170,12 @@
 		"VALIDATOR_DUPLICATED_FIELD": "Valoarea acestui camp deja există.",
 		
 		"INVALID_EMAIL": "E-mail-ul introdus este invalid.",
+		"INVALID_FORM_FIELD": "One of the form fields is invalid",
 		
 		"USER_SAVED": "User-ul a fost salvat.",
 		"USER_DELETED": "User-ul a fost şters.",
+
+		"USERNAME_ALREADY_EXISTS": "User witch such username already exists!",
 		
 		"PARAMETER_NOT_FOUND": "Parametrul nu a fost gasit.",
 		"PARAMETER_VALUE_IS_NOT_OF_TYPE_BOOLEAN": "Parameter is not of type boolean!",
@@ -181,6 +191,9 @@
 
 		"CONFIRM_DELETE_DRIVER":  "Are you sure you want to delete the driver?",
 		"CONFIRM_DELETE_DISPATCHER":  "Are you sure you want to delete the dispatcher?",
-		"CONFIRM_DELETE_CAR":  "Are you sure you want to delete the car?"
+		"CONFIRM_DELETE_CAR":  "Are you sure you want to delete the car?",
+
+		"REGISTER_SUCCESSFUL": "Registered successfully! Please authenticate."
+
 	}
 }

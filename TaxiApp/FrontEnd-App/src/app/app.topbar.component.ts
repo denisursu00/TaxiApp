@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AppComponent} from "./app.component";
-import { TranslateUtils, AclService, StringUtils, MessageDisplayer, LoggedInUserModel, DispatcherPermissionEnum, DriverPermissionEnum } from "@app/shared";
+import { TranslateUtils, AclService, StringUtils, MessageDisplayer, LoggedInUserModel, DispatcherPermissionEnum, DriverPermissionEnum, ClientPermissionEnum } from "@app/shared";
 import { AuthManager, AUTH_ACCESS } from "@app/shared/auth";
 import { RouteConstants } from "./shared/constants/route.constants";
 
@@ -30,6 +30,8 @@ export class AppTopBarComponent implements OnInit {
 			this.homeRouterLink = RouteConstants.DISPATCHER_RIDES;
 		} else if (loggedInUser.permissions.includes(DriverPermissionEnum.PERSONAL_PAGE)) {
 			this.homeRouterLink = RouteConstants.DRIVER_PERSONAL_PAGE;
+		} else if (loggedInUser.permissions.includes(ClientPermissionEnum.PERSONAL_PAGE)) {
+			this.homeRouterLink = RouteConstants.CLIENT_PERSONAL_PAGE;
 		}
 	}
 

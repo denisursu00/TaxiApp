@@ -5,7 +5,7 @@ import { AuthService } from "./../service/auth.service";
 import { AsyncCallback } from "./../async-callback";
 import { AppError } from "./../model";
 import { AuthDataStorage } from "./auth-data-storage";
-import { LoggedInUserModel, LoginRequestModel, LoginResponseModel } from "../model/auth";
+import { LoggedInUserModel, LoginRequestModel, LoginResponseModel, RegisterRequestModel } from "../model/auth";
 
 @Injectable({providedIn: "root"})
 export class AuthManager {
@@ -31,6 +31,18 @@ export class AuthManager {
 				this._loggedInUser = loginResponse.loggedInUser;
 				this.authDataStorage.saveToken(this._authToken, loginRequest.rememberMe);
 				callback.onSuccess(loginResponse);
+			},
+			onFailure: (error: AppError): void => {
+				callback.onFailure(error);
+			}
+		});
+	}
+
+	public register(registerRequest: RegisterRequestModel, callback: AsyncCallback<void, AppError>): void {
+		this.clearAuthData();
+		this.authService.register(registerRequest, {
+			onSuccess: (): void => {				
+				callback.onSuccess(null);
 			},
 			onFailure: (error: AppError): void => {
 				callback.onFailure(error);

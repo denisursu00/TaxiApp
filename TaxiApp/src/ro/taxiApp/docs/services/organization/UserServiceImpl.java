@@ -16,6 +16,7 @@ import ro.taxiApp.docs.domain.organization.Role;
 import ro.taxiApp.docs.domain.organization.User;
 import ro.taxiApp.docs.domain.security.SecurityManager;
 import ro.taxiApp.docs.plugins.organization.UserPersistencePlugin;
+import ro.taxiApp.docs.presentation.client.shared.model.auth.RegisterRequestModel;
 import ro.taxiApp.docs.presentation.client.shared.model.organization.UserModel;
 import ro.taxiApp.docs.presentation.server.converters.organization.UserConverter;
 import ro.taxiApp.docs.utils.PasswordEncoder;
@@ -65,6 +66,30 @@ public class UserServiceImpl implements UserService, InitializingBean {
 			userEntity.setPassword(passwordEncoder.generatePasswordHash(user.getPassword()));
 		}
 		return userPersistencePlugin.saveUserAndReturnId(userEntity);
+	}
+	
+	private Long saveUserWithRole(UserModel user, String roleName) throws AppException {
+		User userEntity = null;
+		userEntity = UserConverter.getUserFromModel(user, userEntity);
+		Set<Role> userRoles = new HashSet<>();
+		userRoles.add(roleDao.getRoleByName(roleName));
+		userEntity.setRoles(userRoles);
+		if (user.getId()==null) {
+			userEntity.setPassword(passwordEncoder.generatePasswordHash(user.getPassword()));
+		}
+		return userPersistencePlugin.saveUserAndReturnId(userEntity);
+	}
+	
+	@Override
+	@Transactional
+	public void registerUser(RegisterRequestModel request) throws AppException {
+		UserModel userModel = UserConverter.getModelFromRegisterRequest(request);
+		User user = getUserByUsername(userModel.getUsername());
+		if (user == null) {
+			saveUserWithRole(userModel, "CLIENT");
+		} else {
+			throw new AppException(AppExceptionCodes.USERNAME_ALREADY_EXISTS);
+		}
 	}
 	
 	@Override

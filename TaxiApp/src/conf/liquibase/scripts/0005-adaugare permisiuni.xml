@@ -24,4 +24,22 @@
 		</sql>
 	</changeSet>
 	
+	<changeSet id="0005-adaugare-permission-group-client" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+			INSERT INTO permission_group (id, name, label) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client', 'Client');
+		]]>
+		</sql>
+	</changeSet>
+	
+	<changeSet id="0005-adaugare-permisiune-client-personal-page" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+		
+			INSERT INTO permission (id, name, label, description, permission_group_id) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.PERSONAL_PAGE', 'Client Personal Page', null, (select id from permission_group where name='client'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'CLIENT'), (select id from permission where name = 'client.PERSONAL_PAGE'));
+	
+		
+		]]>
+		</sql>
+	</changeSet>
+	
 </databaseChangeLog>

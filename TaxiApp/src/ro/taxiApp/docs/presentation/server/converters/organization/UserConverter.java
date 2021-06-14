@@ -14,6 +14,7 @@ import ro.taxiApp.docs.core.AppException;
 import ro.taxiApp.docs.domain.organization.Role;
 import ro.taxiApp.docs.domain.organization.User;
 import ro.taxiApp.docs.domain.security.SecurityManager;
+import ro.taxiApp.docs.presentation.client.shared.model.auth.RegisterRequestModel;
 import ro.taxiApp.docs.presentation.client.shared.model.organization.RoleModel;
 import ro.taxiApp.docs.presentation.client.shared.model.organization.UserModel;
 
@@ -39,6 +40,19 @@ public class UserConverter {
         
         return userModel;
     }
+	
+	public static UserModel getModelFromRegisterRequest(RegisterRequestModel request) {
+		UserModel userModel = new UserModel();
+        
+        userModel.setUsername(request.getUsername());
+        userModel.setPassword(request.getPassword());
+        userModel.setFirstName(request.getFirstName());
+        userModel.setLastName(request.getLastName());
+        userModel.setEmail(request.getEmail());
+        userModel.setMobile(request.getMobile());
+        
+		return userModel;
+	}
 	
 	public static User getUserFromModel(UserModel userModel, User userEntity, SecurityManager userSecurity) throws AppException {
 		User user;
@@ -100,4 +114,66 @@ public class UserConverter {
         
         return user;
     }
+	
+	public static User getUserFromModel(UserModel userModel, User userEntity) throws AppException {
+		User user;
+		
+		if (userEntity == null) {
+			user = new User();
+		} else {
+			user = userEntity;
+		}
+        
+        if (userModel.getId() != null) {
+        	user.setId(userModel.getId());
+        }
+        user.setUsername(userModel.getUsername());
+        user.setFirstName(userModel.getFirstName());
+        user.setLastName(userModel.getLastName());
+        user.setEmail(userModel.getEmail());
+        user.setMobile(userModel.getMobile());
+        String password = userModel.getPassword();
+        if (StringUtils.isNotEmpty(password)) {
+        	user.setPassword(password);
+        }
+      
+        Set<Role> userEntityRoles = new HashSet<>();
+        if ((CollectionUtils.isNotEmpty(user.getRoles()))) {
+        	userEntityRoles = user.getRoles();
+        }
+        
+        Iterator<Role> iteratorRole = userEntityRoles.iterator();
+        while (iteratorRole.hasNext()) {
+        	Long userId = iteratorRole.next().getId();
+			boolean existsInRolesModel = false;
+			for (RoleModel roleModel : userModel.getRoles()) {
+				if (roleModel.getId().equals(userId)) {
+					existsInRolesModel = true;
+				}
+			}
+			if (!existsInRolesModel) {
+				iteratorRole.remove();
+			}
+		}
+       
+        //add the new roles
+        if (userModel.getRoles()!=null) {
+        	for (RoleModel roleModel : userModel.getRoles()) {
+            	boolean existsInRolesEntiy = false;
+            	for (Role role: userEntityRoles) {
+    				if (roleModel.getId().equals(role.getId())) {
+    					existsInRolesEntiy = true;
+    				}
+    			}
+    			if (!existsInRolesEntiy) {
+    				userEntityRoles.add(RoleConverter.getEntityFromModel(roleModel));
+    			}
+    		}
+        }
+
+        user.setRoles(userEntityRoles);
+        
+        return user;
+    }
+	
 }

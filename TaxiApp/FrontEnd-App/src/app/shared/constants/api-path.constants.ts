@@ -13,6 +13,7 @@ export class ApiPathConstants {
 
 	// Auth
 	public static readonly AUTH_LOGIN = "/Auth/login";
+	public static readonly AUTH_REGISTER = "/Auth/register";
 	public static readonly AUTH_GET_LOGGED_IN_USER = "/Auth/getLoggedInUser";
 
 	// Drivers

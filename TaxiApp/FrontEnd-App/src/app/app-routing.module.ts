@@ -16,6 +16,10 @@ const routes: Routes = [
 		loadChildren: "./driver/driver.module#DriverModule"
 	},
 	{
+		path: "client",
+		loadChildren: "./client/client.module#ClientModule"
+	},
+	{
 		path: "auth",
 		loadChildren: "./auth/auth.module#AuthModule"
 	},

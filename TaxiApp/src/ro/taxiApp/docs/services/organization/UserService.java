@@ -5,6 +5,7 @@ import java.util.List;
 import ro.taxiApp.docs.core.AppException;
 import ro.taxiApp.docs.domain.organization.User;
 import ro.taxiApp.docs.domain.security.SecurityManager;
+import ro.taxiApp.docs.presentation.client.shared.model.auth.RegisterRequestModel;
 import ro.taxiApp.docs.presentation.client.shared.model.organization.UserModel;
 
 public interface UserService {
@@ -18,6 +19,8 @@ public interface UserService {
 	public UserModel getUserByIdAsModel(Long id) throws AppException;
 	
 	public Long saveUserWithRole(UserModel user, String roleName, SecurityManager userSecurity) throws AppException;
+	
+	public void registerUser(RegisterRequestModel request) throws AppException;
 	
 	public List<UserModel> getUsersWithRole(String roleName);
 	

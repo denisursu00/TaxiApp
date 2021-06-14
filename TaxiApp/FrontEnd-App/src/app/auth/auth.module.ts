@@ -5,6 +5,8 @@ import { AuthRoutingModule } from "./auth-routing.module";
 import { LoginComponent } from "./login/login.component";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { SharedModule, AppTranslateLoader } from "@app/shared";
+import { RegisterComponent } from './register/register.component';
+import { InputTextModule, KeyFilterModule } from "primeng/primeng";
 
 @NgModule({
 	imports: [
@@ -17,11 +19,14 @@ import { SharedModule, AppTranslateLoader } from "@app/shared";
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
+		KeyFilterModule,
+		InputTextModule,
 		SharedModule,
 		AuthRoutingModule
 	],
 	declarations: [
-		LoginComponent
+		LoginComponent,
+		RegisterComponent
 	],
 	providers: [
 	]

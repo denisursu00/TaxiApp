@@ -1,0 +1,54 @@
+<app-loading *ngIf="loading"></app-loading>
+<div class="login-body">
+    <div class="login-topbar">
+        <a href="#" class="logo">
+            <span class="logo-text" translate>LABELS.APP_NAME</span>
+        </a>
+    </div>
+    <div class="login-image">
+        <div class="login-panel">
+            <div class="login-panel-title" translate>LABELS.REGISTER</div>
+            <div class="login-panel-message-container">              
+              <div *ngIf="errorVisible" class="ui-message ui-widget ui-corner-all ui-message-error">
+                <span class="ui-message-text">{{'MESSAGES.' + errorCode | translate}}</span>
+              </div>
+            </div>
+            <form [formGroup]="formGroup">           
+                <div class="ui-g-12">
+                    <div class="input-wrapper">
+                        <input pInputText type="text" formControlName="username" placeholder="Username" autocomplete="off" class="ui-inputtext ui-widget">
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="input-wrapper">
+                        <input pInputText type="password" formControlName="password" placeholder="Password" autocomplete="off" class="ui-inputtext ui-widget">
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="input-wrapper">
+                        <input pInputText type="text" formControlName="firstName" placeholder="First name" autocomplete="off" class="ui-inputtext ui-widget">
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="input-wrapper">
+                        <input pInputText type="text" formControlName="lastName" placeholder="Last name" autocomplete="off" class="ui-inputtext ui-widget">
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="input-wrapper">
+                        <input pInputText type="text" formControlName="email" autocomplete="off" placeholder="Email" class="ui-inputtext ui-widget">
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="input-wrapper">
+                        <input pInputText type="text" pKeyFilter="num" formControlName="mobile" placeholder="Mobile" autocomplete="off" class="ui-inputtext ui-widget">
+                    </div>
+                </div>
+                <button type="button" (click)="onRegisterAction($event)" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" >
+                    <span class="ui-button-text ui-c">Register</span>
+                </button>
+            </form>
+
+        </div>
+    </div>
+</div>
