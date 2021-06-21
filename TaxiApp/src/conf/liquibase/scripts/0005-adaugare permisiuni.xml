@@ -42,4 +42,15 @@
 		</sql>
 	</changeSet>
 	
+	<changeSet id="0005-adaugare-permisiune-client-order-taxi" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+		
+			INSERT INTO permission (id, name, label, description, permission_group_id) VALUES (nextval('HIBERNATE_SEQUENCE'), 'client.ORDER_TAXI', 'Client Order Taxi', null, (select id from permission_group where name='client'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'CLIENT'), (select id from permission where name = 'client.ORDER_TAXI'));
+	
+		
+		]]>
+		</sql>
+	</changeSet>
+	
 </databaseChangeLog>

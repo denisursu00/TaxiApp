@@ -135,11 +135,17 @@
 
 		"RIDES": "Calatorii",
 		"START_ADRESS": "Adresa de start",
+		"END_ADRESS": "Adresa de sfarsit",
 
 		"OBSERVATIONS": "Observatii",
 
 		"PERSONAL_PAGE": "Pagina personala",
-		"PERSONAL_DATA": "Date personale"
+		"PERSONAL_DATA": "Date personale",
+
+		"ORDER_TAXI": "Comanda taxi",
+		"PLACE_ORDER": "Plaseaza comanda",
+		"ORDER": "Comanda",
+		"CURRENT_ORDER": "Comanda curentă"
 
 	},
 	"MESSAGES": {
@@ -194,7 +200,14 @@
 		"CONFIRM_DELETE_DISPATCHER":  "Esti sigur ca vrei sa stergi dispecerul?",
 		"CONFIRM_DELETE_CAR":  "Esti sigur ca vrei sa stergi automobilul?",
 
-		"REGISTER_SUCCESSFUL": "Inregistrare cu succes! Autentificati-va, va rog."
+		"REGISTER_SUCCESSFUL": "Inregistrare cu succes! Autentificati-va, va rog.",
+
+		"RIDE_REGISTERED_SUCCESSFULLY": "Comanda a fost preluata",
+		"LOOKING_FOR_DRIVER": "Cautam sofer",
+
+		"CONFIRM_CANCEL_ORDER": "Esti sigur ca vrei sa anulezi comanda?",
+
+		"ORDER_CANCELED": "Comanda a fost anulata"
 
 	}
 }

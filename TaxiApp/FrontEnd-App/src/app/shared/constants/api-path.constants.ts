@@ -40,6 +40,7 @@ export class ApiPathConstants {
 	// Rides
 	public static readonly RIDE_SAVE = "/Ride/saveRide";
 	public static readonly RIDE_GET_BY_ID = "/Ride/getRideById";
+	public static readonly RIDE_GET_ACTIVE_RIDE = "/Ride/getActiveRide";
 	public static readonly RIDE_GET_ALL = "/Ride/getAllRides";
 
 	// Organization

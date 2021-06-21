@@ -69,6 +69,12 @@ export const MENU_STRUCTURE: MenuItemDefinition[] = [
 				icon: "fa fa-user",
 				path: "client/personal-page",
 				authPermissions: AUTH_ACCESS.CLIENT.PERSONAL_PAGE.permissions
+			},
+			{
+				labelCode: "ORDER_TAXI",
+				icon: "fa fa-user",
+				path: "client/order-taxi",
+				authPermissions: AUTH_ACCESS.CLIENT.ORDER_TAXI.permissions
 			}
 		]
 	}

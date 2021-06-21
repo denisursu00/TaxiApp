@@ -11,5 +11,7 @@ public interface RideService {
 	public RideModel getById(Long id);
 	
 	public List<RideModel> getAll();
+	
+	public RideModel getActiveRideByClientId(Long clientId);
 
 }

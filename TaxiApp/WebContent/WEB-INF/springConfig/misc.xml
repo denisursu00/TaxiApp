@@ -107,6 +107,7 @@
    		<property name="driverDao" ref="driverDao"></property>
    		<property name="clientDao" ref="clientDao"></property>
    		<property name="userPersistencePlugin" ref="userPersistencePlugin"></property>
+   		<property name="carDao" ref="carDao"></property>
    	</bean>
    	
    	<bean id="rideService" class="ro.taxiApp.docs.services.ride.RideServiceImpl">

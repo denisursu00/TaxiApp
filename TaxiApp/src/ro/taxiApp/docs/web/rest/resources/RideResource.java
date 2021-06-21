@@ -43,4 +43,11 @@ public class RideResource extends BaseResource {
 		return rideService.getAll();
 	}
 	
+	@POST
+	@Path("/getActiveRide/{clientId}")
+	public RideModel getActiveRide(@PathParam("clientId") Long clientId) throws PresentationException {
+		RideModel ride = rideService.getActiveRideByClientId(clientId);
+		return ride;
+	}
+	
 }

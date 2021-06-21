@@ -28,4 +28,9 @@ export class RidesService {
         this.apiCaller.call(relativePath, null, RideModel, callback);
     }
 
+    public getActiveRide(clientId: number, callback: AsyncCallback<RideModel, AppError>): void {
+        let relativePath: string = ApiPathUtils.appendParametersToPath(ApiPathConstants.RIDE_GET_ACTIVE_RIDE, clientId.toString());
+        this.apiCaller.call(relativePath, null, RideModel, callback);
+    }
+
 }

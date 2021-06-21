@@ -134,11 +134,17 @@
 
 		"RIDES": "Rides",
 		"START_ADRESS": "Start adress",
+		"END_ADRESS": "End adress",
 
 		"OBSERVATIONS": "Observations",
 
 		"PERSONAL_PAGE": "Personal page",
-		"PERSONAL_DATA": "Personal data"
+		"PERSONAL_DATA": "Personal data",
+
+		"ORDER_TAXI": "Order taxi",
+		"PLACE_ORDER": "Place order",
+		"ORDER": "Order",
+		"CURRENT_ORDER": "Current order"
 
 	},
 	"MESSAGES": {
@@ -193,7 +199,14 @@
 		"CONFIRM_DELETE_DISPATCHER":  "Are you sure you want to delete the dispatcher?",
 		"CONFIRM_DELETE_CAR":  "Are you sure you want to delete the car?",
 
-		"REGISTER_SUCCESSFUL": "Registered successfully! Please authenticate."
+		"REGISTER_SUCCESSFUL": "Registered successfully! Please authenticate.",
+
+		"RIDE_REGISTERED_SUCCESSFULLY": "Your order has been placed",
+		"LOOKING_FOR_DRIVER": "Looking for a driver",
+
+		"CONFIRM_CANCEL_ORDER": "Are you sure you want to cancel order?",
+
+		"ORDER_CANCELED": "Order has been canceled"
 
 	}
 }

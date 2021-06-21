@@ -3,6 +3,7 @@ package ro.taxiApp.docs.presentation.server.converters.ride;
 import org.springframework.beans.factory.InitializingBean;
 
 import ro.taxiApp.common.utils.DependencyInjectionUtils;
+import ro.taxiApp.docs.dao.car.CarDao;
 import ro.taxiApp.docs.dao.clients.ClientDao;
 import ro.taxiApp.docs.dao.driver.DriverDao;
 import ro.taxiApp.docs.dao.ride.RideDao;
@@ -17,6 +18,7 @@ public class RideConverter implements InitializingBean {
 	private DriverDao driverDao;
 	private ClientDao clientDao;
 	private UserPersistencePlugin userPersistencePlugin;
+	private CarDao carDao;
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -24,7 +26,8 @@ public class RideConverter implements InitializingBean {
 			rideDao,
 			driverDao,
 			clientDao,
-			userPersistencePlugin
+			userPersistencePlugin,
+			carDao
 		);
 	}
 	
@@ -52,6 +55,7 @@ public class RideConverter implements InitializingBean {
 		}
 		model.setPaymentType(entity.getPaymentType().toString());
 		model.setObservations(entity.getObservations());
+		model.setCarCategoryId(entity.getCarCategory().getId());
 		return model;
 	}
 	
@@ -84,6 +88,9 @@ public class RideConverter implements InitializingBean {
 		if (model.getDispatcherId()!=null) {
 			entity.setDispatcher(userPersistencePlugin.getUserById(model.getDispatcherId()));
 		}
+		if (model.getCarCategoryId()!=null) {
+			entity.setCarCategory(carDao.getCarCategoryById(model.getCarCategoryId()));
+		}
 		
 		entity.setPaymentType(PaymentType.valueOf(model.getPaymentType()));
 		entity.setObservations(model.getObservations());
@@ -105,6 +112,10 @@ public class RideConverter implements InitializingBean {
 
 	public void setUserPersistencePlugin(UserPersistencePlugin userPersistencePlugin) {
 		this.userPersistencePlugin = userPersistencePlugin;
+	}
+	
+	public void setCarDao(CarDao carDao) {
+		this.carDao = carDao;
 	}
 
 }

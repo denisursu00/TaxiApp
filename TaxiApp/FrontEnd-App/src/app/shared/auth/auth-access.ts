@@ -30,6 +30,9 @@ export const AUTH_ACCESS = {
 	CLIENT: {
 		PERSONAL_PAGE: {
 			permissions: [ ClientPermissionEnum.PERSONAL_PAGE ]
+		},
+		ORDER_TAXI: {
+			permissions: [ ClientPermissionEnum.ORDER_TAXI ]
 		}
 	}
 };

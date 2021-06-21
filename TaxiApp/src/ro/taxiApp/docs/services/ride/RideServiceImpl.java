@@ -31,11 +31,13 @@ public class RideServiceImpl implements RideService, InitializingBean {
 		return rideDao.save(entity);
 	}
 	
+	@Override
 	public RideModel getById(Long id) {
 		Ride ride = rideDao.getById(id);
 		return rideConverter.toModel(ride);
 	}
 	
+	@Override
 	public List<RideModel> getAll() {
 		List<Ride> rideEntities = new ArrayList<Ride>();
 		rideEntities = rideDao.getAll();
@@ -46,6 +48,17 @@ public class RideServiceImpl implements RideService, InitializingBean {
 			}
 		}
 		return rideModels;
+	}
+	
+	@Override
+	public RideModel getActiveRideByClientId(Long clientId) {
+		Ride ride;
+		ride = rideDao.getActiveRideByClientId(clientId);
+		if (ride == null) {
+			return null;
+		} else {
+			return rideConverter.toModel(ride);
+		}
 	}
 	
 	public void setRideDao(RideDao rideDao) {

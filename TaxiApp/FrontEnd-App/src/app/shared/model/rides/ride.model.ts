@@ -49,6 +49,9 @@ export class RideModel {
 	@JsonProperty("observations", String)
 	public observations: string = null;
 
+	@JsonProperty("carCategoryId", Number)
+	public carCategoryId: number = null;
+
 }
 
 export enum PaymentType {

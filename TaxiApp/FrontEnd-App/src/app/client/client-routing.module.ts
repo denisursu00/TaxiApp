@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AUTH_ACCESS, AuthRouteGuard } from "@app/shared/auth";
+import { OrderTaxiComponent } from "./order-taxi/order-taxi.component";
 import { PersonalPageClientComponent } from "./personal-page-client/personal-page-client.component";
 
 const routes: Routes = [
@@ -10,6 +11,14 @@ const routes: Routes = [
 		canActivate: [AuthRouteGuard],
 		data: {
 			authPermissions: AUTH_ACCESS.CLIENT.PERSONAL_PAGE.permissions
+		}
+	},
+	{
+		path: "order-taxi",
+		component: OrderTaxiComponent,
+		canActivate: [AuthRouteGuard],
+		data: {
+			authPermissions: AUTH_ACCESS.CLIENT.ORDER_TAXI.permissions
 		}
 	},
 	{

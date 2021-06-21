@@ -82,11 +82,11 @@ public class UserServiceImpl implements UserService, InitializingBean {
 	
 	@Override
 	@Transactional
-	public void registerUser(RegisterRequestModel request) throws AppException {
+	public Long registerUser(RegisterRequestModel request) throws AppException {
 		UserModel userModel = UserConverter.getModelFromRegisterRequest(request);
 		User user = getUserByUsername(userModel.getUsername());
 		if (user == null) {
-			saveUserWithRole(userModel, "CLIENT");
+			return saveUserWithRole(userModel, "CLIENT");
 		} else {
 			throw new AppException(AppExceptionCodes.USERNAME_ALREADY_EXISTS);
 		}

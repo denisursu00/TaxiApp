@@ -153,6 +153,7 @@ export class RideWindowComponent extends BaseWindow implements OnInit {
 
 	private prepareForEdit(): void {
 		this.lock();
+		console.log("rideService");
 		this.rideService.getRideById(this.rideId, {
 			onSuccess: (ride: RideModel): void => {
 				this.clientService.getClientById(ride.clientId, {

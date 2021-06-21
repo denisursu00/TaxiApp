@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import ro.taxiApp.docs.domain.cars.CarCategory;
 import ro.taxiApp.docs.domain.clients.Client;
 import ro.taxiApp.docs.domain.drivers.Driver;
 import ro.taxiApp.docs.domain.organization.User;
@@ -44,6 +45,8 @@ public class Ride {
 	private User dispatcher;
 	private PaymentType paymentType;
 	private String observations;
+
+	private CarCategory carCategory;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -186,6 +189,14 @@ public class Ride {
 		this.paymentType = paymentType;
 	}
 	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "car_category_id", referencedColumnName = "id", nullable = false)
+	public CarCategory getCarCategory() {
+		return carCategory;
+	}
 	
+	public void setCarCategory(CarCategory carCategory) {
+		this.carCategory = carCategory;
+	}
 	
 }

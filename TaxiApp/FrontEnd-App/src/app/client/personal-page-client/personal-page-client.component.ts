@@ -42,11 +42,18 @@ export class PersonalPageClientComponent implements OnInit {
   ngOnInit() {
     this.dateFormat = DateConstants.DATE_FORMAT_FOR_TYPING;
     this.yearRange = DateUtils.getDefaultYearRange();
+    this.clearIntervals();
   }
 
   private async init(): Promise<void> {
     this.loggedInUserModel = this.authManager.getLoggedInUser();
     await this.getLoggedInUser();
+  }
+
+  private clearIntervals(): void {
+    for (let i = 0; i < 9999; i++) {
+      clearInterval(i);
+    }
   }
 
   private prepareForm(): void {

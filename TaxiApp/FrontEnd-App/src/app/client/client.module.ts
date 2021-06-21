@@ -35,9 +35,10 @@ import {
 import { DataViewModule } from 'primeng/dataview';
 import { PersonalPageClientComponent } from './personal-page-client/personal-page-client.component';
 import { ClientRoutingModule } from './client-routing.module';
+import { OrderTaxiComponent } from './order-taxi/order-taxi.component';
 
 @NgModule({
-	declarations: [PersonalPageClientComponent],
+	declarations: [PersonalPageClientComponent, OrderTaxiComponent],
 	imports: [
 		CommonModule,
 		RouterModule,

@@ -22,6 +22,8 @@ public class RideModel {
 	private String paymentType;
 	private String observations;
 	
+	private Long carCategoryId;
+	
 	public Long getId() {
 		return id;
 	}
@@ -111,6 +113,12 @@ public class RideModel {
 	}
 	public void setObservations(String observations) {
 		this.observations = observations;
+	}
+	public Long getCarCategoryId() {
+		return carCategoryId;
+	}
+	public void setCarCategoryId(Long carCategoryId) {
+		this.carCategoryId = carCategoryId;
 	}
 	
 }

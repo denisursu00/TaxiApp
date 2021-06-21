@@ -20,7 +20,7 @@ public interface UserService {
 	
 	public Long saveUserWithRole(UserModel user, String roleName, SecurityManager userSecurity) throws AppException;
 	
-	public void registerUser(RegisterRequestModel request) throws AppException;
+	public Long registerUser(RegisterRequestModel request) throws AppException;
 	
 	public List<UserModel> getUsersWithRole(String roleName);
 	
