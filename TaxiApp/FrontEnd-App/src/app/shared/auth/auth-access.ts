@@ -25,6 +25,9 @@ export const AUTH_ACCESS = {
 	DRIVER: {
 		PERSONAL_PAGE: {
 			permissions: [ DriverPermissionEnum.PERSONAL_PAGE ]
+		},
+		ACCEPT_ORDER: {
+			permissions: [ DriverPermissionEnum.ACCEPT_ORDER ]
 		}
 	},
 	CLIENT: {

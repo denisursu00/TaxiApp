@@ -113,6 +113,7 @@
    	<bean id="rideService" class="ro.taxiApp.docs.services.ride.RideServiceImpl">
    		<property name="rideDao" ref="rideDao"></property>
    		<property name="rideConverter" ref="rideConverter"></property>
+   		<property name="carDao" ref="carDao"></property>
    	</bean>
     
 </beans>

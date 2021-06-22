@@ -23,6 +23,11 @@ export class RidesService {
         this.apiCaller.call(ApiPathConstants.RIDE_GET_ALL, null, RideModel, callback);
     }
 
+    public getRidesForDriver(driverId: number, callback: AsyncCallback<RideModel[], AppError>): void {
+        let relativePath: string = ApiPathUtils.appendParametersToPath(ApiPathConstants.RIDE_GET_RIDES_FOR_DRIVER, driverId.toString());
+        this.apiCaller.call(relativePath, null, RideModel, callback);
+    }
+
     public getRideById(id: Number, callback: AsyncCallback<RideModel, AppError>): void {
         let relativePath: string = ApiPathUtils.appendParametersToPath(ApiPathConstants.RIDE_GET_BY_ID, id.toString());
         this.apiCaller.call(relativePath, null, RideModel, callback);

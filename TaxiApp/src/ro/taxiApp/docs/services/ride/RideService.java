@@ -12,6 +12,8 @@ public interface RideService {
 	
 	public List<RideModel> getAll();
 	
+	public List<RideModel> getRidesForDriver(Long driverId);
+	
 	public RideModel getActiveRideByClientId(Long clientId);
 
 }

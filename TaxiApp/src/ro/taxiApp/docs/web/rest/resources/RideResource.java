@@ -44,6 +44,12 @@ public class RideResource extends BaseResource {
 	}
 	
 	@POST
+	@Path("/getRidesForDriver/{driverId}")
+	public List<RideModel> getRidesForDriver(@PathParam("driverId") Long driverId) throws PresentationException {
+		return rideService.getRidesForDriver(driverId);
+	}
+	
+	@POST
 	@Path("/getActiveRide/{clientId}")
 	public RideModel getActiveRide(@PathParam("clientId") Long clientId) throws PresentationException {
 		RideModel ride = rideService.getActiveRideByClientId(clientId);

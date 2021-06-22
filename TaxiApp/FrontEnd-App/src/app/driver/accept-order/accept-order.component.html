@@ -1,0 +1,42 @@
+<div class="ui-g">
+    <div class="ui-lg-6 ui-md-8 ui-sm-12">
+        <p-table [value]="rides" [scrollable]="true" [scrollHeight]="scrollHeight" autoLayout="true">
+            <ng-template pTemplate="colgroup">
+				<colgroup>
+					<col style="width: 70%">
+					<col style="width: 30%">
+				</colgroup>
+			</ng-template>
+            <ng-template pTemplate="header">
+				<tr>
+					<th>{{"LABELS.ORDER" | translate}}</th>
+                    <th></th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-ride>
+				<tr>
+					<td>
+                        <div class="ui-g">
+                            <div class="ui-g-12">{{ride.startAdress}} - {{ride.endAdress}}</div>
+                            <div class="ui-g-12">{{ride.observations}}</div>
+                        </div>
+                    </td>
+                    <td>
+                        <p-button (onClick)="onAcceptOrder(ride)" [label]="'LABELS.ACCEPT' | translate"></p-button>
+                    </td>
+				</tr>
+			</ng-template>
+            <ng-template pTemplate="emptymessage">
+				<tr>
+					<td [attr.colspan]="2" style="text-align: center;">
+            			{{'LABELS.NO_ORDERS_FOUND' | translate}}
+          			</td>
+				</tr>
+			</ng-template>  
+        </p-table>
+            
+    </div>
+</div>
+
+<app-accepted-order-window *ngIf="orderWindowVisible" [acceptedOrder]="acceptedOrder" [maximized]="false" (windowClosed)="onOrderWindowClosed()">
+</app-accepted-order-window>

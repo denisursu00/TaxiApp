@@ -27,9 +27,10 @@
 		"TOOLS": "Unelte",
 		"ACTIONS": "Actions",
 		
-		"NO_RECORDS_FOUND": "Nicio înregistrare găsită",
+		"NO_RECORDS_FOUND": "No records found",
+		"NO_ORDERS_FOUND": "No orders found",
 		
-		"NO_DESCRIPTION": "Nicio descriere",
+		"NO_DESCRIPTION": "No description",
 
 		"ID": "Id",
 		
@@ -38,6 +39,7 @@
 		"ADD": "Adăugare",
 		"EDIT": "Editare",
 		"DELETE": "Ştergere",
+		"ACCEPT": "Accept",
 		"FINALIZE": "Finalizare",
 		"REMOVE": "Eliminare",
 		"REMOVE_ALL": "Elimină-i pe toţi",
@@ -144,7 +146,13 @@
 		"ORDER_TAXI": "Order taxi",
 		"PLACE_ORDER": "Place order",
 		"ORDER": "Order",
-		"CURRENT_ORDER": "Current order"
+		"CURRENT_ORDER": "Current order",
+		"START_RIDE": "Start",
+		"FINISH_RIDE": "Finish",
+
+		"DRIVER_ACCEPT_ORDER_PAGE": "View orders",
+
+		"ORDER_PRICE": "Price"
 
 	},
 	"MESSAGES": {

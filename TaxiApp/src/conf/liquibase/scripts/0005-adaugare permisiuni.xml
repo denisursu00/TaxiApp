@@ -53,4 +53,15 @@
 		</sql>
 	</changeSet>
 	
+	<changeSet id="0005-adaugare-permisiune-driver-accept-order" author="Denis">
+		<sql endDelimiter=";"><![CDATA[
+		
+			INSERT INTO permission (id, name, label, description, permission_group_id) VALUES (nextval('HIBERNATE_SEQUENCE'), 'driver.ACCEPT_ORDER', 'Driver Accept Order', null, (select id from permission_group where name='driver'));
+			INSERT INTO role_permission (role_id, permission_id) VALUES ((select id from role where name = 'SOFER'), (select id from permission where name = 'driver.ACCEPT_ORDER'));
+	
+		
+		]]>
+		</sql>
+	</changeSet>
+	
 </databaseChangeLog>

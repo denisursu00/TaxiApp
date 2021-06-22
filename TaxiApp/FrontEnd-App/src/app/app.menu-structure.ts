@@ -58,6 +58,12 @@ export const MENU_STRUCTURE: MenuItemDefinition[] = [
 				icon: "fa fa-user",
 				path: "driver/personal-page",
 				authPermissions: AUTH_ACCESS.DRIVER.PERSONAL_PAGE.permissions
+			},
+			{
+				labelCode: "DRIVER_ACCEPT_ORDER_PAGE",
+				icon: "pi pi-map-marker",
+				path: "driver/accept-order",
+				authPermissions: AUTH_ACCESS.DRIVER.ACCEPT_ORDER.permissions
 			}
 		]
 	},
@@ -72,7 +78,7 @@ export const MENU_STRUCTURE: MenuItemDefinition[] = [
 			},
 			{
 				labelCode: "ORDER_TAXI",
-				icon: "fa fa-user",
+				icon: "pi pi-map-marker",
 				path: "client/order-taxi",
 				authPermissions: AUTH_ACCESS.CLIENT.ORDER_TAXI.permissions
 			}

@@ -35,9 +35,11 @@ import {
 import { DataViewModule } from 'primeng/dataview';
 import { DriverRoutingModule } from './driver-routing.module';
 import { PersonalPageDriverComponent } from './personal-page-driver/personal-page-driver.component';
+import { AcceptOrderComponent } from './accept-order/accept-order.component';
+import { AcceptedOrderWindowComponent } from './accept-order/accepted-order-window/accepted-order-window.component';
 
 @NgModule({
-  declarations: [PersonalPageDriverComponent],
+  declarations: [PersonalPageDriverComponent, AcceptOrderComponent, AcceptedOrderWindowComponent],
   imports: [
     	RouterModule,
 		HttpModule,

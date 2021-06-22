@@ -28,6 +28,7 @@
 		"ACTIONS": "Actions",
 		
 		"NO_RECORDS_FOUND": "Nicio înregistrare găsită",
+		"NO_ORDERS_FOUND": "Nicio comanda nu a fost gasita",
 		
 		"NO_DESCRIPTION": "Nicio descriere",
 
@@ -38,6 +39,7 @@
 		"ADD": "Adăugare",
 		"EDIT": "Editare",
 		"DELETE": "Ştergere",
+		"ACCEPT": "Accepta",
 		"FINALIZE": "Finalizare",
 		"REMOVE": "Eliminare",
 		"REMOVE_ALL": "Elimină-i pe toţi",
@@ -145,7 +147,13 @@
 		"ORDER_TAXI": "Comanda taxi",
 		"PLACE_ORDER": "Plaseaza comanda",
 		"ORDER": "Comanda",
-		"CURRENT_ORDER": "Comanda curentă"
+		"CURRENT_ORDER": "Comanda curentă",
+		"START_RIDE": "Start",
+		"FINISH_RIDE": "Sfarsit",
+
+		"DRIVER_ACCEPT_ORDER_PAGE": "Vizualizare comenzi",
+
+		"ORDER_PRICE": "Pretul"
 
 	},
 	"MESSAGES": {

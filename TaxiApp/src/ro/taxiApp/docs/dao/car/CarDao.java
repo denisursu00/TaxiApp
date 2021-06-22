@@ -29,6 +29,13 @@ public class CarDao extends HibernateDaoSupport {
 		return getHibernateTemplate().find(query);
 	}
 	
+	public List<Car> getByDriverId(Long driverId) {
+		String query = "SELECT car FROM Car car"
+					+ " JOIN car.driver driver "
+					+ " WHERE driver.id = " + driverId.toString();
+		return getHibernateTemplate().find(query);
+	}
+	
 	public void deleteById(Long id) {
 		Car car = getById(id);
 		getHibernateTemplate().delete(car);

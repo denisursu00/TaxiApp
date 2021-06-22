@@ -1,0 +1,63 @@
+<app-loading *ngIf="loadingVisible"></app-loading>
+<p-dialog #pDialog [(visible)]="windowVisible" [positionTop]="positionTop" [modal]="true" appendTo="body" [closable]="false"
+		[responsive]="true" [style]="{'min-width': '300px'}" (onShow)="onShow($event)" (onHide)="onHide($event)">
+	<p-header>
+		<span>{{"LABELS.ORDER" | translate}}</span>
+		<a [ngClass]="{'ui-dialog-titlebar-icon ui-corner-all':true}" style="position: absolute; right: 30px;"  tabindex="0" role="button" (click)="onToggleMinimize()" (keydown.enter)="onToggleMinimize()">
+			<span [ngClass]="minimized ? 'pi pi-chevron-down' : 'pi pi-minus'"></span>
+		</a>
+	</p-header>
+
+	<p-fieldset *ngIf="!loadingVisible">
+		<p-header>{{"LABELS.CURRENT_ORDER" | translate}}</p-header>
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.START_ADRESS" | translate}}:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				{{acceptedOrder.startAdress}}
+			</div>
+		</div>
+	
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.END_ADRESS" | translate}}:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				{{acceptedOrder.endAdress}}
+			</div>
+		</div>
+	
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.OBSERVATIONS" | translate}}:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				{{acceptedOrder.observations}}
+			</div>
+		</div>
+	
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.CAR_CATEGORY" | translate}}:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				{{carCategory.name}}
+			</div>
+		</div>
+	
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.CLIENT" | translate}}:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				{{userClient.firstName}} {{userClient.lastName}}
+			</div>
+		</div>
+
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4 price"><b>{{"LABELS.ORDER_PRICE" | translate}}:</b></div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8 price">
+				<b>{{ridePriceString}}</b>
+			</div>
+		</div>
+	
+	</p-fieldset>
+
+	<p-footer>
+		<p-button *ngIf="!rideFinished" (onClick)="onCancelRide()" [label]="'LABELS.CANCEL' | translate" styleClass="ui-button-secondary"></p-button>
+		<p-button *ngIf="!rideStarted && !rideFinished" (onClick)="onStartRide()" [label]="'LABELS.START_RIDE' | translate"></p-button>
+		<p-button *ngIf="rideStarted && !rideFinished" (onClick)="onFinishRide()" [label]="'LABELS.FINISH_RIDE' | translate"></p-button>
+		<p-button *ngIf="rideFinished" (onClick)="onCloseWindow()" [label]="'LABELS.CLOSE' | translate"></p-button>
+	</p-footer>
+</p-dialog>
