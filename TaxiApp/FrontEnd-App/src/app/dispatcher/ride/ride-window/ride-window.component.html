@@ -76,6 +76,13 @@
 			</div>
 		</div>
 
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-3 ui-sm-12 ui-md-4">{{"LABELS.CAR_CATEGORY" | translate}}:</div>
+			<div class="ui-g-9 ui-sm-12 ui-md-8">
+				<p-dropdown [options]="categoryOptions" optionLabel="name" formControlName="carCategory" (onChange)="onCategoryChange($event)"></p-dropdown>
+			</div>
+		</div>
+
 	</form>
 
 	<p-footer>

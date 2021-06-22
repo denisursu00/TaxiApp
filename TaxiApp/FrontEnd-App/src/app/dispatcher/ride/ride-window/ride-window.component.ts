@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { MessageDisplayer, StringValidators, FormUtils, DateConstants, DateUtils, UiUtils, AppError, StringUtils, BaseWindow, OrganizationService, ObjectUtils, AclService, SecurityManagerModel, ClientsService, RidesService } from "@app/shared";
+import { MessageDisplayer, StringValidators, FormUtils, DateConstants, DateUtils, UiUtils, AppError, StringUtils, BaseWindow, OrganizationService, ObjectUtils, AclService, SecurityManagerModel, ClientsService, RidesService, CarsService } from "@app/shared";
 import { FormBuilder, FormGroup, Validators, AbstractControl } from "@angular/forms";
 import { SelectItem, Dialog } from "primeng/primeng";
 import { ListItemUtils } from "@app/shared/utils/list-item-utils";
 import { UserModel } from "@app/shared/model/organization/user.model";
 import { PaymentType, RideModel } from "@app/shared/model/rides/ride.model";
 import { ClientModel } from "@app/shared/model/clients/client.model";
+import { CarCategoryModel } from "@app/shared/model/cars";
 
 @Component({
   selector: 'app-ride-window',
@@ -30,6 +31,7 @@ export class RideWindowComponent extends BaseWindow implements OnInit {
 	private clientService: ClientsService;
 	private rideService: RidesService;
 	private aclService: AclService;
+	private carsService: CarsService;
 	private messageDisplayer: MessageDisplayer;
 
 	private dispatcherInfo: SecurityManagerModel;
@@ -44,12 +46,16 @@ export class RideWindowComponent extends BaseWindow implements OnInit {
 
 	public windowVisible: boolean;
 
-	public constructor(organizationService: OrganizationService, clientsService: ClientsService, ridesService: RidesService, aclService: AclService, messageDisplayer: MessageDisplayer, formBuilder: FormBuilder) {
+	public categoryOptions: CarCategoryModel[];
+
+	public constructor(organizationService: OrganizationService, clientsService: ClientsService, ridesService: RidesService,
+						aclService: AclService, carsService: CarsService, messageDisplayer: MessageDisplayer, formBuilder: FormBuilder) {
 		super();
     	this.organizationService = organizationService;
 		this.clientService = clientsService;
 		this.rideService = ridesService;
 		this.aclService = aclService;
+		this.carsService = carsService;
 		this.messageDisplayer = messageDisplayer;
 		this.formBuilder = formBuilder;
 		this.windowClosed = new EventEmitter<void>();
@@ -65,6 +71,7 @@ export class RideWindowComponent extends BaseWindow implements OnInit {
 		this.dateFormat = DateConstants.DATE_FORMAT_FOR_TYPING;
     	this.yearRange = DateUtils.getDefaultYearRange();
 		this.prepareForm();
+		await this.getCarCateogries();
 		await this.getClients();
 		await this.getDispatcherInfo();
 		this.unlock();
@@ -84,7 +91,8 @@ export class RideWindowComponent extends BaseWindow implements OnInit {
 			firstName: [null, [Validators.required, StringValidators.blank()]],
 			lastName: [null, [Validators.required, StringValidators.blank()]],
 			startAdress: [null, [Validators.required, StringValidators.blank()]],
-			observations: [null, []]
+			observations: [null, []],
+			carCategory: [null, []],
 		});
   	}
 
@@ -93,6 +101,24 @@ export class RideWindowComponent extends BaseWindow implements OnInit {
 			this.organizationService.getClients({
 				onSuccess: (users: UserModel[]): void => {
 					this.clients = users;
+					resolve();
+				},
+				onFailure: (appError: AppError): void => {
+					this.messageDisplayer.displayAppError(appError);
+					reject();
+				}
+			});
+		});
+	}
+
+	private getCarCateogries(): Promise<void> {
+		this.categoryOptions = [];
+		return new Promise<void>((resolve,reject) => {
+			this.carsService.getAllCarCategories({
+				onSuccess: (categories: CarCategoryModel[]): void => {
+					ListItemUtils.sort(categories, "code");
+					this.categoryOptions = categories;
+					this.carCategoryFormControl.setValue(this.categoryOptions[0]);
 					resolve();
 				},
 				onFailure: (appError: AppError): void => {
@@ -137,6 +163,10 @@ export class RideWindowComponent extends BaseWindow implements OnInit {
 		this.firstNameFormControl.setValue(event.firstName);
 	}
 
+	public onCategoryChange(event: any): void {
+		this.carCategoryFormControl.setValue(event.value);
+	}
+
 	private isAddMode(): boolean {
 		return this.mode === "add";
 	}
@@ -153,7 +183,6 @@ export class RideWindowComponent extends BaseWindow implements OnInit {
 
 	private prepareForEdit(): void {
 		this.lock();
-		console.log("rideService");
 		this.rideService.getRideById(this.rideId, {
 			onSuccess: (ride: RideModel): void => {
 				this.clientService.getClientById(ride.clientId, {
@@ -165,6 +194,11 @@ export class RideWindowComponent extends BaseWindow implements OnInit {
 								this.lastNameFormControl.setValue(user.lastName);
 								this.startAdressFormControl.setValue(ride.startAdress);
 								this.observationsFormControl.setValue(ride.observations);
+								for (const category of this.categoryOptions) {
+									if (category.id === ride.carCategoryId) {
+										this.carCategoryFormControl.setValue(category);
+									}
+								}
 								this.unlock();
 							},
 							onFailure: (appError: AppError) => {
@@ -280,6 +314,7 @@ export class RideWindowComponent extends BaseWindow implements OnInit {
 		ride.dispatcherId = Number(this.dispatcherInfo.userIdAsString).valueOf();
 		ride.paymentType = PaymentType.CASH;
 		ride.observations = this.observationsFormControl.value;
+		ride.carCategoryId = this.carCategoryFormControl.value["id"];
 		return ride;
 	}
 
@@ -315,6 +350,10 @@ export class RideWindowComponent extends BaseWindow implements OnInit {
 
 	public get observationsFormControl(): AbstractControl {
 		return FormUtils.getControlByName(this.form, "observations");
+	}
+
+	public get carCategoryFormControl(): AbstractControl {
+		return FormUtils.getControlByName(this.form, "carCategory");
 	}
 
 }
