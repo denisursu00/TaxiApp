@@ -209,6 +209,7 @@ export class OrderTaxiComponent implements OnInit {
 		ride.endAdress = this.endAdressFormControl.value;
 		ride.observations = this.observationsFormControl.value;
 		ride.carCategoryId = this.carCategoryFormControl.value["id"];
+		
 		return ride;
 	}
 

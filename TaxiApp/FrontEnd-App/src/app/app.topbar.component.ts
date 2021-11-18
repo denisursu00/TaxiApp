@@ -53,6 +53,9 @@ export class AppTopBarComponent implements OnInit {
 
 	public onLogout(event: any): void {
 		event.preventDefault();
+		for (let i = 0; i < 9999; i++) {
+			clearInterval(i);
+		}
 		this.authManager.logout();
 		this.router.navigate([RouteConstants.AUTH_LOGIN]);
 	}

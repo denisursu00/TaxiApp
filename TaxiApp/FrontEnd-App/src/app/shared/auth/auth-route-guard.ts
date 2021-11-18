@@ -19,6 +19,10 @@ export class AuthRouteGuard implements CanActivate {
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 		
+		for (let i = 0; i < 9999; i++) {
+			clearInterval(i);
+		}
+
 		let authenticated: boolean = this.authManager.isAuthenticated();
 
 		if (!authenticated) {

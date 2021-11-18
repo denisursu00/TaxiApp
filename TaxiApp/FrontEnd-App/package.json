@@ -34,7 +34,7 @@
     "json2typescript": "1.0.5",
     "karma-coverage-istanbul-reporter": "^1.4.3",
     "moment": "2.22.2",
-    "primeicons": "1.0.0",
+    "primeicons": "^1.0.0",
     "primeng": "7.1.0",
     "prismjs": "1.15.0",
     "quill": "1.1.8",
