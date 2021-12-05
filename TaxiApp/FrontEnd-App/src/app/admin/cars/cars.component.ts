@@ -1,8 +1,9 @@
 import { Component } from "@angular/core";
-import { CarsService, AppError, MessageDisplayer, ObjectUtils, ConfirmationUtils, DateUtils, DriversService } from "@app/shared";
+import { CarsService, AppError, MessageDisplayer, ObjectUtils, ConfirmationUtils, DateUtils, DriversService, TranslateUtils } from "@app/shared";
 import { CarModel } from "@app/shared/model/cars";
 import { DriverModel } from "@app/shared/model/drivers";
 import { ListItemUtils } from "@app/shared/utils/list-item-utils";
+import { Column } from "primeng/primeng";
 
 @Component({
   selector: 'app-cars',
@@ -15,6 +16,7 @@ export class CarsComponent {
 	private driversService: DriversService;
 	private messageDisplayer: MessageDisplayer;
 	private confirmationUtils: ConfirmationUtils;
+	private translateUtils: TranslateUtils;
 
 	public cars: CarModel[];
 	private drivers: DriverModel[];
@@ -29,20 +31,40 @@ export class CarsComponent {
 
 	public scrollHeight: string;
 
-	public constructor(carService: CarsService, driversService: DriversService, messageDisplayer: MessageDisplayer, confirmationUtils: ConfirmationUtils) {
+	public columns: Column[];
+
+	public constructor(carService: CarsService, driversService: DriversService, messageDisplayer: MessageDisplayer, confirmationUtils: ConfirmationUtils, translateUtils: TranslateUtils) {
 		this.carsService = carService;
 		this.driversService = driversService;
 		this.messageDisplayer = messageDisplayer;
 		this.confirmationUtils = confirmationUtils;
+		this.translateUtils = translateUtils;
 		this.init();
 	}
 
 	public init(): void {
+		this.columns = [];
+		this.initiateColumns();
 		this.carWindowVisible = false;
 		this.deleteButtonDisabled = true;
 		this.editButtonDisabled = true;
 		this.scrollHeight = (window.innerHeight - 180) + "px";
 		this.loadCars();
+	}
+
+	private initiateColumns(): void {
+		let carModel = new Column();
+		carModel.header = this.translateUtils.translateLabel("CAR_MODEL");
+		let carRegNumber = new Column();
+		carRegNumber.header = this.translateUtils.translateLabel("CAR_REG_NUMBER");
+		let lastTechControl = new Column();
+		lastTechControl.header = this.translateUtils.translateLabel("CAR_LAST_TECH_CONTROL");
+		let driver = new Column();
+		driver.header = this.translateUtils.translateLabel("DRIVER");
+		this.columns.push(carModel);
+		this.columns.push(carRegNumber);
+		this.columns.push(lastTechControl);
+		this.columns.push(driver);
 	}
 
 	public loadCars(): void {

@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
-import { ParameterModel, ParametersService, AppError, MessageDisplayer, ObjectUtils, ConfirmationUtils } from "@app/shared";
+import { ParameterModel, ParametersService, AppError, MessageDisplayer, ObjectUtils, ConfirmationUtils, TranslateUtils } from "@app/shared";
+import { Column } from "primeng/primeng";
 
 @Component({
 	selector: "app-parameters",
@@ -11,6 +12,7 @@ export class ParametersComponent {
 	private parametersService: ParametersService;
 	private messageDisplayer: MessageDisplayer;
 	private confirmationUtils: ConfirmationUtils;
+	private translateUtils: TranslateUtils;
 
 	public parameters: ParameterModel[];
 	public selectedParameter: ParameterModel;
@@ -24,19 +26,39 @@ export class ParametersComponent {
 
 	public scrollHeight: string;
 
-	public constructor(parameterService: ParametersService, messageDisplayer: MessageDisplayer, confirmationUtils: ConfirmationUtils) {
+	public columns: Column[];
+
+	public constructor(parameterService: ParametersService, messageDisplayer: MessageDisplayer, confirmationUtils: ConfirmationUtils, translateUtils: TranslateUtils) {
 		this.parametersService = parameterService;
 		this.messageDisplayer = messageDisplayer;
 		this.confirmationUtils = confirmationUtils;
+		this.translateUtils = translateUtils;
 		this.init();
 	}
 
 	public init(): void {
+		this.columns = [];
+		this.initiateColumns();
 		this.parameterWindowVisible = false;
 		this.deleteButtonDisabled = true;
 		this.editButtonDisabled = true;
 		this.scrollHeight = (window.innerHeight - 180) + "px";
 		this.loadParameters();
+	}
+
+	private initiateColumns(): void {
+		let parName = new Column();
+		parName.header = this.translateUtils.translateLabel("PARAMETER_NAME");
+		let parDesc = new Column();
+		parDesc.header = this.translateUtils.translateLabel("PARAMETER_DESCRIPTION");
+		let parVal = new Column();
+		parVal.header = this.translateUtils.translateLabel("PARAMETER_VALUE");
+		let parType = new Column();
+		parType.header = this.translateUtils.translateLabel("PARAMETER_TYPE");
+		this.columns.push(parName);
+		this.columns.push(parDesc);
+		this.columns.push(parVal);
+		this.columns.push(parType);
 	}
 
 	public loadParameters(): void {

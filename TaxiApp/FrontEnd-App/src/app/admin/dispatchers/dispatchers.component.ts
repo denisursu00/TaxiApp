@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { AppError, MessageDisplayer, ObjectUtils, ConfirmationUtils, DateUtils, OrganizationService } from "@app/shared";
+import { AppError, MessageDisplayer, ObjectUtils, ConfirmationUtils, DateUtils, OrganizationService, TranslateUtils } from "@app/shared";
 import { UserModel } from "@app/shared/model/organization/user.model";
+import { Column } from "primeng/primeng";
 
 @Component({
   selector: 'app-dispatchers',
@@ -12,6 +13,7 @@ export class DispatchersComponent {
   	private organizationService: OrganizationService;
 	private messageDisplayer: MessageDisplayer;
 	private confirmationUtils: ConfirmationUtils;
+	private translateUtils: TranslateUtils;
 
 	public dispatchers: UserModel[];
 	public selectedDispatcher: UserModel;
@@ -25,19 +27,42 @@ export class DispatchersComponent {
 
 	public scrollHeight: string;
 
-	public constructor(organizationService: OrganizationService, messageDisplayer: MessageDisplayer, confirmationUtils: ConfirmationUtils) {
+	public columns: Column[];
+
+	public constructor(organizationService: OrganizationService, messageDisplayer: MessageDisplayer, confirmationUtils: ConfirmationUtils, translateUtils: TranslateUtils) {
 		this.organizationService = organizationService;
 		this.messageDisplayer = messageDisplayer;
 		this.confirmationUtils = confirmationUtils;
+		this.translateUtils = translateUtils;
 		this.init();
 	}
 
 	public init(): void {
+		this.columns = [];
+		this.initiateColumns();
 		this.dispatcherWindowVisible = false;
 		this.deleteButtonDisabled = true;
 		this.editButtonDisabled = true;
 		this.scrollHeight = (window.innerHeight - 180) + "px";
 		this.loadDispatchers();
+	}
+
+	private initiateColumns(): void {
+		let firstName = new Column();
+		firstName.header = this.translateUtils.translateLabel("FIRST_NAME");
+		let lastName = new Column();
+		lastName.header = this.translateUtils.translateLabel("LAST_NAME");
+		let username = new Column();
+		username.header = this.translateUtils.translateLabel("USERNAME");
+		let email = new Column();
+		email.header = this.translateUtils.translateLabel("EMAIL");
+		let phone = new Column();
+		phone.header = this.translateUtils.translateLabel("PHONE");
+		this.columns.push(firstName);
+		this.columns.push(lastName);
+		this.columns.push(username);
+		this.columns.push(email);
+		this.columns.push(phone);
 	}
 
 	public loadDispatchers(): void {

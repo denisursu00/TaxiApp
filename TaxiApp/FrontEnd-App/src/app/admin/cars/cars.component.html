@@ -6,22 +6,18 @@
 	</div>
 	<div class="ui-g-12">
 		<p-table [value]="cars" selectionMode="single" [(selection)]="selectedCar"
-				[scrollable]="true" [scrollHeight]="scrollHeight"
+				[scrollable]="true" [scrollHeight]="scrollHeight" [columns]="columns" 
 				(onRowSelect)="onCarSelected($event)" (onRowUnselect)="onCarUnselected($event)" autoLayout="true">
-			<ng-template pTemplate="colgroup">
+			<ng-template pTemplate="colgroup" let-columns>
 				<colgroup>
-					<col style="width: 30%">
-					<col style="width: 30%">
-					<col style="width: 20%">
-					<col style="width: 20%">
+					<col *ngFor="let col of columns" style="width: 150px;">
 				</colgroup>
 			</ng-template>
 			<ng-template pTemplate="header">
 				<tr>
-					<th>{{"LABELS.CAR_MODEL" | translate}}</th>
-					<th>{{"LABELS.CAR_REG_NUMBER" | translate}}</th>
-					<th>{{"LABELS.CAR_LAST_TECH_CONTROL" | translate}}</th>
-					<th>{{"LABELS.DRIVER" | translate}}</th>
+					<th *ngFor="let col of columns">
+						{{col.header}}
+					</th>
 				</tr>
 			</ng-template>
 			<ng-template pTemplate="body" let-car>

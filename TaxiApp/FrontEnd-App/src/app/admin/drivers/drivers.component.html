@@ -6,26 +6,18 @@
 	</div>
 	<div class="ui-g-12">
 		<p-table [value]="drivers" selectionMode="single" [(selection)]="selectedDriver"
-				[scrollable]="true" [scrollHeight]="scrollHeight"
+				[scrollable]="true" [scrollHeight]="scrollHeight" [columns]="columns"  
 				(onRowSelect)="onDriverSelected($event)" (onRowUnselect)="onDriverUnselected($event)" autoLayout="true">
-			<ng-template pTemplate="colgroup">
+			<ng-template pTemplate="colgroup" let-columns>
 				<colgroup>
-					<col style="width: 20%">
-					<col style="width: 20%">
-					<col style="width: 15%">
-					<col style="width: 15%">
-					<col style="width: 15%">
-					<col style="width: 15%">
+					<col *ngFor="let col of columns" style="width: 150px;">
 				</colgroup>
 			</ng-template>
 			<ng-template pTemplate="header">
 				<tr>
-					<th>{{"LABELS.DRIVER_FIRSTNAME" | translate}}</th>
-					<th>{{"LABELS.DRIVER_LASTNAME" | translate}}</th>
-					<th>{{"LABELS.DRIVER_LICENCE_NUMBER" | translate}}</th>
-					<th>{{"LABELS.DRIVER_EXPIRY_DATE" | translate}}</th>
-          			<th>{{"LABELS.DRIVER_LAST_MED_EXAM" | translate}}</th>
-          			<th>{{"LABELS.DRIVER_MOBILE" | translate}}</th>
+					<th *ngFor="let col of columns">
+						{{col.header}}
+					</th>
 				</tr>
 			</ng-template>
 			<ng-template pTemplate="body" let-driver>

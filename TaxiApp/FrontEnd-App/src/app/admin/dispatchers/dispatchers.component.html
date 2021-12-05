@@ -6,24 +6,18 @@
 	</div>
 	<div class="ui-g-12">
 		<p-table [value]="dispatchers" selectionMode="single" [(selection)]="selectedDispatcher"
-				[scrollable]="true" [scrollHeight]="scrollHeight"
+				[scrollable]="true" [scrollHeight]="scrollHeight" [columns]="columns"  
 				(onRowSelect)="onDispatcherSelected($event)" (onRowUnselect)="onDispatcherUnselected($event)" autoLayout="true">
-			<ng-template pTemplate="colgroup">
+			<ng-template pTemplate="colgroup" let-columns>
 				<colgroup>
-					<col style="width: 20%">
-					<col style="width: 20%">
-					<col style="width: 20%">
-					<col style="width: 20%">
-					<col style="width: 20%">
+					<col *ngFor="let col of columns" style="width: 150px;">
 				</colgroup>
 			</ng-template>
 			<ng-template pTemplate="header">
 				<tr>
-					<th>{{"LABELS.FIRST_NAME" | translate}}</th>
-					<th>{{"LABELS.LAST_NAME" | translate}}</th>
-					<th>{{"LABELS.USERNAME" | translate}}</th>
-					<th>{{"LABELS.EMAIL" | translate}}</th>
-					<th>{{"LABELS.PHONE" | translate}}</th>
+					<th *ngFor="let col of columns">
+						{{col.header}}
+					</th>
 				</tr>
 			</ng-template>
 			<ng-template pTemplate="body" let-dispatcher>

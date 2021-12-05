@@ -13,6 +13,9 @@
 	height: 28px;
     width: auto;
 }
+.login-panel .checkbox-container {
+	padding-bottom: 10px;
+}
 
 .login-panel .login-panel-message-container {
 	font-size: 1em;
@@ -24,5 +27,4 @@
 
 .register {
 	color: #707277;
-	margin-top: 10px;
 }

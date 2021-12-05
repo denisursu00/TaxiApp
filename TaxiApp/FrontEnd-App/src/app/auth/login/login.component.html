@@ -14,28 +14,28 @@
               </div>
             </div>
             <form [formGroup]="formGroup">           
-              <div class="ui-g-12">
-                  <div class="input-wrapper">
-                      <input type="text" formControlName="username" autocomplete="off" placeholder="Username" class="ui-inputtext ui-widget" (keyup.enter)="onLoginAction($event)">
-                  </div>
-              </div>
-              <div class="ui-g-12">
-                  <div class="input-wrapper">
-                      <input type="password" formControlName="password" autocomplete="off" placeholder="Password" class="ui-inputtext ui-widget" (keyup.enter)="onLoginAction($event)">
-                  </div>
-              </div>
-              <div class="checkbox-container">
-                  <div class="remember-me">
-                      <input type="checkbox" formControlName="rememberMe" class="ui-chkbox ui-chkbox-box">
-                      <span translate>LABELS.LOGIN_REMEMBER_ME</span>
-                  </div>
-                  <button type="button" (click)="onLoginAction($event)" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" >
-                      <span class="ui-button-text ui-c">Login</span>
-                  </button>
-              </div>
-              <div class="ui-g-12">
-                <a [routerLink]="registerRouterLink"><span class="register">{{'LABELS.GO_TO_REGISTER' | translate}}</span></a>
-            </div>
+                <div class="ui-g-12">
+                    <div class="input-wrapper">
+                        <input type="text" formControlName="username" autocomplete="off" placeholder="Username" class="ui-inputtext ui-widget" (keyup.enter)="onLoginAction($event)">
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="input-wrapper">
+                        <input type="password" formControlName="password" autocomplete="off" placeholder="Password" class="ui-inputtext ui-widget" (keyup.enter)="onLoginAction($event)">
+                    </div>
+                </div>
+                <div class="ui-g-12 checkbox-container">
+                    <div class="remember-me">
+                        <input type="checkbox" formControlName="rememberMe" class="ui-chkbox ui-chkbox-box">
+                        <span translate>LABELS.LOGIN_REMEMBER_ME</span>
+                    </div>
+                    <button type="button" (click)="onLoginAction($event)" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" >
+                        <span class="ui-button-text ui-c">Login</span>
+                    </button>
+                </div>
+                <div class="ui-g-12">
+                    <a [routerLink]="registerRouterLink"><span class="register">{{'LABELS.GO_TO_REGISTER' | translate}}</span></a>
+                </div>
             </form>
         </div>
     </div>

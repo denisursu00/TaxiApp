@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { DriversService, AppError, MessageDisplayer, ObjectUtils, ConfirmationUtils, DateUtils, OrganizationService } from "@app/shared";
+import { DriversService, AppError, MessageDisplayer, ObjectUtils, ConfirmationUtils, DateUtils, OrganizationService, TranslateUtils } from "@app/shared";
 import { DriverModel } from "@app/shared/model/drivers";
+import { Column } from "primeng/primeng";
 
 @Component({
   selector: 'app-drivers',
@@ -13,6 +14,7 @@ export class DriversComponent {
   	private driversService: DriversService;
 	private messageDisplayer: MessageDisplayer;
 	private confirmationUtils: ConfirmationUtils;
+	private translateUtils: TranslateUtils;
 
 	public drivers: DriverModel[];
 	public selectedDriver: DriverModel;
@@ -25,21 +27,46 @@ export class DriversComponent {
 	public editButtonDisabled: boolean;
 
 	public scrollHeight: string;
+	public columns: Column[];
 
-	public constructor(organizationService: OrganizationService, driverService: DriversService, messageDisplayer: MessageDisplayer, confirmationUtils: ConfirmationUtils) {
+	public constructor(organizationService: OrganizationService, driverService: DriversService, messageDisplayer: MessageDisplayer, confirmationUtils: ConfirmationUtils, translateUtils: TranslateUtils) {
 		this.organizationService = organizationService;
 		this.driversService = driverService;
 		this.messageDisplayer = messageDisplayer;
 		this.confirmationUtils = confirmationUtils;
+		this.translateUtils = translateUtils;
 		this.init();
 	}
 
 	public init(): void {
+		this.columns = [];
+		this.initiateColumns();
 		this.driverWindowVisible = false;
 		this.deleteButtonDisabled = true;
 		this.editButtonDisabled = true;
 		this.scrollHeight = (window.innerHeight - 180) + "px";
 		this.loadDrivers();
+	}
+
+	private initiateColumns(): void {
+		let firstName = new Column();
+		firstName.header = this.translateUtils.translateLabel("DRIVER_FIRSTNAME");
+		let lastName = new Column();
+		lastName.header = this.translateUtils.translateLabel("DRIVER_LASTNAME");
+		let licenceNum = new Column();
+		licenceNum.header = this.translateUtils.translateLabel("DRIVER_LICENCE_NUMBER");
+		let expiryDate = new Column();
+		expiryDate.header = this.translateUtils.translateLabel("DRIVER_EXPIRY_DATE");
+		let lastMedExam = new Column();
+		lastMedExam.header = this.translateUtils.translateLabel("DRIVER_LAST_MED_EXAM");
+		let mobile = new Column();
+		mobile.header = this.translateUtils.translateLabel("DRIVER_MOBILE");
+		this.columns.push(firstName);
+		this.columns.push(lastName);
+		this.columns.push(licenceNum);
+		this.columns.push(expiryDate);
+		this.columns.push(lastMedExam);
+		this.columns.push(mobile);
 	}
 
 	public loadDrivers(): void {

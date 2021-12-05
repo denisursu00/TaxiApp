@@ -6,22 +6,18 @@
 	</div>
 	<div class="ui-g-12">
 		<p-table [value]="parameters" selectionMode="single" [(selection)]="selectedParameter"
-				[scrollable]="true" [scrollHeight]="scrollHeight"
+				[scrollable]="true" [scrollHeight]="scrollHeight" [columns]="columns"  
 				(onRowSelect)="onParameterSelected($event)" (onRowUnselect)="onParameterUnselected($event)" autoLayout="true">
-			<ng-template pTemplate="colgroup">
+			<ng-template pTemplate="colgroup" let-columns>
 				<colgroup>
-					<col style="width: 35%">
-					<col style="width: 35%">
-					<col style="width: 15%">
-					<col style="width: 15%">
+					<col *ngFor="let col of columns" style="width: 250px;">
 				</colgroup>
 			</ng-template>
-			<ng-template pTemplate="header">
+			<ng-template pTemplate="header" let-columns>
 				<tr>
-					<th>{{"LABELS.PARAMETER_NAME" | translate}}</th>
-					<th>{{"LABELS.PARAMETER_DESCRIPTION" | translate}}</th>
-					<th>{{"LABELS.PARAMETER_VALUE" | translate}}</th>
-					<th>{{"LABELS.PARAMETER_TYPE" | translate}}</th>
+					<th *ngFor="let col of columns">
+						{{col.header}}
+					</th>
 				</tr>
 			</ng-template>
 			<ng-template pTemplate="body" let-parameter>
