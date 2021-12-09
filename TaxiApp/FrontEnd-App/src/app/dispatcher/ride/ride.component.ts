@@ -1,9 +1,10 @@
 import { Component } from "@angular/core";
-import { AppError, MessageDisplayer, ObjectUtils, ConfirmationUtils, DateUtils, OrganizationService, AclService, SecurityManagerModel, RidesService, ClientsService } from "@app/shared";
+import { AppError, MessageDisplayer, ObjectUtils, ConfirmationUtils, DateUtils, OrganizationService, AclService, SecurityManagerModel, RidesService, ClientsService, TranslateUtils } from "@app/shared";
 import { ClientModel } from "@app/shared/model/clients/client.model";
 import { UserModel } from "@app/shared/model/organization/user.model";
 import { RideModel } from "@app/shared/model/rides/ride.model";
 import { ListItemUtils } from "@app/shared/utils/list-item-utils";
+import { Column } from "primeng/primeng";
 
 @Component({
   selector: 'app-ride',
@@ -17,6 +18,7 @@ export class RideComponent {
   private clientsService: ClientsService;
   private organizationService: OrganizationService;
 	private messageDisplayer: MessageDisplayer;
+  private translateUtils: TranslateUtils;
 
   private securityManager: SecurityManagerModel;
 
@@ -33,17 +35,23 @@ export class RideComponent {
   public tableVisible: boolean;
 
 	public scrollHeight: string;
+  
+  public columns: Column[];
 
-	public constructor(aclService: AclService, ridesService: RidesService, clientsService: ClientsService, organizationService: OrganizationService, messageDisplayer: MessageDisplayer) {
+	public constructor(aclService: AclService, ridesService: RidesService, clientsService: ClientsService, organizationService: OrganizationService,
+    messageDisplayer: MessageDisplayer, translateUtils: TranslateUtils) {
 		this.aclService = aclService;
     this.ridesService = ridesService;
     this.clientsService = clientsService;
     this.organizationService = organizationService;
 		this.messageDisplayer = messageDisplayer;
+    this.translateUtils = translateUtils;
 		this.init();
 	}
 
 	public async init(): Promise<void> {
+    this.columns = [];
+		this.initiateColumns();
 		this.rideWindowVisible = false;
     this.tableVisible = false;
     this.loading = true;
@@ -55,6 +63,21 @@ export class RideComponent {
 		await this.loadRides();
     this.loading = false;
     this.tableVisible = true;
+	}
+
+  private initiateColumns(): void {
+		let id = new Column();
+		id.header = this.translateUtils.translateLabel("ID");
+		let clientName = new Column();
+		clientName.header = this.translateUtils.translateLabel("CLIENT_NAME");
+		let startAdress = new Column();
+		startAdress.header = this.translateUtils.translateLabel("START_ADRESS");
+		let obs = new Column();
+		obs.header = this.translateUtils.translateLabel("OBSERVATIONS");
+		this.columns.push(id);
+		this.columns.push(clientName);
+		this.columns.push(startAdress);
+		this.columns.push(obs);
 	}
 
   private getSecurityManager(): Promise<void> {

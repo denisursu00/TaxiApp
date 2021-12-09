@@ -1,3 +1,9 @@
 .table-header {
-    font-size: 14pt;
+    font-size: 16pt;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.inp {
+    width: 100%;
 }

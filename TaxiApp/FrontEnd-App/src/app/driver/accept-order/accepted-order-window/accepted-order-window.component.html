@@ -1,4 +1,3 @@
-<app-loading *ngIf="loadingVisible"></app-loading>
 <p-dialog #pDialog [(visible)]="windowVisible" [positionTop]="positionTop" [modal]="true" appendTo="body" [closable]="false"
 		[responsive]="true" [style]="{'min-width': '300px'}" (onShow)="onShow($event)" (onHide)="onHide($event)">
 	<p-header>

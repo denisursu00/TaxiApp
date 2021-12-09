@@ -6,22 +6,18 @@
 	</div>
 	<div class="ui-g-12" *ngIf="tableVisible">
 		<p-table [value]="rides" selectionMode="single" [(selection)]="selectedRide"
-				[scrollable]="true" [scrollHeight]="scrollHeight"
+				[scrollable]="true" [scrollHeight]="scrollHeight" [columns]="columns" 
 				(onRowSelect)="onRideSelected($event)" (onRowUnselect)="onRideUnselected($event)" autoLayout="true">
-			<ng-template pTemplate="colgroup">
+			<ng-template pTemplate="colgroup" let-columns>
 				<colgroup>
-					<col style="width: 25%">
-					<col style="width: 25%">
-					<col style="width: 25%">
-					<col style="width: 25%">
+					<col *ngFor="let col of columns" style="width: 200px;">
 				</colgroup>
 			</ng-template>
-			<ng-template pTemplate="header">
+			<ng-template pTemplate="header" let-columns>
 				<tr>
-					<th>{{"LABELS.ID" | translate}}</th>
-					<th>{{"LABELS.CLIENT_NAME" | translate}}</th>
-					<th>{{"LABELS.START_ADRESS" | translate}}</th>
-					<th>{{"LABELS.OBSERVATIONS" | translate}}</th>
+					<th *ngFor="let col of columns">
+						{{col.header}}
+					</th>
 				</tr>
 			</ng-template>
 			<ng-template pTemplate="body" let-ride>

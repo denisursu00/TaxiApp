@@ -1,15 +1,15 @@
 <form [formGroup]="form">
     <div class="ui-g">
-        <div class="ui-g-4">
+        <div class="ui-g-6 ui-sm-12">
             <p-table [value]="user">
                 <ng-template pTemplate="header">
                     <tr>
                         <th colspan="2" align="left">
-                            <div class="ui-g">
-                                <div class="ui-g-10 table-header">
+                            <div class="table-header">
+                                <div>
                                     {{"LABELS.PERSONAL_DATA" | translate}}
                                 </div>
-                                <div class="ui-g-2">
+                                <div>
                                     <p-button *ngIf="isModeView" (onClick)="onEditAction($event)" icon="fa fa-edit"></p-button>
                                     <p-button *ngIf="isModeEdit" (onClick)="onSaveAction($event)" icon="fa fa-save"></p-button>
                                     <p-button *ngIf="isModeEdit" (onClick)="onCancelAction($event)" icon="fa fa-close"></p-button>
@@ -26,28 +26,28 @@
                     <tr>
                         <td><b>{{"LABELS.FIRST_NAME" | translate}}</b></td>
                         <td *ngIf="isModeEdit">
-                            <input pInputText formControlName="firstName" type="text"/>
+                            <input class="inp" pInputText formControlName="firstName" type="text"/>
                         </td>
                         <td *ngIf="isModeView">{{user.firstName}}</td>
                     </tr>
                     <tr>
                         <td><b>{{"LABELS.LAST_NAME" | translate}}</b></td>
                         <td *ngIf="isModeEdit">
-                            <input pInputText formControlName="lastName" type="text"/>
+                            <input class="inp" pInputText formControlName="lastName" type="text"/>
                         </td>
                         <td *ngIf="isModeView">{{user.lastName}}</td>
                     </tr>
                     <tr>
                         <td><b>{{"LABELS.EMAIL" | translate}}</b></td>
                         <td *ngIf="isModeEdit">
-                            <input pInputText formControlName="email" type="text"/>
+                            <input class="inp" pInputText formControlName="email" type="text"/>
                         </td>
                         <td *ngIf="isModeView">{{user.email}}</td>
                     </tr>
                     <tr>
                         <td><b>{{"LABELS.PHONE" | translate}}</b></td>
                         <td *ngIf="isModeEdit">
-                            <input pInputText pKeyFilter="num" formControlName="mobile" type="text"/>
+                            <input class="inp" pInputText pKeyFilter="num" formControlName="mobile" type="text"/>
                         </td>
                         <td *ngIf="isModeView">{{user.mobile}}</td>
                     </tr>

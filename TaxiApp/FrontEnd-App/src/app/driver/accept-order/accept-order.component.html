@@ -1,10 +1,10 @@
 <div class="ui-g">
-    <div class="ui-lg-6 ui-md-8 ui-sm-12">
+    <div class="ui-lg-5 ui-md-8 ui-sm-12">
         <p-table [value]="rides" [scrollable]="true" [scrollHeight]="scrollHeight" autoLayout="true">
             <ng-template pTemplate="colgroup">
 				<colgroup>
-					<col style="width: 70%">
-					<col style="width: 30%">
+					<col style="width: 60%">
+					<col style="width: 40%">
 				</colgroup>
 			</ng-template>
             <ng-template pTemplate="header">
@@ -22,7 +22,11 @@
                         </div>
                     </td>
                     <td>
-                        <p-button (onClick)="onAcceptOrder(ride)" [label]="'LABELS.ACCEPT' | translate"></p-button>
+						<div class="ui-g">
+							<div class="ui-g-12 ui-sm-12">
+								<button pButton class="btn" (click)="onAcceptOrder(ride)" [label]="'LABELS.ACCEPT' | translate"></button>
+							</div>
+						</div>
                     </td>
 				</tr>
 			</ng-template>

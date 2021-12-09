@@ -1,15 +1,15 @@
 <form [formGroup]="form">
 <div class="ui-g">
-    <div class="ui-g-4">
+    <div class="ui-g-6 ui-sm-12">
         <p-table [value]="driver">
             <ng-template pTemplate="header">
 				<tr>
 					<th colspan="2" align="left">
-                        <div class="ui-g">
-                            <div class="ui-g-10 table-header">
+                        <div class="table-header">
+                            <div>
                                 {{"LABELS.PERSONAL_DATA" | translate}}
                             </div>
-                            <div class="ui-g-2">
+                            <div>
                                 <p-button *ngIf="isModeView" (onClick)="onEditAction($event)" icon="fa fa-edit"></p-button>
                                 <p-button *ngIf="isModeEdit" (onClick)="onSaveAction($event)" icon="fa fa-save"></p-button>
                                 <p-button *ngIf="isModeEdit" (onClick)="onCancelAction($event)" icon="fa fa-close"></p-button>
@@ -22,14 +22,14 @@
 				<tr>
                     <td><b>{{"LABELS.FIRST_NAME" | translate}}</b></td>
                     <td *ngIf="isModeEdit">
-                        <input pInputText formControlName="firstName" type="text"/>
+                        <input class="inp" pInputText formControlName="firstName" type="text"/>
                     </td>
                     <td *ngIf="isModeView">{{driver.user.firstName}}</td>
                 </tr>
                 <tr>
                     <td><b>{{"LABELS.LAST_NAME" | translate}}</b></td>
                     <td *ngIf="isModeEdit">
-                        <input pInputText formControlName="lastName" type="text"/>
+                        <input class="inp" pInputText formControlName="lastName" type="text"/>
                     </td>
                     <td *ngIf="isModeView">{{driver.user.lastName}}</td>
                 </tr>
@@ -54,19 +54,20 @@
                             [monthNavigator]="true"
                             [yearNavigator]="true"
                             [yearRange]="yearRange"
-                            [style]="{'width' :'100%'}"
+                            [style]="{'width': '100%'}"
+                            [inputStyle]="{'width': '70%'}"
                             formControlName="birthDate"
                             readonlyInput="true"
                             appendTo="body"
                             showButtonBar="true">
-				        </p-calendar>
+                        </p-calendar>
                     </td>
                     <td *ngIf="isModeView">{{getDateForDisplay(driver.birthDate)}}</td>
                 </tr>
                 <tr>
                     <td><b>{{"LABELS.DRIVER_LICENCE_NUMBER" | translate}}</b></td>
                     <td *ngIf="isModeEdit">
-                        <input pInputText formControlName="licenceNumber" type="text"/>
+                        <input class="inp" pInputText formControlName="licenceNumber" type="text"/>
                     </td>
                     <td *ngIf="isModeView">{{driver.licenceNumber}}</td>
                 </tr>
@@ -79,10 +80,10 @@
                             [monthNavigator]="true"
                             [yearNavigator]="true"
                             [yearRange]="yearRange"
-                            [style]="{'width' :'100%'}"
+                            [style]="{'width': '100%'}"
+                            [inputStyle]="{'width': '70%'}"
                             formControlName="expiryDate"
                             readonlyInput="true"
-                            appendTo="body"
                             showButtonBar="true">
                         </p-calendar>
                     </td>
@@ -97,10 +98,10 @@
                             [monthNavigator]="true"
                             [yearNavigator]="true"
                             [yearRange]="yearRange"
-                            [style]="{'width' :'100%'}"
+                            [style]="{'width': '100%'}"
+                            [inputStyle]="{'width': '70%'}"
                             formControlName="lastMedExam"
                             readonlyInput="true"
-                            appendTo="body"
                             showButtonBar="true">
                         </p-calendar>
                     </td>
